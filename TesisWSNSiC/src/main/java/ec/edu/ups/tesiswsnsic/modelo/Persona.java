@@ -15,4 +15,17 @@ public class Persona {
 	@Column(name="per_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+<<<<<<< HEAD
+=======
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+>>>>>>> refs/remotes/origin/master
 }
