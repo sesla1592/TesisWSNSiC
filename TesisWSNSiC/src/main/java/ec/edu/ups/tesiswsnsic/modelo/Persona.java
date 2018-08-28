@@ -15,6 +15,12 @@ public class Persona {
 	@Column(name="per_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	
+	@Column(name="per_nombre")
+	private String nombre;
+	
+	@Column(name="per_apellido")
+	private String apellido;
 
 
 	public int getId() {
