@@ -15,6 +15,12 @@ public class Movimiento {
 	@Column(name="mov_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
+	
+	@Column(name="mov_descripcion")
+	private String descripcion;
+	
+	@Column(name="mov_fecha")
+	private String fecha;
 
 	public int getId() {
 		return id;
@@ -23,6 +29,28 @@ public class Movimiento {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	@Override
+	public String toString() {
+		return "Movimiento [id=" + id + ", descripcion=" + descripcion + ", fecha=" + fecha + "]";
+	}
+	
 	
 	
 }
