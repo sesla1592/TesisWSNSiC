@@ -8,18 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MOVIMIENTO")
+@Table(name = "MOVIMIENTO")
 public class Movimiento {
 
 	@Id
-	@Column(name="mov_id")
+	@Column(name = "mov_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="mov_descripcion")
+
+	@Column(name = "mov_descripcion")
 	private String descripcion;
-	
-	@Column(name="mov_fecha")
+
+	@Column(name = "mov_fecha")
 	private String fecha;
 
 	public int getId() {
@@ -50,7 +50,5 @@ public class Movimiento {
 	public String toString() {
 		return "Movimiento [id=" + id + ", descripcion=" + descripcion + ", fecha=" + fecha + "]";
 	}
-	
-	
-	
+
 }

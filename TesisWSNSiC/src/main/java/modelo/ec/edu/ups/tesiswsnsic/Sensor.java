@@ -8,24 +8,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SENSOR")
+@Table(name = "SENSOR")
 public class Sensor {
 
 	@Id
-	@Column(name="sen_id")
+	@Column(name = "sen_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="sen_nombre")
+
+	@Column(name = "sen_nombre")
 	private String nombre;
-	
-	@Column(name="sen_estado")
+
+	@Column(name = "sen_estado")
 	private String estado;
-	
-	@Column(name="sen_latitud")
+
+	@Column(name = "sen_latitud")
 	private double latitud;
-	
-	@Column(name="sen_longitud")
+
+	@Column(name = "sen_longitud")
 	private double longitud;
 
 	public int getId() {
