@@ -13,37 +13,37 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EMPRESA")
+@Table(name = "EMPRESA")
 public class Empresa {
 
 	@Id
-	@Column(name="emp_id")
+	@Column(name = "emp_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="emp_nombre")
+
+	@Column(name = "emp_nombre")
 	private String nombre;
-	
-	@Column(name="emp_direccion")
+
+	@Column(name = "emp_direccion")
 	private String direccion;
-	
-	@Column(name="emp_telefono")
+
+	@Column(name = "emp_telefono")
 	private String telefono;
-	
-	@Column(name="emp_estado")
+
+	@Column(name = "emp_estado")
 	private String estado;
-	
-	@Column(name="emp_correo")
+
+	@Column(name = "emp_correo")
 	private String correo;
-	
-	@Column(name="emp_ciudad")
+
+	@Column(name = "emp_ciudad")
 	private String ciudad;
-	
-	@Column(name="emp_pais")
+
+	@Column(name = "emp_pais")
 	private String pais;
-	
-	@OneToMany(cascade=(javax.persistence.CascadeType.ALL),fetch=FetchType.LAZY)
-	@JoinColumn(name="emp_per_fk", referencedColumnName="emp_id")
+
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_per_fk", referencedColumnName = "emp_id")
 	private List<Persona> personas;
 
 	public int getId() {

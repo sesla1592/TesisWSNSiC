@@ -8,15 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PERSONANODO")
+@Table(name = "PERSONANODO")
 public class PersonaNodo {
 
 	@Id
-	@Column(name="pen_id")
+	@Column(name = "pen_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	
-	@Column(name="pen_estado")
+
+	@Column(name = "pen_estado")
 	private String estado;
 
 	public int getId() {
@@ -39,5 +39,5 @@ public class PersonaNodo {
 	public String toString() {
 		return "PersonaNodo [id=" + id + ", estado=" + estado + "]";
 	}
-	
+
 }
