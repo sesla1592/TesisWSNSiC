@@ -1,10 +1,15 @@
 package modelo.ec.edu.ups.tesiswsnsic;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +41,10 @@ public class Empresa {
 	
 	@Column(name="emp_pais")
 	private String pais;
+	
+	@OneToMany(cascade=(javax.persistence.CascadeType.ALL),fetch=FetchType.LAZY)
+	@JoinColumn(name="emp_per_fk", referencedColumnName="emp_id")
+	private List<Persona> personas;
 
 	public int getId() {
 		return id;
@@ -101,11 +110,19 @@ public class Empresa {
 		this.pais = pais;
 	}
 
+	public List<Persona> getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(List<Persona> personas) {
+		this.personas = personas;
+	}
+
 	@Override
 	public String toString() {
 		return "Empresa [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais + "]";
+				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais + ", personas="
+				+ personas + "]";
 	}
-	
-	
+
 }
