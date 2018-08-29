@@ -51,10 +51,67 @@ public class Persona {
 		this.id = id;
 	}
 
-	
-	
-	
-	
-	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+	public void setMovimientos(List<Movimiento> movimientos) {
+		this.movimientos = movimientos;
+	}
+
+	public List<PersonaNodo> getPersonanodos() {
+		return personanodos;
+	}
+
+	public void setPersonanodos(List<PersonaNodo> personanodos) {
+		this.personanodos = personanodos;
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", estado=" + estado
+				+ ", correo=" + correo + ", password=" + password + ", movimientos=" + movimientos + ", personanodos="
+				+ personanodos + "]";
+	}	
 	
 }
