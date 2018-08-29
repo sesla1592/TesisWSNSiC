@@ -1,4 +1,4 @@
-package ec.edu.ups.tesiswsnsic.modelo;
+package modelo.ec.edu.ups.tesiswsnsic;
 
 import java.util.List;
 import javax.persistence.Column;
