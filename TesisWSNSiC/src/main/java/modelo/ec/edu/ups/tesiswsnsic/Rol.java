@@ -24,7 +24,7 @@ public class Rol {
 	@Column(name="rol_descripcion")
 	private String descripcion;
 	
-	//@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="eve_cat_id", referencedColumnName="cat_id")
 	private List<Persona> personas;
