@@ -7,7 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 
 @ManagedBean
-@SessionScoped
+@javax.faces.bean.SessionScoped
 public class PersonaControlador {
 
 	private Persona p;
@@ -18,7 +18,7 @@ public class PersonaControlador {
 	}
 	
 	public void Login(){
-		
+		//hola mundoooooo
 	}
 
 	public void crearUsuario() {
