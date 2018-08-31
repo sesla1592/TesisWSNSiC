@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ROL")
 public class Rol {
@@ -23,10 +25,10 @@ public class Rol {
 
 	@Column(name = "rol_descripcion")
 	private String descripcion;
-
-	// @JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rol_per_id", referencedColumnName = "rol_id")
+	
+	//@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="per_rol_id", referencedColumnName="rol_id")
 	private List<Persona> personas;
 
 	public int getId() {
