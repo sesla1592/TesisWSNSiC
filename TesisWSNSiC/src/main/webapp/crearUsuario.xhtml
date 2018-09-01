@@ -10,12 +10,15 @@
 
 	<p:outputLabel value="* Seleccione un rol" />
 
-	<p:selectOneMenu value="#{PersonaControlador.selectrol}">
-		<f:ajax execute="@this"
-			listener="#{PersonaControlador.rolSeleccionado()}"></f:ajax>
-		<f:selectItem itemLabel="Seleccione un rol" />
-		<f:selectItems value="#{PersonaControlador.rolSeleccionado()}" />
-	</p:selectOneMenu>
+
+	<h:outputLabel value="Seleccione un ROL" />
+					<h:selectOneMenu value="#{personaControlador.selectrol}">
+						<f:ajax execute="@this"
+							listener="#{personaControlador.rolSeleccionado()}"></f:ajax>
+						<f:selectItem itemLabel="Selecciones Tipo.." />
+						<f:selectItems value="#{personaControlador.listaRolesCombo()}" />
+					</h:selectOneMenu>
+<br/>
 
 
 </body> 
