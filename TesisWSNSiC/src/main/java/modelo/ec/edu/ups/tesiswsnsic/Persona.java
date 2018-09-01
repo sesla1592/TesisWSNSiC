@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,6 +43,10 @@ public class Persona {
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
 	private List<PersonaNodo> personanodos;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "per_rol_id")
+	private Rol rol;
 
 	public int getId() {
 		return id;
@@ -107,11 +112,19 @@ public class Persona {
 		this.personanodos = personanodos;
 	}
 
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", estado=" + estado
 				+ ", correo=" + correo + ", password=" + password + ", movimientos=" + movimientos + ", personanodos="
-				+ personanodos + "]";
+				+ personanodos + ", rol=" + rol + "]";
 	}
 
 }
