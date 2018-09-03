@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head></h:head>
+<body>
+
+	<h:form role="form" id="formregistro">
+	<h:panelGrid columns="1">
+	<br />
+	
+	<h:outputLabel value="Nombre *: " for="correo" />
+	<h:inputText value="#{personaControlador.personas.nombre}" id="nombre" class="form-control input-sm" pt:placeholder="Nombre"/>
+	<br />
+	
+	<h:outputLabel value="Apellido *: " for="correo" />
+	<h:inputText value="#{personaControlador.personas.apellido}" id="apellido" class="form-control input-sm" pt:placeholder="Apellido"/>
+	<br />
+	
+	<h:outputLabel value="Correo *: " for="correo" />
+	<h:inputText value="#{personaControlador.personas.correo}" id="correo" class="form-control input-sm" pt:placeholder="usuario@sudominio.com" />
+	<br />
+	
+	<h:outputLabel value="Contraseña: " for="contrasenia" />
+	<h:inputSecret name="contrasenia" id="contrasenia" value="#{personaControlador.personas.password}"  pt:placeholder="*****"/>
+	<h:message for="contrasenia" errorStyle="color:red; display:block" />
+	<br />
+	
+	<h:outputLabel value="Repita su contraseña: " for="rcontrasenia" />
+	<h:inputSecret name="rcontrasenia" id="rcontrasenia" value="#{personaControlador.password}" pt:placeholder="*****"/>
+	<h:message for="rcontrasenia" errorStyle="color:red; display:block" />
+	<br />
+	
+	
+		<h:outputLabel value="Seleccione el rol" />
+		<h:selectOneMenu value="#{personaControlador.selectrol}" id="srol" >
+			<f:ajax execute="@this"
+				listener="#{personaControlador.rolSeleccionado()}"></f:ajax>
+			<f:selectItem itemLabel="Selecciones Tipo.." />
+			<f:selectItems value="#{personaControlador.listaRolesCombo()}" />
+		</h:selectOneMenu>
+		<br />
+
+		<h:outputText id="muestraValor"
+			value="#{personaControlador.coincidencia}"
+			errorStyle="color:red; display:block" />
+		<h:commandButton type="submit" value="Registrar" id="Crear"
+			action="#{personaControlador.crearPersona()}"
+			class="btn btn-success btn-inline">
+			<f:ajax
+				execute="rcontrasenia contrasenia correo nombre apellido formregistro srol"
+				render="muestraValor">
+			</f:ajax>
+		</h:commandButton>
+</h:panelGrid>
+	</h:form>
+</body>
+</html>
