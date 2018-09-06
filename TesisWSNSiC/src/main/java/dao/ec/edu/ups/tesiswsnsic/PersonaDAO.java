@@ -17,10 +17,13 @@ public class PersonaDAO {
 
 	public void grabarPersona(Persona p) {
 		Persona aux = selectPersona(p.getId());
+		System.out.println("GRABARPERSONA DAO: "+p.getId()+" "  + p.getApellido()+" "+ p.getCorreo() +" "+ p.getNombre()+" "+ p.getPassword());
 		try {
 			if (aux != null) {
 				updatePersona(p);
 			} else {
+			
+				System.out.println("GRABAR");
 				System.out.println("Grabando...!");
 				insertPersona(p);
 			}
