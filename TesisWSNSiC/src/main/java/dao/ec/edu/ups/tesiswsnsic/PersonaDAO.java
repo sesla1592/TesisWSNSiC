@@ -78,4 +78,18 @@ public class PersonaDAO {
 		List<Persona> lpersonas = query.getResultList();
 		return lpersonas;
 	}
+	
+	/**
+	 * Login. SQL para encontrar a la personas a través de los parámetros.
+	 *
+	 * @param user the user
+	 * @param pass the pass
+	 * @return una list de personas con esos parámetros
+	 */
+	public List<Persona> login(String user, String pass) {
+		String sql = "Select p from Persona p WHERE p.correo = '"+user+"' AND p.password='"+pass+"'";
+		TypedQuery<Persona> query = em.createQuery(sql, Persona.class);
+		List<Persona> personas = query.getResultList();
+		return personas;
+	}
 }
