@@ -1,29 +1,47 @@
 package mongodb.ec.edu.ups.tesiswsnsic;
 
 import java.net.UnknownHostException;
+import java.util.Set;
+
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 public class MongoConnectionDB {
 
 	public static void main(String[] args) {
-
+ 
 
 		try {
-			
+			/**Conexion a mongodb */			
 			MongoClient mongoClient = new MongoClient("localhost",27017);
+			/**BD a elegir */	
 			DB db=mongoClient.getDB("wsnbd");
-			DBCollection collection=db.getCollection("Sensor");
+			/**Lista de colecciones de la BD */	
+			Set<String> collection=db.getCollectionNames(); 
+		
+			/**Recorrer las colecciones y mostrar */	
+			for (String s : collection) {
+				System.out.println(s);
+				}
+			/**Ver documentos de una coleccion */	
+			DBCollection coll = db.getCollection("Persona");
 			
-			DBCursor cursor = collection.find();
+				
+			DBObject myDoc = coll.findOne();
+			System.out.println(myDoc);
 			
-				while (cursor.hasNext()) {
-					int i=1;
-					System.out.println(cursor.next());
-					i++;
-				}	
+			DBCursor cursor = coll.find();
+			
+			try {
+			   while(cursor.hasNext()) {
+			       System.out.println(cursor.next());
+			   }
+			} finally {
+			   cursor.close();
+			}
 			
 			System.out.println("Connection Succefull");
 		} catch (UnknownHostException e) {
