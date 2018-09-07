@@ -36,7 +36,7 @@ public class Persona {
 	@Column(name = "per_password")
 	private String password;
 
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
 	@JoinColumn(name = "per_mov_fk", referencedColumnName = "per_id")
 	private List<Movimiento> movimientos;
 

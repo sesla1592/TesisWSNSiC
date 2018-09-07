@@ -42,7 +42,7 @@ public class Empresa {
 	@Column(name = "emp_pais")
 	private String pais;
 
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
 	@JoinColumn(name = "emp_per_fk", referencedColumnName = "emp_id")
 	private List<Persona> personas;
 
