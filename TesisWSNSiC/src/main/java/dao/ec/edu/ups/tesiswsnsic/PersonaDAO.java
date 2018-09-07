@@ -56,6 +56,9 @@ public class PersonaDAO {
 
 	public Persona selectPersona(int idP) {
 		Persona p = em.find(Persona.class, idP);
+		if(!p.getMovimientos().isEmpty()){
+			p.getMovimientos().size();
+		}
 		return p;
 	}
 
@@ -76,6 +79,11 @@ public class PersonaDAO {
 		String jpql = "select p from Persona p";
 		TypedQuery<Persona> query = em.createQuery(jpql, Persona.class);
 		List<Persona> lpersonas = query.getResultList();
+		for(Persona p : lpersonas) {
+			if(!p.getMovimientos().isEmpty()) {
+				p.getMovimientos().size();	
+			}
+		}
 		return lpersonas;
 	}
 	
@@ -90,6 +98,31 @@ public class PersonaDAO {
 		String sql = "Select p from Persona p WHERE p.correo = '"+user+"' AND p.password='"+pass+"'";
 		TypedQuery<Persona> query = em.createQuery(sql, Persona.class);
 		List<Persona> personas = query.getResultList();
+		for(Persona pe : personas) {
+			if(!pe.getMovimientos().isEmpty()) {
+				pe.getMovimientos().size();
+			}
+		}
+		return personas;
+	}
+	
+	
+	/**
+	 * Verifica correo.
+	 *
+	 * @param user the user
+	 * @return the list
+	 */
+	public List<Persona> verificaCorreo(String user)
+	{
+		String sql="Select p from Persona p WHERE p.correo = '"+user+"'";
+		TypedQuery<Persona> query=em.createQuery(sql,Persona.class);
+		List<Persona>personas=query.getResultList();
+		for(Persona p : personas) {
+			if (!p.getMovimientos().isEmpty()) {
+				p.getMovimientos().size();	
+			}
+		}
 		return personas;
 	}
 }

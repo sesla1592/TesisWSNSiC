@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body>
+
+	<form action="">
+		REGISTRO EMPRESA
+		
+		<br />
+		<h:outputLabel value="Nombre de la empresa: " for="nombre" />
+		<h:inputText value="#{empresaControlador.empresa.nombre}" id="nombre"
+			class="form-control input-sm" pt:placeholder="Nombre" />
+			
+		<br />
+		<h:outputLabel value="Direccion: " for="nombre" />
+		<h:inputText value="#{empresaControlador.empresa.direccion}" id="direccion"
+			class="form-control input-sm" pt:placeholder="Direccion" />
+			
+		<br />
+		<h:outputLabel value="Telefono: " for="telefono" />
+		<h:inputText value="#{empresaControlador.empresa.telefono}" id="telefono"
+			class="form-control input-sm" pt:placeholder="+593 959595999" />
+			
+		<br />
+		
+		<h:outputLabel value="Correo: " for="correo" />
+		<h:inputText value="#{empresaControlador.empresa.correo}" id="correo"
+			class="form-control input-sm" pt:placeholder="Correo" />
+			
+		<br />
+		
+		<h:outputLabel value="Ciudad: " for="ciudad" />
+		<h:inputText value="#{empresaControlador.empresa.ciudad}" id="ciudad"
+			class="form-control input-sm" pt:placeholder="Ciudad" />
+			
+		<br />
+		
+		<h:commandButton type="submit" value="Registrar" id="Crear"
+			action="#{empresaControlador.actualizaEmpresaAPersona()}" onclick="#{empresaControlador.actualizaEmpresaAPersona()}"
+			class="btn btn-success btn-inline">
+		</h:commandButton>
+		
+	</form>
+
+</body> 
+</html>
