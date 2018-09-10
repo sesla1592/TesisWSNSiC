@@ -13,7 +13,7 @@ public class Movimiento {
 
 	@Id
 	@Column(name = "mov_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "mov_descripcion")

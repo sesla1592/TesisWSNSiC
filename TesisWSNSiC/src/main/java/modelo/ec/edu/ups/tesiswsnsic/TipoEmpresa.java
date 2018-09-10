@@ -18,7 +18,7 @@ public class TipoEmpresa {
 
 	@Id
 	@Column(name = "tem_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "tem_nombre")

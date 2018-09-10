@@ -15,10 +15,19 @@ public class RolDAO {
 	@Inject
 	private EntityManager em;
 	
+	
 	public List<Rol> listRol(){
-		String jpql = "select r from Rol r";
+		String jpql = "Select r from Rol r";
 		TypedQuery<Rol> query = em.createQuery(jpql, Rol.class);
 		List<Rol> roles = query.getResultList();
+/*
+		for(Rol r : roles) {
+			if(!r.getPersonas().isEmpty()) {
+				r.getPersonas().size();
+			}
+			
+		}
+*/
 		return roles;
 	}
 }

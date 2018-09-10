@@ -1,5 +1,6 @@
 package modelo.ec.edu.ups.tesiswsnsic;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +13,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "PERSONA")
 public class Persona {
 
 	@Id
 	@Column(name = "per_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "per_nombre")
@@ -36,17 +39,17 @@ public class Persona {
 	@Column(name = "per_password")
 	private String password;
 
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_mov_fk", referencedColumnName = "per_id")
-	private List<Movimiento> movimientos;
+	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
-	private List<PersonaNodo> personanodos;
+	private List<PersonaNodo> personanodos = new ArrayList<PersonaNodo>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "per_rol_id")
-	private Rol rol;
+	private Rol rol = new Rol();
 
 
 	public int getId() {
@@ -142,8 +145,8 @@ public class Persona {
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", estado=" + estado
-				+ ", correo=" + correo + ", password=" + password + ", movimientos=" + movimientos + ", personanodos="
-				+ personanodos + ", rol=" + rol + "]";
+				+ ", correo=" + correo + ", password=" + password + ", movimientos=" + movimientos + ", personanodos="+ personanodos + 
+				", rol=" + rol + "]";
 	}
 
 }

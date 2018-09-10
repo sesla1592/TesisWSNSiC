@@ -18,7 +18,7 @@ public class TipoPago {
 
 	@Id
 	@Column(name = "tpa_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "tpa_descripcion")

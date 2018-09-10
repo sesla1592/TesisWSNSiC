@@ -8,12 +8,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import modelo.ec.edu.ups.tesiswsnsic.Rol;
 
 @Stateless
 public class PersonaDAO {
 
 	@Inject
 	private EntityManager em;
+	
+	@Inject
+	private RolDAO rdao;
+	
+	private Rol r = new Rol();
 
 	public void grabarPersona(Persona p) {
 		Persona aux = selectPersona(p.getId());
@@ -56,9 +62,14 @@ public class PersonaDAO {
 
 	public Persona selectPersona(int idP) {
 		Persona p = em.find(Persona.class, idP);
-		if(!p.getMovimientos().isEmpty()){
+//		System.out.println(p.getRol());
+/*		if(!p.getMovimientos().isEmpty()){
 			p.getMovimientos().size();
 		}
+		if(!p.getPersonanodos().isEmpty()){
+			p.getPersonanodos().size();
+		}
+	*/	
 		return p;
 	}
 
@@ -83,6 +94,9 @@ public class PersonaDAO {
 			if(!p.getMovimientos().isEmpty()) {
 				p.getMovimientos().size();	
 			}
+			if(!p.getPersonanodos().isEmpty()) {
+				p.getPersonanodos().size();
+			}
 		}
 		return lpersonas;
 	}
@@ -101,6 +115,9 @@ public class PersonaDAO {
 		for(Persona pe : personas) {
 			if(!pe.getMovimientos().isEmpty()) {
 				pe.getMovimientos().size();
+			}
+			if(!pe.getPersonanodos().isEmpty()) {
+				pe.getPersonanodos().size();
 			}
 		}
 		return personas;
@@ -122,7 +139,25 @@ public class PersonaDAO {
 			if (!p.getMovimientos().isEmpty()) {
 				p.getMovimientos().size();	
 			}
+			if(!p.getPersonanodos().isEmpty()) {
+				p.getPersonanodos().size();
+			}
 		}
 		return personas;
 	}
+
+	
+	public Rol PersonaRol(int idpers) {
+		Persona pe = selectPersona(idpers);
+		for(Rol ro : rdao.listRol()){
+			
+			if(pe.getRol().getId()==ro.getId()){
+				System.out.println("PRINT ******"+ ro.getDescripcion());
+				r = ro;
+			}
+			
+		}
+		return r;
+	}
+
 }

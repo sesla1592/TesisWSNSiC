@@ -13,7 +13,7 @@ public class PersonaNodo {
 
 	@Id
 	@Column(name = "pen_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "pen_estado")
