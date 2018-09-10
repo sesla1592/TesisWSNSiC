@@ -9,7 +9,7 @@
 <h:head></h:head> 
 <body>
 
-	<form action="">
+	<h:form>
 		REGISTRO EMPRESA
 		
 		<br />
@@ -41,12 +41,14 @@
 			
 		<br />
 		
-		<h:commandButton type="submit" value="Registrar" id="Crear"
-			action="#{empresaControlador.actualizaEmpresaAPersona()}" onclick="#{empresaControlador.actualizaEmpresaAPersona()}"
-			class="btn btn-success btn-inline">
+				<h:outputLabel value="Pais: " for="pais" />
+		<h:inputText value="#{empresaControlador.empresa.pais}" id="PAIS"
+			class="form-control input-sm" pt:placeholder="Pais" />
+		
+		<h:commandButton action="#{empresaControlador.actualizaEmpresaAPersona()}" value="Registrar">
 		</h:commandButton>
 		
-	</form>
+	</h:form>
 
 </body> 
 </html>

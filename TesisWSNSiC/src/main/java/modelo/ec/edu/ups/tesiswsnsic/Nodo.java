@@ -18,7 +18,7 @@ public class Nodo {
 
 	@Id
 	@Column(name = "nod_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "nod_nombreColeccion")

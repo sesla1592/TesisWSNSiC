@@ -40,6 +40,8 @@ public class PersonaControlador {
 
 	@Inject
 	private RolDAO rdao;
+	
+	public static int miEmpresa;
 
 	private String Loginexiste;
 	private Empresa empresa;
@@ -85,74 +87,63 @@ public class PersonaControlador {
 			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
 			idUsuario = pers.get(0).getId();
 			
-			//BUSCAR EMPRESA A ESTE USUARIO
-			if(!edao.listEmpresa().isEmpty()) {
-				System.out.println("******************INGRESA IS EMPTY EMPRESA");
-				for(Empresa empre : edao.listEmpresa()) {
-				System.out.println("ID DE PERSONA EMPRESA: "+empre.getPersonas().get(0).getId());
-				System.out.println("idUsuario: "+idUsuario);
-					if(!empre.getPersonas().isEmpty()) {
+			if(pdao.PersonaRol(idUsuario).getDescripcion().equals("US")) {
+				System.out.println("CONTEXTO US");
+				try {
+					contex.getExternalContext().redirect("mainUS.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("BA")){
+				System.out.println("CONTEXTO BA");
+				if(!edao.listEmpresa().isEmpty()) {
+					
+					boolean bandera = false;
+					for(Empresa empre : edao.listEmpresa()) {
 						if(empre.getPersonas().get(0).getId()==idUsuario) {
-							//SI SE ENCUENTRA ASOCIADO A UNA EMPRESA DEBE ARROJARLE LA PAGINA DE  BA O LA RESPECTIVA
-							//System.out.println("******************EMPRESA: " +empre.getNombre() +"PARA USUARIO ID: "+idUsuario);
-							
-							if (pers.get(0).getRol().getDescripcion().equals("BA")) {
-								System.out.println("CONTEXTO BA");
-								try {
-									contex.getExternalContext().redirect("mainBA.xhtml");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							} else if (pers.get(0).getRol().getDescripcion().equals("US")) {
-								System.out.println("CONTEXTO US");
-								try {
-									contex.getExternalContext().redirect("mainUS.xhtml");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}
-						}else {
-							System.out.println("******************NO PERTENECE A NINGUNA");
-							//SI NO TIENE ASOCIADO NINGUNA EMPRESA, SE LANZA LA PANTALLA DE CREACION DE LA EMPRESA SIEM
-							//PRE Y CUANDO TENGA EL ROL DE BA
-			
-							//REDIRECCINOAMIENTO A  LA RESPECTIVA PAGINA SEGUN EL ROL
-							if (pers.get(0).getRol().getDescripcion().equals("BA")) {
-								System.out.println("CONTEXTO BA");
-								try {
-									//CREACION DE LA EMPRESA CAMBIAR LA NAVEGACION
-									cargarDatosUsuario();
-									contex.getExternalContext().redirect("registerBusiness.xhtml");
-//									contex.getExternalContext().redirect("mainBA.xhtml");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							} else if (pers.get(0).getRol().getDescripcion().equals("SA")) {
-								System.out.println("CONTEXTO SA");
-								try {
-									contex.getExternalContext().redirect("mainSA.xhtml");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}	else if (pers.get(0).getRol().getDescripcion().equals("US")) {
-								System.out.println("CONTEXTO US");
-								try {
-									contex.getExternalContext().redirect("mainUS.xhtml");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-						}
-							
-							
+							bandera = true;
+							miEmpresa = empre.getId();
 						}
 					}
+					System.out.println("Bandera:  "+bandera);
+					if(bandera == true) {
+						try {
+							//YA ESTA ASOCIADO A UNA EMPRESA
+							contex.getExternalContext().redirect("mainBA.xhtml");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}else if(bandera==false){
+						//crea empresa
+						System.out.println("A REGISTRAR BUSINESS");
+						try {
+							cargarDatosUsuario();
+							contex.getExternalContext().redirect("registerBusiness.xhtml");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//crea empresa
+					System.out.println("A REGISTRAR BUSINESS");
+					try {
+						cargarDatosUsuario();
+						contex.getExternalContext().redirect("registerBusiness.xhtml");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}else {
-				//Cuando no se crean ninguna empresa
-				System.out.println("******************ARROJA LA PANTALLA DE LA CREACION DE UNA NUEVA EMPRESA LA PRIMERA");		
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("SA")){
+				System.out.println("CONTEXTO SA");
+				try {
+					contex.getExternalContext().redirect("mainSA.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+			init();			
 	}
-	}
+}
 	
 	
 	public void cargarDatosUsuario() {

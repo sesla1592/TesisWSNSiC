@@ -18,7 +18,7 @@ public class TipoSensor {
 
 	@Id
 	@Column(name = "tse_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "tse_descripcion")
