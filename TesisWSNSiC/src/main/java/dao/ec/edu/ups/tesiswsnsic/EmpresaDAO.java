@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import controlador.ec.edu.ups.tesiswsnsic.EmpresaControlador;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa;
 
 @Stateless
 public class EmpresaDAO {
@@ -33,16 +37,49 @@ public class EmpresaDAO {
 		return empresas;
 	}
 	
+	public Empresa selectEmpresa(int idem) {
+		Empresa empres = new  Empresa();
+		empres = em.find(Empresa.class, idem);
+		//System.out.println("**************QUERY SINGLE *************"+empres.getDireccion());
+		return empres;
+	}
 	
 	public void updateEmpresaPersona(Empresa empres, int idp) {
-System.out.println("EMPRESA: "+empres.getNombre());
-		//Empresa emp = new Empresa();
-		//emp.equals(empresa);
+		System.out.println("EMPRESA: "+empres.getNombre());
+		
 		Persona persona = pdao.selectPersona(idp);
 		List<Persona> personas = new ArrayList<Persona>();
 		personas.add(persona);
+		int idempre = maxId();
+		empres.setId(idempre);
 		empres.setPersonas(personas);
 		empres.setEstado("A");
-		em.merge(empres);		
+		System.out.println("TEM:  "+EmpresaControlador.tem +"    ID:"+idempre);
+		empres.setTipoempresa(EmpresaControlador.tem);
+		List<Empresa> lemp = new ArrayList<Empresa>();
+		lemp.add(empres);
+		em.merge(empres);	
+		
+		/*
+		Empresa empobt = selectEmpresa(idempre);
+		List<Empresa> lempobt = new ArrayList<Empresa>();
+		lempobt.add(empobt);
+		EmpresaControlador.tem.setEmpresas(lempobt);
+		em.merge(lempobt);
+		*/
 	}	
+	
+	public int maxId() {
+		String jpql =  "Select em from Empresa em";
+		TypedQuery<Empresa> q = em.createQuery(jpql, Empresa.class);
+		List<Empresa> el = q.getResultList();
+		if(el.size()==0) {
+			return 1;
+		}else {
+			String jpqlm = "Select max(em.id) from Empresa em";
+			int id = (int) em.createQuery(jpqlm).getSingleResult();
+			int idnew = id+1;
+			return idnew;
+		}
+	}
 }
