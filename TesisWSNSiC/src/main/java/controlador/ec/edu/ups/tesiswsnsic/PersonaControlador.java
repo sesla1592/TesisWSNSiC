@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
@@ -29,8 +29,8 @@ import validacionesnegocio.ec.edu.ups.tesiswsnsic.Validacion;
 @SessionScoped
 public class PersonaControlador {
 
-	@Inject
-	private Logger log;
+//	@Inject
+//	private Logger log;
 
 	@Inject
 	private PersonaDAO pdao;
@@ -44,7 +44,7 @@ public class PersonaControlador {
 	public static int miEmpresa;
 
 	private String Loginexiste;
-	private Empresa empresa;
+	//private Empresa empresa;
 	private Persona personas;
 	private String coincidencia;
 	private List<Rol> roles;

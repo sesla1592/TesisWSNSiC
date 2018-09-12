@@ -35,6 +35,15 @@
 			
 		<br />
 		
+		<h:outputLabel value="Tipo de Empresa: " for="tipoempresa" />
+		<h:selectOneMenu value="#{empresaControlador.selecttemp}">
+				<f:ajax execute="@this" listener="#{empresaControlador.tipoSeleccionada()}"></f:ajax>
+					<f:selectItem itemLabel="Seleciones" />
+					<f:selectItems value="#{empresaControlador.devuelveLista()}" />
+		</h:selectOneMenu>
+			
+		<br />
+		
 		<h:outputLabel value="Ciudad: " for="ciudad" />
 		<h:inputText value="#{empresaControlador.empresa.ciudad}" id="ciudad"
 			class="form-control input-sm" pt:placeholder="Ciudad" />
@@ -42,7 +51,7 @@
 		<br />
 		
 				<h:outputLabel value="Pais: " for="pais" />
-		<h:inputText value="#{empresaControlador.empresa.pais}" id="PAIS"
+		<h:inputText value="#{empresaControlador.empresa.pais}" id="pais"
 			class="form-control input-sm" pt:placeholder="Pais" />
 		
 		<h:commandButton action="#{empresaControlador.actualizaEmpresaAPersona()}" value="Registrar">
