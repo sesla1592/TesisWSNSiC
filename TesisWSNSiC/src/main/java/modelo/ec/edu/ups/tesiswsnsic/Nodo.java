@@ -20,6 +20,16 @@ public class Nodo {
 	@Column(name = "nod_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	private String nombre;
+	
+	private String ip;
+	
+	private String mac;
+	
+	private double lat;
+	
+	private double lon;
 
 	@Column(name = "nod_nombreColeccion")
 	private String nombreColeccion;
@@ -38,6 +48,47 @@ public class Nodo {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getMac() {
+		return mac;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 
 	public String getNombreColeccion() {

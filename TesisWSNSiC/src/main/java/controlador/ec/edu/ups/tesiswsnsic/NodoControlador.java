@@ -1,28 +1,47 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+
+
+
+import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
+import mongodb.ec.edu.ups.tesiswsnsic.MongoConnectionDB;
 
 @ManagedBean
+@SessionScoped
 public class NodoControlador {
 
-
-	private List<Nodo> nodos;
+	
+	@Inject
+	private NodoDAO nod;
+	
+	private Nodo nodos;
+	
+	private MongoConnectionDB conexion;
 	
 	@PostConstruct
 	public void init() {
-		nodos = new ArrayList<Nodo>();
+		
+		nodos = new Nodo();
 	}
 	
+	public void insertarNodo() {
+		nod.guardarNodo(nodos);
+	}
 	
-	//DEBE MANDAR LACONSULTA AL DAO NOSQL, DE AQUI SE DEBE VERIFICAR LA DETECCION DEL LOS NODOS
-	public List<Nodo> buscarNodos(){
+	public  void obtenerColeccion() {
 		
-		return nodos;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("correo").is("@gmail.com"));
+	
 	}
 }
