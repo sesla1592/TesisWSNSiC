@@ -113,12 +113,14 @@ public class PersonaDAO {
 		TypedQuery<Persona> query = em.createQuery(sql, Persona.class);
 		List<Persona> personas = query.getResultList();
 		for(Persona pe : personas) {
+			/*
 			if(!pe.getMovimientos().isEmpty()) {
 				pe.getMovimientos().size();
 			}
 			if(!pe.getPersonanodos().isEmpty()) {
 				pe.getPersonanodos().size();
 			}
+			*/
 		}
 		return personas;
 	}

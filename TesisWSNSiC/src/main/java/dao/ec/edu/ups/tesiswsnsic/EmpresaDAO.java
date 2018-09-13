@@ -54,7 +54,6 @@ public class EmpresaDAO {
 		empres.setId(idempre);
 		empres.setPersonas(personas);
 		empres.setEstado("A");
-		System.out.println("TEM:  "+EmpresaControlador.tem +"    ID:"+idempre);
 		empres.setTipoempresa(EmpresaControlador.tem);
 		List<Empresa> lemp = new ArrayList<Empresa>();
 		lemp.add(empres);
