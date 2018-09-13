@@ -2,36 +2,49 @@ package controlador.ec.edu.ups.tesiswsnsic;
 
 import javax.faces.bean.ManagedBean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.RolDAO;
+import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import modelo.ec.edu.ups.tesiswsnsic.Rol;
+import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
 import validacionesnegocio.ec.edu.ups.tesiswsnsic.Validacion;
 
 @ManagedBean
 @SessionScoped
 public class PersonaControlador {
 
-	@Inject
-	private Logger log;
+//	@Inject
+//	private Logger log;
 
 	@Inject
 	private PersonaDAO pdao;
+	
+	@Inject
+	private EmpresaDAO edao;
 
 	@Inject
 	private RolDAO rdao;
+	
+	public static int miEmpresa;
 
+	private String Loginexiste;
+	//private Empresa empresa;
 	private Persona personas;
 	private String coincidencia;
 	private List<Rol> roles;
@@ -42,7 +55,7 @@ public class PersonaControlador {
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
 
-	private Persona miUsuario;
+	public static Persona miUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -51,9 +64,102 @@ public class PersonaControlador {
 		roles = new ArrayList<Rol>();
 		
 	}
+	
+	/**
+	 * IniciarSesion inicilizar una Sesion HTTP y establecimiento de parametros en
+	 * session, FacesContext acceso tanto al contexto de JSF como HTTP.
+	 */
+	public static int idUsuario;
 
-	public void Login() {
-
+	public void iniciarSesion() {
+		if(pdao.login(personas.getCorreo(), personas.getPassword()).size() != 0) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username",
+					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getCorreo());
+//			session.setAttribute("perfil",
+//					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getPerfil());
+			session.setAttribute("estado",
+					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getEstado());
+			this.Loginexiste = " ";
+			FacesContext contex = FacesContext.getCurrentInstance();
+			
+			/**Obtengo el id de persona con una variable estatica*/
+			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
+			idUsuario = pers.get(0).getId();
+			
+			if(pdao.PersonaRol(idUsuario).getDescripcion().equals("US")) {
+				System.out.println("CONTEXTO US");
+				try {
+					contex.getExternalContext().redirect("mainUS.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("BA")){
+				System.out.println("CONTEXTO BA");
+				if(!edao.listEmpresa().isEmpty()) {
+					
+					boolean bandera = false;
+					for(Empresa empre : edao.listEmpresa()) {
+						if(empre.getPersonas().get(0).getId()==idUsuario) {
+							bandera = true;
+							miEmpresa = empre.getId();
+						}
+					}
+					System.out.println("Bandera:  "+bandera);
+					if(bandera == true) {
+						try {
+							//YA ESTA ASOCIADO A UNA EMPRESA
+							contex.getExternalContext().redirect("mainBA.xhtml");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}else if(bandera==false){
+						//crea empresa
+						System.out.println("A REGISTRAR BUSINESS");
+						try {
+							cargarDatosUsuario();
+							contex.getExternalContext().redirect("registerBusiness.xhtml");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}else {
+					//crea empresa
+					System.out.println("A REGISTRAR BUSINESS");
+					try {
+						cargarDatosUsuario();
+						contex.getExternalContext().redirect("registerBusiness.xhtml");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("SA")){
+				System.out.println("CONTEXTO SA");
+				try {
+					contex.getExternalContext().redirect("mainSA.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			init();			
+	}
+}
+	
+	
+	public void cargarDatosUsuario() {
+		miUsuario = new Persona();
+		HttpSession session = SessionUtils.getSession();
+		String nus = (String) session.getAttribute("username");
+		System.out.println("NUS " + nus);
+		try {
+			if (pdao.verificaCorreo(nus).size() != 0) {
+				List<Persona> lusuario = new ArrayList<Persona>();
+				lusuario = pdao.verificaCorreo(nus);
+				miUsuario = lusuario.get(0);
+				System.out.println("MI USUARIO: " + miUsuario.getCorreo());
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	/**
@@ -71,7 +177,6 @@ public class PersonaControlador {
 				System.out.println("CORREO: " + personas.getCorreo());
 				System.out.println("Nombre: " + personas.getNombre());
 				if(v.validarCorreo(personas.getCorreo()) == true) {
-					System.out.println("CONTROLADOR");
 					personas.setEstado("A");
 					personas.setRol(rol);
 					pdao.grabarPersona(personas);
@@ -86,7 +191,6 @@ public class PersonaControlador {
 				this.coincidencia = "No coinciden las  contraseñas";
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("Error al crear: " + e.getMessage());
 			e.printStackTrace();
 		}
@@ -203,6 +307,14 @@ public class PersonaControlador {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public static Persona getMiUsuario() {
+		return miUsuario;
+	}
+
+	public static void setMiUsuario(Persona miUsuario) {
+		PersonaControlador.miUsuario = miUsuario;
 	}
 
 }

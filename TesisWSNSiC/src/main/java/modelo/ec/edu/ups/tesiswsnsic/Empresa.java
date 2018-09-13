@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,7 +19,6 @@ public class Empresa {
 
 	@Id
 	@Column(name = "emp_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 
 	@Column(name = "emp_nombre")
@@ -42,7 +42,11 @@ public class Empresa {
 	@Column(name = "emp_pais")
 	private String pais;
 
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "emp_tem_id")
+	private TipoEmpresa tipoempresa;
+
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
 	@JoinColumn(name = "emp_per_fk", referencedColumnName = "emp_id")
 	private List<Persona> personas;
 
@@ -118,11 +122,19 @@ public class Empresa {
 		this.personas = personas;
 	}
 
+	public TipoEmpresa getTipoempresa() {
+		return tipoempresa;
+	}
+
+	public void setTipoempresa(TipoEmpresa tipoempresa) {
+		this.tipoempresa = tipoempresa;
+	}
+
 	@Override
 	public String toString() {
 		return "Empresa [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais + ", personas="
-				+ personas + "]";
+				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais
+				+ ", tipoempresa=" + tipoempresa + ", personas=" + personas + "]";
 	}
 
 }

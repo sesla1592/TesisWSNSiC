@@ -13,7 +13,7 @@ public class Sensor {
 
 	@Id
 	@Column(name = "sen_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "sen_nombre")

@@ -1,5 +1,6 @@
 package modelo.ec.edu.ups.tesiswsnsic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,16 +23,16 @@ public class Rol {
 
 	@Id
 	@Column(name = "rol_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "rol_descripcion")
 	private String descripcion;
 	
-	//@JsonIgnore
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="per_rol_id", referencedColumnName="rol_id")
-	private List<Persona> personas;
+	private List<Persona> personas = new ArrayList<Persona>();
 
 	public int getId() {
 		return id;

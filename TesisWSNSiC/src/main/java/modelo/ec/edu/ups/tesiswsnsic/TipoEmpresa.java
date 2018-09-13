@@ -12,20 +12,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TIPOEMPRESA")
 public class TipoEmpresa {
 
 	@Id
 	@Column(name = "tem_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "tem_nombre")
 	private String descripcion;
 
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
-	@JoinColumn(name = "tem_emp_fk", referencedColumnName = "tem_id")
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_tem_id", referencedColumnName = "tem_id")
 	private List<Empresa> empresas;
 
 	public int getId() {

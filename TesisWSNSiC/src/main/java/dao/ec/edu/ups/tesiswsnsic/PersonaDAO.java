@@ -8,12 +8,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import modelo.ec.edu.ups.tesiswsnsic.Rol;
 
 @Stateless
 public class PersonaDAO {
 
 	@Inject
 	private EntityManager em;
+	
+	@Inject
+	private RolDAO rdao;
+	
+	private Rol r = new Rol();
 
 	public void grabarPersona(Persona p) {
 		Persona aux = selectPersona(p.getId());
@@ -56,6 +62,14 @@ public class PersonaDAO {
 
 	public Persona selectPersona(int idP) {
 		Persona p = em.find(Persona.class, idP);
+//		System.out.println(p.getRol());
+/*		if(!p.getMovimientos().isEmpty()){
+			p.getMovimientos().size();
+		}
+		if(!p.getPersonanodos().isEmpty()){
+			p.getPersonanodos().size();
+		}
+	*/	
 		return p;
 	}
 
@@ -76,6 +90,74 @@ public class PersonaDAO {
 		String jpql = "select p from Persona p";
 		TypedQuery<Persona> query = em.createQuery(jpql, Persona.class);
 		List<Persona> lpersonas = query.getResultList();
+		for(Persona p : lpersonas) {
+			if(!p.getMovimientos().isEmpty()) {
+				p.getMovimientos().size();	
+			}
+			if(!p.getPersonanodos().isEmpty()) {
+				p.getPersonanodos().size();
+			}
+		}
 		return lpersonas;
 	}
+	
+	/**
+	 * Login. SQL para encontrar a la personas a través de los parámetros.
+	 *
+	 * @param user the user
+	 * @param pass the pass
+	 * @return una list de personas con esos parámetros
+	 */
+	public List<Persona> login(String user, String pass) {
+		String sql = "Select p from Persona p WHERE p.correo = '"+user+"' AND p.password='"+pass+"'";
+		TypedQuery<Persona> query = em.createQuery(sql, Persona.class);
+		List<Persona> personas = query.getResultList();
+		for(Persona pe : personas) {
+			if(!pe.getMovimientos().isEmpty()) {
+				pe.getMovimientos().size();
+			}
+			if(!pe.getPersonanodos().isEmpty()) {
+				pe.getPersonanodos().size();
+			}
+		}
+		return personas;
+	}
+	
+	
+	/**
+	 * Verifica correo.
+	 *
+	 * @param user the user
+	 * @return the list
+	 */
+	public List<Persona> verificaCorreo(String user)
+	{
+		String sql="Select p from Persona p WHERE p.correo = '"+user+"'";
+		TypedQuery<Persona> query=em.createQuery(sql,Persona.class);
+		List<Persona>personas=query.getResultList();
+		for(Persona p : personas) {
+			if (!p.getMovimientos().isEmpty()) {
+				p.getMovimientos().size();	
+			}
+			if(!p.getPersonanodos().isEmpty()) {
+				p.getPersonanodos().size();
+			}
+		}
+		return personas;
+	}
+
+	
+	public Rol PersonaRol(int idpers) {
+		Persona pe = selectPersona(idpers);
+		for(Rol ro : rdao.listRol()){
+			
+			if(pe.getRol().getId()==ro.getId()){
+				System.out.println("PRINT ******"+ ro.getDescripcion());
+				r = ro;
+			}
+			
+		}
+		return r;
+	}
+
 }

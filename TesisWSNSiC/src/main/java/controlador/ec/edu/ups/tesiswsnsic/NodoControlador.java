@@ -1,6 +1,6 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
-import java.util.List;
+
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -44,8 +44,4 @@ public class NodoControlador {
 		query.addCriteria(Criteria.where("correo").is("@gmail.com"));
 	
 	}
-	
-	
-	
-	
 }
