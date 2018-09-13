@@ -137,6 +137,7 @@ public class PersonaDAO {
 		String sql="Select p from Persona p WHERE p.correo = '"+user+"'";
 		TypedQuery<Persona> query=em.createQuery(sql,Persona.class);
 		List<Persona>personas=query.getResultList();
+/*		
 		for(Persona p : personas) {
 			if (!p.getMovimientos().isEmpty()) {
 				p.getMovimientos().size();	
@@ -144,7 +145,8 @@ public class PersonaDAO {
 			if(!p.getPersonanodos().isEmpty()) {
 				p.getPersonanodos().size();
 			}
-		}
+			
+		}*/
 		return personas;
 	}
 
