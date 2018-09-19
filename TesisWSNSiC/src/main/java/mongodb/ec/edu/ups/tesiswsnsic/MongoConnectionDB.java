@@ -80,7 +80,7 @@ public class MongoConnectionDB {
     	        public void apply(final Document document) {
     	            System.out.println(document.toJson());
     	        }
-    	    };
+    	    }; 
     	
     	MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
     	MongoDatabase database = mongoClient.getDatabase("wsnbd");
