@@ -86,16 +86,16 @@ public class PersonaControlador {
 			/**Obtengo el id de persona con una variable estatica*/
 			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
 			idUsuario = pers.get(0).getId();
-			
-			if(pdao.PersonaRol(idUsuario).getDescripcion().equals("US")) {
-				System.out.println("CONTEXTO US");
+			System.out.println("DEVOLVIENDO PARA IF...: "+pdao.PersonaRol(idUsuario).getDescripcion());
+			if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("US")) {
+//				System.out.println("CONTEXTO US");
 				try {
 					contex.getExternalContext().redirect("mainUS.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("BA")){
-				System.out.println("CONTEXTO BA");
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("BA")){
+				System.out.println("DEVUELVE BA");
 				if(!edao.listEmpresa().isEmpty()) {
 					
 					boolean bandera = false;
@@ -109,6 +109,7 @@ public class PersonaControlador {
 					if(bandera == true) {
 						try {
 							//YA ESTA ASOCIADO A UNA EMPRESA
+							System.out.println("REDIRECCIONANDO... BA");
 							contex.getExternalContext().redirect("mainBA.xhtml");
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -133,7 +134,7 @@ public class PersonaControlador {
 						e.printStackTrace();
 					}
 				}
-			}else if(pdao.PersonaRol(idUsuario).getDescripcion().equals("SA")){
+			}else if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("SA")){
 				System.out.println("CONTEXTO SA");
 				try {
 					contex.getExternalContext().redirect("mainSA.xhtml");
@@ -242,8 +243,6 @@ public class PersonaControlador {
 
 	public boolean coincidirPassword() {
 		try {
-			System.out.println("P1: "+personas.getPassword());
-			System.out.println("P2: "+password);
 			if (personas.getPassword().equals(this.password)) {
 				return true;
 			} else {

@@ -9,12 +9,20 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
+
 import modelo.ec.edu.ups.tesiswsnsic.NodoBuscado;
 
 @ManagedBean
 @ViewScoped
 public class BusquedaNodos {
 	private NodoBuscado nodobuscado;
+	
+//	private String pathpython = "C:\\Users\\rommel.inga\\git\\TesisWSNSiC\\TesisWSNSiC\\src\\main\\java\\controlador\\ec\\edu\\ups\\tesiswsnsic\\";
+	private String pathpython = "\\WIN-1MUBU3QIN9E\\poolclientes";
+	private String nspython = "test.py";		//ARCHIVO QUE DEBE ESTAR EN EL NODO CONTROLADOR
+	
 
 	private List<NodoBuscado> nodosbuscados;
 
@@ -43,15 +51,31 @@ public class BusquedaNodos {
 
 	public void generaArchivoNodos() {
 		FileWriter flwriter = null;
-		System.out.println("PASO - GENERAR");
 		System.out.println("Nodo a buscar: " + nodobuscado.getIpv4());
-		System.out.println("Generando archivo de texto...");
 		try {
-			flwriter = new FileWriter("ips.txt");
+			
+			flwriter = new FileWriter("C:\\Users\\rommel.inga\\git\\TesisWSNSiC\\TesisWSNSiC\\src\\main\\java\\controlador\\ec\\edu\\ups\\tesiswsnsic\\poolclientes\\"+PersonaControlador.miEmpresa+".txt");
+//			flwriter = new FileWriter("\\WIN-1MUBU3QIN9E\\poolclientes\\"+PersonaControlador.miEmpresa+".txt");
 			BufferedWriter bfwriter = new BufferedWriter(flwriter);
 			bfwriter.write(nodobuscado.getIpv4());
 			bfwriter.close();
-			System.out.println("Generacion Satisfactoria...!");
+			System.out.println("Generacion IPS Satisfactoria...!");
+			//EJECUTA LINEA PARA PYTHON CON ARCHIVO, ALMOMENTO COLOCAR EN LA MISMA CARPETA DE ARCHIVOS
+			//CONSIGUIENTE PYTHON VA SER EJECUTADO DESDE UN RASPBERRY Y PARA EJECUTARLO DEBE SER
+			//ALGO ASI Runtime.getRuntime().exec("/usr/local/bin/python example.py") SOLO QUE COLOCANDO LA  IP
+			
+			try{
+				//EXECUTE MEDIANTE WEB SERVICE CLIENTE, SEGUN LA DIRECCION IP DEL NODO CONTROLADOR, W7 EL ARCHIVO DEBE HABER
+				//UN WS O "BROKER"
+				System.out.println("EXECUTING SCRIPT PYTHON . . . .");
+				PythonInterpreter python = new PythonInterpreter();
+				python.execfile(pathpython+nspython);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			//ELIMINA EL ARCHIVO LUEGO QUE PYTHON RESPONDA Y CONOZCA EL USUARIO REFERENTE AL ESTADO DE SUS NODOS
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
