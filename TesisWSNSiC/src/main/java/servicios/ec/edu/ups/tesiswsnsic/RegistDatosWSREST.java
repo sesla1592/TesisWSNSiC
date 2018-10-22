@@ -19,7 +19,7 @@ public class RegistDatosWSREST {
 	 * PERMITE PERSISTIR A LA BASE DE DATOS QUE SE ENCUENTRA EN LA NUBE, MONGO DB
 	 * 
 	 * http://localhost:8080/TesisWSNSiC/rs/Registrodatos/Registrar?nod_detalles=hollasdcsd
-	 * */
+	 * */  
 	@Path("/Registrar")
 	@GET 
 	@Produces("application/json")
