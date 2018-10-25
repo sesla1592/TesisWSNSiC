@@ -14,7 +14,7 @@ import com.mongodb.client.MongoDatabase;
 
 @Path("/Registrodatos")
 public class RegistDatosWSREST {
-	
+	private static String smssat = "Saved on the cloud SiC";
 	/*
 	 * PERMITE PERSISTIR A LA BASE DE DATOS QUE SE ENCUENTRA EN LA NUBE, MONGO DB
 	 * 
@@ -32,11 +32,11 @@ public class RegistDatosWSREST {
 	    	MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
 	    	System.out.println("Connection to Data Base");
 	    	MongoCollection<Document> collection = database.getCollection("Nueva");
-	    	System.out.println("CONNECTION SUCCESSFUL");
+	    	System.out.println("Sucess get Collection");
 	    	System.out.println(collection.getNamespace());
 	    	Document doc = Document.parse(nod_detalles.toString());
 	    	collection.insertOne(doc);		
-			r.setMensaje("Saved on the cloud SiC!");
+			r.setMensaje(smssat);
 		}catch(JSONException e) {
 			r.setCodigo(-90);
 			r.setMensaje("Error al almacenar CLOUD SiC");
