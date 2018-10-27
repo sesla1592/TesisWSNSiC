@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+
+
+<h:form>
+ <p:growl id="growl" life="3000" />
+ <h:messages />
+	<h:panelGroup id="display">
+		<p:panelGrid columns="2" rendered="#{nodoController.selected != null}">
+			<h:outputLabel value="Nombre" for="nombre" />
+			<h:inputText id="nombre" value="#{nodoController.selected.nombre}"
+				required="true" />
+			<h:outputLabel value="Descripcion" for="descripcion" />
+			<h:inputText id="descripcion"
+				value="#{nodoController.selected.descripcion}" />
+			<h:outputLabel value="Identificador" for="identificador" />
+			<h:inputText id="identificador"
+				value="#{nodoController.selected.identificador}" required="true" />
+			<h:outputLabel value="Lat" for="latitud" />
+			<h:inputText id="latitud" value="#{nodoController.selected.laitud}" />
+			<h:outputLabel value="Logitud" for="longitud" />
+			<h:inputText id="longitud"
+				value="#{nodoController.selected.longitud}" />
+		</p:panelGrid>
+
+
+
+		<br />
+		<h3>Lista de Sensores</h3>
+	
+		<h:dataTable value="#{nodoController.selected.nodosensorList}"
+			var="nodosensor">
+
+			<h:column>
+				<f:facet name="header">Sensores</f:facet>    				
+      			Id: #{nodosensor.id}
+      			<br />
+				Nombre Sensor:  #{nodosensor.sensorid.nombre}
+				<br></br>
+				Mediciones:
+				<ui:repeat value="#{nodosensor.sensorid.medicionList}" var="medicion">
+				Nombre: #{medicion.nombre}
+				
+				<h:commandButton action="#{nodoController.consultar(nodoController.selected.identificador, nodosensor.sensorid.identificador, medicion.identificador)}" value="#{medicion.nombre}" />
+				<br/>
+				</ui:repeat>
+			
+			</h:column>
+			
+
+		</h:dataTable>
+	
+
+	</h:panelGroup>
+</h:form>
+
+</html>

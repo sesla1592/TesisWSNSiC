@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicionCreateDlg" widgetVar="MedicionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMedicionTitle}">
+            <h:form id="MedicionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicionController.selected != null}">
+                        <p:outputLabel value="Nombre:" for="nombre" />
+                        <p:inputText id="nombre" value="#{medicionController.selected.nombre}"  required="true"/>
+                        <p:outputLabel value="Identificador" for="identificador" />
+                        <p:inputText id="identificador" value="#{medicionController.selected.identificador}" required="true"/>
+                        <p:outputLabel value="Escala" for="escala" />
+                        <p:inputText id="escala" value="#{medicionController.selected.escala}" required="true"/>
+                        <p:outputLabel value="SensorPadre" for="sensorid" />
+                        <p:selectOneMenu id="sensorid" value="#{medicionController.selected.sensorid}" required="true">
+                            <f:selectItems value="#{sensorController.itemsAvailableSelectOne}"
+                                           var="sensoridItem"
+                                           itemValue="#{sensoridItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicionController.create}" value="Guardar" update="display,:MedicionListForm:datalist,:growl" oncomplete="handleSubmit(args,'MedicionCreateDialog');"/>
+                    <p:commandButton value="Cancelar" onclick="MedicionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    
+     <h:body>
+
+            <h:form id="NodoListForm">
+                <p:panel header="Listado de Nodos">
+                    <p:dataTable id="datalist" value="#{nodoController.items}" var="item"
+                                 selectionMode="single" selection="#{nodoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Idenfiticador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.identificador}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Latitud"/>
+                            </f:facet>
+                            <h:outputText value="#{item.laitud}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Logitud"/>
+                            </f:facet>
+                            <h:outputText value="#{item.longitud}"/>
+                        </p:column>
+                        
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Acciones"/>
+                            </f:facet>
+                              <h:commandLink action="#{nodoController.ver(item)}">Ver</h:commandLink> | 
+                            <h:commandLink action="#{nodoController.eliminar(item)}"  >Eliminar</h:commandLink>
+                        </p:column>
+                        <f:facet name="footer">
+                           <h:commandLink action="#{nodoController.nuevo()}"  >Nuevo</h:commandLink>
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+</h:body>
+       
+</html>
