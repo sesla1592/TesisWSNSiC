@@ -34,16 +34,6 @@
 	<h:inputSecret name="rcontrasenia" id="rcontrasenia" value="#{personaControlador.password}" pt:placeholder="*****"/>
 	<h:message for="rcontrasenia" errorStyle="color:red; display:block" />
 	<br />
-	
-	
-		<h:outputLabel value="Seleccione el rol" />
-		<h:selectOneMenu value="#{personaControlador.selectrol}" id="srol" >
-			<f:ajax execute="@this"
-				listener="#{personaControlador.rolSeleccionado()}"></f:ajax>
-			<f:selectItem itemLabel="Selecciones Tipo.." />
-			<f:selectItems value="#{personaControlador.listaRolesCombo()}" />
-		</h:selectOneMenu>
-		<br />
 
 		<h:outputText id="muestraValor"
 			value="#{personaControlador.coincidencia}"

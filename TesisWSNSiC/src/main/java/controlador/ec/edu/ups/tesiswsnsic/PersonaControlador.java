@@ -5,12 +5,10 @@ import javax.faces.bean.ManagedBean;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -18,17 +16,14 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
-import dao.ec.edu.ups.tesiswsnsic.RolDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
-import modelo.ec.edu.ups.tesiswsnsic.Rol;
 import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
 import validacionesnegocio.ec.edu.ups.tesiswsnsic.Validacion;
 
 @ManagedBean
 @SessionScoped
 public class PersonaControlador {
-
 //	@Inject
 //	private Logger log;
 
@@ -37,18 +32,15 @@ public class PersonaControlador {
 	
 	@Inject
 	private EmpresaDAO edao;
-
-	@Inject
-	private RolDAO rdao;
 	
 	public static int miEmpresa;
+	
+	private static String roldev = "developer";
+	private static String rolbad = "businessadmin";
 
 	private String Loginexiste;
-	//private Empresa empresa;
 	private Persona personas;
 	private String coincidencia;
-	private List<Rol> roles;
-	private String selectrol;
 	
 	private Validacion v;
 
@@ -61,7 +53,6 @@ public class PersonaControlador {
 	public void init() {
 		personas = new Persona();
 		v = new  Validacion();
-		roles = new ArrayList<Rol>();
 		
 	}
 	
@@ -72,32 +63,30 @@ public class PersonaControlador {
 	public static int idUsuario;
 
 	public void iniciarSesion() {
+		System.out.println("INGRESANDO A INICIO SESION");
 		if(pdao.login(personas.getCorreo(), personas.getPassword()).size() != 0) {
 			HttpSession session = SessionUtils.getSession();
 			session.setAttribute("username",
 					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getCorreo());
-//			session.setAttribute("perfil",
-//					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getPerfil());
 			session.setAttribute("estado",
 					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getEstado());
 			this.Loginexiste = " ";
 			FacesContext contex = FacesContext.getCurrentInstance();
-			
+			System.out.println("ANTES DAO PERS");
 			/**Obtengo el id de persona con una variable estatica*/
 			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
 			idUsuario = pers.get(0).getId();
-			System.out.println("DEVOLVIENDO PARA IF...: "+pdao.PersonaRol(idUsuario).getDescripcion());
-			if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("US")) {
-//				System.out.println("CONTEXTO US");
+			System.out.println("PERS ROL:   "+pers.get(0).getRol()+"   compara:   "+roldev+" "+rolbad);
+			if(pers.get(0).getRol().toUpperCase().equals(roldev.toUpperCase())) {
+				System.out.println("CONTEXTO US");
 				try {
 					contex.getExternalContext().redirect("mainUS.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}else if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("BA")){
+			}else if(pers.get(0).getRol().toUpperCase().equals(rolbad.toUpperCase())){
 				System.out.println("DEVUELVE BA");
 				if(!edao.listEmpresa().isEmpty()) {
-					
 					boolean bandera = false;
 					for(Empresa empre : edao.listEmpresa()) {
 						if(empre.getPersonas().get(0).getId()==idUsuario) {
@@ -133,13 +122,6 @@ public class PersonaControlador {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
-			}else if(pdao.PersonaRol(idUsuario).getDescripcion().toUpperCase().equals("SA")){
-				System.out.println("CONTEXTO SA");
-				try {
-					contex.getExternalContext().redirect("mainSA.xhtml");
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 			init();			
@@ -179,7 +161,7 @@ public class PersonaControlador {
 				System.out.println("Nombre: " + personas.getNombre());
 				if(v.validarCorreo(personas.getCorreo()) == true) {
 					personas.setEstado("A");
-					personas.setRol(rol);
+					personas.setRol(rolbad);
 					pdao.grabarPersona(personas);
 					inicializar();
 					this.coincidencia = "Grabado exitoso!";
@@ -207,31 +189,6 @@ public class PersonaControlador {
 
 	public void listarUsuarios() {
 
-	}
-
-	public static Rol rol = new Rol();
-
-	public void rolSeleccionado() {
-		for (Rol r : roles) {
-			try {
-				if (r.getDescripcion().equals(selectrol)) {
-					personas.setRol(r);
-					PersonaControlador.rol = r;
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("No existe la categoria");
-			}
-		}
-	}
-
-	public List<SelectItem> listaRolesCombo() {
-		List<SelectItem> lrol = new ArrayList<SelectItem>();
-		roles = rdao.listRol();
-		for (int i = 0; i < roles.size(); i++) {
-			lrol.add(new SelectItem(roles.get(i).getDescripcion()));
-		}
-		return lrol;
 	}
 
 	/**
@@ -274,22 +231,6 @@ public class PersonaControlador {
 
 	public void setPersonas(Persona personas) {
 		this.personas = personas;
-	}
-
-	public List<Rol> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
-	}
-
-	public String getSelectrol() {
-		return selectrol;
-	}
-
-	public void setSelectrol(String selectrol) {
-		this.selectrol = selectrol;
 	}
 
 	public String getCoincidencia() {
