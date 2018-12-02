@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+
+<h:form>
+<h2>Crear Nodo</h2>
+
+<h:panelGroup id="display">
+<h:panelGrid columns="3">
+<h:outputLabel value="Nombre del Nodo"/>
+				<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}" size="50" 
+				/>
+				<br/>
+				
+<h:outputLabel value="Identificador del Nodo"/>
+				<h:inputText id="Identificador" value="#{nodoControlador.nodo.identificador}" size="50" 
+				/>
+				<br/>		
+<h:outputLabel value="laitud del Nodo"/>
+				<h:inputText id="laitud" value="#{nodoControlador.nodo.laitud}" size="50" 
+				/>
+				<br/>		
+<h:outputLabel value="longitud del Nodo"/>
+				<h:inputText id="longitud" value="#{nodoControlador.nodo.longitud}" size="50" 
+				/>
+				<br/>
+
+<h:outputLabel value="descripcion del Nodo"/>
+				<h:inputText id="descripcion" value="#{nodoControlador.nodo.descripcion}" size="50" 
+				/></h:panelGrid>
+				
+				<br/>
+
+<h3>Lista de Sensores</h3>
+<h:commandLink action="#{nodoControlador.addNodoSensor()}">Anadir Sensor</h:commandLink><br/>
+<h:commandButton action="#{nodoControlador.addNodoSensor()}" value="agregar" />
+
+<h:dataTable value="#{nodoControlador.nodo.nodosensores}" var="nodosensor">
+
+	<h:column>
+		<f:facet name="header">Sensores</f:facet>
+		<br/>
+		<h:selectOneMenu id="sensorID"
+		value="#{nodosensor.sensorID}" required="true">
+		<f:selectItems value="#{sensorControlador.listSensor}"
+		var="sensoridItem" itemValue="sensoridItem"
+		itemLabel="#{sensoridItem.nombre}"/>		
+		</h:selectOneMenu>
+	</h:column>
+</h:dataTable>
+		
+<h:commandButton action="#{nodoControlador.guardarNodo()}" value="Guardar" />
+
+
+
+</h:panelGroup>
+</h:form>
+
+<h:form>
+<h:commandButton action="#{nodoControlador.addNodoSensor()}" value="agregar" />
+</h:form>
+</html>

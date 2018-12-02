@@ -36,19 +36,13 @@ public class Persona {
 
 	@Column(name = "per_password")
 	private String password;
-
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
-	@JoinColumn(name = "per_mov_fk", referencedColumnName = "per_id")
-	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
+	
+	@Column(name = "per_rol")
+	private String rol;
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
 	private List<PersonaNodo> personanodos = new ArrayList<PersonaNodo>();
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "per_rol_id")
-	private Rol rol = new Rol();
-
 
 	public int getId() {
 		return id;
@@ -109,17 +103,6 @@ public class Persona {
 		this.password = password;
 	}
 
-
-	public List<Movimiento> getMovimientos() {
-		return movimientos;
-	}
-
-
-	public void setMovimientos(List<Movimiento> movimientos) {
-		this.movimientos = movimientos;
-	}
-
-
 	public List<PersonaNodo> getPersonanodos() {
 		return personanodos;
 	}
@@ -130,21 +113,19 @@ public class Persona {
 	}
 
 
-	public Rol getRol() {
+	public String getRol() {
 		return rol;
 	}
 
 
-	public void setRol(Rol rol) {
+	public void setRol(String rol) {
 		this.rol = rol;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", estado=" + estado
-				+ ", correo=" + correo + ", password=" + password + ", movimientos=" + movimientos + ", personanodos="+ personanodos + 
-				", rol=" + rol + "]";
+				+ ", correo=" + correo + ", password=" + password + ", rol=" + rol + ", personanodos=" + personanodos
+				+ "]";
 	}
-
 }

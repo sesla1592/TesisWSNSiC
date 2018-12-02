@@ -49,6 +49,10 @@ public class Empresa {
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
 	@JoinColumn(name = "emp_per_fk", referencedColumnName = "emp_id")
 	private List<Persona> personas;
+	
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_nod_fk", referencedColumnName = "emp_id")
+	private List<Nodo> listaNodos;
 
 	public int getId() {
 		return id;
@@ -130,11 +134,13 @@ public class Empresa {
 		this.tipoempresa = tipoempresa;
 	}
 
-	@Override
-	public String toString() {
-		return "Empresa [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais
-				+ ", tipoempresa=" + tipoempresa + ", personas=" + personas + "]";
+	public List<Nodo> getListaNodos() {
+		return listaNodos;
 	}
 
+	public void setListaNodos(List<Nodo> listaNodos) {
+		this.listaNodos = listaNodos;
+	}
+
+	
 }
