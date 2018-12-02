@@ -20,7 +20,7 @@
 	<packaging>war</packaging>
 	<name>WildFly Quickstarts: TesisWSNSiC</name>
 	<description>A starter Java EE 7 webapp project for use on JBoss WildFly / WildFly, generated from the jboss-javaee6-webapp archetype</description>
-
+	   
 	<url>http://wildfly.org</url>
 	<licenses>
 		<license>
@@ -205,12 +205,13 @@
 
 		
 		<!-- https://mvnrepository.com/artifact/org.mongodb/bson -->
+<!--  		
 		<dependency>
 		    <groupId>org.mongodb</groupId>
 		    <artifactId>bson</artifactId>
 		    <version>2.3</version>
 		</dependency>
-				
+-->		
 						<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 		    <groupId>org.json</groupId>

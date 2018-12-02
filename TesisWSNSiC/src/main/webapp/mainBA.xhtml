@@ -7,15 +7,18 @@
 <h:head></h:head>
 <body>
 	MAIN BA
-	
+	<br />
+	Registro de Nodos
+	<br />
 	<h:form>
-	Nodo Arduino
-		<h:inputText value="#{busquedaNodos.nodobuscado.ipv4}" />
-		
-	Nodo Controlador (Raspberry)
-	<h:inputText  />
-		<h:commandButton action="#{busquedaNodos.generaArchivoNodos()}"
-			value="Registro de nodos" />
+        <br />
+        <h:link outcome="/medicion/List" value="Mediciones"/>
+        <br />
+        <h:link outcome="/nodo/editar" value="Nodos"/>
+        <br />
+        <h:link outcome="/nodosensor/List" value="Show All Nodosensor Items"/>
+        <br />
+        <h:link outcome="/sensor/List" value="Show All Sensor Items"/>
 	</h:form>
 </body>
 </html>
