@@ -22,13 +22,13 @@ import org.bson.Document;
 public class MongoConnectionDB {
  
 	private static String djson;
- 
+  
 
 	public String recuperaDatos() {
 		
 	
 		String  nodo ="n2";
-    	String  sensor ="d1";
+    	String  sensor ="d1"; 
     	String  medicion ="humedad";
     	 Block<Document> printBlock = new Block<Document>() {
     	        @Override
