@@ -95,6 +95,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+		    <groupId>org.primefaces</groupId>
+		    <artifactId>primefaces</artifactId>
+		    <version>6.2</version>
+		</dependency>
+
 	<!-- https://mvnrepository.com/artifact/org.python/jython -->
 	<dependency>
 		<groupId>org.python</groupId>
