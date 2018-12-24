@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:hf="http://highfaces.org">
+
+<h:head></h:head>
+<h:body>
+
+	<h:form>
+
+<script type="text/javascript" 
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD58EwYENuQLZRfsNUyuLqkeqVbFvxGqnA"></script>
+ 
+ 
+       <p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{mongoConnectionDB.simpleModel}"  />
+       
+		<b:row>
+				<hf:chart title="Mediciones" xaxisLabel="Tiempo"
+					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
+					<hf:chartSerie value="#{mongoConnectionDB.puntos}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="#{mongoConnectionDB.medici}"
+									/>
+									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
+									<hf:chartTooltip  backgroundColor="#000000" shared="true">
+									<f:facet name="header">
+            						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
+        							</f:facet>
+        							<f:facet name="body">
+        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>"/>
+        							</f:facet>
+									</hf:chartTooltip>									
+				</hf:chart>
+		</b:row>		
+		<b:commandButton value="Graficar" update="@form" onclick="ajax:MongoConnectionDB.recuperaDatos()"></b:commandButton>
+	</h:form>
+</h:body>
+</html>

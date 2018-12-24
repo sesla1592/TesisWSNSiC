@@ -99,7 +99,9 @@ public class PersonaControlador {
 						try {
 							//YA ESTA ASOCIADO A UNA EMPRESA
 							System.out.println("REDIRECCIONANDO... BA");
+
 							contex.getExternalContext().redirect("/mainBA.xhtml?faces-redirect=true");
+
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -108,7 +110,11 @@ public class PersonaControlador {
 						System.out.println("A REGISTRAR BUSINESS");
 						try {
 							cargarDatosUsuario();
+
 							contex.getExternalContext().redirect("/registerBusiness.xhtml?faces-redirect=true");
+
+							contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
+
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -226,21 +232,20 @@ public class PersonaControlador {
 		personas.setPassword("");
 	}
 	
+
 	public String cerrarSesion() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
 		return "index?faces-redirect=true";
 	}
 	
-	
 	public String backRe() {
 		
 		System.out.println("Si regresa aa....");
 		
 		return "Registrar?faces-redirect=true";
+
 	}
-
-
 
 	public Persona getPersonas() {
 		return personas;
