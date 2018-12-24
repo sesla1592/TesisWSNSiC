@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+    
+    <h:head>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+       	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <title>Login of WSN</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="assets/css/form-elements.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
+
+    </h:head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text w3-animate-zoom">
+                        
+                        
+                            <h1><strong>Welcome the </strong> Login of WSN</h1>
+                            <div class="description">
+                            	<p>
+	                            	This is a free responsive login form made with Bootstrap. 
+	                            	Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- INICIO DE LOGIN -->
+                    
+                    
+                    <div class="row w3-animate-zoom" >
+                    <h:form>
+                        
+                        <div class="col-sm-6 col-sm-offset-3 form-box w3-animate-zoom">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Login to our site</h3>
+                            		<p>Enter your username and password to login on:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-key"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <p>Email:</p>
+			                    	<div class="form-group">
+			                    		<h:inputText value="#{personaControlador.personas.correo}"
+														name="usuario" class="form-control" id="usuario"
+														pt:placeholder="user@mail.com" />
+									</div>
+									<p>Password:</p>
+			                        <div class="form-group">
+			                        		<h:inputSecret value="#{personaControlador.personas.password}"
+															name="contrasenia" class="form-control input-sm" id="contrasenia"
+															pt:placeholder="password" /></div>
+															
+															 <h:outputText value="#{personaControlador.coincidencia}"
+													   id="mensaje" style="color:red; display:block" />
+															
+			                        	<h:commandButton action="#{personaControlador.iniciarSesion()}"
+													value="Acceder"
+													class="btn btn-lg btn-success btn-block btn-signin">
+												<f:ajax render="mensaje usuario contrasena"
+														execute="usuario contrasenia" />
+								</h:commandButton>
+								
+								 
+								
+							 
+					         <h:commandButton action="#{personaControlador.backRe()}"
+													value="Registrate"
+													class="btn btn-lg btn-info btn-block btn-signin"/>
+					         
+					       
+		                    </div>
+		                 
+                        </div>
+                </h:form>
+                  
+                    </div>
+                   
+                    <div class="row w3-animate-zoom">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                        	<h3>...or login with:</h3>
+                        	<div class="social-login-buttons">
+	                        	<a class="btn btn-link-1 btn-link-1-facebook" href="#">
+	                        		<i class="fa fa-facebook"></i> Facebook
+	                        	</a>
+	                        	<a class="btn btn-link-1 btn-link-1-twitter" href="#">
+	                        		<i class="fa fa-twitter"></i> Twitter
+	                        	</a>
+	                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
+	                        		<i class="fa fa-google-plus"></i> Google Plus
+	                        	</a>
+                        	</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+		 <!-- Footer -->
+        <footer>
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
+              <span class="text-muted">Copyright © 2018 <a class="text-green" href="https://www.ups.edu.ec/" target="_blank">Universidad Politecnica Salesina</a>. All rights reserved.</span>
+            </div>
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 d-flex justify-content-end">
+              <span class="mt-0 text-right">Ingenieria en Sistemas<i class="mdi mdi-heart text-red"></i></span>
+              <span class="mt-0 text-right">GIHP4G "Grupo de Investigación en Cloud Computing Smart Cities &amp; High Perfomance Computing"<i class="mdi mdi-heart text-red"></i></span>
+          
+            </div>
+          </div>
+        </div>
+      </footer>
+				
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+        </body>
+
+</html>

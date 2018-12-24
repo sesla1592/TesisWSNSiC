@@ -47,7 +47,7 @@
 		<h:selectOneMenu id="sensorID"
 		value="#{nodosensor.sensorID}" required="true">
 		<f:selectItems value="#{sensorControlador.listSensor}"
-		var="sensoridItem" itemValue="sensoridItem"
+		var="sensoridItem" itemValue="#{sensoridItem}"
 		itemLabel="#{sensoridItem.nombre}"/>		
 		</h:selectOneMenu>
 	</h:column>

@@ -3,6 +3,7 @@ package mongodb.ec.edu.ups.tesiswsnsic;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
+import javax.faces.bean.ManagedBean;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -19,17 +20,44 @@ import com.google.gson.JsonParser;
 
 import org.bson.Document;
 
+@ManagedBean
 public class MongoConnectionDB {
  
 	private static String djson;
-  
+	
+	private String nodo;
+	private String sensor;
+	private String medicion;
+	
+	
+	public String getNodo() {
+		return nodo;
+	}
+
+	public void setNodo(String nodo) {
+		this.nodo = nodo;
+	}
+
+	public String getSensor() {
+		return sensor;
+	}
+	public void setSensor(String sensor) {
+		this.sensor = sensor;
+	}
+	public String getMedicion() {
+		return medicion;
+	}
+	public void setMedicion(String medicion) {
+		this.medicion = medicion;
+	}
 
 	public String recuperaDatos() {
 		
 	
-		String  nodo ="n2";
-    	String  sensor ="d1"; 
-    	String  medicion ="humedad";
+		//String  nodo ="n2";
+    	//String  sensor ="d1"; 
+    	//String  medicion ="hum";
+		
     	 Block<Document> printBlock = new Block<Document>() {
     	        @Override
     	        
@@ -46,7 +74,7 @@ public class MongoConnectionDB {
     	    }; 
     	
     	MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-    	MongoDatabase database = mongoClient.getDatabase("wsnbd");
+    	MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
     	MongoCollection<Document> collection = database.getCollection("Nueva");   	
     	collection.aggregate(
     		      Arrays.asList(
@@ -65,8 +93,6 @@ public class MongoConnectionDB {
     		             
     		      )
     		).forEach(printBlock);
-		
-
 		System.out.println("Connection Succefull");
 		return null;
 

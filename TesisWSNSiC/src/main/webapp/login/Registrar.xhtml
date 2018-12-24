@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+    
+    <h:head>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+       	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <title>Sign in</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="assets/css/form-elements.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
+
+    </h:head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text w3-animate-zoom">
+                        
+                        
+                            <h1><strong>Registration </strong> of Users</h1>
+                            <div class="description">
+                            	<p>
+	                            	This is a free responsive login form made with Bootstrap. 
+	                            	Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- INICIO DE LOGIN -->
+                    
+                    
+                    <div class="row w3-animate-zoom" >
+                    <h:form>
+                        
+                        <div class="col-sm-6 col-sm-offset-3 form-box w3-animate-zoom">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Register to our site</h3>
+                            		<p>Enter the following fields to register:</p>
+                            		<div class="alert alert-info">
+			    <strong>Info!</strong> Fields that contain * are required.</div>
+                            		</div>
+                      
+                            		
+                        		<div class="form-top-right">
+                        			<i class="fa fa-user-plus " aria-hidden="true"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                   
+			                    	<div class="form-group">
+			                    		<h:outputLabel value="Nombre *: " for="nombre" />
+										<h:inputText value="#{personaControlador.personas.nombre}" id="nombre" 
+													class="form-control input-sm" pt:placeholder="Nombre"/>
+									</div>
+									
+			                        <div class="form-group">
+			                        <h:outputLabel value="Apellido *: " for="apellido" />
+										<h:inputText value="#{personaControlador.personas.apellido}" id="apellido" 
+										class="form-control input-sm" pt:placeholder="Apellido"/>
+	
+			                        </div>
+			                        
+			                         <div class="form-group">
+			                        <h:outputLabel value="Correo *: " for="correo" />
+										<h:inputText value="#{personaControlador.personas.correo}" id="correo" 
+										class="form-control input-sm" pt:placeholder="usuario@sudominio.com" />
+	
+			                        </div>
+			                         <div class="form-group">
+			                        <h:outputLabel value="Contraseña: " for="contrasenia" />
+										<h:inputSecret name="contrasenia" id="contrasenia" value="#{personaControlador.personas.password}" 
+										 pt:placeholder="*****" class="form-control input-sm"/>
+										<h:message for="contrasenia" errorStyle="color:red; display:block" />
+									 </div>
+									 
+			                         <div class="form-group">
+			                        <h:outputLabel value="Repita su contraseña: " for="rcontrasenia" />
+										<h:inputSecret name="rcontrasenia" id="rcontrasenia" value="#{personaControlador.password}" 
+										pt:placeholder="*****" class="form-control input-sm"/>
+										<h:message for="rcontrasenia" errorStyle="color:red; display:block" />
+				 <br/>
+									                        
+			                        </div>
+			                        
+			                       <center>
+			                        
+			                                   <h:outputText id="muestraValor"
+									value="#{personaControlador.coincidencia}"
+									errorStyle="color:red; display:block" />
+			                        <br/>	
+								 <h:commandButton type="submit" id="Crear"
+										action="#{personaControlador.crearPersona()}"
+										styleClass="btn btn-info btn-large btn-lg" value="Registrar">
+										<f:ajax
+											execute="rcontrasenia contrasenia correo nombre apellido formregistro srol"
+											render="muestraValor">
+										</f:ajax>
+									</h:commandButton></center>
+					       
+		                    </div>
+		                 
+                        </div>
+                </h:form>
+                  
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+		 <!-- Footer -->
+        <footer>
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
+              <span class="text-muted">Copyright © 2018 <a class="text-green" href="https://www.ups.edu.ec/" target="_blank">Universidad Politecnica Salesina</a>. All rights reserved.</span>
+            </div>
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 d-flex justify-content-end">
+              <span class="mt-0 text-right">Ingenieria en Sistemas<i class="mdi mdi-heart text-red"></i></span>
+              <span class="mt-0 text-right">GIHP4G "Grupo de Investigación en Cloud Computing Smart Cities &amp; High Perfomance Computing"<i class="mdi mdi-heart text-red"></i></span>
+          
+            </div>
+          </div>
+        </div>
+      </footer>
+		
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+        </body>
+
+</html>

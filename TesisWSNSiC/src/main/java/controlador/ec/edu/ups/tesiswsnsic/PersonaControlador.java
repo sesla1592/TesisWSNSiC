@@ -80,7 +80,7 @@ public class PersonaControlador {
 			if(pers.get(0).getRol().toUpperCase().equals(roldev.toUpperCase())) {
 				System.out.println("CONTEXTO US");
 				try {
-					contex.getExternalContext().redirect("mainUS.xhtml");
+					contex.getExternalContext().redirect("/mainUS.xhtml?faces-redirect=true");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -99,7 +99,7 @@ public class PersonaControlador {
 						try {
 							//YA ESTA ASOCIADO A UNA EMPRESA
 							System.out.println("REDIRECCIONANDO... BA");
-							contex.getExternalContext().redirect("mainBA.xhtml");
+							contex.getExternalContext().redirect("/mainBA.xhtml?faces-redirect=true");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -108,7 +108,7 @@ public class PersonaControlador {
 						System.out.println("A REGISTRAR BUSINESS");
 						try {
 							cargarDatosUsuario();
-							contex.getExternalContext().redirect("registerBusiness.xhtml");
+							contex.getExternalContext().redirect("/registerBusiness.xhtml?faces-redirect=true");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -118,7 +118,7 @@ public class PersonaControlador {
 					System.out.println("A REGISTRAR BUSINESS");
 					try {
 						cargarDatosUsuario();
-						contex.getExternalContext().redirect("registerBusiness.xhtml");
+						contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -154,7 +154,7 @@ public class PersonaControlador {
 	 *            registro de usuarios
 	 */
 	
-	public void crearPersona() {
+	public String crearPersona() {
 		try {
 			if(coincidirPassword() == true ) {
 				System.out.println("CORREO: " + personas.getCorreo());
@@ -165,7 +165,9 @@ public class PersonaControlador {
 					pdao.grabarPersona(personas);
 					inicializar();
 					this.coincidencia = "Grabado exitoso!";
+					
 					personas = new Persona();
+					
 				}else {
 					this.coincidencia = "El formato del correo es incorrecto";
 				}
@@ -177,6 +179,7 @@ public class PersonaControlador {
 			System.out.println("Error al crear: " + e.getMessage());
 			e.printStackTrace();
 		}
+		return "index?faces-redirect=true";
 	}
 
 	public void leerUsuario() {
@@ -221,6 +224,20 @@ public class PersonaControlador {
 		personas.setApellido("");
 		personas.setCorreo("");
 		personas.setPassword("");
+	}
+	
+	public String cerrarSesion() {
+		HttpSession session = SessionUtils.getSession();
+		session.invalidate();
+		return "index?faces-redirect=true";
+	}
+	
+	
+	public String backRe() {
+		
+		System.out.println("Si regresa aa....");
+		
+		return "Registrar?faces-redirect=true";
 	}
 
 

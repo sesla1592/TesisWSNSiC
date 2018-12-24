@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:hf="http://highfaces.org" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      > 
+
+ <h:head />
+  <h:body>
+    <hf:chart type="pie" title="Series with individual lists">
+      <hf:chartSerie name="Boys" value="#{lineChartBean.boys}"
+                     var="point"
+                     point="#{point.amount}" 
+                     tickLabel="#{point.year}"
+                     dataLabel="{point.name}: {point.percentage:.1f} % ({point.y})"/>
+    </hf:chart>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <h:form>
+  <b:row>
+    <b:column small-screen="two-thirds">
+      <hf:chart title="Series with individual lists" xaxisLabel="Year" yaxisLabel="Amount">
+        <hf:chartSerie name="Boys"
+                       type="#{highFacesSettingsBean.boysType}"
+                       value="#{lineChartBean.boys}"
+                       var="point"
+                       point="#{point.amount}"
+                       tickLabel="#{point.year}"/>
+        <hf:chartSerie colorByPoint="true"
+                       type="#{highFacesSettingsBean.girlsType}"
+                       name="Girls"
+                       value="#{lineChartBean.girls}"
+                       var="point"
+                       point="#{point.amount}"  />
+      </hf:chart>
+    </b:column>
+    <b:column small-screen="one-third">
+      <b:panelGrid columns="2">
+        <h:outputLabel value="Chart type (girls):" />
+        <h:outputLabel value="Chart type (boys):" />
+        <b:radiobutton value="#{highFacesSettingsBean.girlsType}">
+          <f:selectItems value="#{highFacesSettingsBean.chartTypes}" />
+        </b:radiobutton>
+        <b:radiobutton value="#{highFacesSettingsBean.boysType}">
+          <f:selectItems value="#{highFacesSettingsBean.chartTypes}" />
+        </b:radiobutton>
+      </b:panelGrid>
+      <br />
+      <b:commandButton value="draw" update="@form" onclick="ajax:highFacesSettingsBean.redraw()" />
+    </b:column>
+  </b:row>
+</h:form>
+
+
+
+  </h:body>
+ 
+</html>

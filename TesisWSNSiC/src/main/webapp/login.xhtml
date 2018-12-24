@@ -14,7 +14,20 @@
  Password: <h:inputSecret value="#{personaControlador.personas.password}" pt:placeholder="Password" id="password"/>
  
  <h:commandButton action="#{personaControlador.iniciarSesion()}" value="Log In" />
+ 
+ <br/>
+ <br/>
+ Nodo: <h:inputText value="#{mongoConnectionDB.nodo}"/>
+ <br/>
+ Sensor:<h:inputText value="#{mongoConnectionDB.sensor}"/>
+ <br/>
+ Medicion:<h:inputText value="#{mongoConnectionDB.medicion}"/>
+ <br/>
+ <h:commandButton action="#{mongoConnectionDB.recuperaDatos()}" value="Recuperar" />
 </h:form>
+
+
+
 
 </body> 
 </html>
