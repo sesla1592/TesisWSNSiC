@@ -1,4 +1,4 @@
-package rockstyle.controller.report;
+package graficos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
