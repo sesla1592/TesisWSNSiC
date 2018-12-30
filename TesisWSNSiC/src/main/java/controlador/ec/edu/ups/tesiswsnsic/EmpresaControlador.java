@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
@@ -18,25 +19,24 @@ import modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa;
 public class EmpresaControlador {
 	
 	@Inject
-	private EmpresaDAO edao;
+	private EmpresaDAO empresaDAO;
 	
 	@Inject
-	private TipoEmpresaDAO tedao;
+	private TipoEmpresaDAO tipoEmpresaDAO;
 	
 	private Empresa empresa;
 	
 	private List<TipoEmpresa> tipoempresas;
-	
+	private TipoEmpresa tipoEmpSelected;
+	private List<Empresa> ltsEmpresa;
 	private String selecttemp;
 
 	@PostConstruct
 	public void init() {
 		empresa = new Empresa();
-		tipoempresas = new ArrayList<TipoEmpresa>();
-	}
-
-	public void crearEmpresa() {
-
+		tipoempresas = tipoEmpresaDAO.listTipoEmpresa();
+		//System.out.println(tipoempresas.size());
+		listarEmpresa();
 	}
 
 	public void leerEmpresa() {
@@ -48,7 +48,11 @@ public class EmpresaControlador {
 	}
 
 	public void listarEmpresa() {
-
+		ltsEmpresa = empresaDAO.getAllEmpresas();
+		System.out.println("tam lts----> "+ltsEmpresa.size());
+		for (int i = 0; i < ltsEmpresa.size(); i++) {
+			System.out.println("emp "+ltsEmpresa.get(i).toString());
+		}
 	}
 
 	public Empresa getEmpresa() {
@@ -75,10 +79,19 @@ public class EmpresaControlador {
 		this.selecttemp = selecttemp;
 	}
 
+	
+	public TipoEmpresa getTipoEmpSelected() {
+		return tipoEmpSelected;
+	}
+
+	public void setTipoEmpSelected(TipoEmpresa tipoEmpSelected) {
+		this.tipoEmpSelected = tipoEmpSelected;
+	}
+
 	public void actualizaEmpresaAPersona() {
 		Persona p = PersonaControlador.miUsuario;
 		System.out.println("ID: "+p.getId() +"  Nombre:"+p.getNombre());
-		edao.updateEmpresaPersona(empresa, p.getId());
+		empresaDAO.updateEmpresaPersona(empresa, p.getId());
 	}
 	
 	public static TipoEmpresa tem = new TipoEmpresa();
@@ -98,11 +111,60 @@ public class EmpresaControlador {
 	
 	public List<SelectItem> devuelveLista(){
 		List<SelectItem> ltipoempresas = new ArrayList<SelectItem>();
-		tipoempresas = tedao.listTipoEmpresa();
+		tipoempresas = tipoEmpresaDAO.listTipoEmpresa();
 		for(int i=0; i < tipoempresas.size(); i++){
 			ltipoempresas.add(new SelectItem(tipoempresas.get(i).getDescripcion()));
 		}
 		return ltipoempresas;
+	}
+	///////codigo de paul
+	
+	public void crearEmpresa(){
+		try {
+			if(tipoEmpSelected!=null){
+				empresa.setTipoempresa(tipoEmpSelected);
+			}else{
+				tipoEmpSelected = tipoempresas.get(0);
+				empresa.setTipoempresa(tipoEmpSelected);
+			}
+			
+			FacesContext contex = FacesContext.getCurrentInstance();
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/listaEmpresas.xhtml");
+			empresaDAO.insertEmpresa(empresa);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public TipoEmpresa getLanguageDiff(Integer id) {
+		if (id == null){
+            throw new IllegalArgumentException("no id provided");
+        }
+        for (TipoEmpresa languageDiff : tipoempresas){
+            if (id.equals(languageDiff.getId())){
+                return languageDiff;
+            }
+        }
+        return null;
+	}
+
+	public List<Empresa> getLtsEmpresa() {
+		return ltsEmpresa;
+	}
+
+	public void setLtsEmpresa(List<Empresa> ltsEmpresa) {
+		this.ltsEmpresa = ltsEmpresa;
+	}
+	
+	public void editEmpresa(Empresa empresa){
+		System.out.println("entro a editar "+empresa.toString());
+		FacesContext contex = FacesContext.getCurrentInstance();
+		contex.getExternalContext().getSessionMap().put("empresaSelected", empresa);
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/editarEmpresa.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 }

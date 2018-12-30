@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form>
+<h:outputLabel value="Crear Tipo Empresas" />
+<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+
+
+<h:outputText  value="Descripcion" />
+<h:inputText value="#{tipoEmpresaControlador.tipoEmpresa.descripcion}" id="usuario"/>
+</h:panelGrid> 
+<h:commandButton action="#{tipoEmpresaControlador.crearTipoEmpresa()}" value="Crear" />
+
+</h:form>
+<h:form>
+	<h:dataTable var="typempresa" value="#{tipoEmpresaControlador.ltsTipoEmpresa}">
+			<h:column headerText="Editar">
+				<h:outputText  value="#{typempresa.id}" />
+			</h:column>
+			
+			<h:column headerText="Descripcion">
+				<h:outputText  value="#{typempresa.descripcion}" />
+			</h:column>
+			
+			<h:column headerText="Editar">
+				<h:commandButton value="Editar" action="#{tipoEmpresaControlador.editEmpresa(typempresa)}"/>
+			</h:column>
+		</h:dataTable>
+</h:form>
+
+
+
+</body> 
+</html>

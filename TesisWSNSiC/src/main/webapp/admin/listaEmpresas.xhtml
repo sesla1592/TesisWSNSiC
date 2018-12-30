@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body> 
+
+<h1>Empresas Registradas</h1>
+<h:form>
+	<div>
+		<h:commandButton value="Crear Empresa" action="crearEmpresa"/>
+		<h:commandButton value="Crear Tipo Empresa" action="crearTipoEmpresa"/>
+	</div>
+		<h:dataTable var="empresa" value="#{empresaControlador.ltsEmpresa}">
+			<h:column headerText="Editar">
+				<h:outputText  value="#{empresa.nombre}" />
+			</h:column>
+			
+			<h:column headerText="Editar">
+				<h:commandButton value="Editar" action="#{empresaControlador.editEmpresa(empresa)}"/>
+			</h:column>
+		</h:dataTable>
+</h:form>
+
+
+
+</body> 
+</html>

@@ -15,6 +15,21 @@ public class TipoEmpresaDAO {
 	@Inject
 	private EntityManager em;
 	
+	public void insert(TipoEmpresa tipoEmpresa){
+		try{
+			em.persist(tipoEmpresa);
+		}catch (Exception e) {
+			System.out.println("error al insertar "+this.getClass().getName());
+		}
+	}
+	
+	public void update(TipoEmpresa tipoEmpresa){
+		try{
+			em.merge(tipoEmpresa);
+		}catch (Exception e) {
+			System.out.println("error al actualizar "+this.getClass().getName());
+		}
+	}
 	
 	public List<TipoEmpresa> listTipoEmpresa(){
 		String jpql = "Select temp from TipoEmpresa temp";
@@ -29,4 +44,5 @@ public class TipoEmpresaDAO {
 		te.setEmpresas(empresas);
 	}
 	*/
+	
 }

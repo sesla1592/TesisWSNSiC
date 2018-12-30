@@ -24,6 +24,22 @@ public class EmpresaDAO {
 	@Inject
 	private PersonaDAO pdao;
 	
+	public void insertEmpresa(Empresa empresa){
+		try {
+			em.persist(empresa);
+		} catch (Exception e) {
+			System.out.println("error al insertar "+this.getClass().getName());
+			// TODO: handle exception
+		}
+	}
+	public void updateEmpresa(Empresa empresa){
+		try {
+			em.merge(empresa);
+		} catch (Exception e) {
+			System.out.println("error al insertar "+this.getClass().getName());
+			// TODO: handle exception
+		}
+	}
 	public List<Empresa> listEmpresa() {
 		List<Empresa> empresas = new ArrayList<Empresa>();
 		String jpql = "Select e from Empresa e";
@@ -34,6 +50,14 @@ public class EmpresaDAO {
 				e.getPersonas().size();
 			}
 		}
+		return empresas;
+	}
+	
+	public List<Empresa> getAllEmpresas(){
+		List<Empresa> empresas = new ArrayList<Empresa>();
+		String jpql = "Select e from Empresa e order by e.id";
+		TypedQuery<Empresa> query = em.createQuery(jpql, Empresa.class);
+		empresas = query.getResultList();
 		return empresas;
 	}
 	
