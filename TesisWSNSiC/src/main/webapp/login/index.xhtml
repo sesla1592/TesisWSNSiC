@@ -12,7 +12,7 @@
 
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-       	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
         <title>Login of WSN</title>
 
@@ -46,11 +46,8 @@
         	
             <div class="inner-bg">
                 <div class="container">
-                
                     <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 text w3-animate-zoom">
-                        
-                        
+                        <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>Welcome the </strong> Login of WSN</h1>
                             <div class="description">
                             	<p>
@@ -60,31 +57,24 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- INICIO DE LOGIN -->
-                    
-                    
-                    <div class="row w3-animate-zoom" >
-                    <h:form>
-                        
-                        <div class="col-sm-6 col-sm-offset-3 form-box w3-animate-zoom">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
                         	<div class="form-top">
                         		<div class="form-top-left">
                         			<h3>Login to our site</h3>
-                            		<p>Enter your username and password to login on:</p>
+                            		<p>Enter your username and password to log on:</p>
                         		</div>
                         		<div class="form-top-right">
                         			<i class="fa fa-key"></i>
                         		</div>
                             </div>
                             <div class="form-bottom">
-			                    <p>Email:</p>
+			                    <h:form role="form" action="" method="post" class="login-form">
 			                    	<div class="form-group">
 			                    		<h:inputText value="#{personaControlador.personas.correo}"
 														name="usuario" class="form-control" id="usuario"
 														pt:placeholder="user@mail.com" />
 									</div>
-									<p>Password:</p>
 			                        <div class="form-group">
 			                        		<h:inputSecret value="#{personaControlador.personas.password}"
 															name="contrasenia" class="form-control input-sm" id="contrasenia"
@@ -102,20 +92,18 @@
 								
 								 
 								
-							 
-					         <h:commandButton action="#{personaControlador.backRe()}"
+					         </h:form>
+					         <br/>
+							 <h:form>
+					         <h:commandButton action="Registrar"
 													value="Registrate"
 													class="btn btn-lg btn-info btn-block btn-signin"/>
-					         
-					       
+					         </h:form>
+					        
 		                    </div>
-		                 
                         </div>
-                </h:form>
-                  
                     </div>
-                   
-                    <div class="row w3-animate-zoom">
+                    <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 social-login">
                         	<h3>...or login with:</h3>
                         	<div class="social-login-buttons">
@@ -131,27 +119,11 @@
                         	</div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
             
         </div>
-		 <!-- Footer -->
-        <footer>
-        <div class="mdc-layout-grid">
-          <div class="mdc-layout-grid__inner">
-            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
-              <span class="text-muted">Copyright © 2018 <a class="text-green" href="https://www.ups.edu.ec/" target="_blank">Universidad Politecnica Salesina</a>. All rights reserved.</span>
-            </div>
-            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 d-flex justify-content-end">
-              <span class="mt-0 text-right">Ingenieria en Sistemas<i class="mdi mdi-heart text-red"></i></span>
-              <span class="mt-0 text-right">GIHP4G "Grupo de Investigación en Cloud Computing Smart Cities &amp; High Perfomance Computing"<i class="mdi mdi-heart text-red"></i></span>
-          
-            </div>
-          </div>
-        </div>
-      </footer>
-				
+
 
         <!-- Javascript -->
         <script src="assets/js/jquery-1.11.1.min.js"></script>
@@ -160,7 +132,7 @@
         <script src="assets/js/scripts.js"></script>
         
         <!--[if lt IE 10]>
-            <script src="assets/js/placeholder.js"></script>
+            <script src="login/assets/js/placeholder.js"></script>
         <![endif]-->
 
         </body>
