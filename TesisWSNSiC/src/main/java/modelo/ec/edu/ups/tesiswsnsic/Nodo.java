@@ -38,8 +38,9 @@ public class Nodo {
 	private String identificador;
 	// @Max(value=?) @Min(value=?)//if you know range of your decimal fields
 	// consider using these annotations to enforce field validation
-	@Column(name = "laitud")
-	private Double laitud;
+	@Column(name = "latitud")
+	private Double latitud;
+	
 	@Column(name = "longitud")
 	private Double longitud;
 
@@ -49,7 +50,7 @@ public class Nodo {
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
 	@JoinColumn(name = "nod_sen_fk", referencedColumnName = "nod_id")
-	private List<NodoSensor> nodosensores = new ArrayList<>();
+	private List<Sensor> ltssensores = new ArrayList<>();
 
 	public Nodo () {
 		
@@ -96,12 +97,12 @@ public class Nodo {
 		this.identificador = identificador;
 	}
 
-	public Double getLaitud() {
-		return laitud;
+	public Double getLatitud() {
+		return latitud;
 	}
 
-	public void setLaitud(Double laitud) {
-		this.laitud = laitud;
+	public void setLatitud(Double latitud) {
+		this.latitud = latitud;
 	}
 
 	public Double getLongitud() {
@@ -119,13 +120,12 @@ public class Nodo {
 	public void setPersonanodos(List<PersonaNodo> personanodos) {
 		this.personanodos = personanodos;
 	}
-	@XmlTransient
-	public List<NodoSensor> getNodosensores() {
-		return nodosensores;
-	}
 
-	public void setNodosensores(List<NodoSensor> nodosensores) {
-		this.nodosensores = nodosensores;
+
+	@Override
+	public String toString() {
+		return "Nodo [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", identificador="
+				+ identificador + ", latitud=" + latitud + ", longitud=" + longitud + "]";
 	}
 
 		

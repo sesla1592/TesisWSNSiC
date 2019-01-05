@@ -4,61 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.sound.midi.Soundbank;
 
 import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
-import modelo.ec.edu.ups.tesiswsnsic.NodoSensor;
-import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 
+@SessionScoped
 @ManagedBean
 public class NodoControlador {
 
 	@Inject
-	private NodoDAO ndao;
+	private NodoDAO nodoDAO;
+	Nodo nodo;
+	Nodo nodoSelected;
 	
-	
-	private List<Nodo> milist=null;
-	private Nodo nodo;
+	private List<Nodo> ltsNodo;
 	
 	@PostConstruct
 	public void init() {
-		milist = new ArrayList<Nodo>();
-		nodo = new Nodo();
-		
-		
-	}
-	protected void initializeEmbeddableKey() {
-    }
-
-	
-	public Nodo prepareCreate() {
-		nodo = new Nodo();
-		 initializeEmbeddableKey();
-		 return nodo;
+		ltsNodo = nodoDAO.getAllNodos();
+		nodo = new Nodo();	
 	}
 	
-	
-	public NodoDAO getNdao() {
-		return ndao;
-	}
-
-	public void setNdao(NodoDAO ndao) {
-		this.ndao = ndao;
-	}
-
-	public List<Nodo> getMilist() {
-		return milist;
-	}
-
-	public void setMilist(List<Nodo> milist) {
-		this.milist = milist;
-	}
-
-
-
 	public Nodo getNodo() {
 		return nodo;
 	}
@@ -67,40 +38,61 @@ public class NodoControlador {
 		this.nodo = nodo;
 	}
 
+	public List<Nodo> getLtsNodo() {
+		return ltsNodo;
+	}
 
-	public static Nodo nod = new Nodo();
-	public static Sensor sor = new Sensor();
-	
-	public List<Nodo> getItems(){
-		
-		if(milist==null) {
-			milist=ndao.listNodos();
+	public void setLtsNodo(List<Nodo> ltsNodo) {
+		this.ltsNodo = ltsNodo;
+	}
+
+	public Nodo getNodoSelected() {
+		return nodoSelected;
+	}
+
+	public void setNodoSelected(Nodo nodoSelected) {
+		this.nodoSelected = nodoSelected;
+	}
+
+	public void crearNodo(){
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/nodo/crearNodo.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
-		return milist;
 	}
 	
-	public String guardarNodo() {
-		
-		if(nodo!=null) {
-			try {
-				ndao.grabarNodo(nodo);
-				System.out.println("Insertado exitosamente...");
-				
-			} catch (Exception e) {
-				System.out.println("Nodo se ha insertado exitosamente...");
-				
-			}
+	public void guardarNodo(){
+		try{
+			System.out.println(nodo.toString());
+			nodoDAO.insert(nodo);
+			nodo = new Nodo();
+			ltsNodo = nodoDAO.getAllNodos();
+			FacesContext contex = FacesContext.getCurrentInstance();
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/nodo/listaNodos.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
-		
-	return null;
-	}
-		
-	public void addNodoSensor() {
-		System.out.println("entry");
-		NodoSensor ns = new NodoSensor();
-		ns.setNodoID(nodo);
-		nodo.getNodosensores().add(ns);
 	}
 	
+	public void editarNodo(Nodo nodo){
+		setNodoSelected(nodo);
+		System.out.println(nodoSelected.toString());
+	}
 	
+	public void guardarEditar(){
+		nodoDAO.update(nodoSelected);
+	}
+	
+	public void irDetalles(Nodo nodoSelected){
+		System.out.println("--> "+nodoSelected.toString());
+		FacesContext contex = FacesContext.getCurrentInstance();
+		contex.getExternalContext().getSessionMap().put("nodoSelected", nodoSelected);
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/nodo/detalleSensor.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

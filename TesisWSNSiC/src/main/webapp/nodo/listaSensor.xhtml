@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+ <h:head>
+        <title><ui:insert name="title">Lista de Sensores</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    
+     <h:body>
+
+            <h:form id="NodoListForm">
+            <div>
+            	<p:commandButton title="Crear Sensor" />
+				<p:commandButton title="Lista Sensores"/>
+				
+            </div>
+            
+                <p:panel header="Listado de Nodos">
+                    <p:dataTable id="datalist" value="#{sensorGestionControlador.ltsSensor}" var="sensor"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{sensor.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{sensor.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <h:outputText value="#{sensor.estado}"/>
+                        </p:column>
+                        
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Editar"/>
+                            </f:facet>
+                            <p:commandButton title="Editar" actionListener="#{nodoControlador.editarNodo(item)}"  onclick="PF('carDialog').show();"/>
+					            
+                        </p:column>
+                        
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Eliminar"/>
+                            </f:facet>
+                            <p:commandButton title="x"/>
+					            
+                        </p:column>
+                        
+                        <f:facet name="footer">
+                           <h:commandLink action="#{nodoControlador.crearNodo()}">Crear Nodo</h:commandLink>
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            
+            <p:dialog header="Editar Nodo" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <h:form>
+            <p:panelGrid  columns="2" >
+                <h:outputText value="Nombre" />
+                <h:inputText value="#{nodoControlador.nodoSelected.nombre}"/>
+                
+                <h:outputText value="Descripcion" />
+                <h:inputText value="#{nodoControlador.nodoSelected.descripcion}"/>
+                
+                <h:outputText value="Identificador" />
+                <h:inputText value="#{nodoControlador.nodoSelected.identificador}"/>
+                
+                <h:outputText value="Latitud" />
+                <h:inputText value="#{nodoControlador.nodoSelected.latitud}"/>
+                
+                <h:outputText value="Longitud" />
+                <h:inputText value="#{nodoControlador.nodoSelected.longitud}"/>
+                
+                
+            </p:panelGrid>
+            
+	            <p:commandButton update=":NodoListForm" actionListener="#{nodoControlador.guardarEditar()}" oncomplete="PF('carDialog').hide()" title="Guardar">
+				</p:commandButton>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+</h:body>
+       
+</html>

@@ -21,7 +21,7 @@
 				/>
 				<br/>		
 <h:outputLabel value="laitud del Nodo"/>
-				<h:inputText id="laitud" value="#{nodoControlador.nodo.laitud}" size="50" 
+				<h:inputText id="laitud" value="#{nodoControlador.nodo.latitud}" size="50" 
 				/>
 				<br/>		
 <h:outputLabel value="longitud del Nodo"/>
@@ -35,32 +35,8 @@
 				
 				<br/>
 
-<h3>Lista de Sensores</h3>
-<h:commandLink action="#{nodoControlador.addNodoSensor()}">Anadir Sensor</h:commandLink><br/>
-<h:commandButton action="#{nodoControlador.addNodoSensor()}" value="agregar" />
-
-<h:dataTable value="#{nodoControlador.nodo.nodosensores}" var="nodosensor">
-
-	<h:column>
-		<f:facet name="header">Sensores</f:facet>
-		<br/>
-		<h:selectOneMenu id="sensorID"
-		value="#{nodosensor.sensorID}" required="true">
-		<f:selectItems value="#{sensorControlador.listSensor}"
-		var="sensoridItem" itemValue="#{sensoridItem}"
-		itemLabel="#{sensoridItem.nombre}"/>		
-		</h:selectOneMenu>
-	</h:column>
-</h:dataTable>
-		
 <h:commandButton action="#{nodoControlador.guardarNodo()}" value="Guardar" />
 
-
-
 </h:panelGroup>
-</h:form>
-
-<h:form>
-<h:commandButton action="#{nodoControlador.addNodoSensor()}" value="agregar" />
 </h:form>
 </html>

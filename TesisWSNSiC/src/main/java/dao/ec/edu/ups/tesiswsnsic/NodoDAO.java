@@ -82,4 +82,43 @@ public class NodoDAO {
 		}
 		return lnodos;
 	}
+	
+	///paul
+	
+	public void insert(Nodo n) {
+		try {
+			em.persist(n);
+			System.out.println("Insercion realizada...");
+		} catch (Exception e) {
+			System.out.println("Error al insertar "+this.getClass().getName());
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(Nodo n) {
+		try {
+			em.merge(n);
+			System.out.println("actualizacion realizada...");
+		} catch (Exception e) {
+			System.out.println("Error al actualizar "+this.getClass().getName());
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(Nodo n) {
+		try {
+			em.remove(n);
+			System.out.println("eliminacion realizada...");
+		} catch (Exception e) {
+			System.out.println("Error al eliminar "+this.getClass().getName());
+			e.printStackTrace();
+		}
+	}
+	public List<Nodo> getAllNodos(){
+		String jpql ="Select n from Nodo n";
+		TypedQuery<Nodo> query = em.createQuery(jpql, Nodo.class);
+		List<Nodo> lnodos = query.getResultList();
+		return lnodos;
+	}
+	
 }

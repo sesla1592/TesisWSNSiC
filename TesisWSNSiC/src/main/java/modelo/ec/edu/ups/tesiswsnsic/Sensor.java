@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,11 +34,11 @@ public class Sensor {
 	@Column(name = "sen_longitud")
 	private double longitud;
 	
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
-	@JoinColumn(name = "sen_nods_fk", referencedColumnName = "sen_id")
-	private List<NodoSensor> SensorNod;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="nod_sen_fk")
+	private Nodo nodo;
 	
-	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.EAGER)
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "sen_med_fk", referencedColumnName = "sen_id")
 	private List<Medicion> mediciones;
 
@@ -81,20 +82,20 @@ public class Sensor {
 		this.longitud = longitud;
 	}
 
-	public List<NodoSensor> getSensorNod() {
-		return SensorNod;
-	}
-
-	public void setSensorNod(List<NodoSensor> sensorNod) {
-		SensorNod = sensorNod;
-	}
-
 	public List<Medicion> getMediciones() {
 		return mediciones;
 	}
 
 	public void setMediciones(List<Medicion> mediciones) {
 		this.mediciones = mediciones;
+	}
+
+	public Nodo getNodo() {
+		return nodo;
+	}
+
+	public void setNodo(Nodo nodo) {
+		this.nodo = nodo;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package dao.ec.edu.ups.tesiswsnsic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -69,9 +70,9 @@ public class SensorDAO {
 
 		System.out.println("Iniciando LAZY.. " + "Line:64, SensorDAO.java");
 		// Iniciando lazy
-		if (se.getSensorNod().isEmpty()) {
-			se.getSensorNod().size();
-		}
+		//if (se.getSensorNod().isEmpty()) {
+		//	se.getSensorNod().size();
+		//}
 		return se;
 	}
 	
@@ -80,11 +81,46 @@ public class SensorDAO {
 		TypedQuery<Sensor> query = em.createQuery(jpql, Sensor.class);
 		List<Sensor> lsensores = query.getResultList();
 		for(Sensor sen: lsensores) {
-			if(!sen.getSensorNod().isEmpty()) {
-				sen.getSensorNod().size();
-			}
+			//if(!sen.getSensorNod().isEmpty()) {
+			//	sen.getSensorNod().size();
+			//}
 		}
 		return lsensores;
 	}
 	
+	////paul
+	
+	public List<Sensor> getAllSensor(){
+		TypedQuery<Sensor> query = em.createQuery("Select s from Sensor", Sensor.class);
+		
+		try{
+			List<Sensor> lsensores = query.getResultList();
+			return lsensores;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error getLtsSensorByNodo - "+ this.getClass().getName());
+			e.printStackTrace();
+			List<Sensor> lsensores = new ArrayList<>();
+			return lsensores;
+		}
+		
+	}
+	
+	public List<Sensor> getLtsSensorByNodo(int idNodo){
+		System.out.println("llego "+idNodo);
+		TypedQuery<Sensor> query = em.createQuery("Select s from Sensor s where s.nodo.id = :idNodo", Sensor.class);
+		query.setParameter("idNodo", idNodo);
+		
+		try{
+			List<Sensor> lsensores = query.getResultList();
+			return lsensores;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error getLtsSensorByNodo - "+ this.getClass().getName());
+			e.printStackTrace();
+			List<Sensor> lsensores = new ArrayList<>();
+			return lsensores;
+		}
+		
+	}
 }
