@@ -147,22 +147,34 @@ public class PersonaControlador {
 			System.out.println("login exitoso");
 			FacesContext contex = FacesContext.getCurrentInstance();
 			contex.getExternalContext().getSessionMap().put("userSelected", miUsuario);
-			
-			if(miUsuario.getEmpresa()!=null) {
-				System.out.println("ya tiene empresa");
+			if(miUsuario.getRolPerson().getId()==1) {//es admin
+				System.out.println("es admin");
 				try{
-					contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
-				}catch (Exception e) {
-					// TODO: handle exception
-				}
-			}else {
-				System.out.println("no tiene empresa");
-				try{
-					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/crearEmpresa.xhtml");
+					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/menuPrincipal.xhtml");
 				}catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
+			
+			if(miUsuario.getRolPerson().getId()==2) {//es usuario
+				System.out.println("es user");
+				if(miUsuario.getEmpresa()!=null) {
+					System.out.println("ya tiene empresa");
+					try{
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
+				}else {
+					System.out.println("no tiene empresa");
+					try{
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/crearEmpresa.xhtml");
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+			
 		}else {
 			System.out.println("login fallido");
 		}
