@@ -10,8 +10,10 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
+import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.TipoEmpresaDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
+import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa;
 
@@ -30,6 +32,11 @@ public class EmpresaControlador {
 	private TipoEmpresa tipoEmpSelected;
 	private List<Empresa> ltsEmpresa;
 	private String selecttemp;
+	
+	private Persona user;
+	
+	@Inject
+	PersonaDAO personaDAO;
 
 	@PostConstruct
 	public void init() {
@@ -37,6 +44,14 @@ public class EmpresaControlador {
 		tipoempresas = tipoEmpresaDAO.listTipoEmpresa();
 		//System.out.println(tipoempresas.size());
 		listarEmpresa();
+		try {
+			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+					.get("userSelected");
+			System.out.println("user "+user.toString());
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 	public void leerEmpresa() {
@@ -129,8 +144,12 @@ public class EmpresaControlador {
 			}
 			
 			FacesContext contex = FacesContext.getCurrentInstance();
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/listaEmpresas.xhtml");
-			empresaDAO.insertEmpresa(empresa);
+			//contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/listaEmpresas.xhtml");
+			
+			empresa = empresaDAO.insertEmpresa(empresa);
+			System.out.println("em "+empresa);
+			user.setEmpresa(empresa);
+			personaDAO.updatePersona(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

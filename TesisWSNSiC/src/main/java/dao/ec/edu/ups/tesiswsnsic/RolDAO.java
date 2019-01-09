@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Rol;
 
 @Stateless
@@ -29,5 +30,16 @@ public class RolDAO {
 		}
 */
 		return roles;
+	}
+	
+	public Rol rolById(int idRol) {
+		
+		try {
+			return em.find(Rol.class, idRol);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+			// TODO: handle exception
+		}
 	}
 }

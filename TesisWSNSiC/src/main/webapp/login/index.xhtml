@@ -71,19 +71,19 @@
                             <div class="form-bottom">
 			                    <h:form role="form" action="" method="post" class="login-form">
 			                    	<div class="form-group">
-			                    		<h:inputText value="#{personaControlador.personas.correo}"
+			                    		<h:inputText value="#{personaControlador.user}"
 														name="usuario" class="form-control" id="usuario"
 														pt:placeholder="user@mail.com" />
 									</div>
 			                        <div class="form-group">
-			                        		<h:inputSecret value="#{personaControlador.personas.password}"
+			                        		<h:inputSecret value="#{personaControlador.password}"
 															name="contrasenia" class="form-control input-sm" id="contrasenia"
 															pt:placeholder="password" /></div>
 															
 															 <h:outputText value="#{personaControlador.coincidencia}"
 													   id="mensaje" style="color:red; display:block" />
 															
-			                        	<h:commandButton action="#{personaControlador.iniciarSesion()}"
+			                        	<h:commandButton action="#{personaControlador.login()}"
 													value="Acceder"
 													class="btn btn-lg btn-success btn-block btn-signin">
 												<f:ajax render="mensaje usuario contrasena"
