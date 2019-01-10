@@ -1,6 +1,5 @@
 package dao.ec.edu.ups.tesiswsnsic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
-import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 
 @Stateless
 public class PersonaDAO {

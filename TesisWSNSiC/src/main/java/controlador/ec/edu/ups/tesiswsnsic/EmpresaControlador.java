@@ -143,13 +143,14 @@ public class EmpresaControlador {
 				empresa.setTipoempresa(tipoEmpSelected);
 			}
 			
-			FacesContext contex = FacesContext.getCurrentInstance();
-			//contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/listaEmpresas.xhtml");
-			
 			empresa = empresaDAO.insertEmpresa(empresa);
 			System.out.println("em "+empresa);
 			user.setEmpresa(empresa);
 			personaDAO.updatePersona(user);
+			
+			FacesContext contex = FacesContext.getCurrentInstance();
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
