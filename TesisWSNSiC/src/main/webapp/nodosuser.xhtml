@@ -121,7 +121,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Seleccionar"/>
                             </f:facet>
-                            <p:commandButton title="Seleccionar" actionListener="#{personaNodoControlador.asociarNodo(item)}" onclick="PF('nodoSelect').hide();"/>
+                            <p:commandButton title="Seleccionar" update=":NodoListForm" actionListener="#{personaNodoControlador.asociarNodo(item)}" onclick="PF('nodoSelect').hide();"/>
                         </p:column>
                         
                     </p:dataTable>

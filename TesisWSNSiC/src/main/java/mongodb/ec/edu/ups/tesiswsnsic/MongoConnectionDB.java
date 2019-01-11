@@ -85,7 +85,7 @@ public class MongoConnectionDB {
 			System.out.println("lista nodos"+ltsMyNodos.size());
 			puntos = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
-			recuperaDatos();
+			//recuperaDatos();
 			addMarker();
 		}catch (Exception e) {
 			// TODO: handle exception

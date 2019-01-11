@@ -32,6 +32,7 @@ public class TipoEmpresaControlador {
 			System.out.println(tipoEmpresa.toString());
 			tipoEmpDAO.insert(tipoEmpresa);
 			ltsTipoEmpresa = tipoEmpDAO.listTipoEmpresa();
+			tipoEmpresa= new TipoEmpresa();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

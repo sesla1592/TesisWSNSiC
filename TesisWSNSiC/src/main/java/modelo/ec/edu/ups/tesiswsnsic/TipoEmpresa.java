@@ -2,6 +2,7 @@ package modelo.ec.edu.ups.tesiswsnsic;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +28,7 @@ public class TipoEmpresa {
 	private String descripcion;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JoinColumn(name = "emp_tem_id", referencedColumnName = "tem_id")
 	private List<Empresa> empresas;
 

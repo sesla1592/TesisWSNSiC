@@ -76,6 +76,14 @@ public class PersonaNodoControlador {
 		personaNodo.setPersona(user);
 		personaNodoDAO.insertPersonaNodo(personaNodo);
 		ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+		ltsAllNodos = nodoDAO.getAllNodos();
+		for (int i = 0; i < ltsAllNodos.size(); i++) {
+			for (int j = 0; j < ltsMyNodos.size(); j++) {
+				if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
+					ltsAllNodos.remove(i);
+				}
+			}
+		}
 	}
 	
 	public void eliminarAsoNodo() {
