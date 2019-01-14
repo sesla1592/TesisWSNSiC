@@ -181,6 +181,16 @@ public class NodoControlador {
 		DBObject d1 = coll.findOne(query);
 		if(d1!=null) {
 			System.out.println("prueba---> "+d1.get("n"));
+			System.out.println("prueba---> "+d1.get("la"));
+			System.out.println("prueba---> "+d1.get("lo"));
+			try {
+				nodo.setIdentificador(codNodo);
+				nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
+				nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			guardarNodo();
 		}else {
 			System.out.println("prueba---> no encontro");
 		}

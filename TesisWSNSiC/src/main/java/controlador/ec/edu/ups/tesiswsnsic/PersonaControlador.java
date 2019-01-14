@@ -180,6 +180,14 @@ public class PersonaControlador {
 		}
 	}
 	
+	public void irLogin() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/index.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public void cargarDatosUsuario() {
 		miUsuario = new Persona();
 		HttpSession session = SessionUtils.getSession();
