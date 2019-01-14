@@ -150,7 +150,7 @@ public class PersonaControlador {
 			if(miUsuario.getRolPerson().getId()==1) {//es admin
 				System.out.println("es admin");
 				try{
-					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/menuPrincipal.xhtml");
+					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
 				}catch (Exception e) {
 					// TODO: handle exception
 				}

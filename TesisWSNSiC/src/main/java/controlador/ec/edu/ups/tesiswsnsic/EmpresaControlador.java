@@ -13,7 +13,6 @@ import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.TipoEmpresaDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
-import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa;
 
@@ -142,7 +141,7 @@ public class EmpresaControlador {
 				tipoEmpSelected = tipoempresas.get(0);
 				empresa.setTipoempresa(tipoEmpSelected);
 			}
-			
+			empresa.setEstado("activo");
 			empresa = empresaDAO.insertEmpresa(empresa);
 			System.out.println("em "+empresa);
 			user.setEmpresa(empresa);
@@ -181,10 +180,20 @@ public class EmpresaControlador {
 		FacesContext contex = FacesContext.getCurrentInstance();
 		contex.getExternalContext().getSessionMap().put("empresaSelected", empresa);
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/editarEmpresa.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/editarEmpresa.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
 	
+	public void backAdmin(){
+		FacesContext contex = FacesContext.getCurrentInstance();
+		contex.getExternalContext().getSessionMap().put("empresaSelected", empresa);
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
 }

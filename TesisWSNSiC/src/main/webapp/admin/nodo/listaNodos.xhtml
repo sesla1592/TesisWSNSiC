@@ -16,7 +16,7 @@
 
             <h:form id="NodoListForm">
             <div>
-            		
+            		<h:commandButton id="atras" action="#{nodoControlador.backMenu()}" value="Atras" />
             </div>
             
                 <p:panel header="Listado de Nodos">
@@ -67,7 +67,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Editar"/>
                             </f:facet>
-                            <p:commandButton title="Editar" update=":carDetail" actionListener="#{nodoControlador.editarNodo(item)}"  onclick="PF('carDialog').show();"/>
+                            <p:commandButton title="Editar" update=":carDetail" action="#{nodoControlador.editarNodo(item)}"  onclick="PF('carDialog').show();"/>
 					            
                         </p:column>
                         
@@ -75,7 +75,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Detalles"/>
                             </f:facet>
-                            <p:commandButton title="ver" actionListener="#{nodoControlador.irDetalles(item)}"/>
+                            <p:commandButton title="ver" action="#{nodoControlador.irDetalles(item)}"/>
 					            
                         </p:column>
                         <p:column>
@@ -116,7 +116,7 @@
                 
             </p:panelGrid>
             
-	            <p:commandButton update=":NodoListForm" actionListener="#{nodoControlador.guardarEditar()}" oncomplete="PF('carDialog').hide()" title="Guardar">
+	            <p:commandButton update=":NodoListForm" action="#{nodoControlador.guardarEditar()}" oncomplete="PF('carDialog').hide()" title="Guardar">
 				</p:commandButton>
             </h:form>
         </p:outputPanel>

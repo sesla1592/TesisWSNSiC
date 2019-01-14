@@ -70,8 +70,6 @@ public class MongoConnectionDB {
 	String nodo ="n2";
 	String sensor ="d1";
 	String medicion ="Temperatura";
-
-	
 	
 	List<Nodo> ltsMyNodos=new ArrayList<>();
 	
@@ -237,9 +235,7 @@ public class MongoConnectionDB {
 			}
 		};
 		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-		System.out.println("MCLI");
 		MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
-		System.out.println("DBWSSIN");
 		FindIterable<Document> collection = database.getCollection("Nueva").find().sort(Sorts.descending("fecha")).limit(2);
 		 
 		collection.forEach(printBlock); 

@@ -42,7 +42,7 @@ public class TipoEmpresaControlador {
 		try{
 			FacesContext contex = FacesContext.getCurrentInstance();
 			contex.getExternalContext().getSessionMap().put("empresaTipoSelected", tipoEmpresa);
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/editarTipoEmpresa.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/editarTipoEmpresa.xhtml");
 			
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -65,5 +65,13 @@ public class TipoEmpresaControlador {
 		this.ltsTipoEmpresa = ltsTipoEmpresa;
 	}
 	
+	public void back() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	
 }

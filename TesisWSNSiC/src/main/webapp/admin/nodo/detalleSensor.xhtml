@@ -14,8 +14,10 @@
     
      <h:body>
      Detalles Nodo: #{sensorControlador.nodo.nombre}
+<br/>
 
             <h:form id="SensorListForm">
+            <h:commandButton id="atras" action="#{sensorControlador.back()}" value="Atras" />
                 <p:panel header="Listada de Sensores">
                     <p:dataTable id="datalist" value="#{sensorControlador.ltsSensor}" var="sensor"
                                  paginator="true"
@@ -38,7 +40,8 @@
                             <f:facet name="header">
                                 <h:outputText value="estado"/>
                             </f:facet>
-                            <h:outputText value="#{sensor.estado}"/>
+                            <h:outputText value="Activo" rendered="#{sensor.estado == true}"/>
+                            <h:outputText value="Inactivo" rendered="#{sensor.estado == false}"/>	
                         </p:column>
                         
                         <p:column>
@@ -53,12 +56,12 @@
                             <f:facet name="header">
                                 <h:outputText value="Editar"/>
                             </f:facet>
-                            <p:commandButton title="x" update=":sensorDetail" actionListener="#{sensorControlador.editarSensor(sensor)}"  onclick="PF('sensorDialog').show();"/>
+                            <p:commandButton title="x" update=":sensorDetail" action="#{sensorControlador.editarSensor(sensor)}"  onclick="PF('sensorDialog').show();"/>
 					            
                         </p:column>
                         
                          <f:facet name="footer">
-                           <h:commandLink action="#{sensorControlador.irCrearSensor()}">Agregar Sensor</h:commandLink>
+                           <p:commandLink onclick="PF('crearsensorDialog').show();">Agregar Sensor</p:commandLink>
                             
                         </f:facet>
                        
@@ -75,16 +78,35 @@
 				<br/>
 				<h:outputLabel value="Estado del sensor"/>
 
-				<h:selectOneMenu value = "#{sensorControlador.sensorSelected.estado}"> 
-				   <f:selectItem itemValue = "activo" itemLabel = "activo" /> 
-				   <f:selectItem itemValue = "inactivo" itemLabel = "inactivo" /> 
+				<h:selectOneMenu value = "#{sensorControlador.sensorEstado}"> 
+				   <f:selectItem itemValue = "true" itemLabel = "activo" /> 
+				   <f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
 				</h:selectOneMenu> 
 				<br/>	
                 
             </p:panelGrid>
             
-	            <p:commandButton update="SensorListForm" oncomplete="PF('sensorDialog').hide()" title="Guardar">
+	            <p:commandButton action="#{sensorControlador.guardarEditar()}" update="SensorListForm" oncomplete="PF('sensorDialog').hide()" title="Guardar">
 				</p:commandButton>
+            </h:form>
+        </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog header="Crear Sensor" widgetVar="crearsensorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="crearsensorDetail" style="text-align:center;">
+            <h:form>
+            <h:panelGrid columns="3">
+<h:outputLabel value="Nombre del Sensor"/>
+				<h:inputText id="nombre" value="#{sensorControlador.sensor.nombre}" size="50" 
+				/>
+				<br/>	
+				</h:panelGrid>
+				
+				<br/>
+
+<h:commandButton action="#{sensorControlador.guardarSensor()}" value="Guardar" />
+            
+	           
             </h:form>
         </p:outputPanel>
     </p:dialog>

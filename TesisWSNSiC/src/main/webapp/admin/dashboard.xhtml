@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form>
+<h1>Bienvenido #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h1>
+<br/>
+	<div id="nodos">
+	<h:panelGrid columns="3">
+	<h:outputLabel value="Nodos: " />
+	<h:outputLabel value="#{dashboardAdmin.nodoActivo}"/>
+	<h:outputLabel value="#{dashboardAdmin.nodoInactivo}"/>
+	
+	<h:outputLabel value="Sensores: " />
+	<h:outputLabel value="#{dashboardAdmin.sensorActivo}"/>
+	<h:outputLabel value="#{dashboardAdmin.sensorInactivo}"/>
+	
+	</h:panelGrid>
+	<h:commandButton action="#{dashboardAdmin.nodos()}" value="Ver detalles nodos" />
+	</div>
+	<div id="advertencias">
+	
+	</div>
+	<div id="empresas">
+	<h:outputLabel value="Empresas: #{dashboardAdmin.ltsEmpresa.size()} " /><br/>
+	<h:outputLabel value="#{dashboardAdmin.empresaActiva} Activas" /><br/>
+	<h:outputLabel value="#{dashboardAdmin.empresaInactiva} Inactivas" /><br/>
+	<h:commandButton action="#{dashboardAdmin.empresas()}" value="Ver detalles empresas" /><br/>
+	<h:commandButton action="#{dashboardAdmin.crearTipoEmpresa()}" value="crear tipo empresa" />
+	</div>
+	<div id="hardware">
+	<h:outputLabel value="Nodos: #{dashboardAdmin.ltsNodo.size()} " /><br/>
+	<h:outputLabel value="Sensores: #{dashboardAdmin.ltsSensor.size()} " /><br/>
+	</div>
+	<div id="almacenamiento">
+	</div>
+	
+</h:form>
+
+</body> 
+</html>

@@ -29,7 +29,7 @@ public class EditTipoEmpresa {
 		tipoEmoresaDAO.update(tipoEmpresaSelected);
 		FacesContext contex = FacesContext.getCurrentInstance();
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/crearTipoEmpresa.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/crearTipoEmpresa.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -43,5 +43,13 @@ public class EditTipoEmpresa {
 		this.tipoEmpresaSelected = tipoEmpresaSelected;
 	}
 
+	public void back() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/crearTipoEmpresa.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	
 }

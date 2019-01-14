@@ -27,7 +27,7 @@ public class EditEmpresa {
 		empresaDAO.updateEmpresa(empresa);
 		FacesContext contex = FacesContext.getCurrentInstance();
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/listaEmpresas.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/listaEmpresas.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -39,6 +39,15 @@ public class EditEmpresa {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+	
+	public void back(){
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/listaEmpresas.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 }
