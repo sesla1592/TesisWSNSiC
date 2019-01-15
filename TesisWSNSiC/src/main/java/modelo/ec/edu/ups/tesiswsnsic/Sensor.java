@@ -21,6 +21,9 @@ public class Sensor {
 
 	@Column(name = "sen_nombre")
 	private String nombre;
+	
+	@Column(name = "sen_descripcion")
+	private String descripcion;
 
 	@Column(name = "sen_estado")
 	private boolean estado;
@@ -61,10 +64,22 @@ public class Sensor {
 	public void setNodo(Nodo nodo) {
 		this.nodo = nodo;
 	}
+	
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
 	@Override
 	public String toString() {
-		return "Sensor [id=" + id + ", nombre=" + nombre + ", estado=" + estado + "]";
+		return "Sensor [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estado=" + estado
+				+ ", nodo=" + nodo + "]";
 	}
+
+
 
 }
