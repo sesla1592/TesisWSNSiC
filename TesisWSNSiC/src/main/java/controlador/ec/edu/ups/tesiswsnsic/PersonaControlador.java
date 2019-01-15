@@ -16,8 +16,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
+import dao.ec.edu.ups.tesiswsnsic.RolDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import modelo.ec.edu.ups.tesiswsnsic.Rol;
 import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
 import validacionesnegocio.ec.edu.ups.tesiswsnsic.Validacion;
 
@@ -29,6 +31,9 @@ public class PersonaControlador {
 
 	@Inject
 	private PersonaDAO pdao;
+	
+	@Inject
+	private RolDAO rolDAO;
 	
 	@Inject
 	private EmpresaDAO edao;
@@ -44,6 +49,7 @@ public class PersonaControlador {
 	
 	private Validacion v;
 
+	private String user;
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
 
@@ -134,7 +140,63 @@ public class PersonaControlador {
 	}
 }
 	
+	public void login() {
+		System.out.println("user "+user +" password "+password);
+		miUsuario = pdao.loginPersona(user,password);
+		if (miUsuario!=null) {
+			System.out.println("login exitoso");
+			FacesContext contex = FacesContext.getCurrentInstance();
+			contex.getExternalContext().getSessionMap().put("userSelected", miUsuario);
+			if(miUsuario.getRolPerson().getId()==1) {//es admin
+				System.out.println("es admin");
+				try{
+					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+			
+			if(miUsuario.getRolPerson().getId()==2) {//es usuario
+				System.out.println("es user");
+				if(miUsuario.getEmpresa()!=null) {
+					System.out.println("ya tiene empresa");
+					try{
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
+				}else {
+					System.out.println("no tiene empresa");
+					try{
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/crearEmpresa.xhtml");
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+			
+		}else {
+			System.out.println("login fallido");
+		}
+	}
 	
+	public void irLogin() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/index.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void irRegistrar() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/Registrar.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public void cargarDatosUsuario() {
 		miUsuario = new Persona();
 		HttpSession session = SessionUtils.getSession();
@@ -168,6 +230,9 @@ public class PersonaControlador {
 				if(v.validarCorreo(personas.getCorreo()) == true) {
 					personas.setEstado("A");
 					personas.setRol(rolbad);
+					Rol rol = rolDAO.rolById(2);
+					System.out.println("ver--> "+rol.toString());
+					personas.setRolPerson(rol);
 					pdao.grabarPersona(personas);
 					inicializar();
 					this.coincidencia = "Grabado exitoso!";
@@ -239,13 +304,7 @@ public class PersonaControlador {
 		return "index?faces-redirect=true";
 	}
 	
-	public String backRe() {
-		
-		System.out.println("Si regresa aa....");
-		
-		return "Registrar?faces-redirect=true";
-
-	}
+	
 
 	public Persona getPersonas() {
 		return personas;
@@ -279,4 +338,13 @@ public class PersonaControlador {
 		PersonaControlador.miUsuario = miUsuario;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	
 }
