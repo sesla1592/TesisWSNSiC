@@ -91,7 +91,7 @@ public class SensorDAO {
 	////paul
 	
 	public List<Sensor> getAllSensor(){
-		TypedQuery<Sensor> query = em.createQuery("Select s from Sensor", Sensor.class);
+		TypedQuery<Sensor> query = em.createQuery("Select s from Sensor s", Sensor.class);
 		
 		try{
 			List<Sensor> lsensores = query.getResultList();

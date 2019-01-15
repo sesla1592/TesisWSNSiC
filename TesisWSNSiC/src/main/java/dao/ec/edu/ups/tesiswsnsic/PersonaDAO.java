@@ -135,5 +135,22 @@ public class PersonaDAO {
 		}*/
 		return personas;
 	}
+	
+	public Persona loginPersona(String user, String password) {
+		
+		TypedQuery<Persona> query = em.createQuery("Select p from Persona p WHERE "
+				+ "p.correo like :user AND p.password like :password", Persona.class);
+		query.setParameter("user", user);
+		query.setParameter("password", password);
+		
+		try{
+			Persona persona = query.getSingleResult();
+			return persona;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error login - "+ this.getClass().getName());
+			return null;
+		}
+	}
 
 }

@@ -53,7 +53,7 @@ public class PersonaControlador {
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
 
-	public static Persona miUsuario;
+	public Persona miUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -67,81 +67,81 @@ public class PersonaControlador {
 	 * session, FacesContext acceso tanto al contexto de JSF como HTTP.
 	 */
 	public static int idUsuario;
-
-	public void iniciarSesion() {
-		System.out.println("INGRESANDO A INICIO SESION");
-		if(pdao.login(personas.getCorreo(), personas.getPassword()).size() != 0) {
-			HttpSession session = SessionUtils.getSession();
-			session.setAttribute("username",
-					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getCorreo());
-			session.setAttribute("estado",
-					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getEstado());
-			this.Loginexiste = " ";
-			FacesContext contex = FacesContext.getCurrentInstance();
-			System.out.println("ANTES DAO PERS");
-			/**Obtengo el id de persona con una variable estatica*/
-			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
-			idUsuario = pers.get(0).getId();
-			System.out.println("PERS ROL:   "+pers.get(0).getRol()+"   compara:   "+roldev+" "+rolbad);
-			if(pers.get(0).getRol().toUpperCase().equals(roldev.toUpperCase())) {
-				System.out.println("CONTEXTO US");
-				try {
-					contex.getExternalContext().redirect("/mainUS.xhtml?faces-redirect=true");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}else if(pers.get(0).getRol().toUpperCase().equals(rolbad.toUpperCase())){
-				System.out.println("DEVUELVE BA");
-				if(!edao.listEmpresa().isEmpty()) {
-					boolean bandera = false;
-					for(Empresa empre : edao.listEmpresa()) {
-						if(empre.getPersonas().get(0).getId()==idUsuario) {
-							bandera = true;
-							miEmpresa = empre.getId();
-						}
-					}
-					System.out.println("Bandera:  "+bandera);
-					if(bandera == true) {
-						try {
-							//YA ESTA ASOCIADO A UNA EMPRESA
-							System.out.println("REDIRECCIONANDO... BA");
-
-							contex.getExternalContext().redirect("/mainBA.xhtml?faces-redirect=true");
-
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}else if(bandera==false){
-						//crea empresa
-						System.out.println("A REGISTRAR BUSINESS");
-						try {
-							cargarDatosUsuario();
-
-							contex.getExternalContext().redirect("/registerBusiness.xhtml?faces-redirect=true");
-
-							contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
-
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				}else {
-					//crea empresa
-					System.out.println("A REGISTRAR BUSINESS");
-					try {
-						cargarDatosUsuario();
-						contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			init();			
-	}
-}
+//
+//	public void iniciarSesion() {
+//		System.out.println("INGRESANDO A INICIO SESION");
+//		if(pdao.login(personas.getCorreo(), personas.getPassword()).size() != 0) {
+//			HttpSession session = SessionUtils.getSession();
+//			session.setAttribute("username",
+//					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getCorreo());
+//			session.setAttribute("estado",
+//					pdao.login(personas.getCorreo(), personas.getPassword()).get(0).getEstado());
+//			this.Loginexiste = " ";
+//			FacesContext contex = FacesContext.getCurrentInstance();
+//			System.out.println("ANTES DAO PERS");
+//			/**Obtengo el id de persona con una variable estatica*/
+//			List<Persona> pers = pdao.login(personas.getCorreo(), personas.getPassword());
+//			idUsuario = pers.get(0).getId();
+//			System.out.println("PERS ROL:   "+pers.get(0).getRol()+"   compara:   "+roldev+" "+rolbad);
+//			if(pers.get(0).getRol().toUpperCase().equals(roldev.toUpperCase())) {
+//				System.out.println("CONTEXTO US");
+//				try {
+//					contex.getExternalContext().redirect("/mainUS.xhtml?faces-redirect=true");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}else if(pers.get(0).getRol().toUpperCase().equals(rolbad.toUpperCase())){
+//				System.out.println("DEVUELVE BA");
+//				if(!edao.listEmpresa().isEmpty()) {
+//					boolean bandera = false;
+//					for(Empresa empre : edao.listEmpresa()) {
+//						if(empre.getPersonas().get(0).getId()==idUsuario) {
+//							bandera = true;
+//							miEmpresa = empre.getId();
+//						}
+//					}
+//					System.out.println("Bandera:  "+bandera);
+//					if(bandera == true) {
+//						try {
+//							//YA ESTA ASOCIADO A UNA EMPRESA
+//							System.out.println("REDIRECCIONANDO... BA");
+//
+//							contex.getExternalContext().redirect("/mainBA.xhtml?faces-redirect=true");
+//
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//					}else if(bandera==false){
+//						//crea empresa
+//						System.out.println("A REGISTRAR BUSINESS");
+//						try {
+//							cargarDatosUsuario();
+//
+//							contex.getExternalContext().redirect("/registerBusiness.xhtml?faces-redirect=true");
+//
+//							contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
+//
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}else {
+//					//crea empresa
+//					System.out.println("A REGISTRAR BUSINESS");
+//					try {
+//						cargarDatosUsuario();
+//						contex.getExternalContext().redirect("../registerBusiness.xhtml?faces-redirect=true");
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//			init();			
+//	}
+//}
+//	
 	
 	public void login() {
-		System.out.println("user "+user +" password "+password);
 		miUsuario = pdao.loginPersona(user,password);
 		if (miUsuario!=null) {
 			System.out.println("login exitoso");
@@ -157,18 +157,18 @@ public class PersonaControlador {
 			}
 			
 			if(miUsuario.getRolPerson().getId()==2) {//es usuario
-				System.out.println("es user");
+				System.out.println("es user "+miUsuario.toString());
 				if(miUsuario.getEmpresa()!=null) {
 					System.out.println("ya tiene empresa");
 					try{
-						contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/dashboard.xhtml");
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
 				}else {
 					System.out.println("no tiene empresa");
 					try{
-						contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/crearEmpresa.xhtml");
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/crearEmpresa.xhtml");
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
@@ -197,6 +197,7 @@ public class PersonaControlador {
 			// TODO: handle exception
 		}
 	}
+
 	public void cargarDatosUsuario() {
 		miUsuario = new Persona();
 		HttpSession session = SessionUtils.getSession();
@@ -229,7 +230,9 @@ public class PersonaControlador {
 				System.out.println("Nombre: " + personas.getNombre());
 				if(v.validarCorreo(personas.getCorreo()) == true) {
 					personas.setEstado("A");
+
 					personas.setRol(rolbad);
+
 					Rol rol = rolDAO.rolById(2);
 					System.out.println("ver--> "+rol.toString());
 					personas.setRolPerson(rol);
@@ -330,12 +333,12 @@ public class PersonaControlador {
 		this.password = password;
 	}
 
-	public static Persona getMiUsuario() {
+	public Persona getMiUsuario() {
 		return miUsuario;
 	}
 
-	public static void setMiUsuario(Persona miUsuario) {
-		PersonaControlador.miUsuario = miUsuario;
+	public void setMiUsuario(Persona miUsuario) {
+		this.miUsuario = miUsuario;
 	}
 
 	public String getUser() {
@@ -346,5 +349,12 @@ public class PersonaControlador {
 		this.user = user;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 	
 }

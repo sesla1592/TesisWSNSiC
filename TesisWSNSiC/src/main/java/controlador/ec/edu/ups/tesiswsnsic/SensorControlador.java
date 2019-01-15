@@ -13,7 +13,7 @@ import dao.ec.edu.ups.tesiswsnsic.SensorDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class SensorControlador {
 	
@@ -23,6 +23,7 @@ public class SensorControlador {
 	Nodo nodo;
 	private Sensor sensor;
 	private Sensor sensorSelected;	
+	private String sensorEstado;
 	private List<Sensor> ltsSensor;
 	
 	
@@ -70,10 +71,18 @@ public class SensorControlador {
 		this.sensorSelected = sensorSelected;
 	}
 
+	public String getSensorEstado() {
+		return sensorEstado;
+	}
+
+	public void setSensorEstado(String sensorEstado) {
+		this.sensorEstado = sensorEstado;
+	}
+
 	public void irCrearSensor(){
 		FacesContext contex = FacesContext.getCurrentInstance();
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/nodo/crearSensor.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/crearSensor.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -81,13 +90,14 @@ public class SensorControlador {
 	
 	public void guardarSensor(){
 		try{
+			sensor.setEstado(true);
 			System.out.println(sensor.toString());
 			sensor.setNodo(nodo);
 			senDAO.insertarSensor(sensor);
 			sensor = new Sensor();
 			ltsSensor = senDAO.getLtsSensorByNodo(nodo.getId());
 			FacesContext contex = FacesContext.getCurrentInstance();
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/nodo/detalleSensor.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/detalleSensor.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -99,6 +109,21 @@ public class SensorControlador {
 	}
 	
 	public void guardarEditar(){
+		System.out.println(sensorSelected.toString() + " -> "+sensorEstado);
+		if(sensorEstado.equals("true")) {
+			sensorSelected.setEstado(true);
+		}else {
+			sensorSelected.setEstado(false);
+		}
 		senDAO.updateSensor(sensorSelected);
+	}
+	
+	public void back() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/listaNodos.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

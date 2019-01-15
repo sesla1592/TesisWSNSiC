@@ -24,12 +24,15 @@ public class EmpresaDAO {
 	@Inject
 	private PersonaDAO pdao;
 	
-	public void insertEmpresa(Empresa empresa){
+	public Empresa insertEmpresa(Empresa empresa){
 		try {
 			em.persist(empresa);
+			em.flush();
+			return empresa;
 		} catch (Exception e) {
 			System.out.println("error al insertar "+this.getClass().getName());
 			// TODO: handle exception
+			return null;
 		}
 	}
 	public void updateEmpresa(Empresa empresa){
