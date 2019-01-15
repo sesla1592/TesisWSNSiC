@@ -1,5 +1,6 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,10 @@ import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 @ManagedBean
 @ViewScoped
 public class DashboardAdmin {
+	
+	private String elibre;
+	private String eutilizado;
+	private String etotal;
 	
 	Persona user;
 	FacesContext contex;
@@ -43,7 +48,7 @@ public class DashboardAdmin {
 	
 	@PostConstruct
 	public void init() {
-		
+		calculaEspaciosa();
 		try {
 			
 			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -206,5 +211,46 @@ public class DashboardAdmin {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	public String getElibre() {
+		return elibre;
+	}
+
+	public void setElibre(String elibre) {
+		this.elibre = elibre;
+	}
+
+	public String getEutilizado() {
+		return eutilizado;
+	}
+
+	public void setEutilizado(String eutilizado) {
+		this.eutilizado = eutilizado;
+	}
+
+	public String getEtotal() {
+		return etotal;
+	}
+
+
+	public void setEtotal(String etotal) {
+		this.etotal = etotal;
+	}
+
+	public void calculaEspaciosa() {
+		File file = new File("C:");
+		// Total espacio en disco (Bytes).
+        long total = file.getTotalSpace();
+        // Espacio libre en disco (Bytes).
+        long libre = file.getFreeSpace(); //unallocate
+        
+        long elib =libre / 1024 / 1024;
+        long etot = total / 1024 / 1024;
+        long euti = etot - elib;
+        
+        elibre = String.valueOf(elib)+" MB";
+        etotal = String.valueOf(etot)+" MB";
+        eutilizado = String.valueOf(euti)+" MB";
 	}
 }

@@ -49,7 +49,7 @@ public class PersonaControlador {
 	
 	private Validacion v;
 
-	private String user;
+	private String user = null;
 	
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
@@ -60,7 +60,6 @@ public class PersonaControlador {
 	public void init() {
 		personas = new Persona();
 		v = new  Validacion();
-		
 	}
 	
 	/**
