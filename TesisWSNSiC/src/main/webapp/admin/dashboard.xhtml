@@ -9,10 +9,6 @@
 	template="/Templateadmin.xhtml">
 	
 <ui:define name="contenido">
-<h:form>
-
-<h1>Bienvenido #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h1>
-<br/>
 	
 
 <h:form>
@@ -74,7 +70,8 @@
                   <div class="mr-5">Empresas</div><br/>
                   <div class="mr-4">Activas:    <h:outputLabel value="#{dashboardAdmin.empresaActiva} " /></div>
                   <div class="mr-3">Inactivos:  <h:outputLabel value="#{dashboardAdmin.empresaInactiva} " /></div>
-                
+                	<h:commandButton action="#{dashboardAdmin.empresas()}" value="Ver detalles empresas" /><br/>
+					<h:commandButton action="#{dashboardAdmin.crearTipoEmpresa()}" value="crear tipo empresa" />
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
                  <h:commandLink id="logoutButton3" action="#{dashboardAdmin.empresas()}" styleClass="btn btn-success">
