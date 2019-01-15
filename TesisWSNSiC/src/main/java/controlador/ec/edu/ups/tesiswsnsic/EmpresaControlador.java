@@ -148,7 +148,7 @@ public class EmpresaControlador {
 			personaDAO.updatePersona(user);
 			
 			FacesContext contex = FacesContext.getCurrentInstance();
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/dashboard.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/dashboard.xhtml");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

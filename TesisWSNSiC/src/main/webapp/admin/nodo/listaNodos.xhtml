@@ -102,18 +102,11 @@
                 <h:inputText value="#{nodoControlador.nodoSelected.nombre}"/>
                 
                 <h:outputText value="Descripcion" />
-                <h:inputText value="#{nodoControlador.nodoSelected.descripcion}"/>
+                <h:outputText value="#{nodoControlador.nodoSelected.descripcion}"/>
                 
                 <h:outputText value="Identificador" />
-                <h:inputText value="#{nodoControlador.nodoSelected.identificador}"/>
-                
-                <h:outputText value="Latitud" />
-                <h:inputText value="#{nodoControlador.nodoSelected.latitud}"/>
-                
-                <h:outputText value="Longitud" />
-                <h:inputText value="#{nodoControlador.nodoSelected.longitud}"/>
-                
-                
+                <h:outputText value="#{nodoControlador.nodoSelected.identificador}"/>
+
             </p:panelGrid>
             
 	            <p:commandButton update=":NodoListForm" action="#{nodoControlador.guardarEditar()}" oncomplete="PF('carDialog').hide()" title="Guardar">

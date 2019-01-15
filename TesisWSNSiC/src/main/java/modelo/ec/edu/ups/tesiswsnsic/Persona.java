@@ -36,9 +36,6 @@ public class Persona {
 
 	@Column(name = "per_password")
 	private String password;
-	
-	@Column(name = "per_rol")
-	private String rol;
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
@@ -118,16 +115,6 @@ public class Persona {
 
 	public void setPersonanodos(List<PersonaNodo> personanodos) {
 		this.personanodos = personanodos;
-	}
-
-
-	public String getRol() {
-		return rol;
-	}
-
-
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 
 	

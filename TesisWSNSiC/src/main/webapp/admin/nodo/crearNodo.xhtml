@@ -18,21 +18,15 @@
 				/>
 				<br/>
 				
-<h:outputLabel value="Identificador del Nodo"/>
-				<h:inputText id="Identificador" value="#{nodoControlador.nodo.identificador}" size="50" 
-				/>
-				<br/>		
-
-<h:outputLabel value="descripcion del Nodo"/>
-				<h:inputText id="descripcion" value="#{nodoControlador.nodo.descripcion}" size="50" 
-				/></h:panelGrid>
+</h:panelGrid>
 				
 				<br/>
 				<h:outputLabel value="Codigo Nodo"/>
 				<h:inputText id="codNodo" value="#{nodoControlador.codNodo}" size="50" />
-				<br/>
+				
 		
 	<h:commandButton id="bucar" action="#{nodoControlador.busquedaNodoMongo()}" value="Buscar nodo" />
+	<br/>
 	<h:commandButton id="gurdar" action="#{nodoControlador.guardarNodo()}" value="Guardar" />
 
 </h:panelGroup>
