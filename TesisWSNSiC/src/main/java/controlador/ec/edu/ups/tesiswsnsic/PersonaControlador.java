@@ -50,6 +50,7 @@ public class PersonaControlador {
 	private Validacion v;
 
 	private String user;
+	
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
 
@@ -231,8 +232,6 @@ public class PersonaControlador {
 				if(v.validarCorreo(personas.getCorreo()) == true) {
 					personas.setEstado("A");
 
-					personas.setRol(rolbad);
-
 					Rol rol = rolDAO.rolById(2);
 					System.out.println("ver--> "+rol.toString());
 					personas.setRolPerson(rol);
@@ -339,14 +338,6 @@ public class PersonaControlador {
 
 	public void setMiUsuario(Persona miUsuario) {
 		this.miUsuario = miUsuario;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
 	}
 
 	public String getUser() {
