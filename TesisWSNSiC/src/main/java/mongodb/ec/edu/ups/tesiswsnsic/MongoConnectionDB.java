@@ -83,7 +83,7 @@ public class MongoConnectionDB {
 			System.out.println("lista nodos"+ltsMyNodos.size());
 			puntos = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
-			//recuperaDatos();
+			recuperaDatos();
 			addMarker();
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -236,7 +236,7 @@ public class MongoConnectionDB {
 		};
 		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
 		MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
-		FindIterable<Document> collection = database.getCollection("Nueva").find().sort(Sorts.descending("fecha")).limit(2);
+		FindIterable<Document> collection = database.getCollection("Nueva").find().sort(Sorts.descending("fecha")).limit(10);
 		 
 		collection.forEach(printBlock); 
 		
