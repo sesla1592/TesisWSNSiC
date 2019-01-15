@@ -188,6 +188,16 @@ public class PersonaControlador {
 			// TODO: handle exception
 		}
 	}
+	
+	public void irRegistrar() {
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/Registrar.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
 	public void cargarDatosUsuario() {
 		miUsuario = new Persona();
 		HttpSession session = SessionUtils.getSession();
@@ -220,6 +230,9 @@ public class PersonaControlador {
 				System.out.println("Nombre: " + personas.getNombre());
 				if(v.validarCorreo(personas.getCorreo()) == true) {
 					personas.setEstado("A");
+
+					personas.setRol(rolbad);
+
 					Rol rol = rolDAO.rolById(2);
 					System.out.println("ver--> "+rol.toString());
 					personas.setRolPerson(rol);
@@ -294,13 +307,7 @@ public class PersonaControlador {
 		return "index?faces-redirect=true";
 	}
 	
-	public String backRe() {
-		
-		System.out.println("Si regresa aa....");
-		
-		return "Registrar?faces-redirect=true";
-
-	}
+	
 
 	public Persona getPersonas() {
 		return personas;
@@ -342,5 +349,12 @@ public class PersonaControlador {
 		this.user = user;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 	
 }
