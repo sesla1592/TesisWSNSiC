@@ -20,6 +20,7 @@ public class TipoEmpresaDAO {
 			em.persist(tipoEmpresa);
 		}catch (Exception e) {
 			System.out.println("error al insertar "+this.getClass().getName());
+			e.printStackTrace();
 		}
 	}
 	

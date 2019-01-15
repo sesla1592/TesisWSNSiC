@@ -30,7 +30,7 @@ public class Rol {
 	private String descripcion;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name="per_rol_id", referencedColumnName="rol_id")
 	private List<Persona> personas = new ArrayList<Persona>();
 
@@ -60,7 +60,7 @@ public class Rol {
 
 	@Override
 	public String toString() {
-		return "Rol [id=" + id + ", descripcion=" + descripcion + ", personas=" + personas + "]";
+		return "Rol [id=" + id + ", descripcion=" + descripcion + "]";
 	}
 
 }

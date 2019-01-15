@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+
+<h:form>		
+<h2>Crear Nodo</h2>
+
+<h:panelGroup id="display">
+<h:commandButton action="#{nodoControlador.back()}" value="atras" />
+<h:panelGrid columns="3">
+
+<h:outputLabel value="Nombre del Nodo"/>
+				<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}" size="50" 
+				/>
+				<br/>
+				
+</h:panelGrid>
+				
+				<br/>
+				<h:outputLabel value="Codigo Nodo"/>
+				<h:inputText id="codNodo" value="#{nodoControlador.codNodo}" size="50" />
+				
+		
+	<h:commandButton id="bucar" action="#{nodoControlador.busquedaNodoMongo()}" value="Buscar nodo" />
+	<br/>
+	<h:commandButton id="gurdar" action="#{nodoControlador.guardarNodo()}" value="Guardar" />
+
+</h:panelGroup>
+</h:form>
+</html>

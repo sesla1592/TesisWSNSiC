@@ -36,14 +36,19 @@ public class Persona {
 
 	@Column(name = "per_password")
 	private String password;
-	
-	@Column(name = "per_rol")
-	private String rol;
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
 	private List<PersonaNodo> personanodos = new ArrayList<PersonaNodo>();
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="emp_per_fk")
+	private Empresa empresa;
 
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="per_rol_id")
+	private Rol rolPerson;
+	
 	public int getId() {
 		return id;
 	}
@@ -112,20 +117,30 @@ public class Persona {
 		this.personanodos = personanodos;
 	}
 
-
-	public String getRol() {
-		return rol;
+	
+	public Rol getRolPerson() {
+		return rolPerson;
 	}
 
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setRolPerson(Rol rolPerson) {
+		this.rolPerson = rolPerson;
 	}
+
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", estado=" + estado
-				+ ", correo=" + correo + ", password=" + password + ", rol=" + rol + ", personanodos=" + personanodos
-				+ "]";
+				+ ", correo=" + correo + "]";
 	}
 }

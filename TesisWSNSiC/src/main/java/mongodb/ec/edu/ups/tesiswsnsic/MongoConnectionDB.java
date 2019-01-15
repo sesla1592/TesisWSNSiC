@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import com.mongodb.Block;
 import com.mongodb.DBCursor;
@@ -22,7 +25,11 @@ import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.UnwindOptions;
 
+import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
+import dao.ec.edu.ups.tesiswsnsic.PersonaNodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
+import modelo.ec.edu.ups.tesiswsnsic.Nodo;
+import modelo.ec.edu.ups.tesiswsnsic.Persona;
 
 import com.mongodb.client.model.Filters;
 import com.google.gson.JsonArray;
@@ -42,7 +49,10 @@ import org.springframework.data.domain.Sort;
 @RequestScoped
 public class MongoConnectionDB {
 
+	@Inject
+	PersonaNodoDAO personaNodoDAO;
 	
+	Persona user;
 	public MapModel simpleModel;
 	
 	public String typemedic = "line";
@@ -51,7 +61,7 @@ public class MongoConnectionDB {
 	public String medici;
 	public double val;
 	public String fec;
-	public String filtroBusqueda="hum";
+	public String filtroBusqueda="T";
 
 	private static String djson;
 
@@ -59,13 +69,27 @@ public class MongoConnectionDB {
 	 * */
 	String nodo ="n2";
 	String sensor ="d1";
-	String medicion ="hum";
-
-	public MongoConnectionDB() {
-		puntos = new ArrayList<>();
-		simpleModel = new DefaultMapModel();
-		recuperaDatos();
-		graficarMapa();
+	String medicion ="Temperatura";
+	
+	List<Nodo> ltsMyNodos=new ArrayList<>();
+	
+	@PostConstruct
+	public void init() {
+		try {
+			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+					.get("userSelected");
+			System.out.println("user "+user.getId());
+			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+			System.out.println("lista nodos"+ltsMyNodos.size());
+			puntos = new ArrayList<>();
+			simpleModel = new DefaultMapModel();
+			//recuperaDatos();
+			addMarker();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
@@ -147,6 +171,7 @@ public class MongoConnectionDB {
 	
 	
 	public MapModel getSimpleModel() {
+		//addMarker();
 		return simpleModel;
 	}
 
@@ -166,12 +191,12 @@ public class MongoConnectionDB {
         System.out.println("agrego");
 	}
 	
-	public void graficarMapa() {
-		
-		for (int i = 0; i < puntos.size(); i++) {
-			mapa(puntos.get(i).getLatitud(), puntos.get(i).getLongitud(), "sensor "+i);
-		}
-	}
+//	public void graficarMapa() {
+//		
+//		for (int i = 0; i < puntos.size(); i++) {
+//			mapa(puntos.get(i).getLatitud(), puntos.get(i).getLongitud(), "sensor "+i);
+//		}
+//	}
 	public String recuperaDatos() {
 
 		Block<Document> printBlock = new Block<Document>() {
@@ -190,30 +215,27 @@ public class MongoConnectionDB {
 					//ELEMENTOS DENTRO DEL LISTADO DE PRIMITIVO: valor medicion
 					//JsonObject gsonObj2= (JsonObject) gsonObj.get("mediciones");
 					
-					JsonArray ltsMediciones = (JsonArray) gsonObj.get("mediciones");
+					JsonArray ltsMediciones = (JsonArray) gsonObj.get("ms");
+					//System.out.println("tam "+ltsMediciones.size());
 					for (int i = 0; i < ltsMediciones.size(); i++) {
 						
 						JsonObject gsonObj2= (JsonObject) ltsMediciones.get(i);
-						medici = gsonObj2.get("medicion").getAsString();
+						medici = gsonObj2.get("m").getAsString();//va el nombre  del sensor
 						if(medici.equals(filtroBusqueda)) {
-							val = gsonObj2.get("valor").getAsDouble();
-							double lat=Double.parseDouble(gsonObj2.get("latitud").getAsString());
-							double longi=Double.parseDouble(gsonObj2.get("longitud").getAsString());
-							puntos.add(new MedValFec(medici, val, fec,lat,longi));
+							val = gsonObj2.get("v").getAsDouble();
+							puntos.add(new MedValFec(medici, val, fec));
 							
 						}
 					}
 				}
-//				for(int i=0;i<puntos.size();i++) {
-//					System.out.println("POINTS   "+puntos.get(i).getFecha()+" - "+puntos.get(i).getMedicion()+" - "+puntos.get(i).getValor());
-//				}
+				for(int i=0;i<puntos.size();i++) {
+					System.out.println("POINTS   "+puntos.get(i).getFecha()+" - "+puntos.get(i).getMedicion()+" - "+puntos.get(i).getValor());
+				}
 				
 			}
 		};
 		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-		System.out.println("MCLI");
 		MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
-		System.out.println("DBWSSIN");
 		FindIterable<Document> collection = database.getCollection("Nueva").find().sort(Sorts.descending("fecha")).limit(2);
 		 
 		collection.forEach(printBlock); 
@@ -232,4 +254,14 @@ public class MongoConnectionDB {
 		return null;
 	}
 
+	public void addMarker() {
+//        Marker marker = new Marker(new LatLng(-2.904770, -79.001693), "nodo");
+//        simpleModel.addOverlay(marker);
+        for (int i = 0; i < ltsMyNodos.size(); i++) {
+        	 	Marker marker = new Marker(new LatLng(ltsMyNodos.get(i).getLatitud(), ltsMyNodos.get(i).getLongitud()), ltsMyNodos.get(i).getNombre());
+             simpleModel.addOverlay(marker);
+			
+		}
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:, Lng:"));
+    }
 }

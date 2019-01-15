@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form>
+ <h:commandButton action="#{editEmpresa.back()}" value="Atras" />
+<h:outputLabel value="Crear Empresas" />
+<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+
+
+<h:outputText  value="Nombre: " />
+<h:inputText value="#{editEmpresa.empresa.nombre}"  pt:placeholder="Nombre"  id="usuario"/>
+<h:outputText  value="Direccion:" />
+<h:inputText value="#{editEmpresa.empresa.direccion}" pt:placeholder="Direccion" id="direccion"/>
+<h:outputText  value="Telefono:" />
+<h:inputText value="#{editEmpresa.empresa.telefono}" pt:placeholder="Telefono" id="telefono"/>
+
+<h:outputText  value="estado: " />
+<h:selectOneMenu value = "#{editEmpresa.empresa.estado}"> 
+				   <f:selectItem itemValue = "activo" itemLabel = "activo" /> 
+				   <f:selectItem itemValue = "inactivo" itemLabel = "inactivo" /> 
+				</h:selectOneMenu>
+
+<h:outputText  value="Correo:" />
+<h:inputText value="#{editEmpresa.empresa.correo}" pt:placeholder="Correo" id="correo"/>
+<h:outputText  value="Cuidad:" />
+<h:inputText value="#{editEmpresa.empresa.ciudad}" pt:placeholder="Ciudad" id="cuidad"/>
+<h:outputText  value="Pais:" />
+<h:inputText value="#{editEmpresa.empresa.pais}" pt:placeholder="Pais" id="pais"/>
+</h:panelGrid> 
+ <h:commandButton action="#{editEmpresa.actualizar()}" value="Actualizar Empresa" />
+
+</h:form>
+
+</body> 
+</html>

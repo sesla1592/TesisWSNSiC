@@ -1,3 +1,4 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -7,22 +8,24 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/Templateadmin.xhtml">
 	
-
-
 <ui:define name="contenido">
 <h:form>
 
 <h1>Bienvenido #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h1>
 <br/>
 	
+
+<h:form>
+<h1>Bienvenido #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h1>
+<br/>
 	
+
 	<div id="hardware">
 	<h:outputLabel value="Nodos: #{dashboardAdmin.ltsNodo.size()} " /><br/>
 	<h:outputLabel value="Sensores: #{dashboardAdmin.ltsSensor.size()} " /><br/>
 	</div>
 	<div id="almacenamiento">
 	</div>
-	
 	
 	
 	<!-- Icon Cards-->

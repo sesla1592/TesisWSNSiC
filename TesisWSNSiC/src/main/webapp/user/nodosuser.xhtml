@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form id="NodoListForm">
+            <div>
+            		Mis nodos
+
+					<br/>
+					<a id="item1"  href="dashboard.xhtml">
+						<span>Pagina principal</span>
+					</a>
+					<br/>
+					<a id="item1"  href="profile.xhtml">
+						<span>Perfil</span>
+					</a>
+					<br/>
+					<a id="item1"  href="nodosuser.xhtml">
+						<span>Mis Nodos</span>
+					</a>
+            </div>
+            
+                <p:panel header="Listado de Nodos">
+                <p:commandButton title="Asociar Nodo" onclick="PF('nodoSelect').show();"/>
+                <br/>
+                    <p:dataTable id="datalist" value="#{personaNodoControlador.ltsMyNodos}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Idenfiticador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.identificador}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Latitud"/>
+                            </f:facet>
+                            <h:outputText value="#{item.latitud}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Logitud"/>
+                            </f:facet>
+                            <h:outputText value="#{item.longitud}"/>
+                        </p:column>
+                        
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Editar"/>
+                            </f:facet>
+                            
+					            
+                        </p:column>
+                        
+                    </p:dataTable>
+                </p:panel>
+            
+            
+        <p:dialog header="Seleccionar Nodo" widgetVar="nodoSelect" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="nodoDetail" style="text-align:center;">
+            
+            		<p:dataTable id="Alllist" value="#{personaNodoControlador.ltsAllNodos}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Idenfiticador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.identificador}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Seleccionar"/>
+                            </f:facet>
+                            <p:commandButton title="Seleccionar" update=":NodoListForm" actionListener="#{personaNodoControlador.asociarNodo(item)}" onclick="PF('nodoSelect').hide();"/>
+                        </p:column>
+                        
+                    </p:dataTable>
+         
+        </p:outputPanel>
+    </p:dialog>
+   </h:form>
+
+
+
+
+</body> 
+</html>

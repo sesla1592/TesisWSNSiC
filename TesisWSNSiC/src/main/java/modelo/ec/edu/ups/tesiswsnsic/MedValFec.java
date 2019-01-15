@@ -6,19 +6,15 @@ public class MedValFec {
 	public String medicion;
 	public double valor;
 	public String fecha;
-	public double latitud;
-	public double longitud;
 	
 	public MedValFec() {
 	}
 
-	public MedValFec(String medicion, double valor, String fecha, double latitud, double longitud) {
+	public MedValFec(String medicion, double valor, String fecha) {
 		super();
 		this.medicion = medicion;
 		this.valor = valor;
 		this.fecha = fecha;
-		this.latitud = latitud;
-		this.longitud = longitud;
 	}
 
 	public String getMedicion() {
@@ -43,22 +39,6 @@ public class MedValFec {
 
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
-	}
-
-	public double getLatitud() {
-		return latitud;
-	}
-
-	public void setLatitud(double latitud) {
-		this.latitud = latitud;
-	}
-
-	public double getLongitud() {
-		return longitud;
-	}
-
-	public void setLongitud(double longitud) {
-		this.longitud = longitud;
 	}
 
 	

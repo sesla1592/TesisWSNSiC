@@ -42,7 +42,13 @@ public class PersonaNodoDAO {
 	public List<Nodo> ltsNodosByUser(int userId) {
 		try {
 			List<PersonaNodo> ltsPersonNodo = new ArrayList<PersonaNodo>();
-			TypedQuery<PersonaNodo> query = em.createQuery("Select n from PersonaNodo n", PersonaNodo.class);
+
+//			TypedQuery<PersonaNodo> query = em.createQuery("Select n from PersonaNodo n", PersonaNodo.class);
+
+			TypedQuery<PersonaNodo> query = em.createQuery("Select n from PersonaNodo n "
+					+ "where n.persona.id = :userId", PersonaNodo.class);
+			query.setParameter("userId", userId);
+
 			ltsPersonNodo = query.getResultList();
 			List<Nodo> ltsNodo = new ArrayList<>();
 			for(PersonaNodo personNodo : ltsPersonNodo) {
