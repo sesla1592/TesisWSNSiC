@@ -101,12 +101,6 @@ public class EmpresaControlador {
 	public void setTipoEmpSelected(TipoEmpresa tipoEmpSelected) {
 		this.tipoEmpSelected = tipoEmpSelected;
 	}
-
-	public void actualizaEmpresaAPersona() {
-		Persona p = PersonaControlador.miUsuario;
-		System.out.println("ID: "+p.getId() +"  Nombre:"+p.getNombre());
-		empresaDAO.updateEmpresaPersona(empresa, p.getId());
-	}
 	
 	public static TipoEmpresa tem = new TipoEmpresa();
 	public void tipoSeleccionada(){

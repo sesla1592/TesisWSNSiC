@@ -53,7 +53,7 @@ public class PersonaControlador {
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
 
-	public static Persona miUsuario;
+	public Persona miUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -142,7 +142,6 @@ public class PersonaControlador {
 //	
 	
 	public void login() {
-		System.out.println("user "+user +" password "+password);
 		miUsuario = pdao.loginPersona(user,password);
 		if (miUsuario!=null) {
 			System.out.println("login exitoso");
@@ -158,7 +157,7 @@ public class PersonaControlador {
 			}
 			
 			if(miUsuario.getRolPerson().getId()==2) {//es usuario
-				System.out.println("es user");
+				System.out.println("es user "+miUsuario.toString());
 				if(miUsuario.getEmpresa()!=null) {
 					System.out.println("ya tiene empresa");
 					try{
@@ -327,12 +326,12 @@ public class PersonaControlador {
 		this.password = password;
 	}
 
-	public static Persona getMiUsuario() {
+	public Persona getMiUsuario() {
 		return miUsuario;
 	}
 
-	public static void setMiUsuario(Persona miUsuario) {
-		PersonaControlador.miUsuario = miUsuario;
+	public void setMiUsuario(Persona miUsuario) {
+		this.miUsuario = miUsuario;
 	}
 
 	public String getUser() {
