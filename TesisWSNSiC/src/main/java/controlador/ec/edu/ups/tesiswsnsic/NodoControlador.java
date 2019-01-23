@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import javax.sound.midi.Soundbank;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -36,6 +38,7 @@ import com.mongodb.client.model.Sorts;
 
 import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
+import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 import utilidades.ec.edu.ups.tesiswsnsic.DBConnection;
 
 @SessionScoped
@@ -47,6 +50,7 @@ public class NodoControlador {
 	
 	Nodo nodo;
 	Nodo nodoSelected;
+	boolean insert;
 	
 	private static String resultadoBusqueda;
 	private List<Nodo> ltsNodo;
@@ -56,6 +60,7 @@ public class NodoControlador {
 	public void init() {
 		ltsNodo = nodoDAO.getAllNodos();
 		nodo = new Nodo();
+		insert=false;
 		//busquedaNodoMongo();
 	}
 	
@@ -101,18 +106,22 @@ public class NodoControlador {
 	}
 	
 	public void guardarNodo(){
-		try{
-			System.out.println("code "+codNodo);
-			System.out.println(nodo.toString());
-			nodoDAO.insert(nodo);
-			nodo = new Nodo();
-			ltsNodo = nodoDAO.getAllNodos();
-			FacesContext contex = FacesContext.getCurrentInstance();
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/listaNodos.xhtml");
-		}catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}
+		
+			try{
+				
+				System.out.println(nodo.toString());
+				nodoDAO.insert(nodo);
+				nodo = new Nodo();
+				nodoSelected = new Nodo();
+				codNodo="";
+				ltsNodo = nodoDAO.getAllNodos();
+				FacesContext contex = FacesContext.getCurrentInstance();
+				contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/listaNodos.xhtml");
+			}catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+		
 
 	}
 	
@@ -180,17 +189,39 @@ public class NodoControlador {
 		
 		DBObject d1 = coll.findOne(query);
 		if(d1!=null) {
-			System.out.println("prueba---> "+d1.get("n"));
+			System.out.println("prueba F---> "+d1.toString());
 			System.out.println("prueba---> "+d1.get("la"));
 			System.out.println("prueba---> "+d1.get("lo"));
-			try {
-				nodo.setIdentificador(codNodo);
-				nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
-				nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
-			}catch (Exception e) {
-				// TODO: handle exception
+			boolean nodoInsert = nodoDAO.existsNode(codNodo);
+			if(nodoInsert) {
+				//existe el nodo
+				System.out.println("existe el nodo en la bd");
+			}else {
+				//
+				System.out.println("no existe el nodo en la bd");
+				try {
+					nodo.setIdentificador(codNodo);
+					nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
+					nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
+					System.out.println("sensores "+ d1.get("ms"));
+					JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
+					System.out.println("tam sensores "+ltsSensores.length());
+					List<Sensor> ltsSensor = new ArrayList<>();
+					for (int i = 0; i < ltsSensores.length(); i++) {
+						JSONObject sensorM = ltsSensores.getJSONObject(i);
+						Sensor sensor = new Sensor();
+						sensor.setNombre(sensorM.getString("m"));
+						sensor.setDescripcion(sensorM.getString("s"));
+						sensor.setEstado(true);
+						ltsSensor.add(sensor);
+					}
+					nodo.setLtssensores(ltsSensor);
+					guardarNodo();
+				}catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
 			}
-			guardarNodo();
 		}else {
 			System.out.println("prueba---> no encontro");
 		}

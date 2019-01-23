@@ -3,6 +3,11 @@ package modelo.ec.edu.ups.tesiswsnsic;
 /* CLASE QUE PERMITE ALMACENAR EN LA LISTA LOS VALORES PARA SER REFLEJADOS EN LA GRAFICA
  * */
 public class MedValFec {
+	@Override
+	public String toString() {
+		return "MedValFec [medicion=" + medicion + ", valor=" + valor + ", fecha=" + fecha + "]";
+	}
+
 	public String medicion;
 	public double valor;
 	public String fecha;

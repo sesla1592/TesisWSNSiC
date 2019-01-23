@@ -139,4 +139,16 @@ public class NodoDAO {
 		}
 	}
 	
+	public boolean existsNode(String codeNodo) {
+		try {
+			TypedQuery<Nodo> query = em.createQuery(
+					"Select n from Nodo n where n.identificador like :codeNodo", Nodo.class);
+			query.setParameter("codeNodo", codeNodo);
+			Nodo nodo = query.getSingleResult();
+			return true;
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return false;
+		}
+	}
 }

@@ -121,6 +121,15 @@ public class Nodo {
 		this.personanodos = personanodos;
 	}
 
+	public List<Sensor> getLtssensores() {
+		return ltssensores;
+	}
+
+
+	public void setLtssensores(List<Sensor> ltssensores) {
+		this.ltssensores = ltssensores;
+	}
+
 
 	@Override
 	public String toString() {

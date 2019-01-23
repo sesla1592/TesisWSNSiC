@@ -12,7 +12,7 @@
 <h:head></h:head> 
 <body> 
 
-<h:form>
+<h:form id="formulario">
 dashboard
 <br/>
 <a id="item1"  href="dashboard.xhtml">
@@ -31,19 +31,33 @@ dashboard
 
 <script type="text/javascript" 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD58EwYENuQLZRfsNUyuLqkeqVbFvxGqnA"></script>
+  <p:growl id="growl" showDetail="true" />
  
- 
-       <p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{mongoConnectionDB.simpleModel}"  />
-       
+       <p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardUser.simpleModel}" >
+       <p:ajax event="overlaySelect" listener="#{dashboardUser.onMarkerSelect}"  update="listaNodos"/>
+       </p:gmap>
+       <h:selectOneMenu id="listaNodos" value="#{dashboardUser.sensorSeleccionado}" >
+		    
+			<f:selectItems value="#{dashboardUser.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
+		</h:selectOneMenu>
 		<b:row>
-				<hf:chart title="Mediciones" xaxisLabel="Tiempo"
+				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{mongoConnectionDB.puntos}" 
+					<hf:chartSerie value="#{dashboardUser.ltsSTemp}" 
 									var="point" 
 									point="#{point.valor}" 
 									tickLabel="#{point.fecha}"
-									name="#{mongoConnectionDB.medicion}"
+									name="Temperatura"
+									rendered="true"
 									/>
+					<hf:chartSerie value="#{dashboardUser.ltsSHum}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Humedad"
+									rendered="false"
+									/>
+									
 									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
 									<hf:chartTooltip  backgroundColor="#000000" shared="true">
 									<f:facet name="header">
@@ -55,8 +69,10 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD58EwYENuQLZRfsNUyuLqkeqV
 									</hf:chartTooltip>									
 				</hf:chart>
 		</b:row>		
-		<b:commandButton action="#{mongoConnectionDB.recuperaDatos()}" value="Graficar" update="@form" onclick="ajax:MongoConnectionDB.recuperaDatos()"></b:commandButton>
-	</h:form>
+		<b:commandButton action="#{dashboardUser.consulta()}" value="Graficar" update="grafica">
+		</b:commandButton>
+	
+       </h:form>
 
 
 

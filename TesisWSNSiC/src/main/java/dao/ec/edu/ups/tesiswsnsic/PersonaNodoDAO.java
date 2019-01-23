@@ -51,8 +51,9 @@ public class PersonaNodoDAO {
 
 			ltsPersonNodo = query.getResultList();
 			List<Nodo> ltsNodo = new ArrayList<>();
-			for(PersonaNodo personNodo : ltsPersonNodo) {
-				ltsNodo.add(personNodo.getNodo());
+			for (int i = 0; i < ltsPersonNodo.size(); i++) {
+				ltsPersonNodo.get(i).getNodo().getLtssensores().size();
+				ltsNodo.add(ltsPersonNodo.get(i).getNodo());
 			}
 			return ltsNodo;
 		} catch (Exception e) {

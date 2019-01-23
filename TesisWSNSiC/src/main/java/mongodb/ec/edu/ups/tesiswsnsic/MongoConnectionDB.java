@@ -191,12 +191,6 @@ public class MongoConnectionDB {
         System.out.println("agrego");
 	}
 	
-//	public void graficarMapa() {
-//		
-//		for (int i = 0; i < puntos.size(); i++) {
-//			mapa(puntos.get(i).getLatitud(), puntos.get(i).getLongitud(), "sensor "+i);
-//		}
-//	}
 	public String recuperaDatos() {
 
 		Block<Document> printBlock = new Block<Document>() {
