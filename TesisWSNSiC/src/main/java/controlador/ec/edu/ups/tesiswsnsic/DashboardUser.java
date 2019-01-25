@@ -1,7 +1,10 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -69,6 +72,8 @@ public class DashboardUser implements Serializable {
 	public Nodo nodoSelected;
 	public Double datoTemp;
 	public Double datoHum;
+	public String fechaInicio="2019/01/10 00:00:00";
+	public String fechaFin;
 	
 	private MongoClient mongoClient;
 
@@ -84,6 +89,12 @@ public class DashboardUser implements Serializable {
 			simpleModel = new DefaultMapModel();
 			// recuperaDatos();
 			addMarker();
+			//fecha actual
+			Date date = new Date();
+			//Caso 2: obtener la fecha y salida por pantalla con formato:
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			fechaFin=dateFormat.format(date)+" 23:59:59";
+			System.out.println("Fecha: fin-->"+fechaFin);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -292,12 +303,10 @@ public class DashboardUser implements Serializable {
 		ltsSTemp = new ArrayList<>();
 		System.out.println("sensor seleccionado: "+sensorSeleccionado);
 		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
-//		MongoDatabase database = mongoClient.getDatabase(DBConnection.dbname);
-//		MongoCollection<Document> collection = database.getCollection(DBConnection.dbcollection);
-//		
+
 		BasicDBObject query = new BasicDBObject();
 		query.put("n", nodoSelected.getIdentificador());
-		query.put("fecha", BasicDBObjectBuilder.start("$gte", "2019/01/10 00:00:00").add("$lte", "2019/01/16 23:59:59").get());
+		query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
 		//FindIterable<Document> busquedaNodo = collection.find(query);
 		//busquedaNodo.forEach(printBlock); 
 		DB db = mongoClient.getDB(DBConnection.dbname);
