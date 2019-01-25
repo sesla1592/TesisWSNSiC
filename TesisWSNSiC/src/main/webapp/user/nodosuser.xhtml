@@ -71,22 +71,32 @@
                             <h:outputText value="#{item.longitud}"/>
                         </p:column>
                         
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Seonsores"/>
+                            </f:facet>
+                            <ui:repeat value="#{item.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombre}" />
+						        		<br/>
+						    </ui:repeat>
+                        </p:column>
                         
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Editar"/>
+                                <h:outputText value="Eliminar"/>
                             </f:facet>
-                            
-					            
+                            	<p:commandButton title="x" actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" update="datalist"/>
+					           
                         </p:column>
                         
                     </p:dataTable>
                 </p:panel>
-            
+            </h:form>
             
         <p:dialog header="Seleccionar Nodo" widgetVar="nodoSelect" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
         <p:outputPanel id="nodoDetail" style="text-align:center;">
-            
+            <h:form>
             		<p:dataTable id="Alllist" value="#{personaNodoControlador.ltsAllNodos}" var="item"
                                  paginator="true"
                                  rowKey="#{item.id}"
@@ -125,10 +135,10 @@
                         </p:column>
                         
                     </p:dataTable>
-         
+            </h:form>
         </p:outputPanel>
     </p:dialog>
-   </h:form>
+
 
 
 

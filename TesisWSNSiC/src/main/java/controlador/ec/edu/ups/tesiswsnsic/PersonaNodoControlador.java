@@ -29,6 +29,7 @@ public class PersonaNodoControlador {
 	@Inject
 	NodoDAO nodoDAO;
 	
+	
 	@PostConstruct
 	public void init() {
 		try {
@@ -86,7 +87,24 @@ public class PersonaNodoControlador {
 		}
 	}
 	
-	public void eliminarAsoNodo() {
-		
+	public void eliminarAsoNodo(Nodo nodo) {
+		System.out.println("=------> entro a alieminar");
+		PersonaNodo personNodo = personaNodoDAO.getByPersonNodo(user.getId(),nodo.getId());
+		if(personNodo==null) {
+			//error al buscar nodo
+			System.out.println("error al buscar pernona nodo");
+		}else{
+			personaNodoDAO.remove(personNodo);
+			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+			ltsAllNodos = nodoDAO.getAllNodos();
+			for (int i = 0; i < ltsAllNodos.size(); i++) {
+				for (int j = 0; j < ltsMyNodos.size(); j++) {
+					if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
+						ltsAllNodos.remove(i);
+					}
+				}
+			}
+			
+		}
 	}
 }

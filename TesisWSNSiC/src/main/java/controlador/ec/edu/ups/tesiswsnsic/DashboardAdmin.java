@@ -1,6 +1,7 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
@@ -38,6 +45,9 @@ public class DashboardAdmin {
 	List<Nodo> ltsNodo;
 	List<Sensor> ltsSensor;
 	List<Empresa> ltsEmpresa;
+	Marker marker;
+	Nodo nodoSelected;
+	public MapModel simpleModel;
 	
 	@Inject
 	NodoDAO nodoDAO;
@@ -57,6 +67,7 @@ public class DashboardAdmin {
 			//cantidad de nodos
 			ltsNodo = nodoDAO.getAllNodos();
 			nodoActivo=ltsNodo.size();
+			simpleModel = new DefaultMapModel();
 			//cantidad de sensores
 			ltsSensor = sensorDAO.getAllSensor();
 			for (int i = 0; i < ltsSensor.size(); i++) {
@@ -76,6 +87,7 @@ public class DashboardAdmin {
 					empresaInactiva++;
 				}
 			}
+			addMarker();
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -238,6 +250,23 @@ public class DashboardAdmin {
 		this.etotal = etotal;
 	}
 
+	public MapModel getSimpleModel() {
+		return simpleModel;
+	}
+
+
+	public void setSimpleModel(MapModel simpleModel) {
+		this.simpleModel = simpleModel;
+	}
+
+	public void addMarker() {
+		for (int i = 0; i < ltsNodo.size(); i++) {
+			Marker marker = new Marker(new LatLng(ltsNodo.get(i).getLatitud(), ltsNodo.get(i).getLongitud()),
+					ltsNodo.get(i).getIdentificador());
+			simpleModel.addOverlay(marker);
+		}
+	}
+
 	public void calculaEspaciosa() {
 		File file = new File("C:");
 		// Total espacio en disco (Bytes).
@@ -252,5 +281,23 @@ public class DashboardAdmin {
         elibre = String.valueOf(elib)+" MB";
         etotal = String.valueOf(etot)+" MB";
         eutilizado = String.valueOf(euti)+" MB";
+	}
+	
+	public void onMarkerSelect(OverlaySelectEvent event) {
+		marker = (Marker) event.getOverlay();
+		nodoSelected = findNodo(marker.getTitle());
+		System.out.println("Nodo Selected" + nodoSelected.toString() +" sensores: "+ nodoSelected.getLtssensores().size());
+		
+	}
+	
+	public Nodo findNodo(String identificador) {
+		Nodo nodo = new Nodo();
+		for (int i = 0; i < ltsNodo.size(); i++) {
+			if (ltsNodo.get(i).getIdentificador().equals(identificador)) {
+				nodo = ltsNodo.get(i);
+				break;
+			}
+		}
+		return nodo;
 	}
 }

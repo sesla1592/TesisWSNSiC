@@ -29,7 +29,7 @@ public class Nodo {
 	@Size(min = 1, max = 45)
 	@Column(name = "nombre")
 	private String nombre;
-	@Size(max = 45)
+	
 	@Column(name = "descripcion")
 	private String descripcion; // calculado sector y calle;
 

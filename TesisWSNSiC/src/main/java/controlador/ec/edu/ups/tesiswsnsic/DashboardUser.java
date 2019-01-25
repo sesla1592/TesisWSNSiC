@@ -34,6 +34,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 
@@ -64,10 +65,11 @@ public class DashboardUser implements Serializable {
 	public String medici;
 	public double val;
 	public String fec;
-	//public String filtroBusqueda = "T";
-	String medicion = "Temperatura";
-	Nodo nodoSelected;
-
+	public String medicion = "Temperatura";
+	public Nodo nodoSelected;
+	public Double datoTemp;
+	public Double datoHum;
+	
 	private MongoClient mongoClient;
 
 	@PostConstruct
@@ -163,6 +165,31 @@ public class DashboardUser implements Serializable {
 	public void grafica() {
 		System.out.println("sensor seleccionados: "+sensorSeleccionado);
 	}
+	
+	public Nodo getNodoSelected() {
+		return nodoSelected;
+	}
+
+	public void setNodoSelected(Nodo nodoSelected) {
+		this.nodoSelected = nodoSelected;
+	}
+
+	public Double getDatoTemp() {
+		return datoTemp;
+	}
+
+	public void setDatoTemp(Double datoTemp) {
+		this.datoTemp = datoTemp;
+	}
+
+	public Double getDatoHum() {
+		return datoHum;
+	}
+
+	public void setDatoHum(Double datoHum) {
+		this.datoHum = datoHum;
+	}
+
 	public String recuperaDatos() {
 
 		Block<Document> printBlock = new Block<Document>() {
@@ -215,8 +242,12 @@ public class DashboardUser implements Serializable {
 
 	public void addMarker() {
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
+			String descripcion="Sensores\n";
+			for (int j = 0; j < ltsMyNodos.get(i).getLtssensores().size(); j++) {
+				descripcion=descripcion+ltsMyNodos.get(i).getLtssensores().get(j).getNombre()+"\n";
+			}
 			Marker marker = new Marker(new LatLng(ltsMyNodos.get(i).getLatitud(), ltsMyNodos.get(i).getLongitud()),
-					ltsMyNodos.get(i).getIdentificador());
+					ltsMyNodos.get(i).getIdentificador(),descripcion);
 			simpleModel.addOverlay(marker);
 
 		}
@@ -237,6 +268,7 @@ public class DashboardUser implements Serializable {
 			System.out.println("-> "+ltsSensores.get(i));
 			//nodoSelected.getLtssensores().size()
 		}
+		getDatosTH();
 	}
 
 	public Nodo findNodo(String identificador) {
@@ -253,6 +285,7 @@ public class DashboardUser implements Serializable {
 	public Marker getMarker() {
 		return marker;
 	}
+	
 	
 	public void consulta() {
 		ltsSHum= new ArrayList<>();
@@ -334,5 +367,67 @@ public class DashboardUser implements Serializable {
 		System.out.println("Connection Succesfull");
 	}
 	
-
+	public void getDatosTH() {
+		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
+		BasicDBObject query = new BasicDBObject();
+		query.put("n", nodoSelected.getIdentificador());
+		
+		//busquedaNodo.forEach(printBlock); 
+		DB db = mongoClient.getDB(DBConnection.dbname);
+		DBCollection coll = db.getCollection(DBConnection.dbcollection);
+		
+		
+		DBObject d1 = coll.findOne(query);
+		if(d1!=null) {
+			System.out.println("prueba F---> "+d1.toString());
+			System.out.println("prueba---> "+d1.get("la"));
+			System.out.println("prueba---> "+d1.get("lo"));
+			JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
+			for (int i = 0; i < ltsSensores.length(); i++) {
+				JSONObject sensorM = ltsSensores.getJSONObject(i);
+				if(sensorM.getString("m").equals("T")) {
+					datoTemp= Double.parseDouble(sensorM.get("v").toString());
+				}
+				if(sensorM.getString("m").equals("H")) {
+					datoHum= Double.parseDouble(sensorM.get("v").toString());
+				}
+				
+			}
+			
+			//boolean nodoInsert = true;//nodoDAO.existsNode(codNodo);
+//			if(nodoInsert) {
+//				//existe el nodo
+//				System.out.println("existe el nodo en la bd");
+//			}else {
+//				//
+//				System.out.println("no existe el nodo en la bd");
+//				try {
+//					nodo.setIdentificador(codNodo);
+//					nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
+//					nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
+//					System.out.println("sensores "+ d1.get("ms"));
+//					JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
+//					System.out.println("tam sensores "+ltsSensores.length());
+//					List<Sensor> ltsSensor = new ArrayList<>();
+//					for (int i = 0; i < ltsSensores.length(); i++) {
+//						JSONObject sensorM = ltsSensores.getJSONObject(i);
+//						Sensor sensor = new Sensor();
+//						sensor.setNombre(sensorM.getString("m"));
+//						sensor.setDescripcion(sensorM.getString("s"));
+//						sensor.setEstado(true);
+//						ltsSensor.add(sensor);
+//					}
+//					nodo.setLtssensores(ltsSensor);
+//					guardarNodo();
+//				}catch (Exception e) {
+//					// TODO: handle exception
+//					e.printStackTrace();
+//				}
+//			}
+		}else {
+			System.out.println("prueba---> no encontro");
+		}
+		
+		System.out.println("Connection Succesfull");
+	}
 }

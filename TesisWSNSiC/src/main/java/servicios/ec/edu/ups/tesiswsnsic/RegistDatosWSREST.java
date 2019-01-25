@@ -1,10 +1,20 @@
 package servicios.ec.edu.ups.tesiswsnsic;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,5 +106,57 @@ public class RegistDatosWSREST {
 			 e.printStackTrace();
 		}
 		return r;
+	}
+	
+	@Path("/prueba")
+	@GET
+	@Produces("application/json")
+	public void prueba() {
+//		Client client = ClientBuilder.newClient();
+//		WebTarget target = client.target("https://maps.googleapis.com/maps/api/geocode/json?latlng=-2.889550,-79.022854&key=AIzaSyCEjgmfiCvCnSGCwVd-EU0M2ZBYUM08N1k");
+//		JsonArray response = target.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
+//		System.out.println("res "+response.toString());
+		
+		/////
+		
+		try {
+			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?latlng=-2.889550,-79.022854&key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g");//your url i.e fetch data from .
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Accept", "application/json");
+	        if (conn.getResponseCode() != 200) {
+	            throw new RuntimeException("Failed : HTTP Error code : "
+	                    + conn.getResponseCode());
+	        }
+	        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+	        BufferedReader br = new BufferedReader(in);
+	        String salida="";
+	        String output="";
+	        while ((output=br.readLine()) != null) {
+	        	salida=salida+output;
+	            
+	        }
+	     
+	        System.out.println(salida);
+	        
+	        JSONObject js = new JSONObject(salida);
+	        
+	        String result=js.get("results").toString();
+	        //System.out.println(result);
+	        JSONArray ltsResult = new JSONArray(result);
+//	        for (int i = 0; i < ltsResult.length(); i++) {
+//	        		System.out.println(ltsResult.get(i));
+//	        		System.out.println("-------");
+//			}
+
+	        String direccion = ltsResult.get(0).toString();
+	        JSONObject jsonDirec = new JSONObject(direccion);
+	        System.out.println(jsonDirec.get("formatted_address"));
+	        System.out.println("tam "+ltsResult.length());
+	        conn.disconnect();
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
 	}
 }

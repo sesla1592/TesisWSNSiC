@@ -1,5 +1,9 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,8 +111,48 @@ public class NodoControlador {
 	
 	public void guardarNodo(){
 		
+		try {
+			//extraigo dato de la ubicacion
+			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?latlng="+nodo.getLatitud()+","+nodo.getLongitud()+"&key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g");//your url i.e fetch data from .
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Accept", "application/json");
+	        if (conn.getResponseCode() != 200) {
+	            throw new RuntimeException("Failed : HTTP Error code : "
+	                    + conn.getResponseCode());
+	        }
+	        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+	        BufferedReader br = new BufferedReader(in);
+	        String salida="";
+	        String output="";
+	        while ((output=br.readLine()) != null) {
+	        	salida=salida+output;
+	            
+	        }
+	        JSONObject js = new JSONObject(salida);
+	        
+	        String result=js.get("results").toString();
+	        //System.out.println(result);
+	        JSONArray ltsResult = new JSONArray(result);
+//	        for (int i = 0; i < ltsResult.length(); i++) {
+//	        		System.out.println(ltsResult.get(i));
+//	        		System.out.println("-------");
+//			}
+	        
+	        String direccion = ltsResult.get(0).toString();
+	        JSONObject jsonDirec = new JSONObject(direccion);
+	        System.out.println(jsonDirec.get("formatted_address"));
+	        nodo.setDescripcion(jsonDirec.get("formatted_address").toString());
+	        conn.disconnect();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("error al encontrar lugar");
+			nodo.setDescripcion("lugar desconocido");
+		}
 			try{
 				
+				///
 				System.out.println(nodo.toString());
 				nodoDAO.insert(nodo);
 				nodo = new Nodo();
@@ -150,29 +194,7 @@ public class NodoControlador {
 	
 	public void busquedaNodoMongo() {
 		System.out.println("entro a la busqueda cod "+codNodo);
-		Block<Document> printBlock = new Block<Document>() {
-			@Override
-
-			public void apply(final Document document) {
-				resultadoBusqueda = "[" +document.toJson()+ "]";
-				JsonParser parser = new JsonParser();
-				JsonArray gsonArr = parser.parse(resultadoBusqueda).getAsJsonArray();
-//				for(JsonElement obj : gsonArr) {	
-//					
-//					JsonObject gsonObj = obj.getAsJsonObject();
-//					//ELEMENTOS PRIMITIVOS DE OBJETOS: fecha
-//					latitud = gsonObj.get("la").getAsString();
-//					longitud = gsonObj.get("lo").getAsString();
-//				}
-				JsonObject gsonObj = gsonArr.get(0).getAsJsonObject();
-				//ELEMENTOS PRIMITIVOS DE OBJETOS: fecha
-				latitud = gsonObj.get("la").getAsString();
-				longitud = gsonObj.get("lo").getAsString();
-				
-				System.out.println("latitud "+latitud+" Longitud "+longitud);
-			
-			}
-		};
+		
 		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 		MongoDatabase database = mongoClient.getDatabase(DBConnection.dbname);
 		MongoCollection<Document> collection = database.getCollection(DBConnection.dbcollection);

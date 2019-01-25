@@ -30,12 +30,32 @@ dashboard
 <br/>
 
 <script type="text/javascript" 
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD58EwYENuQLZRfsNUyuLqkeqVbFvxGqnA"></script>
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
   <p:growl id="growl" showDetail="true" />
  
        <p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardUser.simpleModel}" >
-       <p:ajax event="overlaySelect" listener="#{dashboardUser.onMarkerSelect}"  update="listaNodos"/>
+	       <p:ajax event="overlaySelect" listener="#{dashboardUser.onMarkerSelect}"  update="listaNodos panelDatos"/>
+	       <p:gmapInfoWindow id="infoWindow">
+	            <p:outputPanel style="text-align: center; display: block; margin: auto">
+	 
+	                    <h:outputText value="#{dashboardUser.marker.title}" />
+	                    <br/>
+	                    <h:outputText value="Sensores:" />
+	                    <br/>
+	                    <ui:repeat value="#{dashboardUser.nodoSelected.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombre}" />
+						        		<br/>
+						    </ui:repeat>
+	 
+	            </p:outputPanel>
+	        </p:gmapInfoWindow>
        </p:gmap>
+       <h:panelGroup id="panelDatos">
+       	datos sensor<br/>
+       	Temperatura: #{dashboardUser.datoTemp}<br/>
+       	Humedad: #{dashboardUser.datoHum}<br/>
+       </h:panelGroup>
        <h:selectOneMenu id="listaNodos" value="#{dashboardUser.sensorSeleccionado}" >
 		    
 			<f:selectItems value="#{dashboardUser.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>

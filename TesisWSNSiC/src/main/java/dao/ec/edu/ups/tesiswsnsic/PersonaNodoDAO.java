@@ -28,6 +28,23 @@ public class PersonaNodoDAO {
 		}
 	}
 	
+	public void remove(PersonaNodo personaNodo){
+		try {
+			//em.remove(personaNodo);
+			PersonaNodo managed = findbyId(personaNodo.getId());
+			em.remove(managed);
+		} catch (Exception e) {
+			System.out.println("error al eliminar "+this.getClass().getName());
+			e.printStackTrace();
+			// TODO: handle exception
+			
+		}
+	}
+	
+	public PersonaNodo findbyId(int id) {
+		return em.find(PersonaNodo.class, id);
+	}
+	
 	public void updatePersonaNodo(PersonaNodo personaNodo){
 		try {
 			em.merge(personaNodo);
@@ -60,5 +77,22 @@ public class PersonaNodoDAO {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public PersonaNodo getByPersonNodo(int userId, int nodoId) {
+
+		TypedQuery<PersonaNodo> query = em.createQuery("Select n from PersonaNodo n "
+				+ "where n.persona.id = :userId and n.nodo.id = :nodoId", PersonaNodo.class);
+		query.setParameter("userId", userId);
+		query.setParameter("nodoId", nodoId);
+		try {
+			PersonaNodo personaNodo = query.getSingleResult();
+			return personaNodo;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 }
