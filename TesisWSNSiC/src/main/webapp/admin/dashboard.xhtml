@@ -22,6 +22,7 @@
           </ol>
 
 <h2>Bienvenido: #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h2>
+<h2>Rol: #{dashboardAdmin.user.rolPerson.descripcion}</h2>
 <br/>
 		<script type="text/javascript" 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
@@ -71,6 +72,16 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
                                 <h:outputText value="Logitud"/>
                             </f:facet>
                             <h:outputText value="#{item.longitud}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Sensores"/>
+                            </f:facet>
+                            <ui:repeat value="#{item.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
+						        		<br/>
+						    </ui:repeat>
                         </p:column>
                         
                     </p:dataTable>

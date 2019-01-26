@@ -11,7 +11,8 @@
 
 <h:head></h:head> 
 <body> 
-
+<h2>Bienvenido: #{dashboardUser.user.nombre} #{dashboardUser.user.apellido}</h2>
+<h2>Rol: #{dashboardUser.user.rolPerson.descripcion}</h2>
 <h:form id="formulario">
 dashboard
 <br/>
@@ -44,7 +45,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 	                    <br/>
 	                    <ui:repeat value="#{dashboardUser.nodoSelected.ltssensores}" var="sensores">
 						        
-						            <h:outputText value="- #{sensores.nombre}" />
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
 						        		<br/>
 						    </ui:repeat>
 	 
@@ -52,7 +53,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 	        </p:gmapInfoWindow>
        </p:gmap>
        <h:panelGroup id="panelDatos">
-       	datos sensor<br/>
+       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br/>
        	Temperatura: #{dashboardUser.datoTemp}<br/>
        	Humedad: #{dashboardUser.datoHum}<br/>
        </h:panelGroup>

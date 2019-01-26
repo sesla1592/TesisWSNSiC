@@ -262,7 +262,8 @@ public class DashboardAdmin {
 	public void addMarker() {
 		for (int i = 0; i < ltsNodo.size(); i++) {
 			Marker marker = new Marker(new LatLng(ltsNodo.get(i).getLatitud(), ltsNodo.get(i).getLongitud()),
-					ltsNodo.get(i).getIdentificador());
+					ltsNodo.get(i).getNombre());
+			marker.setShadow(ltsNodo.get(i).getIdentificador());
 			simpleModel.addOverlay(marker);
 		}
 	}
@@ -285,7 +286,7 @@ public class DashboardAdmin {
 	
 	public void onMarkerSelect(OverlaySelectEvent event) {
 		marker = (Marker) event.getOverlay();
-		nodoSelected = findNodo(marker.getTitle());
+		nodoSelected = findNodo(marker.getShadow());
 		System.out.println("Nodo Selected" + nodoSelected.toString() +" sensores: "+ nodoSelected.getLtssensores().size());
 		
 	}

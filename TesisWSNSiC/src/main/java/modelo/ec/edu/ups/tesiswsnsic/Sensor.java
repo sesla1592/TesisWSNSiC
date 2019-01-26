@@ -28,6 +28,9 @@ public class Sensor {
 	@Column(name = "sen_estado")
 	private boolean estado;
 	
+	@Column(name = "sen_nombre_completo")
+	private String nombreCompleto;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="nod_sen_fk")
 	private Nodo nodo;
@@ -72,6 +75,19 @@ public class Sensor {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
+	public String getNombreCompleto() {
+		return nombreCompleto;
+	}
+
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 
 	@Override

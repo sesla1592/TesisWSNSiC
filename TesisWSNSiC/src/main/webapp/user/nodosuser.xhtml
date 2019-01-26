@@ -73,11 +73,11 @@
                         
                          <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Seonsores"/>
+                                <h:outputText value="Sensores"/>
                             </f:facet>
                             <ui:repeat value="#{item.ltssensores}" var="sensores">
 						        
-						            <h:outputText value="- #{sensores.nombre}" />
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
 						        		<br/>
 						    </ui:repeat>
                         </p:column>
@@ -122,9 +122,13 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Idenfiticador"/>
+                                <h:outputText value="Sensores"/>
                             </f:facet>
-                            <h:outputText value="#{item.identificador}"/>
+                            <ui:repeat value="#{item.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
+						        		<br/>
+						    </ui:repeat>
                         </p:column>
                         
                         <p:column>

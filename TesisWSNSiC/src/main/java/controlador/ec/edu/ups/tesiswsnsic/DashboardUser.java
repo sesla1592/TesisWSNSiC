@@ -72,7 +72,7 @@ public class DashboardUser implements Serializable {
 	public Nodo nodoSelected;
 	public Double datoTemp;
 	public Double datoHum;
-	public String fechaInicio="2019/01/10 00:00:00";
+	public String fechaInicio="2018/01/11 00:00:00";
 	public String fechaFin;
 	
 	private MongoClient mongoClient;
@@ -201,6 +201,14 @@ public class DashboardUser implements Serializable {
 		this.datoHum = datoHum;
 	}
 
+	public Persona getUser() {
+		return user;
+	}
+
+	public void setUser(Persona user) {
+		this.user = user;
+	}
+
 	public String recuperaDatos() {
 
 		Block<Document> printBlock = new Block<Document>() {
@@ -258,7 +266,8 @@ public class DashboardUser implements Serializable {
 				descripcion=descripcion+ltsMyNodos.get(i).getLtssensores().get(j).getNombre()+"\n";
 			}
 			Marker marker = new Marker(new LatLng(ltsMyNodos.get(i).getLatitud(), ltsMyNodos.get(i).getLongitud()),
-					ltsMyNodos.get(i).getIdentificador(),descripcion);
+					ltsMyNodos.get(i).getNombre(),descripcion);
+			marker.setShadow(ltsMyNodos.get(i).getIdentificador());
 			simpleModel.addOverlay(marker);
 
 		}
@@ -266,7 +275,7 @@ public class DashboardUser implements Serializable {
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
 		marker = (Marker) event.getOverlay();
-		nodoSelected = findNodo(marker.getTitle());
+		nodoSelected = findNodo(marker.getShadow());
 		System.out.println("Nodo Selected" + nodoSelected.toString() +" sensores: "+ nodoSelected.getLtssensores().size());
 		ltsSensores = new ArrayList<>();
 		ltsSensores.add("Todos");

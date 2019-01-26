@@ -235,6 +235,18 @@ public class NodoControlador {
 						sensor.setNombre(sensorM.getString("m"));
 						sensor.setDescripcion(sensorM.getString("s"));
 						sensor.setEstado(true);
+						if(sensorM.getString("m").equals("T")) {
+							sensor.setNombreCompleto("Temperatura");
+						}
+						if(sensorM.getString("m").equals("H")) {
+							sensor.setNombreCompleto("Humedad");
+						}
+						if(sensorM.getString("m").equals("R")) {
+							sensor.setNombreCompleto("Ruido");
+						}
+						if(sensorM.getString("m").equals("L")) {
+							sensor.setNombreCompleto("Luminosidad");
+						}
 						ltsSensor.add(sensor);
 					}
 					nodo.setLtssensores(ltsSensor);
