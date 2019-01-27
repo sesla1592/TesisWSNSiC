@@ -37,11 +37,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
                                  rowKey="#{item.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column>
+                        <p:column style="text-align: center;">
                             <f:facet name="header">
-                                <h:outputText value="Id"/>
+                                <h:outputText value="Estado"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <h:graphicImage rendered="#{item.estado == true}" value="/image/ic_active.png" style="width:50px;height;50px"></h:graphicImage> 
+                            <h:graphicImage rendered="#{item.estado == false}" value="/image/ic_desactive.png" style="width:50px;height;50px"></h:graphicImage> 
+                            
                         </p:column>
                         <p:column>
                             <f:facet name="header">

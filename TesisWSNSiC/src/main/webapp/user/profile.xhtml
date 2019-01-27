@@ -27,8 +27,60 @@ perfil
  
 </h:form>
 
+<div>
+	<h2>Datos Empresa</h2>
+	
+	<h:form>
+	<h:outputLabel value="Editar Empresa" />
+	<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+	
+	
+	<h:outputText  value="Nombre: " />
+	<h:inputText value="#{editEmpresa.empresa.nombre}"  pt:placeholder="Nombre" disabled="true"/>
+	<h:outputText  value="Direccion:" />
+	<h:inputText value="#{editEmpresa.empresa.direccion}" pt:placeholder="Direccion" />
+	<h:outputText  value="Telefono:" />
+	<h:inputText value="#{editEmpresa.empresa.telefono}" pt:placeholder="Telefono" />
+	
+	<h:outputText  value="estado: " />
+	<h:selectOneMenu value = "#{editEmpresa.empresa.estado}"> 
+					   <f:selectItem itemValue = "activo" itemLabel = "activo" /> 
+					   <f:selectItem itemValue = "inactivo" itemLabel = "inactivo" /> 
+					</h:selectOneMenu>
+	
+	<h:outputText  value="Correo:" />
+	<h:inputText value="#{editEmpresa.empresa.correo}" pt:placeholder="Correo" />
+	<h:outputText  value="Cuidad:" />
+	<h:inputText value="#{editEmpresa.empresa.ciudad}" pt:placeholder="Ciudad" />
+	<h:outputText  value="Pais:" />
+	<h:inputText value="#{editEmpresa.empresa.pais}" pt:placeholder="Pais" />
+	</h:panelGrid> 
+	 <h:commandButton action="#{editEmpresa.actualizar()}" value="Actualizar Empresa" />
+	
+	</h:form>
+</div>
 
-
+<div>
+	<h2>Datos Personales</h2>
+	<h:form>
+	
+	<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+	
+	
+	<h:outputText  value="Nombre: " />
+	<h:inputText value="#{editEmpresa.user.nombre}"  pt:placeholder="Nombre"/>
+	<h:outputText  value="Apellido: " />
+	<h:inputText value="#{editEmpresa.user.apellido}" pt:placeholder="Direccion" />
+	<h:outputText  value="Correo: " />
+	<h:inputText value="#{editEmpresa.user.correo}" pt:placeholder="Telefono" />
+	<h:outputText  value="Contraseña: " />
+	<h:inputText value="#{editEmpresa.user.password}" pt:placeholder="Telefono" />
+	
+	</h:panelGrid> 
+	 <h:commandButton action="#{editEmpresa.actualizarPersona()}" value="Actualizar Datos Personales" />
+	
+	</h:form>
+</div>
 
 </body> 
 </html>

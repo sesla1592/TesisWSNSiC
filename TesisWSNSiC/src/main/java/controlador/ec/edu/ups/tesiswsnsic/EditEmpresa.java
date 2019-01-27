@@ -6,7 +6,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
+import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
+import modelo.ec.edu.ups.tesiswsnsic.Persona;
 
 @ManagedBean
 public class EditEmpresa {
@@ -14,23 +16,34 @@ public class EditEmpresa {
 	@Inject
 	private EmpresaDAO empresaDAO;
 	
-	private Empresa empresa;
+	@Inject
+	private PersonaDAO personaDAO;
 	
+	private Empresa empresa;
+	Persona user;
 	@PostConstruct
 	public void init() {
-		empresa = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("empresaSelected");
-		System.out.println("empresa s"+empresa.toString());
+		try {
+			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSelected");
+			empresa =  user.getEmpresa();
+			System.out.println("user " + user.getEmpresa().toString());
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("error la extraer usuario");
+		}
+//		empresa = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+//				.get("empresaSelected");
+//		System.out.println("empresa s"+empresa.toString());
 	}
 	
 	public void actualizar(){
 		empresaDAO.updateEmpresa(empresa);
-		FacesContext contex = FacesContext.getCurrentInstance();
-		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/listaEmpresas.xhtml");
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+		//mensaje de cambio realizado
+	}
+	
+	public void actualizarPersona() {
+		personaDAO.updatePersona(user);
 	}
 
 	public Empresa getEmpresa() {
@@ -40,14 +53,15 @@ public class EditEmpresa {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-	
-	public void back(){
-		FacesContext contex = FacesContext.getCurrentInstance();
-		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/empresa/listaEmpresas.xhtml");
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+
+	public Persona getUser() {
+		return user;
 	}
+
+	public void setUser(Persona user) {
+		this.user = user;
+	}
+	
+	
 	
 }

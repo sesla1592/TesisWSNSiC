@@ -154,6 +154,7 @@ public class NodoControlador {
 				
 				///
 				System.out.println(nodo.toString());
+				nodo.setEstado(true);
 				nodoDAO.insert(nodo);
 				nodo = new Nodo();
 				nodoSelected = new Nodo();

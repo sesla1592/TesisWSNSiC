@@ -43,6 +43,9 @@ public class Nodo {
 	
 	@Column(name = "longitud")
 	private Double longitud; // de mongo
+	
+	@Column(name = "estado")
+	private boolean estado; // de mongo
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "nod_pen_fk", referencedColumnName = "nod_id")
@@ -128,6 +131,15 @@ public class Nodo {
 
 	public void setLtssensores(List<Sensor> ltssensores) {
 		this.ltssensores = ltssensores;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 

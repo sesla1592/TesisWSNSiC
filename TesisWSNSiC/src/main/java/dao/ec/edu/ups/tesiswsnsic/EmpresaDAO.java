@@ -108,4 +108,15 @@ public class EmpresaDAO {
 			return idnew;
 		}
 	}
+	
+//	public Empresa getEmpresaByUser() {
+//		try {
+//			String jpql = "Select e from Empresa e where e.";
+//			TypedQuery<Empresa> query = em.createQuery(jpql, Empresa.class);
+//			empresas = query.getResultList();
+//			return empresas;
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
 }
