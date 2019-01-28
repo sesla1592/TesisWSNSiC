@@ -110,8 +110,10 @@
                 <h:outputText value="Descripcion" />
                 <h:outputText value="#{nodoControlador.nodoSelected.descripcion}"/>
                 
-                <h:outputText value="Identificador" />
-                <h:outputText value="#{nodoControlador.nodoSelected.identificador}"/>
+               	<h:selectOneMenu value = "#{nodoControlador.nodoSelected.estado}"> 
+				   <f:selectItem itemValue = "true" itemLabel = "activo" /> 
+				   <f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
+				</h:selectOneMenu>
 
             </p:panelGrid>
             

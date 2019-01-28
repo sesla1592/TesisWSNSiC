@@ -180,6 +180,16 @@ public class EmpresaControlador {
 		}
 	}
 	
+	public void changeStatusEmpresa(Empresa empresa) {
+		if(empresa.getEstado().equals("activo")) {
+			empresa.setEstado("inactivo");
+		}else {
+			empresa.setEstado("activo");
+		}
+		
+		empresaDAO.updateEmpresa(empresa);
+	}
+	
 	public void backAdmin(){
 		FacesContext contex = FacesContext.getCurrentInstance();
 		contex.getExternalContext().getSessionMap().put("empresaSelected", empresa);

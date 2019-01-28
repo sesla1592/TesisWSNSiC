@@ -54,14 +54,21 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
        </p:gmap>
        <h:panelGroup id="panelDatos">
        	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br/>
-       	Temperatura: #{dashboardUser.datoTemp}<br/>
-       	Humedad: #{dashboardUser.datoHum}<br/>
+       	<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}" value="Temperatura: #{dashboardUser.datoTemp}" /><br/>
+       	<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}" value="Humedad: #{dashboardUser.datoHum}" /><br/>
+       	<h:outputText rendered="#{dashboardUser.datoLum != 0.0}" value="Luminosidad: #{dashboardUser.datoLum}" /><br/>
+       	<h:outputText rendered="#{dashboardUser.datoRui != 0.0}" value="Ruido: #{dashboardUser.datoRui}" /><br/>
        </h:panelGroup>
        <h:selectOneMenu id="listaNodos" value="#{dashboardUser.sensorSeleccionado}" >
 		    
 			<f:selectItems value="#{dashboardUser.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
 		</h:selectOneMenu>
-		<b:row>
+		<h:selectOneMenu value = "#{dashboardUser.tipoFecha}"> 
+		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
+		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
+		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		</h:selectOneMenu> 
+		<b:row style="background-color: red;width: 100%;height: 100%;">
 				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
 					<hf:chartSerie value="#{dashboardUser.ltsSTemp}" 
@@ -69,14 +76,24 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 									point="#{point.valor}" 
 									tickLabel="#{point.fecha}"
 									name="Temperatura"
-									rendered="true"
 									/>
 					<hf:chartSerie value="#{dashboardUser.ltsSHum}" 
 									var="point" 
 									point="#{point.valor}" 
 									tickLabel="#{point.fecha}"
 									name="Humedad"
-									rendered="false"
+									/>
+					<hf:chartSerie value="#{dashboardUser.ltsSLum}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Luminosidad"
+									/>
+					<hf:chartSerie value="#{dashboardUser.ltsSRui}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Ruido"
 									/>
 									
 									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
@@ -92,9 +109,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		</b:row>		
 		<b:commandButton action="#{dashboardUser.consulta()}" value="Graficar" update="grafica">
 		</b:commandButton>
-	
+	 
        </h:form>
-
+	<h:form>
+	<h:commandButton actionListener="#{dashboardUser.descargarCSV()}" value="Descargar datos CSV" />
+	<h:commandButton actionListener="#{dashboardUser.descargarJSON()}" value="Descargar datos JSON" />
+	<h:commandButton actionListener="#{dashboardUser.descargarPDF()}" value="Descargar datos PDF" />
+	</h:form>
 
 
 

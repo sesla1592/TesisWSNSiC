@@ -28,12 +28,6 @@
                                  rowsPerPageTemplate="10,20,30,40,50">
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
                             <h:outputText value="#{empresa.nombre}"/>
@@ -75,7 +69,18 @@
                             </f:facet>
                             <h:outputText value="#{empresa.pais}"/>
                         </p:column>
-                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Usuario"/>
+                            </f:facet>
+                            <h:outputText value="#{empresa.personas.get(0).nombre} #{empresa.personas.get(0).apellido}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Cambiar estado"/>
+                            </f:facet>
+                            <h:commandButton action="#{empresaControlador.changeStatusEmpresa(empresa)}" value="Cambiar estado" />
+                        </p:column>
                     </p:dataTable>
                 </p:panel>
 	
