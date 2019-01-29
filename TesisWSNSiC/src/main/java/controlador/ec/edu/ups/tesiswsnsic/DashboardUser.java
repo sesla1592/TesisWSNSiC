@@ -86,7 +86,7 @@ public class DashboardUser implements Serializable {
 	protected List<MedValFec> ltsSLum;
 	protected List<MedValFec> ltsSRui;
 	
-	private String URL_FOLDER="/Users/paul/dataWSNSIC/";
+	private String URL_FOLDER="C:\\Users\\rommel.inga\\tesisfiles\\";
 	
 	private List<Reporte> ltsReporte;
 	
@@ -694,7 +694,7 @@ public class DashboardUser implements Serializable {
 		org.json.simple.JSONArray company = new org.json.simple.JSONArray();
 		for (int i = 0; i < ltsReporte.size(); i++) {
 			
-			obj.put("codSensor", ltsReporte.get(i).getCodSensor());
+			obj.put("codNodo", ltsReporte.get(i).getCodSensor());
 			obj.put("fecha", ltsReporte.get(i).getFecha());
 			
 			obj.put("latitud", ltsReporte.get(i).getLatitud());
@@ -707,7 +707,7 @@ public class DashboardUser implements Serializable {
 		}
 		contenedor.put("data", company);
 		// try-with-resources statement based on post comment below :)
-		try (FileWriter file = new FileWriter(URL_FOLDER+"/file1.json")) {
+		try (FileWriter file = new FileWriter(URL_FOLDER+"file1.json")) {
 			file.write(contenedor.toJSONString());
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -731,7 +731,7 @@ public class DashboardUser implements Serializable {
 	public void crearPDF() {
 		try {
 			com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 36, 36, 100, 54);
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(URL_FOLDER+"/prueba.pdf"));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(URL_FOLDER+"prueba.pdf"));
 			//HeaderFooterPageEvent event = new HeaderFooterPageEvent();
 			//writer.setPageEvent(event);
 			document.open();
@@ -756,7 +756,7 @@ public class DashboardUser implements Serializable {
 			PdfPCell columnHeader;
 			// Fill table rows (rellenamos las filas de la tabla).
 			
-			columnHeader = new PdfPCell(new Phrase("Codigo Sensor",headerTable));
+			columnHeader = new PdfPCell(new Phrase("Codigo Nodo",headerTable));
 			columnHeader.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(columnHeader);
 			columnHeader = new PdfPCell(new Phrase("Fecha",headerTable));
