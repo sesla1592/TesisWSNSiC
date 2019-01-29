@@ -314,11 +314,13 @@ public class DashboardAdmin {
 
 
 	public void setSensorSeleccionado(String sensorSeleccionado) {
-		if(sensorSeleccionado.equals("Todos")) {
-			this.sensorSeleccionado = sensorSeleccionado;
-		}else {
-			sensorSeleccionado=sensorSeleccionado.substring(0, 1);
-			this.sensorSeleccionado = sensorSeleccionado;
+		if(sensorSeleccionado!=null) {
+			if(sensorSeleccionado.equals("Todos")) {
+				this.sensorSeleccionado = sensorSeleccionado;
+			}else {
+				sensorSeleccionado=sensorSeleccionado.substring(0, 1);
+				this.sensorSeleccionado = sensorSeleccionado;
+			}
 		}
 	}
 

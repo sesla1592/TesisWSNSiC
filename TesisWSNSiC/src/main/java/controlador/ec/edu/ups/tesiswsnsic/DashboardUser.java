@@ -79,7 +79,7 @@ public class DashboardUser implements Serializable {
 	public MapModel simpleModel;
 	List<Nodo> ltsMyNodos = new ArrayList<>();
 	List<String> ltsSensores = new ArrayList<>();
-	String sensorSeleccionado;
+	String sensorSeleccionado="";
 	
 	protected List<MedValFec> ltsSTemp;
 	protected List<MedValFec> ltsSHum;
