@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:hf="http://highfaces.org"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head></h:head>
+<body>
+
+<script type="text/javascript" 
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
+
+	<h:form>
+		<h:outputLabel value="#{blogDetalle.blog.nombreBlog}" /><br/>
+		<h:outputLabel value="Descripcion #{blogDetalle.blog.descripcion}" /><br/>
+		<h:outputLabel value="Empresa: #{blogDetalle.blog.empresa.nombre}" /><br/>
+		<h:outputLabel value="Descripcion Empresa: #{blogDetalle.blog.empresa.descripcion}" /><br/>
+		<h:outputLabel value="Propietario: #{blogDetalle.blog.empresa.personas.get(0).nombre}" /><br/>
+		<h:outputLabel value="Correo: #{blogDetalle.blog.empresa.correo}" /><br/>
+		<h:outputLabel value="Direccion: #{blogDetalle.blog.empresa.direccion}" /><br/>
+		<h:outputLabel value="Cuidad: #{blogDetalle.blog.empresa.ciudad}" /><br/>	
+	</h:form>
+<h:form>
+<p:growl id="growl" showDetail="true" />
+
+<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{blogDetalle.simpleModel}" >
+	       <p:ajax event="overlaySelect" listener="#{blogDetalle.onMarkerSelect}"  update="panelDatos listaNodos"/>
+	       <p:gmapInfoWindow id="infoWindow">
+	            <p:outputPanel style="text-align: center; display: block; margin: auto">
+	 
+	                    <h:outputText value="#{blogDetalle.marker.title}" />
+	                    <br/>
+	                    <h:outputText value="Sensores:" />
+	                    <br/>
+	                    <ui:repeat value="#{blogDetalle.nodoSelected.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
+						        		<br/>
+						    </ui:repeat>
+	 
+	            </p:outputPanel>
+	        </p:gmapInfoWindow>
+       </p:gmap>
+
+<h:panelGroup id="panelDatos">
+       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br/>
+       	<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}" value="Temperatura: #{blogDetalle.datoTemp}" /><br/>
+       	<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}" value="Humedad: #{blogDetalle.datoHum}" /><br/>
+       	<h:outputText rendered="#{blogDetalle.datoLum != 0.0}" value="Luminosidad: #{blogDetalle.datoLum}" /><br/>
+       	<h:outputText rendered="#{blogDetalle.datoRui != 0.0}" value="Ruido: #{blogDetalle.datoRui}" /><br/>
+       </h:panelGroup>
+       <h:selectOneMenu id="listaNodos" value="#{blogDetalle.sensorSeleccionado}" >
+		    
+			<f:selectItems value="#{blogDetalle.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
+		</h:selectOneMenu>
+		<h:selectOneMenu value = "#{blogDetalle.tipoFecha}"> 
+		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
+		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
+		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		</h:selectOneMenu> 
+		<b:row style="background-color: red;width: 100%;height: 100%;">
+				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
+					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
+					<hf:chartSerie value="#{blogDetalle.ltsSTemp}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Temperatura"
+									/>
+									
+					<hf:chartSerie value="#{blogDetalle.ltsSHum}" 
+									var="pointh" 
+									point="#{pointh.valor}" 
+									tickLabel="#{pointh.fecha}"
+									name="Humedad"
+									/>
+					<hf:chartSerie value="#{blogDetalle.ltsSLum}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Luminosidad"
+									/>
+					<hf:chartSerie value="#{blogDetalle.ltsSRui}" 
+									var="point" 
+									point="#{point.valor}" 
+									tickLabel="#{point.fecha}"
+									name="Ruido"
+									/>
+									
+									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
+									<hf:chartTooltip  backgroundColor="#000000" shared="true">
+									<f:facet name="header">
+            						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
+        							</f:facet>
+        							<f:facet name="body">
+        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>"/>
+        							</f:facet>
+									</hf:chartTooltip>									
+				</hf:chart>
+		</b:row>		
+		<b:commandButton action="#{blogDetalle.consulta()}" value="Graficar" update="grafica">
+		</b:commandButton>
+	 
+       </h:form>
+</body>
+</html>

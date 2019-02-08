@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form>
+perfil
+
+<br/>
+<a id="item1"  href="dashboard.xhtml">
+	<span>Pagina principal</span>
+</a>
+<br/>
+<a id="item1"  href="profile.xhtml">
+	<span>Perfil</span>
+</a>
+<br/>
+<a id="item1"  href="nodosuser.xhtml">
+	<span>Mis Nodos</span>
+</a>
+ <br/>
+<a id="item1"  href="myBlog.xhtml">
+	<span>Mi Blog</span>
+</a>
+</h:form>
+
+<div>
+	<h2>Mi Blog</h2>
+	
+	<h:form>
+	<h:outputLabel value="Editar Empresa" />
+	<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+	
+	
+	<h:outputText  value="Nombre Del blog: " />
+	<h:inputText value="#{blogControlador.blog.nombreBlog}"  pt:placeholder="Nombre" />
+	<h:outputText  value="Descripcion: " />
+	<h:inputText value="#{blogControlador.blog.descripcion}" pt:placeholder="Descripcion" />
+	
+	</h:panelGrid> 
+	 <h:commandButton action="#{editEmpresa.actualizar()}" value="Actualizar Empresa" />
+	
+	</h:form>
+</div>
+
+</body> 
+</html>

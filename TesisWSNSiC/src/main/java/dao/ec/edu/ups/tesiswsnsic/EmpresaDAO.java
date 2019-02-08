@@ -31,15 +31,17 @@ public class EmpresaDAO {
 			return empresa;
 		} catch (Exception e) {
 			System.out.println("error al insertar "+this.getClass().getName());
+			e.printStackTrace();
 			// TODO: handle exception
 			return null;
 		}
 	}
 	public void updateEmpresa(Empresa empresa){
+		System.out.println("------- entro a actualizar empresa");
 		try {
 			em.merge(empresa);
 		} catch (Exception e) {
-			System.out.println("error al insertar "+this.getClass().getName());
+			System.out.println("error al actualizar "+this.getClass().getName());
 			// TODO: handle exception
 		}
 	}

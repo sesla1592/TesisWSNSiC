@@ -27,7 +27,10 @@ dashboard
 <a id="item1"  href="nodosuser.xhtml">
 	<span>Mis Nodos</span>
 </a>
-
+<br/>
+<a id="item1"  href="myBlog.xhtml">
+	<span>Mi Blog</span>
+</a>
 <br/>
 
 <script type="text/javascript" 
@@ -77,10 +80,11 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 									tickLabel="#{point.fecha}"
 									name="Temperatura"
 									/>
+									
 					<hf:chartSerie value="#{dashboardUser.ltsSHum}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
+									var="pointh" 
+									point="#{pointh.valor}" 
+									tickLabel="#{pointh.fecha}"
 									name="Humedad"
 									/>
 					<hf:chartSerie value="#{dashboardUser.ltsSLum}" 

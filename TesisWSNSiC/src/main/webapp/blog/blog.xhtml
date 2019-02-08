@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head></h:head>
+<body>
+
+	<h:form>
+		<h:outputLabel value="Blogs Empresariales" />
+
+		<p:dataTable value="#{publicBlog.ltsBlogs}" var="blog" rows="10">
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nombre" />
+				</f:facet>
+				<h:outputText value="#{blog.nombreBlog}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Descripcion" />
+				</f:facet>
+				<h:outputText value="#{blog.descripcion}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Empresa" />
+				</f:facet>
+				<h:outputText value="#{blog.empresa.nombre}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Propietario" />
+				</f:facet>
+				<h:outputText value="#{blog.empresa.personas.get(0).nombre}" />
+			</p:column>
+			<p:column>
+				<h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</h:form>
+
+
+
+</body>
+</html>

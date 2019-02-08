@@ -21,6 +21,7 @@ public class EditEmpresa {
 	
 	private Empresa empresa;
 	Persona user;
+	
 	@PostConstruct
 	public void init() {
 		try {

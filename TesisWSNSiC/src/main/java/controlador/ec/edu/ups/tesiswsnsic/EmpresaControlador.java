@@ -9,9 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
+import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.TipoEmpresaDAO;
+import modelo.ec.edu.ups.tesiswsnsic.Blog;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa;
@@ -33,6 +35,9 @@ public class EmpresaControlador {
 	private String selecttemp;
 	
 	private Persona user;
+	
+	@Inject
+	BlogDAO blogDAO;
 	
 	@Inject
 	PersonaDAO personaDAO;
@@ -64,9 +69,9 @@ public class EmpresaControlador {
 	public void listarEmpresa() {
 		ltsEmpresa = empresaDAO.getAllEmpresas();
 		System.out.println("tam lts----> "+ltsEmpresa.size());
-		for (int i = 0; i < ltsEmpresa.size(); i++) {
-			System.out.println("emp "+ltsEmpresa.get(i).toString());
-		}
+//		for (int i = 0; i < ltsEmpresa.size(); i++) {
+//			System.out.println("emp "+ltsEmpresa.get(i).toString());
+//		}
 	}
 
 	public Empresa getEmpresa() {
@@ -135,9 +140,15 @@ public class EmpresaControlador {
 				tipoEmpSelected = tipoempresas.get(0);
 				empresa.setTipoempresa(tipoEmpSelected);
 			}
+			Blog blog = new Blog();
+			blog.setVisitas(0);
+			blog = blogDAO.insert(blog);
+			empresa.setBlog(blog);
 			empresa.setEstado("activo");
 			empresa = empresaDAO.insertEmpresa(empresa);
-			System.out.println("em "+empresa);
+			System.out.println("em ->"+empresa.toString());
+			blog.setEmpresa(empresa);
+			blogDAO.update(blog);
 			user.setEmpresa(empresa);
 			personaDAO.updatePersona(user);
 			

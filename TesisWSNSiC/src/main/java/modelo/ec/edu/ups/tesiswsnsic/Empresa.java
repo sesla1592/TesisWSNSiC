@@ -2,6 +2,7 @@ package modelo.ec.edu.ups.tesiswsnsic;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +27,9 @@ public class Empresa {
 	@Column(name = "emp_nombre")
 	private String nombre;
 
+	@Column(name = "emp_descripcion")
+	private String descripcion;
+	
 	@Column(name = "emp_direccion")
 	private String direccion;
 
@@ -54,6 +59,10 @@ public class Empresa {
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "emp_nod_fk", referencedColumnName = "emp_id")
 	private List<Nodo> listaNodos;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "blo_id")
+	private Blog blog;
 
 	public int getId() {
 		return id;
@@ -144,12 +153,30 @@ public class Empresa {
 	}
 
 	
+	public Blog getBlog() {
+		return blog;
+	}
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((blog == null) ? 0 : blog.hashCode());
 		result = prime * result + ((ciudad == null) ? 0 : ciudad.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
+		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + id;
@@ -171,6 +198,11 @@ public class Empresa {
 		if (getClass() != obj.getClass())
 			return false;
 		Empresa other = (Empresa) obj;
+		if (blog == null) {
+			if (other.blog != null)
+				return false;
+		} else if (!blog.equals(other.blog))
+			return false;
 		if (ciudad == null) {
 			if (other.ciudad != null)
 				return false;
@@ -180,6 +212,11 @@ public class Empresa {
 			if (other.correo != null)
 				return false;
 		} else if (!correo.equals(other.correo))
+			return false;
+		if (descripcion == null) {
+			if (other.descripcion != null)
+				return false;
+		} else if (!descripcion.equals(other.descripcion))
 			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
@@ -228,9 +265,9 @@ public class Empresa {
 
 	@Override
 	public String toString() {
-		return "Empresa [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono
-				+ ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad + ", pais=" + pais + "]";
+		return "Empresa [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", direccion=" + direccion
+				+ ", telefono=" + telefono + ", estado=" + estado + ", correo=" + correo + ", ciudad=" + ciudad
+				+ ", pais=" + pais + "]";
 	}
-
 	
 }

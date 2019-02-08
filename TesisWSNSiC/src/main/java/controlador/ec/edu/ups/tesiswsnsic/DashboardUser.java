@@ -87,6 +87,7 @@ public class DashboardUser implements Serializable {
 	protected List<MedValFec> ltsSRui;
 	
 	private String URL_FOLDER="C:\\Users\\rommel.inga\\tesisfiles\\";
+	//private String URL_FOLDER="/Users/paul/dataWSNSIC/";
 	
 	private List<Reporte> ltsReporte;
 	
@@ -400,24 +401,26 @@ public class DashboardUser implements Serializable {
 			Date date = new Date();
 			//Caso 2: obtener la fecha y salida por pantalla con formato:
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			String fechaPrueba = dateFormat.format(date)+" 00:00:00";
+			fechaInicio = dateFormat.format(date)+" 00:00:00";
 		}
 		if(tipoFecha.equals("Semanal")) {
 			Calendar calendar =Calendar.getInstance(); //obtiene la fecha de hoy 
 			calendar.add(Calendar.DATE, -7); //el -3 indica que se le restaran 3 dias 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			String fechaPrueba = dateFormat.format(calendar.getTime())+" 00:00:00";
-			System.out.println("fecha semanal "+fechaPrueba);
+			fechaInicio = dateFormat.format(calendar.getTime())+" 00:00:00";
+			System.out.println("fecha semanal "+fechaInicio);
 		}
 		if(tipoFecha.equals("Mensual")) {
 			Calendar calendar =Calendar.getInstance(); //obtiene la fecha de hoy 
 			calendar.add(Calendar.DATE, -30); //el -3 indica que se le restaran 3 dias 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			String fechaPrueba = dateFormat.format(calendar.getTime())+" 00:00:00";
-			System.out.println("fecha mensual "+fechaPrueba);
+			fechaInicio = dateFormat.format(calendar.getTime())+" 00:00:00";
+			System.out.println("fecha mensual "+fechaInicio);
 		}
 		
 		System.out.println("sensor seleccionado: "+sensorSeleccionado);
+		System.out.println("fache inicio : "+fechaInicio);
+		System.out.println("fache fin : "+fechaFin);
 		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 
 		BasicDBObject query = new BasicDBObject();
@@ -429,20 +432,15 @@ public class DashboardUser implements Serializable {
 		DBCollection coll = db.getCollection(DBConnection.dbcollection);
 		
 		DBCursor d1 = coll.find(query);
-		//int cont=0;
-		//System.out.println("contador "+cont+ " tam "+d1.count() +" - "+d1.length());
 		if(sensorSeleccionado.equals("Todos")) {
 			System.out.println("selecciono todos");
 			while(d1.hasNext()) {
 				
 				DBObject obj = d1.next();
-				//System.out.println(cont+" prueba F---> "+obj.toString());
-				//JsonArray ltsMediciones = (JsonArray) obj.get("ms");
 				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
 				fec = obj.get("fecha").toString();
 				for (int i = 0; i < ltsMediciones.length(); i++) {
 					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					//JsonObject gsonObj2= (JsonObject) ltsMediciones.get(i);
 					medici = gsonObj2.get("m").toString();//va el nombre  del sensor
 					if(medici.equals("T")) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
@@ -469,14 +467,16 @@ public class DashboardUser implements Serializable {
 			}
 		}else {
 			System.out.println("selecciono uno");
+			fec="";
 			while(d1.hasNext()) {
 				
 				DBObject obj = d1.next();
+				
 				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
 				fec = obj.get("fecha").toString();
+				fec = fec.substring(0,10);
 				for (int i = 0; i < ltsMediciones.length(); i++) {
 					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					//JsonObject gsonObj2= (JsonObject) ltsMediciones.get(i);
 					medici = gsonObj2.get("m").toString();//va el nombre  del sensor
 					if(medici.equals(sensorSeleccionado)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
@@ -490,7 +490,7 @@ public class DashboardUser implements Serializable {
 							ltsSLum.add(new MedValFec(medici, val, fec));
 						}
 						if(sensorSeleccionado.equals("R")) {
-							ltsSRui.add(new MedValFec(medici, val, fec));
+							ltsSRui.add(new MedValFec(medici, val,fec));
 						}
 						
 					}
@@ -503,6 +503,17 @@ public class DashboardUser implements Serializable {
 //		for (int i = 0; i < puntos.size(); i++) {
 //			System.out.println("punto "+puntos.get(i).toString());
 //		}
+		
+		System.out.println("ltsSLum "+ltsSLum.size());
+		System.out.println("ltsSHum "+ltsSHum.size());
+		System.out.println("ltsSTemp "+ltsSTemp.size());
+		System.out.println("ltsSRui "+ltsSRui.size());
+		
+		for (int i = 0; i < ltsSHum.size(); i++) {
+			System.out.println("data H "+ltsSHum.get(i).toString());
+			//System.out.println("data L "+ltsSLum.get(i).toString());
+		}
+		
 		System.out.println("Connection Succesfull");
 	}
 	
