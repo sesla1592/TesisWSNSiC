@@ -20,7 +20,8 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		<h:outputLabel value="Descripcion #{blogDetalle.blog.descripcion}" /><br/>
 		<h:outputLabel value="Empresa: #{blogDetalle.blog.empresa.nombre}" /><br/>
 		<h:outputLabel value="Descripcion Empresa: #{blogDetalle.blog.empresa.descripcion}" /><br/>
-		<h:outputLabel value="Propietario: #{blogDetalle.blog.empresa.personas.get(0).nombre}" /><br/>
+		<h:outputLabel value="Autor: #{blogDetalle.blog.empresa.personas.get(0).nombre} #{blogDetalle.blog.empresa.personas.get(0).apellido}" /><br/>
+		<h:outputLabel value="Fecha de publicacion: #{blogDetalle.blog.fechaPub}" /><br/>
 		<h:outputLabel value="Correo: #{blogDetalle.blog.empresa.correo}" /><br/>
 		<h:outputLabel value="Direccion: #{blogDetalle.blog.empresa.direccion}" /><br/>
 		<h:outputLabel value="Cuidad: #{blogDetalle.blog.empresa.ciudad}" /><br/>	
@@ -48,7 +49,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
        </p:gmap>
 
 <h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br/>
        	<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}" value="Temperatura: #{blogDetalle.datoTemp}" /><br/>
        	<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}" value="Humedad: #{blogDetalle.datoHum}" /><br/>
        	<h:outputText rendered="#{blogDetalle.datoLum != 0.0}" value="Luminosidad: #{blogDetalle.datoLum}" /><br/>

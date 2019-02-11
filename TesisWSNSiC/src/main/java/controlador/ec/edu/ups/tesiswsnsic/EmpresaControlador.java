@@ -1,6 +1,9 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -140,8 +143,13 @@ public class EmpresaControlador {
 				tipoEmpSelected = tipoempresas.get(0);
 				empresa.setTipoempresa(tipoEmpSelected);
 			}
+			Date date = new Date();
+			DateFormat fechaPub = new SimpleDateFormat("dd/MM/yyyy");
+			String fechaPublicacion = fechaPub.format(date);
+			
 			Blog blog = new Blog();
 			blog.setVisitas(0);
+			blog.setFechaPub(fechaPublicacion);
 			blog = blogDAO.insert(blog);
 			empresa.setBlog(blog);
 			empresa.setEstado("activo");

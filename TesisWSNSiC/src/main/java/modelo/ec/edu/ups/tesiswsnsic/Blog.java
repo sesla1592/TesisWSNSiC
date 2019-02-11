@@ -31,6 +31,9 @@ public class Blog {
 	@Column(name = "blo_img64")
 	private String imagen;
 	
+	@Column(name = "blo_fecha_pub")
+	private String fechaPub;
+	
 	@Column(name = "blo_visitas")
 	private int visitas;
 	
@@ -90,6 +93,22 @@ public class Blog {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public String getFechaPub() {
+		return fechaPub;
+	}
+
+	public void setFechaPub(String fechaPub) {
+		this.fechaPub = fechaPub;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	@Override

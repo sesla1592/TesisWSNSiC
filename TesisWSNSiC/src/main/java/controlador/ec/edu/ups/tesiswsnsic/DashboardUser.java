@@ -86,8 +86,8 @@ public class DashboardUser implements Serializable {
 	protected List<MedValFec> ltsSLum;
 	protected List<MedValFec> ltsSRui;
 	
-	private String URL_FOLDER="C:\\Users\\rommel.inga\\tesisfiles\\";
-	//private String URL_FOLDER="/Users/paul/dataWSNSIC/";
+	//private String URL_FOLDER="C:\\Users\\rommel.inga\\tesisfiles\\";
+	private String URL_FOLDER="/Users/paul/dataWSNSIC/";
 	
 	private List<Reporte> ltsReporte;
 	
@@ -396,7 +396,6 @@ public class DashboardUser implements Serializable {
 		ltsSTemp = new ArrayList<>();
 		ltsSLum = new ArrayList<>();
 		ltsSRui = new ArrayList<>();
-		System.out.println("tipo de filtro fecha "+tipoFecha);
 		if(tipoFecha.equals("Diario")) {
 			Date date = new Date();
 			//Caso 2: obtener la fecha y salida por pantalla con formato:
@@ -554,37 +553,6 @@ public class DashboardUser implements Serializable {
 				}
 				
 			}
-			
-			//boolean nodoInsert = true;//nodoDAO.existsNode(codNodo);
-//			if(nodoInsert) {
-//				//existe el nodo
-//				System.out.println("existe el nodo en la bd");
-//			}else {
-//				//
-//				System.out.println("no existe el nodo en la bd");
-//				try {
-//					nodo.setIdentificador(codNodo);
-//					nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
-//					nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
-//					System.out.println("sensores "+ d1.get("ms"));
-//					JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
-//					System.out.println("tam sensores "+ltsSensores.length());
-//					List<Sensor> ltsSensor = new ArrayList<>();
-//					for (int i = 0; i < ltsSensores.length(); i++) {
-//						JSONObject sensorM = ltsSensores.getJSONObject(i);
-//						Sensor sensor = new Sensor();
-//						sensor.setNombre(sensorM.getString("m"));
-//						sensor.setDescripcion(sensorM.getString("s"));
-//						sensor.setEstado(true);
-//						ltsSensor.add(sensor);
-//					}
-//					nodo.setLtssensores(ltsSensor);
-//					guardarNodo();
-//				}catch (Exception e) {
-//					// TODO: handle exception
-//					e.printStackTrace();
-//				}
-//			}
 		}else {
 			System.out.println("prueba---> no encontro");
 		}
@@ -595,24 +563,30 @@ public class DashboardUser implements Serializable {
 	public void descargarCSV() {
 		ltsReporte= new ArrayList<>();
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
-			datosNodo(ltsMyNodos.get(i).getIdentificador());
+			datosNodo(ltsMyNodos.get(i).getIdentificador(),true);
 		}
-//		for (int i = 0; i < ltsReporte.size(); i++) {
-//			System.out.println(ltsReporte.get(i).toString());
-//		}
 		crearCSV();
 	}
 	
-	public void datosNodo(String codSensor) {
+	public void datosNodo(String codSensor,boolean historico) {
 
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 		BasicDBObject query = new BasicDBObject();
 		query.put("n", codSensor);
-		
+		System.out.println("sensor selected ----> " +codSensor);
 		//busquedaNodo.forEach(printBlock); 
 		DB db = mongoClient.getDB(DBConnection.dbname);
 		DBCollection coll = db.getCollection(DBConnection.dbcollection);
-		
+		if(historico) {
+//			System.out.println("fache inicio : "+fechaInicio);
+//			System.out.println("fache fin : "+fechaFin);
+//			System.out.println("prueba");
+//			fechaInicio="2019/01/11 00:00:00";
+//			fechaFin="2019/01/11 23:59:59";
+//			System.out.println("fache inicio : "+fechaInicio);
+//			System.out.println("fache fin : "+fechaFin);
+			query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
+		}
 		
 		DBCursor d1 = coll.find(query);
 		double latitud=0.0;
@@ -655,6 +629,8 @@ public class DashboardUser implements Serializable {
 				
 			}
 		}
+		
+		System.out.println("tam reporte "+ltsReporte.size());
 	}
 	
 	public void crearCSV() {
@@ -675,14 +651,10 @@ public class DashboardUser implements Serializable {
 				colum.add(ltsReporte.get(i).getValor());
 				csvPrinter.printRecord(colum);
 			}
-			csvPrinter.flush();
-//			for (int i = 0; i < ltsCabecera.length; i++) {
-//				
-//			}
-			
-			
+			csvPrinter.flush();	
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 	}
@@ -690,7 +662,7 @@ public class DashboardUser implements Serializable {
 	public void descargarJSON() {
 		ltsReporte= new ArrayList<>();
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
-			datosNodo(ltsMyNodos.get(i).getIdentificador());
+			datosNodo(ltsMyNodos.get(i).getIdentificador(),true);
 		}
 //		for (int i = 0; i < ltsReporte.size(); i++) {
 //			System.out.println(ltsReporte.get(i).toString());
@@ -732,7 +704,7 @@ public class DashboardUser implements Serializable {
 	public void descargarPDF() {
 		ltsReporte= new ArrayList<>();
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
-			datosNodo(ltsMyNodos.get(i).getIdentificador());
+			datosNodo(ltsMyNodos.get(i).getIdentificador(),true);
 		}
 //		for (int i = 0; i < ltsReporte.size(); i++) {
 //			System.out.println(ltsReporte.get(i).toString());
