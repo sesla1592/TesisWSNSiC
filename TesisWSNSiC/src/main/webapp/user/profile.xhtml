@@ -77,8 +77,9 @@ perfil
 	<h:outputText  value="Correo: " />
 	<h:inputText value="#{editEmpresa.user.correo}" pt:placeholder="Telefono" />
 	<h:outputText  value="Contraseña: " />
-	<h:inputText value="#{editEmpresa.user.password}" pt:placeholder="Telefono" />
-	
+	<h:inputText value="#{editEmpresa.user.password}" pt:placeholder="Password" />
+	<h:outputText  value="Repita su Contraseña: " />
+	<h:inputText value="#{editEmpresa.user.password}" pt:placeholder="Password" />
 	</h:panelGrid> 
 	 <h:commandButton action="#{editEmpresa.actualizarPersona()}" value="Actualizar Datos Personales" />
 	

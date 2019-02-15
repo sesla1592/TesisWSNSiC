@@ -25,6 +25,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		<h:outputLabel value="Correo: #{blogDetalle.blog.empresa.correo}" /><br/>
 		<h:outputLabel value="Direccion: #{blogDetalle.blog.empresa.direccion}" /><br/>
 		<h:outputLabel value="Cuidad: #{blogDetalle.blog.empresa.ciudad}" /><br/>	
+		<h:outputLabel value="Numero de visitas: #{blogDetalle.blog.visitas}" /><br/>	
 	</h:form>
 <h:form>
 <p:growl id="growl" showDetail="true" />
@@ -63,33 +64,14 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
 		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
 		</h:selectOneMenu> 
-		<b:row style="background-color: red;width: 100%;height: 100%;">
+		<b:row style="width: 100%;height: 100%;">
 				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{blogDetalle.ltsSTemp}" 
+					<hf:chartSerie value="#{blogDetalle.ltsSData}" 
 									var="point" 
 									point="#{point.valor}" 
 									tickLabel="#{point.fecha}"
 									name="Temperatura"
-									/>
-									
-					<hf:chartSerie value="#{blogDetalle.ltsSHum}" 
-									var="pointh" 
-									point="#{pointh.valor}" 
-									tickLabel="#{pointh.fecha}"
-									name="Humedad"
-									/>
-					<hf:chartSerie value="#{blogDetalle.ltsSLum}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="Luminosidad"
-									/>
-					<hf:chartSerie value="#{blogDetalle.ltsSRui}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="Ruido"
 									/>
 									
 									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>

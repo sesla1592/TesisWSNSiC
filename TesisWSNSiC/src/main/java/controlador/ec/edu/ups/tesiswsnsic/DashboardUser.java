@@ -2,7 +2,6 @@ package controlador.ec.edu.ups.tesiswsnsic;
 
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.Serializable;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,7 +23,6 @@ import org.apache.commons.csv.CSVPrinter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -57,11 +55,6 @@ import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import utilidades.ec.edu.ups.tesiswsnsic.DBConnection;
 import utilidades.ec.edu.ups.tesiswsnsic.Reporte;
 
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.ChartSeries;
-
 @ManagedBean
 @ViewScoped
 public class DashboardUser {
@@ -76,11 +69,11 @@ public class DashboardUser {
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
 
-//	protected List<MedValFec> ltsSTemp;
-//	protected List<MedValFec> ltsSHum;
-//	protected List<MedValFec> ltsSLum;
-//	protected List<MedValFec> ltsSRui;
-	
+	// protected List<MedValFec> ltsSTemp;
+	// protected List<MedValFec> ltsSHum;
+	// protected List<MedValFec> ltsSLum;
+	// protected List<MedValFec> ltsSRui;
+
 	protected List<MedValFec> ltsDataSensor;
 
 	// private String URL_FOLDER="C:\\Users\\rommel.inga\\tesisfiles\\";
@@ -114,12 +107,12 @@ public class DashboardUser {
 			System.out.println("user " + user.getId());
 			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
 			System.out.println("lista nodos" + ltsMyNodos.size());
-//			ltsSTemp = new ArrayList<>();
-//			ltsSHum = new ArrayList<>();
-//			ltsSRui = new ArrayList<>();
-//			ltsSLum = new ArrayList<>();
+			// ltsSTemp = new ArrayList<>();
+			// ltsSHum = new ArrayList<>();
+			// ltsSRui = new ArrayList<>();
+			// ltsSLum = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
-			
+
 			ltsDataSensor = new ArrayList<>();
 			// recuperaDatos();
 			addMarker();
@@ -129,8 +122,8 @@ public class DashboardUser {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			fechaFin = dateFormat.format(date) + " 23:59:59";
 			System.out.println("Fecha: fin-->" + fechaFin);
-			//lineModel1 = new LineChartModel();
-			//createLineModels();
+			// lineModel1 = new LineChartModel();
+			// createLineModels();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -182,9 +175,9 @@ public class DashboardUser {
 	}
 
 	public void setSensorSeleccionado(String sensorSeleccionado) {
-			//sensorSeleccionado = sensorSeleccionado.substring(0, 1);
-			this.sensorSeleccionado = sensorSeleccionado;
-		//System.out.println("--> " + this.sensorSeleccionado);
+		// sensorSeleccionado = sensorSeleccionado.substring(0, 1);
+		this.sensorSeleccionado = sensorSeleccionado;
+		// System.out.println("--> " + this.sensorSeleccionado);
 	}
 
 	public List<String> getLtsSensores() {
@@ -195,21 +188,21 @@ public class DashboardUser {
 		this.ltsSensores = ltsSensores;
 	}
 
-//	public List<MedValFec> getLtsSTemp() {
-//		return ltsSTemp;
-//	}
-//
-//	public void setLtsSTemp(List<MedValFec> ltsSTemp) {
-//		this.ltsSTemp = ltsSTemp;
-//	}
-//
-//	public List<MedValFec> getLtsSHum() {
-//		return ltsSHum;
-//	}
-//
-//	public void setLtsSHum(List<MedValFec> ltsSHum) {
-//		this.ltsSHum = ltsSHum;
-//	}
+	// public List<MedValFec> getLtsSTemp() {
+	// return ltsSTemp;
+	// }
+	//
+	// public void setLtsSTemp(List<MedValFec> ltsSTemp) {
+	// this.ltsSTemp = ltsSTemp;
+	// }
+	//
+	// public List<MedValFec> getLtsSHum() {
+	// return ltsSHum;
+	// }
+	//
+	// public void setLtsSHum(List<MedValFec> ltsSHum) {
+	// this.ltsSHum = ltsSHum;
+	// }
 
 	public Nodo getNodoSelected() {
 		return nodoSelected;
@@ -243,21 +236,21 @@ public class DashboardUser {
 		this.user = user;
 	}
 
-//	public List<MedValFec> getLtsSLum() {
-//		return ltsSLum;
-//	}
-//
-//	public void setLtsSLum(List<MedValFec> ltsSLum) {
-//		this.ltsSLum = ltsSLum;
-//	}
-//
-//	public List<MedValFec> getLtsSRui() {
-//		return ltsSRui;
-//	}
-//
-//	public void setLtsSRui(List<MedValFec> ltsSRui) {
-//		this.ltsSRui = ltsSRui;
-//	}
+	// public List<MedValFec> getLtsSLum() {
+	// return ltsSLum;
+	// }
+	//
+	// public void setLtsSLum(List<MedValFec> ltsSLum) {
+	// this.ltsSLum = ltsSLum;
+	// }
+	//
+	// public List<MedValFec> getLtsSRui() {
+	// return ltsSRui;
+	// }
+	//
+	// public void setLtsSRui(List<MedValFec> ltsSRui) {
+	// this.ltsSRui = ltsSRui;
+	// }
 
 	public Double getDatoRui() {
 		return datoRui;
@@ -282,7 +275,6 @@ public class DashboardUser {
 	public void setTipoFecha(String tipoFecha) {
 		this.tipoFecha = tipoFecha;
 	}
-	
 
 	public List<MedValFec> getLtsDataSensor() {
 		return ltsDataSensor;
@@ -312,16 +304,16 @@ public class DashboardUser {
 		System.out.println(
 				"Nodo Selected" + nodoSelected.toString() + " sensores: " + nodoSelected.getLtssensores().size());
 		ltsSensores = new ArrayList<>();
-		
+
 		for (int i = 0; i < nodoSelected.getLtssensores().size(); i++) {
 			ltsSensores.add("" + nodoSelected.getLtssensores().get(i).getNombreCompleto());
 			// nodoSelected.getLtssensores().size()
 		}
 
-//		for (int i = 0; i < ltsSensores.size(); i++) {
-//			System.out.println("-> " + ltsSensores.get(i));
-//			// nodoSelected.getLtssensores().size()
-//		}
+		// for (int i = 0; i < ltsSensores.size(); i++) {
+		// System.out.println("-> " + ltsSensores.get(i));
+		// // nodoSelected.getLtssensores().size()
+		// }
 		getDatosTH();
 	}
 
@@ -341,10 +333,10 @@ public class DashboardUser {
 	}
 
 	public void consulta() {
-//		ltsSHum = new ArrayList<>();
-//		ltsSTemp = new ArrayList<>();
-//		ltsSLum = new ArrayList<>();
-//		ltsSRui = new ArrayList<>();
+		// ltsSHum = new ArrayList<>();
+		// ltsSTemp = new ArrayList<>();
+		// ltsSLum = new ArrayList<>();
+		// ltsSRui = new ArrayList<>();
 		ltsDataSensor = new ArrayList<>();
 		if (tipoFecha.equals("Diario")) {
 			Date date = new Date();
@@ -381,31 +373,29 @@ public class DashboardUser {
 		DBCollection coll = db.getCollection(DBConnection.dbcollection);
 
 		DBCursor d1 = coll.find(query);
-		
-			System.out.println("selecciono uno");
-			fec = "";
-			while (d1.hasNext()) {
 
-				DBObject obj = d1.next();
+		System.out.println("selecciono uno");
+		fec = "";
+		while (d1.hasNext()) {
 
-				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
-				fec = obj.get("fecha").toString();
-				fec = fec.substring(0, 10);
-				for (int i = 0; i < ltsMediciones.length(); i++) {
-					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					medici = gsonObj2.get("m").toString();// va el nombre del sensor
-					String sensor =sensorSeleccionado.substring(0, 1);
+			DBObject obj = d1.next();
+
+			JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
+			fec = obj.get("fecha").toString();
+			fec = fec.substring(0, 10);
+			for (int i = 0; i < ltsMediciones.length(); i++) {
+				JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
+				medici = gsonObj2.get("m").toString();// va el nombre del sensor
+				String sensor = sensorSeleccionado.substring(0, 1);
+				if (medici.equals(sensor)) {
+					val = Double.parseDouble(gsonObj2.get("v").toString());
+					// String sensor =sensorSeleccionado.substring(0, 1);
 					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
-						//String sensor =sensorSeleccionado.substring(0, 1);
-						if (medici.equals(sensor)) {
-							val = Double.parseDouble(gsonObj2.get("v").toString());
-							ltsDataSensor.add(new MedValFec(medici, val, fec));
+						ltsDataSensor.add(new MedValFec(medici, val, fec));
 
-						}
 					}
-				
-				// cont++;
+				}
 			}
 		}
 
@@ -414,16 +404,16 @@ public class DashboardUser {
 		// System.out.println("punto "+puntos.get(i).toString());
 		// }
 
-//		System.out.println("ltsSLum " + ltsSLum.size());
-//		System.out.println("ltsSHum " + ltsSHum.size());
-//		System.out.println("ltsSTemp " + ltsSTemp.size());
-//		System.out.println("ltsSRui " + ltsSRui.size());
+		// System.out.println("ltsSLum " + ltsSLum.size());
+		// System.out.println("ltsSHum " + ltsSHum.size());
+		// System.out.println("ltsSTemp " + ltsSTemp.size());
+		// System.out.println("ltsSRui " + ltsSRui.size());
 
 		for (int i = 0; i < ltsDataSensor.size(); i++) {
 			System.out.println("data H " + ltsDataSensor.get(i).toString());
 			// System.out.println("data L "+ltsSLum.get(i).toString());
 		}
-		//createLineModels();
+		// createLineModels();
 		System.out.println("Connection Succesfull");
 	}
 
@@ -707,81 +697,81 @@ public class DashboardUser {
 	}
 
 	// prueba graficas
-//
-//	private LineChartModel lineModel1;
-//
-//	private void createLineModels() {
-//		lineModel1 = initLinearModel();
-//		lineModel1.setTitle("Linear Chart");
-//		lineModel1.setLegendPosition("e");
-//		
-//		lineModel1.setShowPointLabels(true);
-//		lineModel1.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-//		
-//		Axis yAxis = lineModel1.getAxis(AxisType.Y);
-//		yAxis.setMin(0);
-//		yAxis.setMax(70);
-//
-//		 
-//	       
-//	       
-//		
-//	        yAxis = lineModel1.getAxis(AxisType.Y);
-//	        yAxis.setLabel("Births");
-//	        
-//	}
-//
-//	private LineChartModel initLinearModel() {
-//		LineChartModel model = new LineChartModel();
-//
-//		ChartSeries sTemperatura = new ChartSeries();
-//		sTemperatura.setLabel("Temperatura");
-//		for (int i = 0; i < ltsSTemp.size(); i++) {
-//			sTemperatura.set("n"+i, ltsSTemp.get(i).getValor());
-//		}//ltsSTemp.get(i).getFecha()
-//
-//		ChartSeries sHumedad = new ChartSeries();
-//		sHumedad.setLabel("Humedad");
-//
-//		for (int i = 0; i < ltsSHum.size(); i++) {
-//			sHumedad.set("n"+i, ltsSHum.get(i).getValor());
-//		}//ltsSHum.get(i).getFecha()
-//
-//		ChartSeries sLuminosidad = new ChartSeries();
-//		sLuminosidad.setLabel("Luminosidad");
-//
-//		for (int i = 0; i < ltsSLum.size(); i++) {
-//			sLuminosidad.set(ltsSLum.get(i).getFecha(), ltsSLum.get(i).getValor());
-//		}
-//
-//		ChartSeries sRuido = new ChartSeries();
-//		sRuido.setLabel("Ruido");
-//		for (int i = 0; i < ltsSRui.size(); i++) {
-//			sRuido.set(ltsSRui.get(i).getFecha(), ltsSRui.get(i).getValor());
-//		}
-//
-//		if(ltsSTemp.size()>0) {
-//			model.addSeries(sTemperatura);
-//		}
-//		if(ltsSHum.size()>0) {
-//			model.addSeries(sHumedad);
-//		}
-//		if(ltsSLum.size()>0) {
-//			model.addSeries(sLuminosidad);
-//		}
-//		if(ltsSRui.size()>0) {
-//			model.addSeries(sRuido);
-//		}
-//
-//		return model;
-//	}
-//
-//	public LineChartModel getLineModel1() {
-//		return lineModel1;
-//	}
-//
-//	public void setLineModel1(LineChartModel lineModel1) {
-//		this.lineModel1 = lineModel1;
-//	}
+	//
+	// private LineChartModel lineModel1;
+	//
+	// private void createLineModels() {
+	// lineModel1 = initLinearModel();
+	// lineModel1.setTitle("Linear Chart");
+	// lineModel1.setLegendPosition("e");
+	//
+	// lineModel1.setShowPointLabels(true);
+	// lineModel1.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+	//
+	// Axis yAxis = lineModel1.getAxis(AxisType.Y);
+	// yAxis.setMin(0);
+	// yAxis.setMax(70);
+	//
+	//
+	//
+	//
+	//
+	// yAxis = lineModel1.getAxis(AxisType.Y);
+	// yAxis.setLabel("Births");
+	//
+	// }
+	//
+	// private LineChartModel initLinearModel() {
+	// LineChartModel model = new LineChartModel();
+	//
+	// ChartSeries sTemperatura = new ChartSeries();
+	// sTemperatura.setLabel("Temperatura");
+	// for (int i = 0; i < ltsSTemp.size(); i++) {
+	// sTemperatura.set("n"+i, ltsSTemp.get(i).getValor());
+	// }//ltsSTemp.get(i).getFecha()
+	//
+	// ChartSeries sHumedad = new ChartSeries();
+	// sHumedad.setLabel("Humedad");
+	//
+	// for (int i = 0; i < ltsSHum.size(); i++) {
+	// sHumedad.set("n"+i, ltsSHum.get(i).getValor());
+	// }//ltsSHum.get(i).getFecha()
+	//
+	// ChartSeries sLuminosidad = new ChartSeries();
+	// sLuminosidad.setLabel("Luminosidad");
+	//
+	// for (int i = 0; i < ltsSLum.size(); i++) {
+	// sLuminosidad.set(ltsSLum.get(i).getFecha(), ltsSLum.get(i).getValor());
+	// }
+	//
+	// ChartSeries sRuido = new ChartSeries();
+	// sRuido.setLabel("Ruido");
+	// for (int i = 0; i < ltsSRui.size(); i++) {
+	// sRuido.set(ltsSRui.get(i).getFecha(), ltsSRui.get(i).getValor());
+	// }
+	//
+	// if(ltsSTemp.size()>0) {
+	// model.addSeries(sTemperatura);
+	// }
+	// if(ltsSHum.size()>0) {
+	// model.addSeries(sHumedad);
+	// }
+	// if(ltsSLum.size()>0) {
+	// model.addSeries(sLuminosidad);
+	// }
+	// if(ltsSRui.size()>0) {
+	// model.addSeries(sRuido);
+	// }
+	//
+	// return model;
+	// }
+	//
+	// public LineChartModel getLineModel1() {
+	// return lineModel1;
+	// }
+	//
+	// public void setLineModel1(LineChartModel lineModel1) {
+	// this.lineModel1 = lineModel1;
+	// }
 
 }

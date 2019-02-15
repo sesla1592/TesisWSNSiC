@@ -22,6 +22,7 @@ public class EditEmpresa {
 	private Empresa empresa;
 	Persona user;
 	
+	private String newPassword;
 	@PostConstruct
 	public void init() {
 		try {
@@ -44,7 +45,14 @@ public class EditEmpresa {
 	}
 	
 	public void actualizarPersona() {
-		personaDAO.updatePersona(user);
+		if(newPassword.equals(user.getPassword())){
+			System.out.println("contrasenas iguales");
+			personaDAO.updatePersona(user);
+		}else {
+			System.out.println("contrasenas diferentes");
+			//mensaje de no guardado
+		}
+		
 	}
 
 	public Empresa getEmpresa() {
@@ -61,6 +69,14 @@ public class EditEmpresa {
 
 	public void setUser(Persona user) {
 		this.user = user;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 	
 	

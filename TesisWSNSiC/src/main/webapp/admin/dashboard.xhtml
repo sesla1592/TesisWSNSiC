@@ -114,34 +114,22 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		<h:selectOneMenu id="listaNodos" value="#{dashboardAdmin.sensorSeleccionado}" >
 			<f:selectItems value="#{dashboardAdmin.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
 		</h:selectOneMenu>
-		
+		<h:selectOneMenu value = "#{dashboardAdmin.tipoFecha}"> 
+		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
+		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
+		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		</h:selectOneMenu> 
+		<br /><br />
 		<b:row>
 				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{dashboardAdmin.ltsSTemp}" 
+					<hf:chartSerie value="#{dashboardAdmin.ltsSData}" 
 									var="point" 
 									point="#{point.valor}" 
 									tickLabel="#{point.fecha}"
-									name="Temperatura"
+									name="#{dashboardAdmin.sensorSeleccionado}"
 									/>
-					<hf:chartSerie value="#{dashboardAdmin.ltsSHum}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="Humedad"
-									/>
-					<hf:chartSerie value="#{dashboardAdmin.ltsSLum}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="Luminosidad"
-									/>
-					<hf:chartSerie value="#{dashboardAdmin.ltsSRui}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="Ruido"
-									/>
+					
 									
 									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
 									<hf:chartTooltip  backgroundColor="#000000" shared="true">
@@ -154,7 +142,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 									</hf:chartTooltip>									
 				</hf:chart>
 		</b:row>		
-		<b:commandButton action="#{dashboardAdmin.consulta()}" value="Graficar" update="grafica">
+		<b:commandButton action="#{dashboardAdmin.graficaDatos()}" value="Graficar" update="grafica">
 		</b:commandButton>
 		
 	</div>

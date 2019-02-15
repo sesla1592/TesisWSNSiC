@@ -30,6 +30,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaNodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
@@ -42,16 +43,17 @@ public class BlogDetalle {
 
 	Blog blog;
 	List<Nodo> ltsNodos = new ArrayList<>();
+	
 	@Inject
 	PersonaNodoDAO personaNodoDAO;
+	
+	@Inject
+	BlogDAO blogDAO;
 	
 	public MapModel simpleModel;
 	public Nodo nodoSelected;
 	
-	protected List<MedValFec> ltsSTemp;
-	protected List<MedValFec> ltsSHum;
-	protected List<MedValFec> ltsSLum;
-	protected List<MedValFec> ltsSRui;
+	protected List<MedValFec> ltsSData;
 	public String fechaInicio;
 	public String fechaFin;
 	private Marker marker;
@@ -75,10 +77,7 @@ public class BlogDetalle {
 			System.out.println("blog " + blog.toString());
 			ltsNodos = personaNodoDAO.ltsNodosByUser(blog.getEmpresa().getPersonas().get(0).getId());
 			System.out.println("tam nodos em "+ltsNodos.size());
-			ltsSTemp = new ArrayList<>();
-			ltsSHum = new ArrayList<>();
-			ltsSRui = new ArrayList<>();
-			ltsSLum = new ArrayList<>();
+			ltsSData = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
 			// recuperaDatos();
 			addMarker();
@@ -88,7 +87,8 @@ public class BlogDetalle {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			fechaFin=dateFormat.format(date)+" 23:59:59";
 			System.out.println("Fecha: fin-->"+fechaFin);
-			
+			blog.setVisitas(blog.getVisitas()+1);
+			blogDAO.update(blog);
 		}catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("error la extraer blog");
@@ -128,36 +128,12 @@ public class BlogDetalle {
 		this.nodoSelected = nodoSelected;
 	}
 
-	public List<MedValFec> getLtsSTemp() {
-		return ltsSTemp;
+	public List<MedValFec> getLtsSData() {
+		return ltsSData;
 	}
 
-	public void setLtsSTemp(List<MedValFec> ltsSTemp) {
-		this.ltsSTemp = ltsSTemp;
-	}
-
-	public List<MedValFec> getLtsSHum() {
-		return ltsSHum;
-	}
-
-	public void setLtsSHum(List<MedValFec> ltsSHum) {
-		this.ltsSHum = ltsSHum;
-	}
-
-	public List<MedValFec> getLtsSLum() {
-		return ltsSLum;
-	}
-
-	public void setLtsSLum(List<MedValFec> ltsSLum) {
-		this.ltsSLum = ltsSLum;
-	}
-
-	public List<MedValFec> getLtsSRui() {
-		return ltsSRui;
-	}
-
-	public void setLtsSRui(List<MedValFec> ltsSRui) {
-		this.ltsSRui = ltsSRui;
+	public void setLtsSData(List<MedValFec> ltsSData) {
+		this.ltsSData = ltsSData;
 	}
 
 	public String getFechaInicio() {
@@ -229,14 +205,7 @@ public class BlogDetalle {
 	}
 
 	public void setSensorSeleccionado(String sensorSeleccionado) {
-		if(sensorSeleccionado.equals("Todos")) {
-			this.sensorSeleccionado = sensorSeleccionado;
-		}else {
-			sensorSeleccionado=sensorSeleccionado.substring(0, 1);
-			this.sensorSeleccionado = sensorSeleccionado;
-		}
-		
-		System.out.println("--> "+this.sensorSeleccionado);
+		this.sensorSeleccionado = sensorSeleccionado;
 	}
 	
 	public String getTipoFecha() {
@@ -266,7 +235,6 @@ public class BlogDetalle {
 		nodoSelected = findNodo(marker.getShadow());
 		System.out.println("Nodo Selected" + nodoSelected.toString() +" sensores: "+ nodoSelected.getLtssensores().size());
 		ltsSensores = new ArrayList<>();
-		ltsSensores.add("Todos");
 		for (int i = 0; i < nodoSelected.getLtssensores().size(); i++) {
 			ltsSensores.add(""+nodoSelected.getLtssensores().get(i).getNombreCompleto());
 			//nodoSelected.getLtssensores().size()
@@ -328,36 +296,6 @@ public class BlogDetalle {
 				
 			}
 			
-			//boolean nodoInsert = true;//nodoDAO.existsNode(codNodo);
-//			if(nodoInsert) {
-//				//existe el nodo
-//				System.out.println("existe el nodo en la bd");
-//			}else {
-//				//
-//				System.out.println("no existe el nodo en la bd");
-//				try {
-//					nodo.setIdentificador(codNodo);
-//					nodo.setLatitud(Double.parseDouble(d1.get("la").toString()));
-//					nodo.setLongitud(Double.parseDouble(d1.get("lo").toString()));
-//					System.out.println("sensores "+ d1.get("ms"));
-//					JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
-//					System.out.println("tam sensores "+ltsSensores.length());
-//					List<Sensor> ltsSensor = new ArrayList<>();
-//					for (int i = 0; i < ltsSensores.length(); i++) {
-//						JSONObject sensorM = ltsSensores.getJSONObject(i);
-//						Sensor sensor = new Sensor();
-//						sensor.setNombre(sensorM.getString("m"));
-//						sensor.setDescripcion(sensorM.getString("s"));
-//						sensor.setEstado(true);
-//						ltsSensor.add(sensor);
-//					}
-//					nodo.setLtssensores(ltsSensor);
-//					guardarNodo();
-//				}catch (Exception e) {
-//					// TODO: handle exception
-//					e.printStackTrace();
-//				}
-//			}
 		}else {
 			System.out.println("prueba---> no encontro");
 		}
@@ -366,10 +304,7 @@ public class BlogDetalle {
 	}
 	
 	public void consulta() {
-		ltsSHum= new ArrayList<>();
-		ltsSTemp = new ArrayList<>();
-		ltsSLum = new ArrayList<>();
-		ltsSRui = new ArrayList<>();
+		ltsSData= new ArrayList<>();
 		System.out.println("tipo de filtro fecha "+tipoFecha);
 		if(tipoFecha.equals("Diario")) {
 			Date date = new Date();
@@ -406,8 +341,7 @@ public class BlogDetalle {
 		DBCollection coll = db.getCollection(DBConnection.dbcollection);
 		
 		DBCursor d1 = coll.find(query);
-		if(sensorSeleccionado.equals("Todos")) {
-			System.out.println("selecciono todos");
+
 			while(d1.hasNext()) {
 				
 				DBObject obj = d1.next();
@@ -415,79 +349,21 @@ public class BlogDetalle {
 				fec = obj.get("fecha").toString();
 				for (int i = 0; i < ltsMediciones.length(); i++) {
 					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					medici = gsonObj2.get("m").toString();//va el nombre  del sensor
-					if(medici.equals("T")) {
+					medici = gsonObj2.get("m").toString();// va el nombre del sensor
+					String sensor = sensorSeleccionado.substring(0, 1);
+					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
-						ltsSTemp.add(new MedValFec(medici, val, fec));
-						
-					}
-					if(medici.equals("H")) {
-						val = Double.parseDouble(gsonObj2.get("v").toString());
-						ltsSHum.add(new MedValFec(medici, val, fec));
-						
-					}
-					if(medici.equals("L")) {
-						val = Double.parseDouble(gsonObj2.get("v").toString());
-						ltsSLum.add(new MedValFec(medici, val, fec));
-						
-					}
-					if(medici.equals("R")) {
-						val = Double.parseDouble(gsonObj2.get("v").toString());
-						ltsSRui.add(new MedValFec(medici, val, fec));
-						
+						// String sensor =sensorSeleccionado.substring(0, 1);
+						if (medici.equals(sensor)) {
+							val = Double.parseDouble(gsonObj2.get("v").toString());
+							ltsSData.add(new MedValFec(medici, val, fec));
+
+						}
 					}
 				}
+				
 				//cont++;
 			}
-		}else {
-			System.out.println("selecciono uno");
-			fec="";
-			while(d1.hasNext()) {
-				
-				DBObject obj = d1.next();
-				
-				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
-				fec = obj.get("fecha").toString();
-				fec = fec.substring(0,10);
-				for (int i = 0; i < ltsMediciones.length(); i++) {
-					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					medici = gsonObj2.get("m").toString();//va el nombre  del sensor
-					if(medici.equals(sensorSeleccionado)) {
-						val = Double.parseDouble(gsonObj2.get("v").toString());
-						if(sensorSeleccionado.equals("T")) {
-							ltsSTemp.add(new MedValFec(medici, val, fec));
-						}
-						if(sensorSeleccionado.equals("H")) {
-							ltsSHum.add(new MedValFec(medici, val, fec));
-						}
-						if(sensorSeleccionado.equals("L")) {
-							ltsSLum.add(new MedValFec(medici, val, fec));
-						}
-						if(sensorSeleccionado.equals("R")) {
-							ltsSRui.add(new MedValFec(medici, val,fec));
-						}
-						
-					}
-				}
-				//cont++;
-			}
-		}
-		
-//		System.out.println("contador "+cont);
-//		for (int i = 0; i < puntos.size(); i++) {
-//			System.out.println("punto "+puntos.get(i).toString());
-//		}
-		
-		System.out.println("ltsSLum "+ltsSLum.size());
-		System.out.println("ltsSHum "+ltsSHum.size());
-		System.out.println("ltsSTemp "+ltsSTemp.size());
-		System.out.println("ltsSRui "+ltsSRui.size());
-		
-		for (int i = 0; i < ltsSHum.size(); i++) {
-			System.out.println("data H "+ltsSHum.get(i).toString());
-			//System.out.println("data L "+ltsSLum.get(i).toString());
-		}
-		
 		System.out.println("Connection Succesfull");
 	}
 }

@@ -3,7 +3,9 @@ package controlador.ec.edu.ups.tesiswsnsic;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
+import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
@@ -14,6 +16,10 @@ public class BlogControlador {
 	Persona user;
 	Empresa empresa;
 	Blog blog;
+	
+	@Inject
+	BlogDAO blogDao;
+	
 	@PostConstruct
 	public void init() {
 		try {
@@ -35,5 +41,7 @@ public class BlogControlador {
 		this.blog = blog;
 	}
 	
-	
+	public void actualizar() {
+		blogDao.update(blog);
+	}
 }
