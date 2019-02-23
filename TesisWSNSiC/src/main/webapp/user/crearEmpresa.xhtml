@@ -1,46 +1,318 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
- 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+<h:head>
+	<title>Crear Empresa</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="crearEmpresaStyle/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/bootstrap/css/bootstrap.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/animate/animate.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/css-hamburgers/hamburgers.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/animsition/css/animsition.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/select2/select2.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/vendor/daterangepicker/daterangepicker.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/css/util.css"/>
+	<link rel="stylesheet" type="text/css" href="crearEmpresaStyle/css/main.css"/>
+<!--===============================================================================================-->
 
-<h:head></h:head> 
-<body> 
-
+</h:head>
 <h:form>
-<h:outputLabel value="Crear Empresas" />
-<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+<header>
+  <nav>
+    <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
+    <ul>
+      <li>
+        <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
+      </li>
+      <li>
+       <h:commandLink action="#{personaControlador.logout()}" value="Cancelar" />
+      </li>
+    </ul>
+  </nav>
+  
+</header>
+</h:form> 
+
+<body>
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<h:form class="contact100-form validate-form">
+				<span class="contact100-form-title">
+					Datos de la Empresa
+				</span>
+
+				<label class="label-input100" for="first-name">Nombre de la empresa *</label>
+				<div class="wrap-input100 validate-input" data-validate="Ingrese el nombre de la empresa">
+					<h:inputText value="#{empresaControlador.empresa.nombre}" id="first-name" class="input100" type="text" name="first-name" pt:placeholder="Nombre de la Empresa"/>
+					<span class="focus-input100"></span>
+				</div>
+				
+
+				<label class="label-input100" for="email">Direccion *</label>
+				<div class="wrap-input100 validate-input" data-validate = "Ingrese la direccion">
+					<h:inputText value="#{empresaControlador.empresa.direccion}" id="direccion" class="input100" type="text" name="direccion" pt:placeholder="Direccion"/>
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="phone" >Numero Telefonico *</label>
+				<div class="wrap-input100 validate-input" data-validate = "Ingrese un numero telefonico">
+					<h:inputText value="#{empresaControlador.empresa.telefono}" id="phone" class="input100" type="text" name="phone" pt:placeholder="072 888888/0998888888"/>
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="phone">Email *</label>
+				<div class="wrap-input100 validate-input" data-validate = "Mail contiene ex@abc.xyz">
+					<h:inputText value="#{empresaControlador.empresa.correo}" id="email" class="input100" type="text" name="email" pt:placeholder="ejemplo@mail.com"/>
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="phone">Ciudad *</label>
+				<div class="wrap-input100 validate-input" data-validate = "Ingrese la ciudad">
+					<h:inputText value="#{empresaControlador.empresa.ciudad}" id="ciudad" class="input100" type="text" name="ciudad" pt:placeholder="Ciudad"/>
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100" for="phone">Pais *</label>
+				<div class="wrap-input100 validate-input" data-validate = "Ingrese el pais">
+					<h:inputText value="#{empresaControlador.empresa.pais}" id="pais" class="input100" type="text" name="pais" pt:placeholder="Pais"/>
+					<span class="focus-input100"></span>
+				</div>
 
 
-<h:outputText  value="Nombre: " />
-<h:inputText value="#{empresaControlador.empresa.nombre}"  pt:placeholder="Nombre"  id="usuario"/>
-<h:outputText  value="Direccion:" />
-<h:inputText value="#{empresaControlador.empresa.direccion}" pt:placeholder="Direccion" id="direccion"/>
-<h:outputText  value="Telefono:" />
-<h:inputText value="#{empresaControlador.empresa.telefono}" pt:placeholder="Telefono" id="telefono"/>
-<h:outputText  value="Descripcion" />
-<h:inputText value="#{empresaControlador.empresa.telefono}" pt:placeholder="Breve descripcion de la empresa" />
-<h:outputText  value="Correo:" />
-<h:inputText value="#{empresaControlador.empresa.correo}" pt:placeholder="Correo" id="correo"/>
-<h:outputText  value="Cuidad:" />
-<h:inputText value="#{empresaControlador.empresa.ciudad}" pt:placeholder="Ciudad" id="cuidad"/>
-<h:outputText  value="Pais:" />
-<h:inputText value="#{empresaControlador.empresa.pais}" pt:placeholder="Pais" id="pais"/>
-<h:selectOneMenu value="#{empresaControlador.tipoEmpSelected}" converter="tipoEmpresaConverter">
-	        		<f:selectItems value="#{empresaControlador.tipoempresas}" var="tipoemp"  
+				<label class="label-input100" for="phone">Elija la organizacion a la que pertenece:</label>
+				<div class="wrap-input100">
+					<h:selectOneMenu value="#{empresaControlador.tipoEmpSelected}" converter="tipoEmpresaConverter"
+					 id="elegir" class="input100" type="text" name="elegir">
+					 <f:selectItems value="#{empresaControlador.tipoempresas}" var="tipoemp"  
 	        						itemValue="#{tipoemp}" 
 	        						itemLabel="#{tipoemp.descripcion}"/>
 	        </h:selectOneMenu>
+					
+				</div>
+				
+				
+			<div class="container-contact100-form-btn">
+					<h:commandButton action="#{empresaControlador.crearEmpresa()}" value="Finalizar" class="btn btn-primary btn-block"/>
+			
+				</div>
+			
+			
+			
+			</h:form>
+			
+			
 
 
-</h:panelGrid> 
- <h:commandButton action="#{empresaControlador.crearEmpresa()}" value="Crear Empresa" />
+			<div class="contact100-more flex-col-c-m" style="background-image: url('crearEmpresaStyle/images/bg-01.jpg');">
+				<div class="flex-w size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-map-marker"></span>
+					</div>
 
-</h:form>
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							Ubicacion
+						</span>
+
+						<span class="txt2">
+							Universidad Politecnica Salesiana, Cuenca, Calle Vieja.
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-phone-handset"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							Comunicanos
+						</span>
+
+						<span class="txt3">
+							(+593) 74135250
+						</span>
+					</div>
+				</div>
+
+				<div class="dis-flex size1 p-b-47">
+					<div class="txt1 p-r-25">
+						<span class="lnr lnr-envelope"></span>
+					</div>
+
+					<div class="flex-col size2">
+						<span class="txt1 p-b-20">
+							Soporte General
+						</span>
+
+						<span class="txt3">
+							wsncloud@iot.com
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
-</body> 
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/bootstrap/js/popper.js"></script>
+	<script src="crearEmpresaStyle/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/daterangepicker/moment.min.js"></script>
+	<script src="crearEmpresaStyle/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="crearEmpresaStyle/js/main.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-23581568-13');
+	</script>
+	
+	 <!-- Header -->
+        
+         <style type="text/css">
+         @import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto:400,500);
+nav {
+  background: #333;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+nav h1 {
+  color: #eee;
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  float: left;
+}
+
+nav h1>a {
+  color: #3ab4a6;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 200ms linear;
+}
+
+nav h1>a:hover {
+  background: none;
+  color: #C18055;
+}
+
+ul {
+  text-align: center;
+  float: right;
+}
+
+ul li {
+  display: inline-block;
+}
+
+ul li a {
+  text-decoration: none;
+  display: block;
+  padding: 0px 10px;
+  margin: 0 5px;
+  color: #eee;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+  
+}
+
+nav a:hover,
+nav#small a:hover {
+  color: #C18055;    
+  background: #fff;
+}
+
+nav#small {
+  background: #fff;
+  padding: 3px 10px;
+  position: fixed;
+  box-sizing: border-box;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0px 2px 2px #fff;
+}
+
+nav#small h1,
+nav#small a {
+  color: #333;
+}
+
+nav#small h1 {
+  font-size: 25px;
+}
+
+nav#small h1>a {
+  color: #C18055;
+}
+
+nav#small h1>a:hover {
+  color: #3ab4a6;
+}
+
+
+         
+         </style>
+
+</body>
+
+
 </html>
