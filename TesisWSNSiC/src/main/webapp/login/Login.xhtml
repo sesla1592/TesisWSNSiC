@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+    
+    <h:head>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <title>Inicio de Sesion WSN</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="assets/css/form-elements.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
+
+    </h:head>
+    <h:form>
+	<header>
+  <nav>
+    <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
+    <ul>
+      <li>
+        <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
+      </li>
+      <li>
+        <a href="#">Contacto</a>
+      </li>
+    </ul>
+  </nav>
+  <nav id="small">
+    <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
+    <ul>
+      <li>
+        <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
+      </li>
+      <li>
+        <a href="#">Contacto</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+</h:form>
+
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>Bienvenidos: </strong>Inicie sesion en WSNCloud</h1>
+                            <div class="description">
+                            	<p>
+	                            	WSNCloud proporciona una plataforma para la administracion
+	                            	y obtención de datos estadisticos que seran almacenados
+	                            	en la <a href=""><strong> NUBE</strong></a>, ingrese a nuestro sitio para
+	                            	conocer nuestros beneficios.
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Ingresa a nuestro sitio</h3>
+                            		<p>Ingrese su nombre de usuario y contraseña para iniciar sesión:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-key"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <h:form class="login-form">
+			                    	<div class="inputWithIcon inputIconBg">
+			                    		<h:inputText value="#{personaControlador.user}"
+														name="usuario" class="login-form" id="usuario"
+														pt:placeholder="user@mail.com" />
+														<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+														
+									</div>
+			                        <div class="inputWithIconp inputIconBgp">
+			                        		<h:inputSecret value="#{personaControlador.password}"
+															name="contrasenia" class="login-form" id="contrasenia"
+															pt:placeholder="password" 
+															requiredMessage="Contrasenia es requerida"/>
+															<i class="fa fa-key fa-lg fa-fw" aria-hidden="true"></i>
+									</div>
+															
+											<br/>
+															
+															 <h:outputText value="#{personaControlador.coincidencia}"
+													   id="mensaje" style="color:red; display:block" />
+										<div class="login-form">					
+			                        	<h:commandButton action="#{personaControlador.login()}"
+													value="Acceder"
+													class="btn btn-lg btn-success btn-block btn-signin text-uppercase">
+												<f:ajax render="mensaje usuario contrasena"
+														execute="usuario contrasenia" />
+														
+														<br/>
+																
+												
+								</h:commandButton>
+								
+								</div>
+								</h:form>
+							<h:form>
+							<div class="login-form">
+					         <h:commandButton action="#{personaControlador.irRegistrar()}"
+													value="Crear cuenta"
+													class="btn btn-lg btn-info btn-block btn-signin text-uppercase">
+													</h:commandButton>
+													</div>
+																								
+							     </h:form>
+					        
+		                    </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+              
+                    
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                        	<h3>...o inicie sesion con:</h3>
+                        	<div class="social-login-buttons">
+	                        	<a class="btn btn-link-1 btn-link-1-facebook" href="#">
+	                        		<i class="fa fa-facebook"></i> Facebook
+	                        	</a>
+	                        	<a class="btn btn-link-1 btn-link-1-twitter" href="#">
+	                        		<i class="fa fa-twitter"></i> Twitter
+	                        	</a>
+	                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
+	                        		<i class="fa fa-google-plus"></i> Google Plus
+	                        	</a>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="login/assets/js/placeholder.js"></script>
+        <![endif]-->
+        
+          <!-- Estilos para la caja de texto normal -->
+        
+              <style type="text/css">
+        
+      input[type="text"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 3px;
+  margin: 8px 0;
+  outline: none;
+  padding: 3px ;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon input[type="text"] {
+  padding-left: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 17px 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+      
+        </style>
+        
+        <!-- Estilos para la caja de texto password -->
+        
+        <style type="text/css">
+        
+        input[type="password"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 3px;
+  margin: 8px 0;
+  outline: none;
+  padding: 3px ;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+input[type="password"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIconp input[type="password"] {
+  padding-left: 40px;
+}
+
+.inputWithIconp {
+  position: relative;
+}
+
+.inputWithIconp i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.inputWithIconp input[type="password"]:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIconp.inputIconBgp i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 17px 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputWithIconp.inputIconBgp input[type="password"]:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+        </style>
+        
+        
+        
+        
+        <!-- Header -->
+        
+         <style type="text/css">
+         @import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto:400,500);
+nav {
+  background: #333;
+  overflow: hidden;
+  
+  position: relative;
+  z-index: 2;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+nav h1 {
+  color: #eee;
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  float: left;
+}
+
+nav h1>a {
+  color: #3ab4a6;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 200ms linear;
+}
+
+nav h1>a:hover {
+  background: none;
+  color: #C18055;
+}
+
+ul {
+  text-align: center;
+  float: right;
+}
+
+ul li {
+  display: inline-block;
+}
+
+ul li a {
+  text-decoration: none;
+  display: block;
+  
+  margin: 0 5px;
+  color: #eee;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+  
+}
+
+nav a:hover,
+nav#small a:hover {
+  color: #C18055;    ----------------------------
+  background: #fff;
+}
+
+nav#small {
+  background: #fff;
+  
+  position: fixed;
+  box-sizing: border-box;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+  
+}
+
+nav#small h1,
+nav#small a {
+  color: #333;
+}
+
+nav#small h1 {
+  font-size: 25px;
+}
+
+nav#small h1>a {
+  color: #C18055;
+}
+
+nav#small h1>a:hover {
+  color: #3ab4a6;
+}
+
+
+         
+         </style>
+
+
+        </body>
+
+</html>
