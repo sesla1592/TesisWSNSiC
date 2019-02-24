@@ -183,7 +183,7 @@ public class PersonaControlador {
 	public void irLogin() {
 		FacesContext contex = FacesContext.getCurrentInstance();
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/index.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/Login.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -197,6 +197,27 @@ public class PersonaControlador {
 			// TODO: handle exception
 		}
 	}
+	
+	/**
+	* Metodo para cerrar sesion 
+	* pozo
+	**/
+	public void logout() {
+		System.out.println("Cerrando Sesion...");
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+	        if (session != null) {
+	            session.invalidate(); //Cierre de sesion  
+	            facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/homepage/home.xhtml?faces-redirect=true");  
+	        }
+	    		
+	        System.out.println("Sesion exitosamente cerrada..!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al cerrar Sesion");
+		}
+    }
 
 	public void cargarDatosUsuario() {
 		miUsuario = new Persona();
@@ -251,7 +272,7 @@ public class PersonaControlador {
 			System.out.println("Error al crear: " + e.getMessage());
 			e.printStackTrace();
 		}
-		return "index?faces-redirect=true";
+		return "Login?faces-redirect=true";
 	}
 
 	public void leerUsuario() {
@@ -297,14 +318,6 @@ public class PersonaControlador {
 		personas.setCorreo("");
 		personas.setPassword("");
 	}
-	
-
-	public String cerrarSesion() {
-		HttpSession session = SessionUtils.getSession();
-		session.invalidate();
-		return "index?faces-redirect=true";
-	}
-	
 	
 
 	public Persona getPersonas() {
