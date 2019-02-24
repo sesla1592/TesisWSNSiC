@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -148,6 +149,7 @@ public class NodoControlador {
 				codNodo="";
 				ltsNodo = nodoDAO.getAllNodos();
 				FacesContext contex = FacesContext.getCurrentInstance();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nodo", "Nodo Agregado Correctamente"));
 				contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/listaNodos.xhtml");
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -206,6 +208,8 @@ public class NodoControlador {
 			if(nodoInsert) {
 				//existe el nodo
 				System.out.println("existe el nodo en la bd");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El nodo ya existe en la base de datos"));
+				
 			}else {
 				//
 				System.out.println("no existe el nodo en la bd");
@@ -241,6 +245,8 @@ public class NodoControlador {
 					guardarNodo();
 				}catch (Exception e) {
 					// TODO: handle exception
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al insertar"));
+					
 					e.printStackTrace();
 				}
 			}

@@ -113,11 +113,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
                     </p:dataTable>
 		<h:selectOneMenu id="listaNodos" value="#{dashboardAdmin.sensorSeleccionado}" >
 			<f:selectItems value="#{dashboardAdmin.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
+			<f:ajax event="valueChange" listener="#{dashboardAdmin.cambioSensor}" render="grafica fecha" />
 		</h:selectOneMenu>
-		<h:selectOneMenu value = "#{dashboardAdmin.tipoFecha}"> 
+		<h:selectOneMenu id="fecha" value = "#{dashboardAdmin.tipoFecha}"> 
 		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
 		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
 		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		   <f:ajax event="valueChange" listener="#{dashboardAdmin.cambioSensor}" render="grafica fecha" />
 		</h:selectOneMenu> 
 		<br /><br />
 		<b:row>

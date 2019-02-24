@@ -29,7 +29,7 @@ public class Blog {
 	private String descripcion;
 	
 	@Column(name = "blo_img64")
-	private String imagen;
+	private byte[] imagen;
 	
 	@Column(name = "blo_fecha_pub")
 	private String fechaPub;
@@ -71,11 +71,11 @@ public class Blog {
 		this.descripcion = descripcion;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 

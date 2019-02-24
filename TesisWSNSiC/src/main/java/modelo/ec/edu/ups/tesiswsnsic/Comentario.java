@@ -103,7 +103,7 @@ public class Comentario {
 
 	@Override
 	public String toString() {
-		return "Comentario [id=" + id + ", email=" + email + ", cometario=" + cometario + ", blog=" + blog + "]";
+		return "Comentario [id=" + id + ", email=" + email + ", cometario=" + cometario + "]";
 	}
 	
 	

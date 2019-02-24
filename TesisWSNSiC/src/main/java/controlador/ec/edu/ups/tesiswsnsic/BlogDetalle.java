@@ -1,6 +1,11 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,11 +16,16 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
+import org.apache.commons.codec.binary.Base64;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -31,8 +41,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
 import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
+import dao.ec.edu.ups.tesiswsnsic.ComentariosDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaNodoDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
+import modelo.ec.edu.ups.tesiswsnsic.Comentario;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import utilidades.ec.edu.ups.tesiswsnsic.DBConnection;
@@ -49,6 +61,9 @@ public class BlogDetalle {
 	
 	@Inject
 	BlogDAO blogDAO;
+	
+	@Inject
+	ComentariosDAO comentarioDAO;
 	
 	public MapModel simpleModel;
 	public Nodo nodoSelected;
@@ -68,13 +83,19 @@ public class BlogDetalle {
 	public String medici;
 	public double val;
 	public String fec;
-	
+	List<Comentario> ltsComentarios;
+	public Comentario comentario;
+	String imageString;
 	@PostConstruct
 	public void init() {
 		
 		try {
 			blog  = (Blog) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("blogSelected");
 			System.out.println("blog " + blog.toString());
+			//comentarios
+			ltsComentarios = comentarioDAO.allComByBlog(blog.getId());
+			System.out.println("comentarios " + ltsComentarios.size());
+			//
 			ltsNodos = personaNodoDAO.ltsNodosByUser(blog.getEmpresa().getPersonas().get(0).getId());
 			System.out.println("tam nodos em "+ltsNodos.size());
 			ltsSData = new ArrayList<>();
@@ -89,11 +110,30 @@ public class BlogDetalle {
 			System.out.println("Fecha: fin-->"+fechaFin);
 			blog.setVisitas(blog.getVisitas()+1);
 			blogDAO.update(blog);
+			comentario = new Comentario();
+			//imagen
+//			String fileName ="/Users/paul/pruebaaaaa.png";
+//			FileOutputStream fos = new FileOutputStream(new File(fileName));
+//			fos.write(blog.getImagen());
+			
+			imageString= new String(Base64.encodeBase64(blog.getImagen()));
+			//fos.close();
 		}catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			System.out.println("error la extraer blog");
 		}
 	
+	}
+
+	private StreamedContent dbImage;
+	
+	public StreamedContent getDbImage() {
+		return dbImage;
+	}
+
+	public void setDbImage(StreamedContent dbImage) {
+		this.dbImage = dbImage;
 	}
 
 	public Blog getBlog() {
@@ -216,6 +256,30 @@ public class BlogDetalle {
 		this.tipoFecha = tipoFecha;
 	}
 
+	public List<Comentario> getLtsComentarios() {
+		return ltsComentarios;
+	}
+
+	public void setLtsComentarios(List<Comentario> ltsComentarios) {
+		this.ltsComentarios = ltsComentarios;
+	}
+
+	public Comentario getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(Comentario comentario) {
+		this.comentario = comentario;
+	}
+
+	public String getImageString() {
+		return imageString;
+	}
+
+	public void setImageString(String imageString) {
+		this.imageString = imageString;
+	}
+
 	public void addMarker() {
 		for (int i = 0; i < ltsNodos.size(); i++) {
 			String descripcion="Sensores\n";
@@ -303,33 +367,13 @@ public class BlogDetalle {
 		System.out.println("Connection Succesfull");
 	}
 	
-	public void consulta() {
+	public void grafica() {
 		ltsSData= new ArrayList<>();
-		System.out.println("tipo de filtro fecha "+tipoFecha);
-		if(tipoFecha.equals("Diario")) {
-			Date date = new Date();
-			//Caso 2: obtener la fecha y salida por pantalla con formato:
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(date)+" 00:00:00";
-		}
-		if(tipoFecha.equals("Semanal")) {
-			Calendar calendar =Calendar.getInstance(); //obtiene la fecha de hoy 
-			calendar.add(Calendar.DATE, -7); //el -3 indica que se le restaran 3 dias 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(calendar.getTime())+" 00:00:00";
-			System.out.println("fecha semanal "+fechaInicio);
-		}
-		if(tipoFecha.equals("Mensual")) {
-			Calendar calendar =Calendar.getInstance(); //obtiene la fecha de hoy 
-			calendar.add(Calendar.DATE, -30); //el -3 indica que se le restaran 3 dias 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(calendar.getTime())+" 00:00:00";
-			System.out.println("fecha mensual "+fechaInicio);
-		}
-		
 		System.out.println("sensor seleccionado: "+sensorSeleccionado);
-		System.out.println("fache inicio : "+fechaInicio);
-		System.out.println("fache fin : "+fechaFin);
+		System.out.println("fecha inicio "+fechaInicio);
+		System.out.println("fecha fin "+fechaFin);
+		////fecha fin
+		
 		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 
 		BasicDBObject query = new BasicDBObject();
@@ -365,5 +409,27 @@ public class BlogDetalle {
 				//cont++;
 			}
 		System.out.println("Connection Succesfull");
+	}
+	
+	public void onDateSelectInicio(SelectEvent event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        fechaInicio = format.format(event.getObject())+" 00:00:00";
+        System.out.println("fecha seleccionada "+fechaInicio);
+        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+	
+	public void onDateSelectFin(SelectEvent event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        fechaFin = format.format(event.getObject())+" 23:59:59";
+        System.out.println("fecha fin "+fechaFin);
+        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+	public void guardarComentario() {
+		System.out.println("cometario "+comentario.toString());
+		comentario.setBlog(blog);
+		comentarioDAO.insert(comentario);
+		comentario = new Comentario();
+		ltsComentarios = comentarioDAO.allComByBlog(blog.getId());
+		
 	}
 }

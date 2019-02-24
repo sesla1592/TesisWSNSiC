@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
 
 <h:head></h:head> 
 
@@ -11,12 +12,12 @@
 
 <h:panelGroup id="display">
 <h:commandButton action="#{nodoControlador.back()}" value="atras" />
+
 <h:panelGrid columns="3">
 
-<h:outputLabel value="Nombre del Nodo"/>
-				<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}" size="50" 
-				/>
-				<br/>
+	<h:outputLabel value="Nombre del Nodo"/>
+	<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}" size="50" />
+	<br/>
 				
 </h:panelGrid>
 				
@@ -30,5 +31,6 @@
 	<h:commandButton id="bucar" action="#{nodoControlador.busquedaNodoMongo()}" value="Buscar nodo" />
 
 </h:panelGroup>
+<p:messages id="messages" showDetail="true" closable="true" autoUpdate="true"/>
 </h:form>
 </html>

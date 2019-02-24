@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
-import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 
 @Stateless
 public class BlogDAO {
@@ -49,8 +48,9 @@ public class BlogDAO {
 	public List<Blog> allBlogs(){
 		try {
 			TypedQuery<Blog> query = em.createQuery(
-					"Select b from Blog b where b.estado = true", Blog.class);
+					"Select b from Blog b where b.estado = true order by b.visitas DESC", Blog.class);
 			//query.setParameter("codeNodo", codeNodo);
+			query.setMaxResults(10);
 			List<Blog> ltsBlogs = query.getResultList();
 			return ltsBlogs;
 		} catch (Exception e) {

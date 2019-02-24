@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
@@ -571,4 +572,8 @@ public class DashboardAdmin {
 		System.out.println("Connection Succesfull");
 	}
 	
+	public void cambioSensor(final AjaxBehaviorEvent event) {
+		System.out.println("--> sensor seleccionado "+sensorSeleccionado);
+		graficaDatos();
+	}
 }

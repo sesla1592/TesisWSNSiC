@@ -4,6 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
  	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
+ 	  xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
 
 <h:head></h:head> 
@@ -43,8 +44,18 @@ perfil
 	<h:outputText  value="Descripcion: " />
 	<h:inputText value="#{blogControlador.blog.descripcion}" pt:placeholder="Descripcion" />
 	
+	<h:outputText  value="Estado: " />
+	<h:selectOneMenu id="fecha" value = "#{blogControlador.blog.estado}"> 
+		<f:selectItem itemValue = "true" itemLabel = "activo" /> 
+		<f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
+		
+		<p:fileUpload fileUploadListener="#{blogControlador.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                  update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+ 		<p:growl id="messages" showDetail="true" /> 
+	</h:selectOneMenu> 
+		
 	</h:panelGrid> 
-	 <h:commandButton action="#{blogControlador.actualizar()}" value="Actualizar Empresa" />
+	 <h:commandButton action="#{blogControlador.actualizar()}" value="Actualizar mi blog" />
 	
 	</h:form>
 </div>

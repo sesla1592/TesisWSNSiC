@@ -26,6 +26,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		<h:outputLabel value="Direccion: #{blogDetalle.blog.empresa.direccion}" /><br/>
 		<h:outputLabel value="Cuidad: #{blogDetalle.blog.empresa.ciudad}" /><br/>	
 		<h:outputLabel value="Numero de visitas: #{blogDetalle.blog.visitas}" /><br/>	
+		<img src="data:image/png;base64,#{blogDetalle.imageString}" />
 	</h:form>
 <h:form>
 <p:growl id="growl" showDetail="true" />
@@ -59,11 +60,18 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		    
 			<f:selectItems value="#{blogDetalle.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
 		</h:selectOneMenu>
-		<h:selectOneMenu value = "#{blogDetalle.tipoFecha}"> 
-		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
-		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
-		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
-		</h:selectOneMenu> 
+		
+		
+		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+        <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
+        		<p:ajax event="dateSelect" listener="#{blogDetalle.onDateSelectInicio}" />
+        </p:calendar>
+        
+        <p:outputLabel for="fechaFin" value="Fecha de fin:" />
+        <p:calendar id="fechaFin" pattern="dd/MM/yyyy">
+        		<p:ajax event="dateSelect" listener="#{blogDetalle.onDateSelectFin}" />
+        </p:calendar>
+        
 		<b:row style="width: 100%;height: 100%;">
 				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
@@ -85,9 +93,35 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 									</hf:chartTooltip>									
 				</hf:chart>
 		</b:row>		
-		<b:commandButton action="#{blogDetalle.consulta()}" value="Graficar" update="grafica">
+		<b:commandButton action="#{blogDetalle.grafica()}" value="Graficar" update="grafica">
 		</b:commandButton>
-	 
-       </h:form>
+	 </h:form>
+       <h:form id="formularioComentario">
+       <h:panelGrid id="panelComentarios" columns="2">
+      	<h:outputLabel value="Email"/>
+		<h:inputText id="email" value="#{blogDetalle.comentario.email}" size="50" required="true"/>
+      	
+      	<h:outputLabel value="Comentario"/>
+		<h:inputText id="nombre" value="#{blogDetalle.comentario.cometario}" size="50" required="true"/>
+		
+      	</h:panelGrid>
+      	<br/>
+		
+		<h:commandButton value="Agregar Comentario 2" action="#{blogDetalle.guardarComentario()}">
+			<f:ajax  execute="@form"  render=":dataCom formularioComentario" /> 
+		</h:commandButton>
+		</h:form>
+       <p:dataTable id="dataCom" value="#{blogDetalle.ltsComentarios}" var="comentarios">
+       		<p:column>
+				<f:facet name="header">
+                		<h:outputText value="Comentarios"/>
+                 </f:facet>
+                            <h:outputText value="#{comentarios.cometario}"/>
+                            <br/>
+                             <h:outputText value="Por #{comentarios.email}"/>
+			</p:column>
+      	</p:dataTable>
+      	
+       
 </body>
 </html>
