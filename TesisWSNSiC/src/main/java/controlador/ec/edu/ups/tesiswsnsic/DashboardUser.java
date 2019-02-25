@@ -27,6 +27,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -337,33 +338,13 @@ public class DashboardUser {
 		return marker;
 	}
 
-	public void consulta() {
+	public void grafica() {
 		// ltsSHum = new ArrayList<>();
 		// ltsSTemp = new ArrayList<>();
 		// ltsSLum = new ArrayList<>();
 		// ltsSRui = new ArrayList<>();
 		ltsDataSensor = new ArrayList<>();
-		if (tipoFecha.equals("Diario")) {
-			Date date = new Date();
-			// Caso 2: obtener la fecha y salida por pantalla con formato:
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(date) + " 00:00:00";
-		}
-		if (tipoFecha.equals("Semanal")) {
-			Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-			calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-			System.out.println("fecha semanal " + fechaInicio);
-		}
-		if (tipoFecha.equals("Mensual")) {
-			Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-			calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-			System.out.println("fecha mensual " + fechaInicio);
-		}
-
+		
 		System.out.println("sensor seleccionado: " + sensorSeleccionado);
 		System.out.println("fache inicio : " + fechaInicio);
 		System.out.println("fache fin : " + fechaFin);
@@ -404,21 +385,6 @@ public class DashboardUser {
 			}
 		}
 
-		// System.out.println("contador "+cont);
-		// for (int i = 0; i < puntos.size(); i++) {
-		// System.out.println("punto "+puntos.get(i).toString());
-		// }
-
-		// System.out.println("ltsSLum " + ltsSLum.size());
-		// System.out.println("ltsSHum " + ltsSHum.size());
-		// System.out.println("ltsSTemp " + ltsSTemp.size());
-		// System.out.println("ltsSRui " + ltsSRui.size());
-
-		for (int i = 0; i < ltsDataSensor.size(); i++) {
-			System.out.println("data H " + ltsDataSensor.get(i).toString());
-			// System.out.println("data L "+ltsSLum.get(i).toString());
-		}
-		// createLineModels();
 		System.out.println("Connection Succesfull");
 	}
 
@@ -472,6 +438,20 @@ public class DashboardUser {
 		}
 		crearCSV();
 	}
+	
+	public void onDateSelectInicio(SelectEvent event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        fechaInicio = format.format(event.getObject())+" 00:00:00";
+        System.out.println("fecha seleccionada "+fechaInicio);
+        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+	
+	public void onDateSelectFin(SelectEvent event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        fechaFin = format.format(event.getObject())+" 23:59:59";
+        System.out.println("fecha fin "+fechaFin);
+        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
 
 	public void datosNodo(String codSensor, boolean historico) {
 

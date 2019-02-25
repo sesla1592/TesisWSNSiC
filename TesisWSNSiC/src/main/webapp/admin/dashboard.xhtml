@@ -113,15 +113,19 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
                     </p:dataTable>
 		<h:selectOneMenu id="listaNodos" value="#{dashboardAdmin.sensorSeleccionado}" >
 			<f:selectItems value="#{dashboardAdmin.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
-			<f:ajax event="valueChange" listener="#{dashboardAdmin.cambioSensor}" render="grafica fecha" />
+			
 		</h:selectOneMenu>
-		<h:selectOneMenu id="fecha" value = "#{dashboardAdmin.tipoFecha}"> 
-		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
-		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
-		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
-		   <f:ajax event="valueChange" listener="#{dashboardAdmin.cambioSensor}" render="grafica fecha" />
-		</h:selectOneMenu> 
+		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+        <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
+        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectInicio}" />
+        </p:calendar>
+        
+        <p:outputLabel for="fechaFin" value="Fecha de fin:" />
+        <p:calendar id="fechaFin" pattern="dd/MM/yyyy">
+        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectFin}" />
+        </p:calendar>
 		<br /><br />
+		
 		<b:row>
 				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
 					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
