@@ -17,6 +17,13 @@
 			
 			<p:column>
 				<f:facet name="header">
+					<h:outputText value="Imagen" />
+				</f:facet>
+				<img src="data:image/png;base64,#{blog.imgBase64}" style="width: 100px; height: 100px" />
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
 					<h:outputText value="Nombre" />
 				</f:facet>
 				<h:outputText value="#{blog.nombreBlog}" />

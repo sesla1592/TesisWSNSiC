@@ -45,13 +45,18 @@ public class EditEmpresa {
 	}
 	
 	public void actualizarPersona() {
-		if(newPassword.equals(user.getPassword())){
-			System.out.println("contrasenas iguales");
-			personaDAO.updatePersona(user);
+		if(newPassword!=null) {
+			if(newPassword.equals(user.getPassword())){
+				System.out.println("contrasenas iguales");
+				personaDAO.updatePersona(user);
+			}else {
+				System.out.println("contrasenas diferentes");
+				//mensaje de no guardado
+			}
 		}else {
-			System.out.println("contrasenas diferentes");
-			//mensaje de no guardado
+			personaDAO.updatePersona(user);
 		}
+		
 		
 	}
 

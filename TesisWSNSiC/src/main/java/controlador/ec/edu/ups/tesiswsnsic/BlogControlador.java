@@ -43,6 +43,7 @@ public class BlogControlador {
 		}catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("error la extraer usuario");
+			e.printStackTrace();
 		}
 	}
 	
@@ -64,8 +65,12 @@ public class BlogControlador {
 //	        // Store image to DB
 //	        blog.setImagen(bytes);
 	        blogDao.update(blog);
+	        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Succesful", "Informacion Actualizada.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
 	        
 		}catch (Exception e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Error al guardar su informacion.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
 			e.printStackTrace();
 			// TODO: handle exception
 		}

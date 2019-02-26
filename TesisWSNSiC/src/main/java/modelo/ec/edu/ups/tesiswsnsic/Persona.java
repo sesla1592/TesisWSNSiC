@@ -36,6 +36,9 @@ public class Persona {
 
 	@Column(name = "per_password")
 	private String password;
+	
+	@Column(name = "per_cambio_password")
+	private boolean cambioPassword;
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
 	@JoinColumn(name = "per_pen_fk", referencedColumnName = "per_id")
@@ -135,6 +138,16 @@ public class Persona {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+
+	public boolean isCambioPassword() {
+		return cambioPassword;
+	}
+
+
+	public void setCambioPassword(boolean cambioPassword) {
+		this.cambioPassword = cambioPassword;
 	}
 
 

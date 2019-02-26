@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "BLOG")
@@ -46,6 +47,9 @@ public class Blog {
 
 	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY,mappedBy="blog")
 	private List<Comentario> ltsComentario;
+	
+	@Transient
+	String imgBase64;
 	
 	public int getId() {
 		return id;
@@ -109,6 +113,14 @@ public class Blog {
 
 	public void setEstado(boolean estado) {
 		this.estado = estado;
+	}
+
+	public String getImgBase64() {
+		return imgBase64;
+	}
+
+	public void setImgBase64(String imgBase64) {
+		this.imgBase64 = imgBase64;
 	}
 
 	@Override

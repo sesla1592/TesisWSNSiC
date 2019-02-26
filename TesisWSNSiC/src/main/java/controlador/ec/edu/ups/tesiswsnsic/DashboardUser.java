@@ -1,6 +1,7 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
@@ -521,8 +522,10 @@ public class DashboardUser {
 	public void crearCSV() {
 		String[] ltsCabecera = { "Codigo Sensor", "Fecha", "Latitud", "Longitud", "Sensor", "Valor" };
 		try {
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			Writer writer = Files.newBufferedWriter(Paths.get(URL_FOLDER + "data_1.csv"));
 			CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(ltsCabecera);
+			//writer.
 			CSVPrinter csvPrinter = new CSVPrinter(writer, csvFormat);
 			for (int i = 0; i < ltsReporte.size(); i++) {
 				List<Object> colum = new ArrayList<>();
@@ -535,7 +538,39 @@ public class DashboardUser {
 				csvPrinter.printRecord(colum);
 			}
 			csvPrinter.flush();
+			InputStream inputstream = new FileInputStream(URL_FOLDER + "data_1.csv");
 			
+			String nameFile ="file.csv";
+			//descargar
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			
+			// Get HTTP response
+			HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+
+			// Set response headers
+			response.reset(); // Reset the response in the first place
+			response.setContentType("application/octet-stream");
+			response.addHeader("Content-Disposition", "attachment; filename=\"" + nameFile + "\"");
+
+			// Open response output stream
+			OutputStream responseOutputStream = response.getOutputStream();
+
+			byte[] backByte = csvPrinter.toString().getBytes();
+			responseOutputStream.write(backByte);
+			// Make sure that everything is out
+			responseOutputStream.flush();
+
+			// Close both streams
+			//pdfInputStream.close();
+			responseOutputStream.close();
+
+			// JSF doc:
+			// Signal the JavaServer Faces implementation that the HTTP response for this
+			// request has already been generated
+			// (such as an HTTP redirect), and that the request processing lifecycle should
+			// be terminated
+			// as soon as the current phase is completed.
+			facesContext.responseComplete();
 
 		} catch (Exception e) {
 			e.printStackTrace();

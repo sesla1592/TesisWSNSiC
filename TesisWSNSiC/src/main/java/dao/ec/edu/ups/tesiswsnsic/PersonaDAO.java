@@ -152,5 +152,18 @@ public class PersonaDAO {
 			return null;
 		}
 	}
+	
+	public Persona getByEmail(String email)
+	{
+		String sql="Select p from Persona p WHERE p.correo = '"+email+"'";
+		TypedQuery<Persona> query=em.createQuery(sql,Persona.class);
+		try {
+			Persona persona = query.getSingleResult();
+			return persona;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}
 
 }

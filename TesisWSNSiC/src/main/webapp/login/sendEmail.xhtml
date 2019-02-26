@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+
+<h:form>		
+<h2>Reset Password</h2>
+
+<h:panelGroup id="display">
+
+
+<h:panelGrid columns="2">
+
+	<h:outputLabel value="Escriba su email"/>
+	<h:inputText id="pass1" value="#{recuperarPassword.email}"/>
+	
+	<br/>
+				
+</h:panelGrid>
+				
+	<h:commandButton action="#{recuperarPassword.sendEmailRecovery()}" value="Enviar email" />
+
+</h:panelGroup>
+<p:growl id="messages" showDetail="true" /> 
+</h:form>
+</html>

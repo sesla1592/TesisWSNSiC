@@ -147,33 +147,44 @@ public class PersonaControlador {
 			System.out.println("login exitoso");
 			FacesContext contex = FacesContext.getCurrentInstance();
 			contex.getExternalContext().getSessionMap().put("userSelected", miUsuario);
-			if(miUsuario.getRolPerson().getId()==1) {//es admin
-				System.out.println("es admin");
+			if(miUsuario.isCambioPassword()) {
+				//envio a la pagina de cambio
 				try{
-					contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
+					contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/resetPassword.xhtml");
 				}catch (Exception e) {
 					// TODO: handle exception
 				}
-			}
-			
-			if(miUsuario.getRolPerson().getId()==2) {//es usuario
-				System.out.println("es user "+miUsuario.toString());
-				if(miUsuario.getEmpresa()!=null) {
-					System.out.println("ya tiene empresa");
+			}else {
+				//continua con las validaciones
+				if(miUsuario.getRolPerson().getId()==1) {//es admin
+					System.out.println("es admin");
 					try{
-						contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/dashboard.xhtml");
-					}catch (Exception e) {
-						// TODO: handle exception
-					}
-				}else {
-					System.out.println("no tiene empresa");
-					try{
-						contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/crearEmpresa.xhtml");
+						contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
 				}
+				
+				if(miUsuario.getRolPerson().getId()==2) {//es usuario
+					System.out.println("es user "+miUsuario.toString());
+					if(miUsuario.getEmpresa()!=null) {
+						System.out.println("ya tiene empresa");
+						try{
+							contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/dashboard.xhtml");
+						}catch (Exception e) {
+							// TODO: handle exception
+						}
+					}else {
+						System.out.println("no tiene empresa");
+						try{
+							contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/crearEmpresa.xhtml");
+						}catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
+				}
 			}
+			
 			
 		}else {
 			System.out.println("login fallido");
@@ -198,6 +209,16 @@ public class PersonaControlador {
 		}
 	}
 	
+	
+	public void irRecuperarPass() {
+		//http://localhost:8080/TesisWSNSiC/faces/login/sendEmail.xhtml
+		FacesContext contex = FacesContext.getCurrentInstance();
+		try{
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/sendEmail.xhtml");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	/**
 	* Metodo para cerrar sesion 
 	* pozo
