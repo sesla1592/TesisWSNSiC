@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
@@ -84,11 +85,12 @@ public class DashboardAdmin {
 	public Double datoLum=0.0;
 	String sensorSeleccionado;
 	protected List<MedValFec> ltsSData;
-	public String fechaInicio="2018/01/11 00:00:00";
+	public String fechaInicio;
 	public String fechaFin;
 	public String fec;
 	public String medici;
 	public double val;
+	boolean typeCalendar;
 	
 	@PostConstruct
 	public void init() {
@@ -499,6 +501,35 @@ public class DashboardAdmin {
 
 	public void graficaDatos() {
 		ltsSData= new ArrayList<>();
+		System.out.println("boolean typo calendario "+typeCalendar);
+		if(typeCalendar==false) {
+			System.out.println("fecha por combo :"+tipoFecha);
+			//cambio las fechas
+			
+			if (tipoFecha.equals("Diario")) {
+				Date date = new Date();
+				// Caso 2: obtener la fecha y salida por pantalla con formato:
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(date) + " 00:00:00";
+			}
+			if (tipoFecha.equals("Semanal")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha semanal " + fechaInicio);
+			}
+			if (tipoFecha.equals("Mensual")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha mensual " + fechaInicio);
+			}
+			
+		}else {
+			System.out.println("fecha por calendario");
+		}
 		
 		System.out.println("sensor seleccionado: " + sensorSeleccionado);
 		System.out.println("fache inicio : " + fechaInicio);
@@ -556,6 +587,7 @@ public class DashboardAdmin {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaInicio = format.format(event.getObject())+" 00:00:00";
         System.out.println("fecha seleccionada "+fechaInicio);
+        typeCalendar=true;
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
 	
@@ -563,7 +595,12 @@ public class DashboardAdmin {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaFin = format.format(event.getObject())+" 23:59:59";
         System.out.println("fecha fin "+fechaFin);
+        typeCalendar=true;
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
+	
+	public void cambioDeFecha(ValueChangeEvent e){
+		typeCalendar=false;
+	}
 	
 }

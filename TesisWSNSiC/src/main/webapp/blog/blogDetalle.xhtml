@@ -60,7 +60,11 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		    
 			<f:selectItems value="#{blogDetalle.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
 		</h:selectOneMenu>
-		
+		<h:selectOneMenu value = "#{blogDetalle.tipoFecha}" valueChangeListener="#{blogDetalle.cambioDeFecha}"> 
+		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
+		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
+		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		</h:selectOneMenu> 
 		
 		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
         <p:calendar id="fechaIni" pattern="yyyy/MM/dd">

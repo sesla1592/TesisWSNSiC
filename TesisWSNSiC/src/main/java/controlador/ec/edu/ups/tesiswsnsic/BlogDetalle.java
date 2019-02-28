@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import org.apache.commons.codec.binary.Base64;
 
@@ -86,6 +87,8 @@ public class BlogDetalle {
 	List<Comentario> ltsComentarios;
 	public Comentario comentario;
 	String imageString;
+	boolean typeCalendar;
+	
 	@PostConstruct
 	public void init() {
 		
@@ -369,6 +372,35 @@ public class BlogDetalle {
 	
 	public void grafica() {
 		ltsSData= new ArrayList<>();
+		System.out.println("boolean typo calendario "+typeCalendar);
+		if(typeCalendar==false) {
+			System.out.println("fecha por combo :"+tipoFecha);
+			//cambio las fechas
+			
+			if (tipoFecha.equals("Diario")) {
+				Date date = new Date();
+				// Caso 2: obtener la fecha y salida por pantalla con formato:
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(date) + " 00:00:00";
+			}
+			if (tipoFecha.equals("Semanal")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha semanal " + fechaInicio);
+			}
+			if (tipoFecha.equals("Mensual")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha mensual " + fechaInicio);
+			}
+			
+		}else {
+			System.out.println("fecha por calendario");
+		}
 		System.out.println("sensor seleccionado: "+sensorSeleccionado);
 		System.out.println("fecha inicio "+fechaInicio);
 		System.out.println("fecha fin "+fechaFin);
@@ -415,6 +447,7 @@ public class BlogDetalle {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaInicio = format.format(event.getObject())+" 00:00:00";
         System.out.println("fecha seleccionada "+fechaInicio);
+        typeCalendar=true;
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
 	
@@ -422,8 +455,13 @@ public class BlogDetalle {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaFin = format.format(event.getObject())+" 23:59:59";
         System.out.println("fecha fin "+fechaFin);
+        typeCalendar=true;
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
+	
+	public void cambioDeFecha(ValueChangeEvent e){
+		typeCalendar=false;
+	}
 	public void guardarComentario() {
 		System.out.println("cometario "+comentario.toString());
 		comentario.setBlog(blog);

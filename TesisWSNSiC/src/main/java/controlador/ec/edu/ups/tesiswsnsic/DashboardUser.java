@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,6 +77,7 @@ public class DashboardUser {
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
 
+	boolean typeCalendar; //true= calendario ; false = combo
 	// protected List<MedValFec> ltsSTemp;
 	// protected List<MedValFec> ltsSHum;
 	// protected List<MedValFec> ltsSLum;
@@ -98,7 +100,7 @@ public class DashboardUser {
 	public Double datoHum = 0.0;
 	public Double datoRui = 0.0;
 	public Double datoLum = 0.0;
-	public String fechaInicio = "2018/01/11 00:00:00";
+	public String fechaInicio;
 	public String fechaFin;
 
 	public String tipoFecha;
@@ -291,6 +293,14 @@ public class DashboardUser {
 		this.ltsDataSensor = ltsDataSensor;
 	}
 
+	public boolean isTypeCalendar() {
+		return typeCalendar;
+	}
+
+	public void setTypeCalendar(boolean typeCalendar) {
+		this.typeCalendar = typeCalendar;
+	}
+
 	public void addMarker() {
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
 			String descripcion = "Sensores\n";
@@ -344,6 +354,35 @@ public class DashboardUser {
 		// ltsSTemp = new ArrayList<>();
 		// ltsSLum = new ArrayList<>();
 		// ltsSRui = new ArrayList<>();
+		System.out.println("boolean typo calendario "+typeCalendar);
+		if(typeCalendar==false) {
+			System.out.println("fecha por combo :"+tipoFecha);
+			//cambio las fechas
+			
+			if (tipoFecha.equals("Diario")) {
+				Date date = new Date();
+				// Caso 2: obtener la fecha y salida por pantalla con formato:
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(date) + " 00:00:00";
+			}
+			if (tipoFecha.equals("Semanal")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha semanal " + fechaInicio);
+			}
+			if (tipoFecha.equals("Mensual")) {
+				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+				calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+				System.out.println("fecha mensual " + fechaInicio);
+			}
+			
+		}else {
+			System.out.println("fecha por calendario");
+		}
 		ltsDataSensor = new ArrayList<>();
 		
 		System.out.println("sensor seleccionado: " + sensorSeleccionado);
@@ -443,7 +482,9 @@ public class DashboardUser {
 	public void onDateSelectInicio(SelectEvent event) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaInicio = format.format(event.getObject())+" 00:00:00";
+        typeCalendar=true;
         System.out.println("fecha seleccionada "+fechaInicio);
+        System.out.println("boolean typo calendario "+typeCalendar);
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
 	
@@ -451,9 +492,14 @@ public class DashboardUser {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         fechaFin = format.format(event.getObject())+" 23:59:59";
         System.out.println("fecha fin "+fechaFin);
+        typeCalendar=true;
+        System.out.println("boolean typo calendario "+typeCalendar);
         //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
 
+	public void cambioDeFecha(ValueChangeEvent e){
+		typeCalendar=false;
+	}
 	public void datosNodo(String codSensor, boolean historico) {
 
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));

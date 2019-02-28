@@ -67,13 +67,19 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 			<f:selectItems value="#{dashboardUser.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
 		</h:selectOneMenu>
 		
+		<h:selectOneMenu value = "#{dashboardUser.tipoFecha}" valueChangeListener="#{dashboardUser.cambioDeFecha}"> 
+		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
+		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
+		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
+		</h:selectOneMenu> 
+
 		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
         <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
         		<p:ajax event="dateSelect" listener="#{dashboardUser.onDateSelectInicio}" />
         </p:calendar>
         
         <p:outputLabel for="fechaFin" value="Fecha de fin:" />
-        <p:calendar id="fechaFin" pattern="dd/MM/yyyy">
+        <p:calendar id="fechaFin" pattern="yyyy/MM/dd">
         		<p:ajax event="dateSelect" listener="#{dashboardUser.onDateSelectFin}" />
         </p:calendar>
 		<br /><br />
