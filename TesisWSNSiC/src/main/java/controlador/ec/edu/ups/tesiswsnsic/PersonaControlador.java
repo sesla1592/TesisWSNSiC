@@ -230,7 +230,9 @@ public class PersonaControlador {
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 	        if (session != null) {
 	            session.invalidate(); //Cierre de sesion  
-	            facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/homepage/home.xhtml?faces-redirect=true");  
+	            miUsuario = new Persona();
+	            //facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/homepage/home.xhtml?faces-redirect=true");
+	            facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/login/Login.xhtml");
 	        }
 	    		
 	        System.out.println("Sesion exitosamente cerrada..!");
@@ -381,4 +383,7 @@ public class PersonaControlador {
 		this.user = user;
 	}
 	
+	public void logout2() {
+		
+	}
 }
