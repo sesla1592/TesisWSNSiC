@@ -1,36 +1,137 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/Templateadmin.xhtml">
 
-<h:head></h:head> 
+<ui:define name="contenido">
 
-<h:form>		
-<h2>Crear Nodo</h2>
+ <h:head>
+        <title><ui:insert name="title">Lista de Nodos</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        
+        
+    </h:head>
 
-<h:panelGroup id="display">
-<h:commandButton action="#{nodoControlador.back()}" value="atras" />
+            <h:form id="NodoListForm">
+            
+            <!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item"><a href="../nodo/listaNodos.xhtml">Listado
+						de Nodos </a></li>
+					
+				<li class="breadcrumb-item active">Detalle Sensor</li>
+			</ol>
 
-<h:panelGrid columns="3">
 
-	<h:outputLabel value="Nombre del Nodo"/>
-	<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}" size="50" />
-	<br/>
-				
-</h:panelGrid>
+			
+			
+			<div class="container">
+				<div class="card card-register mx-auto mt-5">
+					<div class="card-header">Registro de Nodos</div>
+					<div class="card-body">
+
+						<div class="alert alert-info">
+			    <strong>Info!</strong> Busque nodos segun el codigo registrado en la base de datos
+			    y digite un nombre para ser visualizado en la listado de nodos.</div>
+
+						<div class="form-group">
+							
+								<p class="b">Nombre del Nodo</p>
+								<h:inputText id="nombre" value="#{nodoControlador.nodo.nombre}"
+									size="50" class="form-control"  style="height:40px"/><br/>
+														
+							<div class="form-group">
+								
+									<p class="b">Codigo del Nodo</p>
+									<h:inputText id="codNodo" value="#{nodoControlador.codNodo}"
+										size="50" class="form-control" style="height:40px"/>
+									
+								
+							</div>
+
+						</div>
+
+
+						<h:commandButton id="bucar"
+							action="#{nodoControlador.busquedaNodoMongo()}"
+							value="Buscar nodo" class="btn btn-primary" />
+
+
+						<p:messages id="messages" showDetail="true" closable="true"
+							autoUpdate="true" />
+
+					</div>
+				</div>
 				
 				<br/>
-				<h:outputLabel value="Codigo Nodo"/>
-				<h:inputText id="codNodo" value="#{nodoControlador.codNodo}" size="50" />
 				
+				
+				
+			</div>
+			
+			
+			
+		</h:form>
+            
+            <p:dialog >
+       
+    </p:dialog>
+    
+<style type="text/css">
+		/* Import the google web fonts you want to use */
 		
-	
-	<br/>
-	<h:commandButton id="bucar" action="#{nodoControlador.busquedaNodoMongo()}" value="Buscar nodo" />
-
-</h:panelGroup>
-<p:messages id="messages" showDetail="true" closable="true" autoUpdate="true"/>
-</h:form>
-</html>
+		/* tangerine font */
+		@import url(https://fonts.googleapis.com/css?family=Tangerine);
+		
+		/* bigshot one font */
+		@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+		
+		/* Over the rainbow font */
+		@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+		
+		/* pacifico font */
+		@import url(https://fonts.googleapis.com/css?family=Pacifico);
+		
+		/* Content styling */
+		/* fonts for the text */
+		@import
+			url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+		
+		p.a {
+			font-family: 'Tangerine', serif;
+			font-size: 20px;
+			color: #C23B22;
+		}
+		
+		p.b {
+			font-family: 'Bigshot One', serif;
+			font-size: 20px;
+			color: #317873;
+		}
+		
+		p.c {
+			font-family: 'Over the Rainbow', serif;
+			font-size: 20px;
+			color: #0077BE;
+		}
+		
+		p.d {
+			font-family: 'Pacifico', serif;
+			font-size: 20px;
+			color: #C23B22;
+		}
+	</style>
+    
+    
+    
+    </ui:define>
+</ui:composition>

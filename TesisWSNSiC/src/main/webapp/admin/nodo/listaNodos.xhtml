@@ -4,124 +4,177 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:hs="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui"
-	template="/Templateadmin.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/Templateadmin.xhtml">
 
-<ui:define name="contenido">
+	<ui:define name="contenido">
 
- <h:head>
-        <title><ui:insert name="title">Lista de Nodos</ui:insert></title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/>
-    </h:head>
+		<h:head>
+			<title><ui:insert name="title">Lista de Nodos</ui:insert></title>
+			<h:outputStylesheet library="css" name="jsfcrud.css" />
+			<h:outputScript library="js" name="jsfcrud.js" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<link rel="stylesheet"
+				href="https://www.w3schools.com/w3css/4/w3.css" />
 
-            <h:form id="NodoListForm">
-            
-             <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="../dashboard.xhtml">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Listado deNodos</li>
-          </ol>
-            
-                <p:panel header="Listado de Nodos">
-                    <p:dataTable id="datalist" value="#{nodoControlador.ltsNodo}" var="item"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Descripcion"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Idenfiticador"/>
-                            </f:facet>
-                            <h:outputText value="#{item.identificador}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Latitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.latitud}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Logitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.longitud}"/>
-                        </p:column>
-                        
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Editar"/>
-                            </f:facet>
-                            <p:commandButton title="Editar" update=":carDetail" action="#{nodoControlador.editarNodo(item)}"  onclick="PF('carDialog').show();"/>
-					            
-                        </p:column>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Detalles"/>
-                            </f:facet>
-                            <p:commandButton title="ver" action="#{nodoControlador.irDetalles(item)}"/>
-					            
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Eliminar"/>
-                            </f:facet>
-                            
-					            
-                        </p:column>
-                        
-                        <f:facet name="footer">
-                           <h:commandLink action="#{nodoControlador.crearNodo()}">Crear Nodo</h:commandLink>
-                            
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
-            
-            <p:dialog header="Editar Nodo" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="carDetail" style="text-align:center;">
-            <h:form>
-            <p:panelGrid  columns="2" >
-                <h:outputText value="Nombre" />
-                <h:inputText value="#{nodoControlador.nodoSelected.nombre}"/>
-                
-                <h:outputText value="Descripcion" />
-                <h:outputText value="#{nodoControlador.nodoSelected.descripcion}"/>
-                
-               	<h:selectOneMenu value = "#{nodoControlador.nodoSelected.estado}"> 
-				   <f:selectItem itemValue = "true" itemLabel = "activo" /> 
-				   <f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
-				</h:selectOneMenu>
 
-            </p:panelGrid>
-            
-	            <p:commandButton update=":NodoListForm" action="#{nodoControlador.guardarEditar()}" oncomplete="PF('carDialog').hide()" title="Guardar">
-				</p:commandButton>
-            </h:form>
-        </p:outputPanel>
-    </p:dialog>
-    
-    </ui:define>
+		</h:head>
+
+		<h:form id="NodoListForm">
+
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Listado de Nodos</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i> Lista de Nodos
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<h:dataTable id="datalist" value="#{nodoControlador.ltsNodo}"
+							var="item" paginator="true" rowKey="#{item.id}" rows="10"
+							rowsPerPageTemplate="10,20,30,40,50"
+							styleClass="table table-bordered">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Id" />
+								</f:facet>
+								<h:outputText value="#{item.id}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nombre" />
+								</f:facet>
+								<h:outputText value="#{item.nombre}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Descripcion" />
+								</f:facet>
+								<h:outputText value="#{item.descripcion}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Idenfiticador" />
+								</f:facet>
+								<h:outputText value="#{item.identificador}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Latitud" />
+								</f:facet>
+								<h:outputText value="#{item.latitud}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Logitud" />
+								</f:facet>
+								<h:outputText value="#{item.longitud}" />
+							</p:column>
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Editar" />
+								</f:facet>
+								<center>
+									<p:commandLink title="Editar" update=":carDetail"
+										action="#{nodoControlador.editarNodo(item)}"
+										onclick="PF('carDialog').show();">
+										<i class="fa fa-external-link-alt fa-2x"></i>
+									</p:commandLink>
+								</center>
+
+							</p:column>
+
+							<center>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Mas info" />
+									</f:facet>
+									<p:commandLink title="ver"
+										action="#{nodoControlador.irDetalles(item)}">
+										<i class="fas fa-info-circle fa-2x"></i>
+									</p:commandLink>
+
+								</p:column>
+							</center>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Eliminar" />
+								</f:facet>
+
+
+							</p:column>
+
+							<f:facet name="footer">
+							<div class="alert alert-info">
+			    <strong>Crear Nodo! </strong>Busque los nodos por codigo de registro</div>
+								<center><h:commandLink action="#{nodoControlador.crearNodo()}">
+									<i class="fas fa-plus-circle fa-3x"></i></h:commandLink></center>
+
+							</f:facet>
+						</h:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<p:dialog header="Editar Nodo" widgetVar="carDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="carDetail" style="text-align:center;">
+				<h:form>
+
+					<p:growl id="growl" life="2000" />
+
+					<h:panelGrid id="panel" columns="4">
+						<h:outputLabel value="Nombre del Nodo: " />
+						<div class="form-group">
+							<h:inputText value="#{nodoControlador.nodoSelected.nombre}"
+								class="form-control" type="text" />
+						</div>
+						<br />
+						<br />
+						<h:outputLabel value="Descripcion: " />
+						<div class="form-group">
+							<h:outputText value="#{nodoControlador.nodoSelected.descripcion}"
+								class="form-control" style="background:#DCDCDC" />
+						</div>
+
+						<h:outputLabel value="Estado: " />
+						<div class="form-group">
+							<br />
+							<h:selectOneMenu value="#{nodoControlador.nodoSelected.estado}"
+								class="custom-select">
+								<f:selectItem itemValue="true" itemLabel="activo" />
+								<f:selectItem itemValue="false" itemLabel="inactivo" />
+							</h:selectOneMenu>
+						</div>
+
+						<br />
+						<br />
+
+					</h:panelGrid>
+					<br />
+
+					<center>
+						<h:commandButton class="btn btn-primary btn-lg btn-block"
+							update=":NodoListForm growl"
+							action="#{nodoControlador.guardarEditar()}"
+							oncomplete="PF('carDialog').hide()" title="Guardar"
+							style="margin-right:20px;" value="Guardar" />
+					</center>
+
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+
+
+
+
+
+	</ui:define>
 </ui:composition>
