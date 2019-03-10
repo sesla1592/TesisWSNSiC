@@ -36,7 +36,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="Templateadmin.xhtml">#{dashboardAdmin.user.correo}</a>
+      <a class="navbar-brand mr-1" href="/TesisWSNSiC/faces/admin/dashboard.xhtml">Desarrollador: #{dashboardAdmin.user.correo}</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -53,7 +53,7 @@
           </div>
         </div>
       </form>
-
+<h:form>
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
@@ -88,11 +88,12 @@
             <a class="dropdown-item" href="#">Settings</a>
             <a class="dropdown-item" href="#">Activity Log</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            <a>
+            <h:commandLink action="#{personaControlador.logout()}" value="Logout" class="dropdown-item" data-toggle="modal"/></a>
           </div>
         </li>
       </ul>
-
+</h:form>
     </nav>
 
     <div id="wrapper">
@@ -139,7 +140,7 @@
           
 								<ui:insert name="contenido">
                                
-                               Aqui se incluira el contenido del formulario o la pagina
+                               
                                
                                
                                </ui:insert>
@@ -186,10 +187,10 @@
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/TesisWSNSiC/faces/dashboard/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript       //Este bloquea las graficas//-->
+  
     <script src="/TesisWSNSiC/faces/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+ 
     <!-- Core plugin JavaScript-->
     <script src="/TesisWSNSiC/faces/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
 

@@ -4,123 +4,270 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:hs="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui"
-	template="/Templateadmin.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/Templateadmin.xhtml">
 
-<ui:define name="contenido">
+	<ui:define name="contenido">
 
- <h:head>
-        <title><ui:insert name="title">Lista de Sensores</ui:insert></title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/>
-    </h:head>
+		<h:head>
+			<title><ui:insert name="title">Lista de Sensores</ui:insert></title>
+			<h:outputStylesheet library="css" name="jsfcrud.css" />
+			<h:outputScript library="js" name="jsfcrud.js" />
+			<link rel="stylesheet"
+				href="https://www.w3schools.com/w3css/4/w3.css" />
+		</h:head>
 
 		<h:form id="SensorListForm">
-             <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="../dashboard.xhtml">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Listado de Sensores</li>
-          </ol>
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item"><a href="../nodo/listaNodos.xhtml">Listado
+						de Nodos </a></li>
+				<li class="breadcrumb-item active">Nodo:
+					#{sensorControlador.nodo.nombre}</li>
+				<li class="breadcrumb-item active">Detalle Sensor</li>
+			</ol>
 
-			<h2>Nodo:</h2><h3>#{sensorControlador.nodo.nombre}</h3>
-			<p:panel header="Listada de Sensores">
-				<p:dataTable id="datalist" value="#{sensorControlador.ltsSensor}"
-					var="sensor" paginator="true" rowKey="#{item.id}" rows="10"
-					rowsPerPageTemplate="10,20,30,40,50">
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Id" />
-						</f:facet>
-						<h:outputText value="#{sensor.id}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Nombre" />
-						</f:facet>
-						<h:outputText value="#{sensor.nombreCompleto}" />
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Estado" />
-						</f:facet>
-						<h:outputText value="Activo" rendered="#{sensor.estado == true}" />
-						<h:outputText value="Inactivo"
-							rendered="#{sensor.estado == false}" />
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Detalle" />
-						</f:facet>
-						<h:outputText value="#{sensor.descripcion}" />
-					</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Eliminar" />
-						</f:facet>
-						<p:commandButton title="x" />
+			<p class="b">Nodo: #{sensorControlador.nodo.nombre}</p>
 
-					</p:column>
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Editar" />
-						</f:facet>
-						<p:commandButton title="x" update=":sensorDetail"
-							action="#{sensorControlador.editarSensor(sensor)}"
-							onclick="PF('sensorDialog').show();" />
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i> Lista de Sensores
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
 
-					</p:column>
+						<h:dataTable id="datalist" value="#{sensorControlador.ltsSensor}"
+							var="sensor" paginator="true" rowKey="#{item.id}" rows="10"
+							styleClass="table table-bordered" style="bacground:#DCDCDC">
 
-					<f:facet name="footer">
-						<p:commandLink onclick="PF('crearsensorDialog').show();">Agregar Sensor</p:commandLink>
+							<center>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Id" />
+									</f:facet>
+									<h:outputText value="#{sensor.id}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nombre" />
+									</f:facet>
+									<h:outputText value="#{sensor.nombreCompleto}" />
+								</p:column>
 
-					</f:facet>
+								<p:column>
+									<f:facet name="header">
 
-				</p:dataTable>
-			</p:panel>
+										<h:outputText value="Estado" />
+									</f:facet>
+									<center>
+										<h:graphicImage rendered="#{sensor.estado == true}"
+											value="/image/activo.png" style="width:50px;height;50px"></h:graphicImage>
+										<h:graphicImage rendered="#{sensor.estado == false}"
+											value="/image/inactivo.png" style="width:50px;height;50px"></h:graphicImage>
+									</center>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Detalle" />
+									</f:facet>
+									<h:outputText value="#{sensor.descripcion}" />
+								</p:column>
+
+								<p:column>
+									<center>
+										<f:facet name="header">
+											<h:outputText value="Eliminar" />
+										</f:facet>
+										<p:commandLink title="eliminar">
+											<i class="fas fa-trash fa-2x"></i>
+										</p:commandLink>
+									</center>
+
+								</p:column>
+
+								<p:column>
+									<center>
+										<f:facet name="header">
+											<h:outputText value="Editar" />
+										</f:facet>
+
+										<p:commandLink title="x" update=":sensorDetail"
+											action="#{sensorControlador.editarSensor(sensor)}"
+											onclick="PF('sensorDialog').show();">
+											<i class="fa fa-external-link-alt fa-2x"></i>
+										</p:commandLink>
+									</center>
+
+								</p:column>
+
+
+
+								
+								<f:facet name="footer">
+
+									<div class="alert alert-info">
+										<strong>Info!</strong> Agrege sensores, siempre y cuando 
+										se encuentre registrado en el sistema. Existen diferente tipos de ellos entre los mas comunes
+										(Luminosidad, CO2, Ruido, Temperatura, Humedad).
+									</div>
+									<center>
+									<p:commandLink onclick="PF('crearsensorDialog').show();">
+										<i class="fas fa-plus-circle fa-3x"></i>
+									</p:commandLink></center>
+
+								</f:facet>
+							</center>
+						</h:dataTable>
+					</div>
+				</div>
+			</div>
+
 		</h:form>
 
-		<p:dialog header="Editar Sensor" widgetVar="sensorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="sensorDetail" style="text-align:center;">
-            <h:form>
-            <p:panelGrid  columns="2" >
-                <h:outputLabel value="Nombre del Sensor"/><h:inputText id="nombre" value="#{sensorControlador.sensorSelected.nombre}" size="50"/>
-				
-				<h:outputLabel value="Descripcion"/><h:inputText value="#{sensorControlador.sensorSelected.descripcion}" size="80" />
-				
-				<h:outputLabel value="Estado del sensor"/><h:selectOneMenu value = "#{sensorControlador.sensorEstado}"><f:selectItem itemValue = "true" itemLabel = "activo" /><f:selectItem itemValue = "false" itemLabel = "inactivo" /></h:selectOneMenu> 	
-                
-            </p:panelGrid>
-            
-	            <p:commandButton action="#{sensorControlador.guardarEditar()}" update="SensorListForm" oncomplete="PF('sensorDialog').hide()" title="Guardar">
-				</p:commandButton>
-            </h:form>
-        </p:outputPanel>
-    </p:dialog>
-    
-    <p:dialog header="Crear Sensor" widgetVar="crearsensorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="crearsensorDetail" style="text-align:center;">
-            <h:form>
-            <p:panelGrid columns="2">
-				<h:outputLabel value="Nombre del Sensor"/><h:inputText id="nombre" value="#{sensorControlador.sensor.nombre}" size="50"/>
-				
-				<h:outputLabel value="Descripcion"/><h:inputText id="descripcion" value="#{sensorControlador.sensor.descripcion}" size="80"/>
-						
-				</p:panelGrid>
-				
-				<br/>
+		<p:dialog header="Editar Sensor" widgetVar="sensorDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="sensorDetail" style="text-align:center;">
+				<h:form>
 
-<h:commandButton action="#{sensorControlador.guardarSensor()}" value="Guardar" />
-            
-	           
-            </h:form>
-        </p:outputPanel>
-    </p:dialog>
+					<p:growl id="growl" life="2000" />
 
-    </ui:define>
+
+
+					<h:panelGrid columns="4">
+
+						<h:outputLabel value="Nombre del Sensor:" />
+
+						<div class="form-group">
+							<h:inputText id="nombre"
+								value="#{sensorControlador.sensorSelected.nombre}"
+								class="form-control" style="height:40px" />
+						</div>
+						<br />
+						<br />
+
+						<h:outputLabel value="Descripcion:" />
+
+						<div class="form-group">
+							<h:inputText
+								value="#{sensorControlador.sensorSelected.descripcion}"
+								class="form-control" style="height:40px" />
+						</div>
+						<br />
+						<br />
+
+
+						<h:outputLabel value="Estado del sensor" />
+						<div class="form-group">
+							<h:selectOneMenu value="#{sensorControlador.sensorEstado}"
+								class="custom-select">
+								<f:selectItem itemValue="true" itemLabel="activo" />
+								<f:selectItem itemValue="false" itemLabel="inactivo" />
+							</h:selectOneMenu>
+						</div>
+
+
+
+
+					</h:panelGrid>
+
+
+					<br />
+					<p:commandButton class="btn btn-primary"
+						action="#{sensorControlador.guardarEditar()}"
+						update="SensorListForm" oncomplete="PF('sensorDialog').hide()"
+						title="Guardar">
+					</p:commandButton>
+
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+
+		<p:dialog header="Crear Sensor" widgetVar="crearsensorDialog"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			style="background:#FFFFE0">
+			<p:outputPanel id="crearsensorDetail" style="text-align:center;">
+				<h:form>
+
+					<h:panelGrid columns="4">
+
+						<h:outputLabel value="Nombre del Sensor: " />
+
+						<div class="form-group">
+							<h:inputText id="nombre"
+								value="#{sensorControlador.sensor.nombre}" class="form-control" />
+						</div>
+						<br />
+						<br />
+
+						<h:outputLabel value="Descripcion: " />
+
+						<div class="form-group">
+							<h:inputText id="descripcion"
+								value="#{sensorControlador.sensor.descripcion}"
+								style="height:200px" class="form-control" />
+						</div>
+
+					</h:panelGrid>
+
+					<br />
+
+					<h:commandButton class="btn btn-primary"
+						action="#{sensorControlador.guardarSensor()}" value="Guardar" />
+					<br />
+					<br />
+
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+
+
+		<style type="text/css">
+/* Import the google web fonts you want to use */
+
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
+
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 20px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 20px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+</style>
+	</ui:define>
 </ui:composition>

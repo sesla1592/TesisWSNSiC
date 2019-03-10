@@ -1,168 +1,682 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
- 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
- 	  xmlns:p="http://primefaces.org/ui"
- 	  xmlns:b="http://bootsfaces.net/ui"
- 	  xmlns:hf="http://highfaces.org"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
 
-<h:head></h:head> 
-<body> 
-	
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:hf="http://highfaces.org" template="/Templateadmin.xhtml">
 
-<h:form>
+	<ui:define name="contenido">
 
- <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="dashboard.xhtml">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Overview</li>
-          </ol>
 
-<h2>Bienvenido: #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h2>
-<h2>Rol: #{dashboardAdmin.user.rolPerson.descripcion}</h2>
-<br/>
-<br/>
-<h:commandLink action="#{personaControlador.logout()}" value="Salir" />
-<br/>
-		<script type="text/javascript" 
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
+		<h:form>
 
-	<div id="almacenamiento">
-	
-		<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardAdmin.simpleModel}" >
-	       <p:ajax event="overlaySelect" listener="#{dashboardAdmin.onMarkerSelect}" update="listaNodos panelDatos"/>
-	       <p:gmapInfoWindow id="infoWindow">
-	            <p:outputPanel style="text-align: center; display: block; margin: auto">
-	 
-	                    <h:outputText value="#{dashboardAdmin.marker.title}" />
-	                    <br/>
-	                    <h:outputText value="Sensores:" />
-	                    <br/>
-	                    <ui:repeat value="#{dashboardAdmin.nodoSelected.ltssensores}" var="sensores">
-						        
-						            <h:outputText value="- #{sensores.nombreCompleto}" />
-						        		<br/>
-						    </ui:repeat>
-	 
-	            </p:outputPanel>
-	        </p:gmapInfoWindow>
-	       </p:gmap>
-	       <h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardAdmin.nodoSelected.nombre}<br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}" value="Temperatura: #{dashboardAdmin.datoTemp}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}" value="Humedad: #{dashboardAdmin.datoHum}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}" value="Luminosidad: #{dashboardAdmin.datoLum}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}" value="Ruido: #{dashboardAdmin.datoRui}" /><br/>
-       </h:panelGroup>
-	       <p:dataTable id="datalist" value="#{dashboardAdmin.ltsNodo}" var="item"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="5"
-                                 rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column style="text-align: center;">
-                            <f:facet name="header">
-                                <h:outputText value="Estado"/>
-                            </f:facet>
-                            <h:graphicImage rendered="#{item.estado == true}" value="/image/ic_active.png" style="width:50px;height;50px"></h:graphicImage> 
-                            <h:graphicImage rendered="#{item.estado == false}" value="/image/ic_desactive.png" style="width:50px;height;50px"></h:graphicImage> 
-                            
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Descripcion"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Idenfiticador"/>
-                            </f:facet>
-                            <h:outputText value="#{item.identificador}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Latitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.latitud}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Logitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.longitud}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Sensores"/>
-                            </f:facet>
-                            <ui:repeat value="#{item.ltssensores}" var="sensores">
-						        
-						            <h:outputText value="- #{sensores.nombreCompleto}" />
-						        		<br/>
-						    </ui:repeat>
-                        </p:column>
-                        
-                    </p:dataTable>
-		<h:selectOneMenu id="listaNodos" value="#{dashboardAdmin.sensorSeleccionado}" >
-			<f:selectItems value="#{dashboardAdmin.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
-			
-		</h:selectOneMenu>
-		<h:selectOneMenu value = "#{dashboardAdmin.tipoFecha}" valueChangeListener="#{dashboardAdmin.cambioDeFecha}"> 
-		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
-		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
-		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
-		</h:selectOneMenu> 
-		
-		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-        <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
-        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectInicio}" />
-        </p:calendar>
-        
-        <p:outputLabel for="fechaFin" value="Fecha de fin:" />
-        <p:calendar id="fechaFin" pattern="dd/MM/yyyy">
-        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectFin}" />
-        </p:calendar>
-		<br /><br />
-		
-		<b:row>
-				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
-					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{dashboardAdmin.ltsSData}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="#{dashboardAdmin.sensorSeleccionado}"
-									/>
-					
-									
-									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
-									<hf:chartTooltip  backgroundColor="#000000" shared="true">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="dashboard.xhtml">Dashboard</a>
+				</li>
+
+				<li class="breadcrumb-item active"><a>Bienvenido:
+						#{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</a></li>
+				<li class="breadcrumb-item active"><a>#{dashboardAdmin.user.rolPerson.descripcion}</a></li>
+
+			</ol>
+
+			<h2></h2>
+			<br />
+
+
+			<!-- Icon Cards-->
+			<div class="row">
+				<div class="col-xl-3 col-sm mb-3">
+					<div class="card text-white bg-primary o-hidden h-100">
+						<div class="card-body">
+							<div class="card-body-icon">
+								<i class="fas fa-fw fa-microchip"></i>
+							</div>
+
+							<div class="mr-5">Nodos</div>
+							<br />
+							<div class="mr-4">
+								Activos:
+								<h:outputLabel value="#{dashboardAdmin.nodoActivo}" />
+							</div>
+							<div class="mr-3">
+								Inactivos:
+								<h:outputLabel value="#{dashboardAdmin.nodoInactivo}" />
+							</div>
+							<div class="mr-2">
+								Total:
+								<h:outputLabel value="#{dashboardAdmin.ltsNodo.size()}" />
+							</div>
+						</div>
+						<a class="card text-white clearfix small z-1"> <h:commandLink
+								id="logoutButton" action="#{dashboardAdmin.nodos()}"
+								styleClass="btn btn-primary">
+								<span class="float-left"></span>Ver Detalles <span
+									class="fi-arrow-circle-right"></span>
+								<span class="float-right"> <i class="fas fa-angle-right"></i></span>
+							</h:commandLink>
+
+						</a>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 mb-3">
+					<div class="card text-white bg-warning o-hidden h-100">
+						<div class="card-body">
+							<div class="card-body-icon">
+								<i class="fas fa-fw fa-map-pin"></i>
+							</div>
+							<div class="mr-5">Sensores</div>
+							<br />
+							<div class="mr-4">
+								Activos:
+								<h:outputLabel value="#{dashboardAdmin.sensorActivo}" />
+							</div>
+							<div class="mr-3">
+								Inactivos:
+								<h:outputLabel value="#{dashboardAdmin.sensorInactivo}" />
+							</div>
+							<div class="mr-2">
+								Total:
+								<h:outputLabel value="#{dashboardAdmin.ltsSensor.size()}" />
+							</div>
+						</div>
+						<a class="card text-white clearfix small z-1"> <h:commandLink
+								id="logoutButton2" action="#{dashboardAdmin.nodos()}"
+								styleClass="btn btn-warning	">
+								<span class="float-left"></span>Ver Detalles <span
+									class="fi-arrow-circle-right"></span>
+								<span class="float-right"> <i class="fas fa-angle-right"></i></span>
+							</h:commandLink>
+						</a>
+					</div>
+				</div>
+				<div class="col-xl-3 mb-3">
+					<div class="card text-white bg-success o-hidden h-100">
+						<div class="card-body">
+							<div class="card-body-icon">
+								<i class="fas fa-fw fa-building"></i>
+							</div>
+							<div class="mr-5">Empresas</div>
+							<br />
+							<div class="mr-4">
+								Activas:
+								<h:outputLabel value="#{dashboardAdmin.empresaActiva} " />
+							</div>
+							<div class="mr-3">
+								Inactivos:
+								<h:outputLabel value="#{dashboardAdmin.empresaInactiva} " />
+							</div>
+						</div>
+						<a class="card text-white" href="#"> <h:commandLink
+								id="logoutButton4" action="#{dashboardAdmin.crearTipoEmpresa()}"
+								styleClass="btn btn-success">
+								<span class="float-left"></span>Crear tipos de empresas<span
+									class="fi-arrow-circle-right"></span>
+								<span class="float-right"> <i class="fas fa-angle-right"></i></span>
+							</h:commandLink> <h:commandLink id="logoutButton3"
+								action="#{dashboardAdmin.empresas()}"
+								styleClass="btn btn-success">
+								<span class="float-left"></span>Ver detalles <span
+									class="fi-arrow-circle-right"></span>
+								<span class="float-right"> <i class="fas fa-angle-right"></i></span>
+							</h:commandLink>
+						</a>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 mb-3">
+					<div class="card text-white bg-danger o-hidden h-100">
+						<div class="card-body">
+							<div class="card-body-icon">
+								<i class="fas fa-fw fa-hdd"></i>
+							</div>
+							<div class="mr-5">Memoria del Servidor de Aplicaciones</div>
+							<br />
+							<div class="mr-4">
+								Libre:
+								<h:outputLabel value="#{dashboardAdmin.elibre} " />
+							</div>
+							<div class="mr-3">
+								Utilizado:
+								<h:outputLabel value="#{dashboardAdmin.eutilizado} " />
+							</div>
+							<div class="mr-3">
+								Total:
+								<h:outputLabel value="#{dashboardAdmin.etotal} " />
+							</div>
+						</div>
+						<!-- <a class="card-footer text-white clearfix small z-1" href="#">
+                  <span class="float-left">View Details</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a> -->
+					</div>
+				</div>
+
+			</div>
+
+
+			<br />
+
+			<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
+
+			<div id="almacenamiento">
+
+
+				<!-- UBICACION DEL MAPA PRIMEFACES -->
+
+				<div class="card mb-3">
+					<div class="card-header">
+						<i class="fas fa-map-marked-alt"></i> Ubicacion de los Nodos
+					</div>
+
+					<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap"
+						style="width:100%;height:400px"
+						model="#{dashboardAdmin.simpleModel}">
+						<p:ajax event="overlaySelect"
+							listener="#{dashboardAdmin.onMarkerSelect}"
+							update="listaNodos panelDatos" />
+						<p:gmapInfoWindow id="infoWindow">
+							<p:outputPanel
+								style="text-align: center; display: block; margin: auto">
+
+								<h:outputText value="#{dashboardAdmin.marker.title}" />
+								<br />
+								<h:outputText value="Sensores:" />
+								<br />
+								<ui:repeat value="#{dashboardAdmin.nodoSelected.ltssensores}"
+									var="sensores">
+
+									<h:outputText value="- #{sensores.nombreCompleto}" />
+									<br />
+								</ui:repeat>
+
+							</p:outputPanel>
+						</p:gmapInfoWindow>
+					</p:gmap>
+				</div>
+
+
+
+
+
+				<!-- STYLE CLAS DATA TABLE -->
+
+				<div class="card mb-3">
+					<div class="card-header">
+						<i class="fas fa-table"></i> Listado general de todos los nodos ubicados en la ciudad de Cuenca
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<h:dataTable id="datalist" value="#{dashboardAdmin.ltsNodo}"
+								var="item" paginator="true" rowKey="#{item.id}" rows="5"
+								styleClass="table table-bordered">
+								<h:column style="text-align: center;">
 									<f:facet name="header">
-            						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
-        							</f:facet>
-        							<f:facet name="body">
-        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>"/>
-        							</f:facet>
-									</hf:chartTooltip>									
-				</hf:chart>
-		</b:row>		
-		<b:commandButton action="#{dashboardAdmin.graficaDatos()}" value="Graficar" update="grafica">
-		</b:commandButton>
-		
-	</div>
-	
-</h:form>
+										<h:outputText value="Estado" />
+									</f:facet>
+									<h:graphicImage rendered="#{item.estado == true}"
+										value="/image/activo.png" style="width:50px;height;50px"></h:graphicImage>
+									<h:graphicImage rendered="#{item.estado == false}"
+										value="/image/inactivo.png" style="width:50px;height;50px"></h:graphicImage>
 
-</body> 
-</html>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Nombre" />
+									</f:facet>
+									<h:outputText value="#{item.nombre}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Descripcion" />
+									</f:facet>
+									<h:outputText value="#{item.descripcion}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Idenfiticador" />
+									</f:facet>
+									<h:outputText value="#{item.identificador}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Latitud" />
+									</f:facet>
+									<h:outputText value="#{item.latitud}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Logitud" />
+									</f:facet>
+									<h:outputText value="#{item.longitud}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Sensores" />
+									</f:facet>
+									<ui:repeat value="#{item.ltssensores}" var="sensores">
+
+										<h:outputText value="- #{sensores.nombreCompleto}" />
+										<br />
+									</ui:repeat>
+								</h:column>
+
+							</h:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<br />
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-filter"></i> Opciones de Busqueda
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+
+						<h:panelGrid columns="8" style="margin-bottom:10px"
+							cellpadding="5">
+							<p class="a">Seleccione los datos a graficar:</p>
+							<center>
+
+								<h:selectOneMenu id="listaNodos" class="custom-select"
+									value="#{dashboardAdmin.sensorSeleccionado}"
+									style="width: 157px;" filter="true" filterMatchMode="contains"
+									effect="fold"
+									converterMessage="The supplied value is incorrect.">
+									<f:selectItems value="#{dashboardAdmin.ltsSensores}"
+										var="sensorItem" itemValue="#{sensorItem}"
+										itemLabel="#{sensorItem}" />
+
+								</h:selectOneMenu>
+								<h:selectOneMenu value="#{dashboardAdmin.tipoFecha}"
+									valueChangeListener="#{dashboardAdmin.cambioDeFecha}"
+									class="custom-select">
+									<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
+									<f:selectItem itemValue="Diario" itemLabel="Diario" />
+									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
+									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
+								</h:selectOneMenu>
+
+
+
+								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+								<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" mode="popup" styleClass="calendar">
+									<p:ajax event="dateSelect"
+										listener="#{dashboardAdmin.onDateSelectInicio}" />
+								</p:calendar>
+
+								<p:outputLabel for="fechaFin" value="Fecha de fin:" />
+								<p:calendar id="fechaFin" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
+									<p:ajax event="dateSelect" 
+										listener="#{dashboardAdmin.onDateSelectFin}" />
+								</p:calendar>
+							</center>
+						</h:panelGrid>
+						
+						</div>
+						</div>
+						</div>
+
+						<div class="card mb-3">
+							<div class="card-header">
+								<i class="fas fa-chart-area"></i> Grafica
+							</div>
+							<div class="card-body">
+								<div class="table-responsive">
+
+
+
+									<h:panelGroup id="panelDatos">
+       	datos Nodo: #{dashboardAdmin.nodoSelected.nombre}<br />
+										<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
+											value="Temperatura: #{dashboardAdmin.datoTemp}" />
+										<br />
+										<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}"
+											value="Humedad: #{dashboardAdmin.datoHum}" />
+										<br />
+										<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}"
+											value="Luminosidad: #{dashboardAdmin.datoLum}" />
+										<br />
+										<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}"
+											value="Ruido: #{dashboardAdmin.datoRui}" />
+										<br />
+									</h:panelGroup>
+
+									<br />
+
+									<p:row>
+										<center>
+											<hf:chart id="grafica" title="" xaxisLabel="Tiempo"
+												yaxisLabel="Valor" type="line" width="1600">
+
+												<hf:chartSerie value="#{dashboardAdmin.ltsSData}"
+													var="point" point="#{point.valor}"
+													tickLabel="#{point.fecha}"
+													name="#{dashboardAdmin.sensorSeleccionado}" />
+
+
+												<hf:chartLegend position="ne" title="Valores"
+													layout="vertical" backgroundColor="#eeeeee" />
+												<hf:chartTooltip backgroundColor="#000000" shared="true">
+													<f:facet name="header">
+														<h:outputText escape="false"
+															value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>" />
+													</f:facet>
+													<f:facet name="body">
+														<h:outputText
+															value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>" />
+													</f:facet>
+												</hf:chartTooltip>
+											</hf:chart>
+										</center>
+									</p:row>
+								</div>
+							</div>
+						</div>
+
+						<p:commandButton action="#{dashboardAdmin.graficaDatos()}"
+				value="Graficar" update="grafica" style="margin-right:20px;"
+				styleClass="ui-priority-primary">
+			</p:commandButton>
+
+			<div>
+				<br />
+
+			</div>
+
+
+
+		</h:form>
+
+	<style type="text/css">
+		/* Import the google web fonts you want to use */
+		
+		/* tangerine font */
+		@import url(https://fonts.googleapis.com/css?family=Tangerine);
+		
+		/* bigshot one font */
+		@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+		
+		/* Over the rainbow font */
+		@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+		
+		/* pacifico font */
+		@import url(https://fonts.googleapis.com/css?family=Pacifico);
+		
+		/* Content styling */
+		/* fonts for the text */
+		@import
+			url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+		
+		p.a {
+			font-family: 'Tangerine', serif;
+			font-size: 48px;
+			color: #C23B22;
+		}
+		
+		p.b {
+			font-family: 'Bigshot One', serif;
+			font-size: 48px;
+			color: #317873;
+		}
+		
+		p.c {
+			font-family: 'Over the Rainbow', serif;
+			font-size: 48px;
+			color: #0077BE;
+		}
+		
+		p.d {
+			font-family: 'Pacifico', serif;
+			font-size: 48px;
+			color: #C23B22;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+	PrimeFaces.locales ['es'] = {
+	    closeText: 'Close',
+	    prevText: 'Previous',
+	    nextText: 'Next',
+	    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+	    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+	    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+	    dayNamesMin: ['D', 'L', 'M', 'M ', 'J', 'V ', 'S'],
+	    weekHeader: 'Week',
+	    firstDay: 1,
+	    isRTL: false,
+	    showMonthAfterYear: false,
+	    yearSuffix:'',
+	    timeOnlyTitle: 'Only Time',
+	    timeText: 'Time',
+	    hourText: 'Time',
+	    minuteText: 'Minute',
+	    secondText: 'Second',
+	    currentText: 'Current Date',
+	    ampm: false,
+	    month: 'Month',
+	    week: 'week',
+	    day: 'Day',
+	    allDayText: 'All Day',
+	    messages: {
+	        'javax.faces.component.UIInput.REQUIRED': '{0}: Validation Error: Value is required.',
+	        'javax.faces.converter.IntegerConverter.INTEGER': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.IntegerConverter.INTEGER_detail': '{2}: \'{0}\' must be a number between -2147483648 and 2147483647 Example: {1}',
+	        'javax.faces.converter.DoubleConverter.DOUBLE': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.DoubleConverter.DOUBLE_detail': '{2}: \'{0}\' must be a number between 4.9E-324 and 1.7976931348623157E308  Example: {1}',
+	        'javax.faces.converter.BigDecimalConverter.DECIMAL': '{2}: \'{0}\' must be a signed decimal number.',
+	        'javax.faces.converter.BigDecimalConverter.DECIMAL_detail': '{2}: \'{0}\' must be a signed decimal number consisting of zero or more digits, that may be followed by a decimal point and fraction.  Example: {1}',
+	        'javax.faces.converter.BigIntegerConverter.BIGINTEGER': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.BigIntegerConverter.BIGINTEGER_detail': '{2}: \'{0}\' must be a number consisting of one or more digits. Example: {1}',
+	        'javax.faces.converter.ByteConverter.BYTE': '{2}: \'{0}\' must be a number between 0 and 255.',
+	        'javax.faces.converter.ByteConverter.BYTE_detail': '{2}: \'{0}\' must be a number between 0 and 255.  Example: {1}',
+	        'javax.faces.converter.CharacterConverter.CHARACTER': '{1}: \'{0}\' must be a valid character.',
+	        'javax.faces.converter.CharacterConverter.CHARACTER_detail': '{1}: \'{0}\' must be a valid ASCII character.',
+	        'javax.faces.converter.ShortConverter.SHORT': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.ShortConverter.SHORT_detail': '{2}: \'{0}\' must be a number between -32768 and 32767 Example: {1}',
+	        'javax.faces.converter.BooleanConverter.BOOLEAN': '{1}: \'{0}\' must be \'true\' or \'false\'',
+	        'javax.faces.converter.BooleanConverter.BOOLEAN_detail': '{1}: \'{0}\' must be \'true\' or \'false\'.  Any value other than \'true\' will evaluate to \'false\'.',
+	        'javax.faces.validator.LongRangeValidator.MAXIMUM': '{1}: Validation Error: Value is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.LongRangeValidator.MINIMUM': '{1}: Validation Error: Value is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.LongRangeValidator.NOT_IN_RANGE': '{2}: Validation Error: Specified attribute is not between the expected values of {0} and {1}.',
+	        'javax.faces.validator.LongRangeValidator.TYPE={0}': 'Validation Error: Value is not of the correct type.',
+	        'javax.faces.validator.DoubleRangeValidator.MAXIMUM': '{1}: Validation Error: Value is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.DoubleRangeValidator.MINIMUM': '{1}: Validation Error: Value is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.DoubleRangeValidator.NOT_IN_RANGE': '{2}: Validation Error: Specified attribute is not between the expected values of {0} and {1}',
+	        'javax.faces.validator.DoubleRangeValidator.TYPE={0}': 'Validation Error: Value is not of the correct type',
+	        'javax.faces.converter.FloatConverter.FLOAT': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.FloatConverter.FLOAT_detail': '{2}: \'{0}\' must be a number between 1.4E-45 and 3.4028235E38  Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.DATE': '{2}: \'{0}\' could not be understood as a date.',
+	        'javax.faces.converter.DateTimeConverter.DATE_detail': '{2}: \'{0}\' could not be understood as a date. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.TIME': '{2}: \'{0}\' could not be understood as a time.',
+	        'javax.faces.converter.DateTimeConverter.TIME_detail': '{2}: \'{0}\' could not be understood as a time. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.DATETIME': '{2}: \'{0}\' could not be understood as a date and time.',
+	        'javax.faces.converter.DateTimeConverter.DATETIME_detail': '{2}: \'{0}\' could not be understood as a date and time. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.PATTERN_TYPE': '{1}: A \'pattern\' or \'type\' attribute must be specified to convert the value \'{0}\'',
+	        'javax.faces.converter.NumberConverter.CURRENCY': '{2}: \'{0}\' could not be understood as a currency value.',
+	        'javax.faces.converter.NumberConverter.CURRENCY_detail': '{2}: \'{0}\' could not be understood as a currency value. Example: {1}',
+	        'javax.faces.converter.NumberConverter.PERCENT': '{2}: \'{0}\' could not be understood as a percentage.',
+	        'javax.faces.converter.NumberConverter.PERCENT_detail': '{2}: \'{0}\' could not be understood as a percentage. Example: {1}',
+	        'javax.faces.converter.NumberConverter.NUMBER': '{2}: \'{0}\' could not be understood as a date.',
+	        'javax.faces.converter.NumberConverter.NUMBER_detail': '{2}: \'{0}\' is not a number. Example: {1}',
+	        'javax.faces.converter.NumberConverter.PATTERN': '{2}: \'{0}\' is not a number pattern.',
+	        'javax.faces.converter.NumberConverter.PATTERN_detail': '{2}: \'{0}\' is not a number pattern. Example: {1}',
+	        'javax.faces.validator.LengthValidator.MINIMUM': '{1}: Validation Error: Length is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.LengthValidator.MAXIMUM': '{1}: Validation Error: Length is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.RegexValidator.PATTERN_NOT_SET': 'Regex pattern must be set.',
+	        'javax.faces.validator.RegexValidator.PATTERN_NOT_SET_detail': 'Regex pattern must be set to non-empty value.',
+	        'javax.faces.validator.RegexValidator.NOT_MATCHED': 'Regex Pattern not matched',
+	        'javax.faces.validator.RegexValidator.NOT_MATCHED_detail': 'Regex pattern of \'{0}\' not matched',
+	        'javax.faces.validator.RegexValidator.MATCH_EXCEPTION': 'Error in regular expression.',
+	        'javax.faces.validator.RegexValidator.MATCH_EXCEPTION_detail': 'Error in regular expression, \'{0}\''
+    }
+};
+
+
+</script>
+
+<style type="text/css">
+
+.ui-datepicker .ui-datepicker-header,
+.ui-datepicker .ui-datepicker-title,
+.ui-datepicker .ui-datepicker-title,
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.ui-datepicker table,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-default {
+  background: #fff;
+  text-align:center !Important;
+
+}
+
+.ui-datepicker-inline {
+  padding: 0;
+}
+
+.ui-widget-header {
+  border: none;
+ 
+}
+
+.ui-datepicker .ui-datepicker-header {
+  padding: 0.5em 0;
+  border-radius: 0 !Important;
+  border-bottom: 1px solid #E8ECF0;
+  
+}
+
+
+.ui-datepicker .ui-datepicker-prev
+{
+  top: 6px;
+
+}
+
+.ui-datepicker .ui-datepicker-next {
+  top: 7px;
+}
+
+.ui-datepicker-prev {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+}
+
+.ui-datepicker-next {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+  padding: 5px 5px !Important;
+  background-color: #fff !Important;
+  border-radius: 5px !Important;
+  margin-right:5px;
+  
+}
+
+.ui-datepicker-next-hover {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+  padding: 5px 5px !Important;
+  background-color: #fff !Important;
+  border-radius: 5px !Important;
+  margin-right:5px;
+}
+
+.ui-icon,
+.ui-datepicker-month,
+.ui-datepicker-year {
+  color: #405E7C;
+  
+}
+
+a.ui-state-default
+{
+  color: #000 !important;
+  padding: 4px !Important;
+  border-radius:50px;
+  text-align:center;
+  border: 1px solid transparent !important;
+}
+
+.ui-datepicker th {
+  color: #909090 !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.ui-datepicker {
+  width: 20.4em;
+  font-family: "Noto Sans", san-serif !important;
+  text-transform: uppercase;  
+  border-color:#E8ECF0;
+  
+}
+
+.ui-datepicker td {
+ padding: 8px;
+  border: 1px solid transparent;
+  text-align:center;  
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+  color: #f5f5f5 !important;
+  
+}
+
+.ui-datepicker .ui-state-highlight {
+    background-color: #E8ECF0;
+  color: #405E7C !important;
+  font-weight:bold;
+  padding: 13px;
+  border-radius:50px;
+  width:23px;
+  height:26px;
+  text-align:center;
+}
+
+.ui-datepicker .ui-state-hover {
+   background-color: #1E73E9;
+  color: #fff !important;
+  padding: 13px;
+  border-radius:50px;
+  width:23px;
+  height:26px;
+  text-align:center;
+}
+
+</style>
+
+
+<script type="text/javascript">
+$(function() {
+    $( "#datepicker" ).datepicker();
+  });
+
+$( "#datepicker" ).datepicker({
+  // altField: "#datepicker-input",
+  // altFormat: "yy-mm-dd",
+  // hideIfNoPrevNext = true,
+  dateFormat: "dd/mm/yy",
+  yearRange: "c-100:c+10",
+   dayNamesMin : [ "S", "M", "T", "W", "T", "F", "S" ],
+  // defaultDate: +1,
+});
+</script>
+
+	</ui:define>
+</ui:composition>

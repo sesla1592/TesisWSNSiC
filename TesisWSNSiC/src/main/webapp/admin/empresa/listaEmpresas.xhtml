@@ -5,86 +5,102 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:hs="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui"
-	template="/Templateadmin.xhtml">
-	
-<ui:define name="contenido">
-	
+	xmlns:p="http://primefaces.org/ui" template="/Templateadmin.xhtml">
 
-<h:form>
- <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="../dashboard.xhtml">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Lista de Empresas</li>
-          </ol>
+	<ui:define name="contenido">
 
-	<p:panel header="Empresas Registradas">
-                    <p:dataTable value="#{empresaControlador.ltsEmpresa}" var="empresa"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="estado"/>
-                            </f:facet>
-                            <h:outputText value="Activo" rendered="#{empresa.estado == 'activo'}"/>
-                            <h:outputText value="Inactivo" rendered="#{empresa.estado == 'inactivo'}"/>	
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Direccion"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.direccion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Correo"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.correo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Telefono"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.telefono}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Cuidad"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.ciudad}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Pais"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.pais}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Usuario"/>
-                            </f:facet>
-                            <h:outputText value="#{empresa.personas.get(0).nombre} #{empresa.personas.get(0).apellido}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Cambiar estado"/>
-                            </f:facet>
-                            <h:commandButton action="#{empresaControlador.changeStatusEmpresa(empresa)}" value="Cambiar estado" />
-                        </p:column>
-                    </p:dataTable>
-                </p:panel>
-	
-</h:form>
 
-</ui:define>
+		<h:form>
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Lista de Empresas</li>
+			</ol>
+
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i> Lista de Empresas registradas
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+
+
+						<h:dataTable value="#{empresaControlador.ltsEmpresa}"
+							var="empresa" paginator="true" rowKey="#{item.id}" rows="10"  styleClass="table table-bordered">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nombre" />
+								</f:facet>
+								<h:outputText value="#{empresa.nombre}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="estado" />
+								</f:facet>
+								<center>
+										<h:graphicImage rendered="#{empresa.estado == 'activo'}"
+											value="/image/activo.png" style="width:50px;height;50px"></h:graphicImage>
+										<h:graphicImage rendered="#{empresa.estado == 'inactivo'}"
+											value="/image/inactivo.png" style="width:50px;height;50px"></h:graphicImage>
+									</center>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Direccion" />
+								</f:facet>
+								<h:outputText value="#{empresa.direccion}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Correo" />
+								</f:facet>
+								<h:outputText value="#{empresa.correo}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Telefono" />
+								</f:facet>
+								<h:outputText value="#{empresa.telefono}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Cuidad" />
+								</f:facet>
+								<h:outputText value="#{empresa.ciudad}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Pais" />
+								</f:facet>
+								<h:outputText value="#{empresa.pais}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Usuario" />
+								</f:facet>
+								<h:outputText
+									value="#{empresa.personas.get(0).nombre} #{empresa.personas.get(0).apellido}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Cambiar estado" />
+								</f:facet>
+								<center>
+								<h:commandLink  action="#{empresaControlador.changeStatusEmpresa(empresa)}">
+									<i class="fas fa-sync-alt fa-2x"></i></h:commandLink></center>
+							</p:column>
+						</h:dataTable>
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+ 
+            <p:dialog >
+       
+    </p:dialog>
+	</ui:define>
 </ui:composition>
