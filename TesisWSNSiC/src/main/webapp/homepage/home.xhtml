@@ -125,6 +125,47 @@
 					<div class="section_title text-center"><h2>How to get started</h2></div>
 				</div>
 			</div>
+			<h:form>
+			<div id="blogsDestacados">
+				<p:dataTable value="#{publicBlog.ltsBlogsDestacados}" var="blog" rows="10">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Imagen" />
+						</f:facet>
+						<img src="data:image/png;base64,#{blog.imgBase64}" style="width: 100px; height: 100px" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
+						<h:outputText value="#{blog.nombreBlog}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Descripcion" />
+						</f:facet>
+						<h:outputText value="#{blog.descripcion}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Empresa" />
+						</f:facet>
+						<h:outputText value="#{blog.empresa.nombre}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Propietario" />
+						</f:facet>
+						<h:outputText value="#{blog.empresa.personas.get(0).nombre}" />
+					</p:column>
+					<p:column>
+						<h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" />
+					</p:column>
+				</p:dataTable>
+				
+			</div>
+			</h:form>
 			<div class="row intro_row">
 				<div class="intro_dots magic_fade_in" style="background-image:url(images/dots.png)"></div>
 				

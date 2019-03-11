@@ -1,5 +1,6 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ public class PublicBlog {
 	BlogDAO blogDAO;
 	
 	List<Blog> ltsBlogs;
+	List<Blog> ltsBlogsDestacados = new ArrayList<Blog>();
 	
 	@PostConstruct
 	public void init() {
@@ -28,6 +30,13 @@ public class PublicBlog {
 			//imageString= new String(Base64.encodeBase64(blog.getImagen()));
 		}
 		System.out.println(ltsBlogs.size());
+		
+		ltsBlogsDestacados = blogDAO.bestBlogs();
+		for (int i = 0; i < ltsBlogsDestacados.size(); i++) {
+			ltsBlogsDestacados.get(i).setImgBase64(new String(Base64.encodeBase64(ltsBlogsDestacados.get(i).getImagen())));
+			//ltsBlogsDestacados= new String(Base64.encodeBase64(blog.getImagen()));
+		}
+		System.out.println(ltsBlogsDestacados.size());
 	}
 
 	public List<Blog> getLtsBlogs() {
@@ -38,6 +47,14 @@ public class PublicBlog {
 		this.ltsBlogs = ltsBlogs;
 	}
 	
+	public List<Blog> getLtsBlogsDestacados() {
+		return ltsBlogsDestacados;
+	}
+
+	public void setLtsBlogsDestacados(List<Blog> ltsBlogsDestacados) {
+		this.ltsBlogsDestacados = ltsBlogsDestacados;
+	}
+
 	public void irDetalle(Blog blog) {
 		FacesContext contex = FacesContext.getCurrentInstance();
 		contex.getExternalContext().getSessionMap().put("blogSelected", blog);

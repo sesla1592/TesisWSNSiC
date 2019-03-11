@@ -33,7 +33,7 @@
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
 
 	<div id="almacenamiento">
-	
+	<p:growl id="messages" showDetail="true" /> 
 		<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardAdmin.simpleModel}" >
 	       <p:ajax event="overlaySelect" listener="#{dashboardAdmin.onMarkerSelect}" update="listaNodos panelDatos"/>
 	       <p:gmapInfoWindow id="infoWindow">
@@ -152,12 +152,12 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
             						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
         							</f:facet>
         							<f:facet name="body">
-        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>"/>
+        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{dashboardAdmin.typeMedicion}&lt;/b>&lt;/span>&lt;br/>"/>
         							</f:facet>
 									</hf:chartTooltip>									
 				</hf:chart>
 		</b:row>		
-		<b:commandButton action="#{dashboardAdmin.graficaDatos()}" value="Graficar" update="grafica">
+		<b:commandButton action="#{dashboardAdmin.graficaDatos()}" value="Graficar" update="grafica messages">
 		</b:commandButton>
 		
 	</div>

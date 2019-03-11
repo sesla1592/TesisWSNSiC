@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -77,11 +78,7 @@ public class DashboardUser {
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
 
-	boolean typeCalendar; //true= calendario ; false = combo
-	// protected List<MedValFec> ltsSTemp;
-	// protected List<MedValFec> ltsSHum;
-	// protected List<MedValFec> ltsSLum;
-	// protected List<MedValFec> ltsSRui;
+	boolean typeCalendar; // true= calendario ; false = combo
 
 	protected List<MedValFec> ltsDataSensor;
 
@@ -102,6 +99,7 @@ public class DashboardUser {
 	public Double datoLum = 0.0;
 	public String fechaInicio;
 	public String fechaFin;
+	public String typeMedicion = "";
 
 	public String tipoFecha;
 
@@ -116,10 +114,6 @@ public class DashboardUser {
 			System.out.println("user " + user.getId());
 			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
 			System.out.println("lista nodos" + ltsMyNodos.size());
-			// ltsSTemp = new ArrayList<>();
-			// ltsSHum = new ArrayList<>();
-			// ltsSRui = new ArrayList<>();
-			// ltsSLum = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
 
 			ltsDataSensor = new ArrayList<>();
@@ -183,9 +177,36 @@ public class DashboardUser {
 		return sensorSeleccionado;
 	}
 
+	public String getTypeMedicion() {
+		return typeMedicion;
+	}
+
+	public void setTypeMedicion(String typeMedicion) {
+		this.typeMedicion = typeMedicion;
+	}
+
 	public void setSensorSeleccionado(String sensorSeleccionado) {
 		// sensorSeleccionado = sensorSeleccionado.substring(0, 1);
-		this.sensorSeleccionado = sensorSeleccionado;
+		try {
+			this.sensorSeleccionado = sensorSeleccionado;
+			if (this.sensorSeleccionado.equals("Temperatura")) {
+				typeMedicion = " C";
+			}
+			if (this.sensorSeleccionado.equals("Humedad")) {
+				typeMedicion = " %";
+			}
+			if (this.sensorSeleccionado.equals("Ruido")) {
+				typeMedicion = " dB";
+			}
+			if (this.sensorSeleccionado.equals("Luminosidad")) {
+				typeMedicion = " Lux";
+			}
+
+		} catch (Exception e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Seleccione un nodo");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+
 		// System.out.println("--> " + this.sensorSeleccionado);
 	}
 
@@ -354,78 +375,81 @@ public class DashboardUser {
 		// ltsSTemp = new ArrayList<>();
 		// ltsSLum = new ArrayList<>();
 		// ltsSRui = new ArrayList<>();
-		System.out.println("boolean typo calendario "+typeCalendar);
-		if(typeCalendar==false) {
-			System.out.println("fecha por combo :"+tipoFecha);
-			//cambio las fechas
-			
-			if (tipoFecha.equals("Diario")) {
-				Date date = new Date();
-				// Caso 2: obtener la fecha y salida por pantalla con formato:
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				fechaInicio = dateFormat.format(date) + " 00:00:00";
+		if (nodoSelected != null) {
+			System.out.println("boolean typo calendario " + typeCalendar);
+			if (typeCalendar == false) {
+				System.out.println("fecha por combo :" + tipoFecha);
+				// cambio las fechas
+
+				if (tipoFecha.equals("Diario")) {
+					Date date = new Date();
+					// Caso 2: obtener la fecha y salida por pantalla con formato:
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(date) + " 00:00:00";
+				}
+				if (tipoFecha.equals("Semanal")) {
+					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+					calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+					System.out.println("fecha semanal " + fechaInicio);
+				}
+				if (tipoFecha.equals("Mensual")) {
+					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+					calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+					System.out.println("fecha mensual " + fechaInicio);
+				}
+
+			} else {
+				System.out.println("fecha por calendario");
 			}
-			if (tipoFecha.equals("Semanal")) {
-				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-				calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-				System.out.println("fecha semanal " + fechaInicio);
-			}
-			if (tipoFecha.equals("Mensual")) {
-				Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-				calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-				System.out.println("fecha mensual " + fechaInicio);
-			}
-			
-		}else {
-			System.out.println("fecha por calendario");
-		}
-		ltsDataSensor = new ArrayList<>();
-		
-		System.out.println("sensor seleccionado: " + sensorSeleccionado);
-		System.out.println("fache inicio : " + fechaInicio);
-		System.out.println("fache fin : " + fechaFin);
-		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
+			ltsDataSensor = new ArrayList<>();
 
-		BasicDBObject query = new BasicDBObject();
-		query.put("n", nodoSelected.getIdentificador());
-		query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
-		// FindIterable<Document> busquedaNodo = collection.find(query);
-		// busquedaNodo.forEach(printBlock);
-		DB db = mongoClient.getDB(DBConnection.dbname);
-		DBCollection coll = db.getCollection(DBConnection.dbcollection);
+			System.out.println("sensor seleccionado: " + sensorSeleccionado);
+			System.out.println("fache inicio : " + fechaInicio);
+			System.out.println("fache fin : " + fechaFin);
+			MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 
-		DBCursor d1 = coll.find(query);
+			BasicDBObject query = new BasicDBObject();
+			query.put("n", nodoSelected.getIdentificador());
+			query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
+			// FindIterable<Document> busquedaNodo = collection.find(query);
+			// busquedaNodo.forEach(printBlock);
+			DB db = mongoClient.getDB(DBConnection.dbname);
+			DBCollection coll = db.getCollection(DBConnection.dbcollection);
 
-		System.out.println("selecciono uno");
-		fec = "";
-		while (d1.hasNext()) {
+			DBCursor d1 = coll.find(query);
 
-			DBObject obj = d1.next();
+			fec = "";
+			while (d1.hasNext()) {
 
-			JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
-			fec = obj.get("fecha").toString();
-			fec = fec.substring(0, 10);
-			for (int i = 0; i < ltsMediciones.length(); i++) {
-				JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-				medici = gsonObj2.get("m").toString();// va el nombre del sensor
-				String sensor = sensorSeleccionado.substring(0, 1);
-				if (medici.equals(sensor)) {
-					val = Double.parseDouble(gsonObj2.get("v").toString());
-					// String sensor =sensorSeleccionado.substring(0, 1);
+				DBObject obj = d1.next();
+
+				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
+				fec = obj.get("fecha").toString();
+				fec = fec.substring(0, 10);
+				for (int i = 0; i < ltsMediciones.length(); i++) {
+					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
+					medici = gsonObj2.get("m").toString();// va el nombre del sensor
+					String sensor = sensorSeleccionado.substring(0, 1);
 					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
-						ltsDataSensor.add(new MedValFec(medici, val, fec));
+						// String sensor =sensorSeleccionado.substring(0, 1);
+						if (medici.equals(sensor)) {
+							val = Double.parseDouble(gsonObj2.get("v").toString());
+							MedValFec medicionValue = new MedValFec(medici, val, fec);
+							ltsDataSensor.add(medicionValue);
 
+						}
 					}
 				}
 			}
+
+			System.out.println("Connection Succesfull");
 		}
 
-		System.out.println("Connection Succesfull");
 	}
 
 	public void getDatosTH() {
@@ -478,28 +502,31 @@ public class DashboardUser {
 		}
 		crearCSV();
 	}
-	
-	public void onDateSelectInicio(SelectEvent event) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        fechaInicio = format.format(event.getObject())+" 00:00:00";
-        typeCalendar=true;
-        System.out.println("fecha seleccionada "+fechaInicio);
-        System.out.println("boolean typo calendario "+typeCalendar);
-        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
-	
-	public void onDateSelectFin(SelectEvent event) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        fechaFin = format.format(event.getObject())+" 23:59:59";
-        System.out.println("fecha fin "+fechaFin);
-        typeCalendar=true;
-        System.out.println("boolean typo calendario "+typeCalendar);
-        //facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
 
-	public void cambioDeFecha(ValueChangeEvent e){
-		typeCalendar=false;
+	public void onDateSelectInicio(SelectEvent event) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		fechaInicio = format.format(event.getObject()) + " 00:00:00";
+		typeCalendar = true;
+		System.out.println("fecha seleccionada " + fechaInicio);
+		System.out.println("boolean typo calendario " + typeCalendar);
+		// facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+		// "Date Selected", format.format(event.getObject())));
 	}
+
+	public void onDateSelectFin(SelectEvent event) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		fechaFin = format.format(event.getObject()) + " 23:59:59";
+		System.out.println("fecha fin " + fechaFin);
+		typeCalendar = true;
+		System.out.println("boolean typo calendario " + typeCalendar);
+		// facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+		// "Date Selected", format.format(event.getObject())));
+	}
+
+	public void cambioDeFecha(ValueChangeEvent e) {
+		typeCalendar = false;
+	}
+
 	public void datosNodo(String codSensor, boolean historico) {
 
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
@@ -571,7 +598,7 @@ public class DashboardUser {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			Writer writer = Files.newBufferedWriter(Paths.get(URL_FOLDER + "data_1.csv"));
 			CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(ltsCabecera);
-			//writer.
+			// writer.
 			CSVPrinter csvPrinter = new CSVPrinter(writer, csvFormat);
 			for (int i = 0; i < ltsReporte.size(); i++) {
 				List<Object> colum = new ArrayList<>();
@@ -585,11 +612,11 @@ public class DashboardUser {
 			}
 			csvPrinter.flush();
 			InputStream inputstream = new FileInputStream(URL_FOLDER + "data_1.csv");
-			
-			String nameFile ="file.csv";
-			//descargar
+
+			String nameFile = "file.csv";
+			// descargar
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			
+
 			// Get HTTP response
 			HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
@@ -607,7 +634,7 @@ public class DashboardUser {
 			responseOutputStream.flush();
 
 			// Close both streams
-			//pdfInputStream.close();
+			// pdfInputStream.close();
 			responseOutputStream.close();
 
 			// JSF doc:
@@ -656,9 +683,9 @@ public class DashboardUser {
 		contenedor.put("data", company);
 		// try-with-resources statement based on post comment below :)
 		try {
-			
-			String nameFile ="file.json";
-			//descargar
+
+			String nameFile = "file.json";
+			// descargar
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 
 			// Get HTTP response
@@ -678,7 +705,7 @@ public class DashboardUser {
 			responseOutputStream.flush();
 
 			// Close both streams
-			//pdfInputStream.close();
+			// pdfInputStream.close();
 			responseOutputStream.close();
 
 			// JSF doc:
@@ -692,7 +719,7 @@ public class DashboardUser {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
 		System.out.print(obj);
 
 	}
@@ -716,7 +743,7 @@ public class DashboardUser {
 			// writer.setPageEvent(event);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			PdfWriter.getInstance(document, stream);
-			 
+
 			document.open();
 			// We add metadata to PDF
 			// Añadimos los metadatos del PDF
@@ -790,42 +817,40 @@ public class DashboardUser {
 			chapter.add(table);
 			document.add(chapter);
 			document.close();
-			
-			 //descargar
-			 String nameFile ="file.pdf";
-				//descargar
-				FacesContext facesContext = FacesContext.getCurrentInstance();
 
-				// Get HTTP response
-				HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+			// descargar
+			String nameFile = "file.pdf";
+			// descargar
+			FacesContext facesContext = FacesContext.getCurrentInstance();
 
-				// Set response headers
-				response.reset(); // Reset the response in the first place
-				response.setContentType("application/octet-stream");
-				response.addHeader("Content-Disposition", "attachment; filename=\"" + nameFile + "\"");
+			// Get HTTP response
+			HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
-				// Open response output stream
-				OutputStream responseOutputStream = response.getOutputStream();
+			// Set response headers
+			response.reset(); // Reset the response in the first place
+			response.setContentType("application/octet-stream");
+			response.addHeader("Content-Disposition", "attachment; filename=\"" + nameFile + "\"");
 
-				byte[] backByte = stream.toByteArray();
-				responseOutputStream.write(backByte);
-				// Make sure that everything is out
-				responseOutputStream.flush();
+			// Open response output stream
+			OutputStream responseOutputStream = response.getOutputStream();
 
-				// Close both streams
-				//pdfInputStream.close();
-				responseOutputStream.close();
+			byte[] backByte = stream.toByteArray();
+			responseOutputStream.write(backByte);
+			// Make sure that everything is out
+			responseOutputStream.flush();
 
-				// JSF doc:
-				// Signal the JavaServer Faces implementation that the HTTP response for this
-				// request has already been generated
-				// (such as an HTTP redirect), and that the request processing lifecycle should
-				// be terminated
-				// as soon as the current phase is completed.
-				facesContext.responseComplete();
-				
-			
-			
+			// Close both streams
+			// pdfInputStream.close();
+			responseOutputStream.close();
+
+			// JSF doc:
+			// Signal the JavaServer Faces implementation that the HTTP response for this
+			// request has already been generated
+			// (such as an HTTP redirect), and that the request processing lifecycle should
+			// be terminated
+			// as soon as the current phase is completed.
+			facesContext.responseComplete();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception

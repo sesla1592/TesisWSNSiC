@@ -37,7 +37,7 @@ dashboard
 
 <script type="text/javascript" 
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
-  <p:growl id="growl" showDetail="true" />
+ 	<p:growl id="messages" showDetail="true" /> 
  
        <p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardUser.simpleModel}" >
 	       <p:ajax event="overlaySelect" listener="#{dashboardUser.onMarkerSelect}"  update="listaNodos panelDatos"/>
@@ -97,20 +97,18 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 									name="#{dashboardUser.sensorSeleccionado}"
 									/>
 									
-					
-									
-									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
+					<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
 									<hf:chartTooltip  backgroundColor="#000000" shared="true">
 									<f:facet name="header">
             						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
         							</f:facet>
         							<f:facet name="body">
-        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>"/>
+        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{dashboardUser.typeMedicion}&lt;/b>&lt;/span>&lt;br/>"/>
         							</f:facet>
 									</hf:chartTooltip>									
 				</hf:chart>
 		</b:row>		
-		<b:commandButton action="#{dashboardUser.grafica()}" value="Graficar" update="grafica">
+		<b:commandButton action="#{dashboardUser.grafica()}" value="Graficar" update="grafica messages">
 		</b:commandButton>
 	 
        </h:form>

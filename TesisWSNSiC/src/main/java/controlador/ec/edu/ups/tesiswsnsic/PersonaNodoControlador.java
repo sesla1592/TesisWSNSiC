@@ -78,6 +78,8 @@ public class PersonaNodoControlador {
 		personaNodoDAO.insertPersonaNodo(personaNodo);
 		ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
 		ltsAllNodos = nodoDAO.getAllNodos();
+		System.out.println("nodos que tengo "+ltsMyNodos.size());
+		System.out.println("nodos hay en la bd "+ltsAllNodos.size());
 		for (int i = 0; i < ltsAllNodos.size(); i++) {
 			for (int j = 0; j < ltsMyNodos.size(); j++) {
 				if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
@@ -85,6 +87,7 @@ public class PersonaNodoControlador {
 				}
 			}
 		}
+		System.out.println("nodos filtrados "+ltsAllNodos.size());
 	}
 	
 	public void eliminarAsoNodo(Nodo nodo) {

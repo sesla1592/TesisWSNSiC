@@ -85,7 +85,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Eliminar"/>
                             </f:facet>
-                            	<p:commandButton title="x" actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" update="datalist"/>
+                            	<p:commandButton title="x" actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" update="datalist nodoDetail"/>
 					           
                         </p:column>
                         
@@ -134,7 +134,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Seleccionar"/>
                             </f:facet>
-                            <p:commandButton title="Seleccionar" update=":NodoListForm" actionListener="#{personaNodoControlador.asociarNodo(item)}" onclick="PF('nodoSelect').hide();"/>
+                            <p:commandButton title="Seleccionar" update="NodoListForm Alllist nodoDetail" actionListener="#{personaNodoControlador.asociarNodo(item)}" onclick="PF('nodoSelect').hide();"/>
                         </p:column>
                         
                     </p:dataTable>
