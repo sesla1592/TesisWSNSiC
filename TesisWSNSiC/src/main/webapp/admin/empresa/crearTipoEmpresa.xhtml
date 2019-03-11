@@ -1,45 +1,133 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
- 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/Templateadmin.xhtml">
 
-<h:head></h:head> 
-<body> 
-
-<h:form>
-<h:commandButton action="#{tipoEmpresaControlador.back()}" value="atras" />
-<br/>
-<h:outputLabel value="Crear Tipo Empresas" />
-<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
-
-
-<h:outputText  value="Descripcion" />
-<h:inputText value="#{tipoEmpresaControlador.tipoEmpresa.descripcion}" id="usuario"/>
-</h:panelGrid> 
-<h:commandButton action="#{tipoEmpresaControlador.crearTipoEmpresa()}" value="Crear" />
-
-</h:form>
-<h:form>
-
-	<h:dataTable var="typempresa" value="#{tipoEmpresaControlador.ltsTipoEmpresa}">
-			<h:column headerText="Editar">
-				<h:outputText  value="#{typempresa.id}" />
-			</h:column>
-			
-			<h:column headerText="Descripcion">
-				<h:outputText  value="#{typempresa.descripcion}" />
-			</h:column>
-			
-			<h:column headerText="Editar">
-				<h:commandButton value="Editar" action="#{tipoEmpresaControlador.editEmpresa(typempresa)}"/>
-			</h:column>
-		</h:dataTable>
-</h:form>
+	<ui:define name="contenido">
 
 
 
-</body> 
-</html>
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active">Crear tipo de Empresa</li>
+		</ol>
+
+
+		<div class="container">
+			<div class="card card-register mx-auto mt-5">
+				<div class="card-header">Registrar el tipo de Empresa</div>
+				<div class="card-body">
+					<h:form>
+
+						<div class="form-group">
+							<p class="b">Nombre de la Empresa</p>
+							<h:inputText
+								value="#{tipoEmpresaControlador.tipoEmpresa.descripcion}"
+								id="usuario" class="form-control" />
+
+							<br />
+							<h:commandButton
+								action="#{tipoEmpresaControlador.crearTipoEmpresa()}"
+								value="Crear" class="btn btn-primary btn-lg btn-block" />
+						</div>
+
+
+					</h:form>
+					<h:form>
+
+						<h:dataTable var="typempresa"
+							value="#{tipoEmpresaControlador.ltsTipoEmpresa}"
+							styleClass="table table-bordered">
+							<h:column headerText="Editar">
+								<center>
+									<f:facet name="header">
+										<h:outputText value="Id" />
+									</f:facet>
+									<h:outputText value="#{typempresa.id}" />
+								</center>
+							</h:column>
+
+							<h:column headerText="Descripcion">
+
+								<f:facet name="header">
+									<h:outputText value="Nombre de la Empresa" />
+								</f:facet>
+								<h:outputText value="#{typempresa.descripcion}" />
+							</h:column>
+
+							<h:column headerText="Editar">
+								<center>
+									<f:facet name="header">
+										<h:outputText value="Accion" style="text-align:center" />
+									</f:facet>
+									<h:commandButton value="Editar"
+										action="#{tipoEmpresaControlador.editEmpresa(typempresa)}"
+										class="btn btn-warning" />
+								</center>
+							</h:column>
+						</h:dataTable>
+
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+		<p:dialog>
+
+		</p:dialog>
+
+		<style type="text/css">
+/* Import the google web fonts you want to use */
+
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
+
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 20px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 20px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+</style>
+
+	</ui:define>
+</ui:composition>
+

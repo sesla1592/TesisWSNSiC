@@ -123,7 +123,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
 		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
 		</h:selectOneMenu> 
-		
+
 		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
         <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
         		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectInicio}" />

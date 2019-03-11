@@ -391,6 +391,7 @@ public class DashboardAdmin {
 			Marker marker = new Marker(new LatLng(ltsNodo.get(i).getLatitud(), ltsNodo.get(i).getLongitud()),
 					ltsNodo.get(i).getNombre());
 			marker.setShadow(ltsNodo.get(i).getIdentificador());
+			marker.setIcon("/TesisWSNSiC/faces/admin/loading.gif");
 			simpleModel.addOverlay(marker);
 		}
 	}

@@ -1,28 +1,122 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
- 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/Templateadmin.xhtml">
 
-<h:head></h:head> 
-<body> 
+	<ui:define name="contenido">
 
-<h:form>
-<h:commandButton action="#{editTipoEmpresa.back()}" value="atras" />
-<br/>
-<h:outputLabel value="Crear Tipo Empresas" />
-<h:panelGrid columns="2" cellpadding="5" style="display:blocks">
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item"><a
+				href="../empresa/crearTipoEmpresa.xhtml">Ingresar tipo de
+					Empresa </a></li>
+			<li class="breadcrumb-item active">Empresa:
+				#{editTipoEmpresa.tipoEmpresaSelected.descripcion} Id:
+				#{editTipoEmpresa.tipoEmpresaSelected.id}</li>
+		</ol>
 
-<h:outputText  value="id" />
-<h:outputText value="#{editTipoEmpresa.tipoEmpresaSelected.id}" id="id"/>
 
-<h:outputText  value="Descripcion" />
-<h:inputText value="#{editTipoEmpresa.tipoEmpresaSelected.descripcion}" id="descripcion"/>
-</h:panelGrid> 
-<h:commandButton action="#{editTipoEmpresa.actualizar()}" value="Actualizar" />
+		<div class="container">
+			<div class="card card-register mx-auto mt-5">
+				<div class="card-header">
+					<p class="b">Actualizar Registro</p>
+				</div>
+				<div class="card-body">
 
-</h:form>
-</body> 
-</html>
+					<h:form>
+
+						<center>
+							<h:panelGrid columns="4" cellpadding="6" style="display:blocks">
+
+								<h:outputText value="Codigo" />
+								<div class="form-group">
+									<h:outputText value="#{editTipoEmpresa.tipoEmpresaSelected.id}"
+										id="id" class="form-control" style="background:#DCDCDC" />
+								</div>
+
+								<h:outputText value="Descripcion" />
+								<div class="form-group">
+									<h:inputText
+										value="#{editTipoEmpresa.tipoEmpresaSelected.descripcion}"
+										id="descripcion" class="form-control" />
+								</div>
+								<br />
+								<br />
+
+
+								<center>
+									<h:commandButton action="#{editTipoEmpresa.actualizar()}"
+										value="Actualizar" class="btn btn-success btn-lg active" />
+								</center>
+
+								<center>
+									<h:commandButton action="crearTipoEmpresa.xhtml"
+										value="Cancelar" class="btn btn-secondary btn-lg active" />
+								</center>
+
+							</h:panelGrid>
+
+						</center>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+		<p:dialog>
+
+		</p:dialog>
+
+		<style type="text/css">
+/* Import the google web fonts you want to use */
+
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
+
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 20px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 20px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+</style>
+
+	</ui:define>
+</ui:composition>
