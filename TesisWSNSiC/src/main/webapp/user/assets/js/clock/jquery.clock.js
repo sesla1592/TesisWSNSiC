@@ -1,18 +1,10 @@
-/* Copyright (c) 2009 José Joaquín Núñez (josejnv@gmail.com) http://joaquinnunez.cl/blog/
- * Licensed under GPL (http://www.opensource.org/licenses/gpl-2.0.php)
- * Use only for non-commercial usage.
- *
- * Version : 0.1
- *
- * Requires: jQuery 1.2+
- */
 
 (function(jQuery)
 {
   jQuery.fn.clock = function(options)
   {
     var defaults = {
-      offset: '+0',
+      offset: '-5', 
       type: 'analog'
     };
     var _this = this;
@@ -33,11 +25,12 @@
     }, 1000 );
 
     setInterval( function() {
-      var hours = jQuery.calcTime(opts.offset).getHours();
-      var mins = jQuery.calcTime(opts.offset).getMinutes();
+    	var date = new Date();
+      var hours = date.getHours();
+      var mins = date.getMinutes();
       if(opts.type=='analog')
       {
-        var hdegree = hours * 30 + (mins / 2);
+        var hdegree = (hours * 30 + (mins / 2));
         var hrotate = "rotate(" + hdegree + "deg)";
         jQuery(_this).find(".hour").css({"-moz-transform" : hrotate, "-webkit-transform" : hrotate});
       }
