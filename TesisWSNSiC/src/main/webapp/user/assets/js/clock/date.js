@@ -1,8 +1,9 @@
-var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-];
-var dayNames = ["Sun, ", "Mon, ", "Tue, ", "Wed, ", "Thu, ", "Fri, ", "Sat, "]
+var monthNames = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+		"Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ];
+var dayNames = [ "Domingo, ", "Lunes, ", "Martes, ", "Miercoles, ", "Jueves, ", "Viernes, ", "Sabado, " ]
 
 var newDate = new Date();
-newDate.setDate(newDate.getDate() + 1);
-$('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+newDate.setDate(newDate.getDate());
+$('#Date').html(
+		dayNames[newDate.getDay()] + " " + newDate.getDate() + ' '
+				+ monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
