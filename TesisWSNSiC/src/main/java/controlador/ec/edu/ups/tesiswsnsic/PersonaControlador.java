@@ -232,7 +232,7 @@ public class PersonaControlador {
 	            session.invalidate(); //Cierre de sesion  
 	            miUsuario = new Persona();
 	            //facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/homepage/home.xhtml?faces-redirect=true");
-	            facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/login/Login.xhtml");
+	            facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/login/Login.xhtml?faces-redirect=true");
 	        }
 	    		
 	        System.out.println("Sesion exitosamente cerrada..!");

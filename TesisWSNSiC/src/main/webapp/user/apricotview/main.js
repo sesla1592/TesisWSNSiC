@@ -1,29 +1,29 @@
 //Sliding Effect Control
-head.js("../assets/js/skin-select/jquery.cookie.js");
-head.js("../assets/js/skin-select/skin-select.js");
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/skin-select/jquery.cookie.js");
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/skin-select/skin-select.js");
 
 //Showing Date
-head.js("../assets/js/clock/date.js");
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/clock/date.js");
 
 //Bootstrap
 //head.js("../assets/js/bootstrap.js");
 
 ////Acordion and Sliding menu
 
-head.js("../assets/js/custom/scriptbreaker-multiple-accordion-1.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/custom/scriptbreaker-multiple-accordion-1.js", function() {
 
     $(".topnav").accordionze({
         accordionze: true,
         speed: 500,
-        closedSign: '<img src="../assets/img/plus.png">',
-        openedSign: '<img src="../assets/img/minus.png">'
+        closedSign: '<img src="/TesisWSNSiC/faces/templateDevBuss/assets/img/plus.png">',
+        openedSign: '<img src="/TesisWSNSiC/faces/templateDevBuss/assets/img/minus.png">'
     });
 
 });
 
 ////Right Sliding menu
 
-head.js("../assets/js/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js", function() {
 
     $(document).ready(function() {
         var mySlidebars = new $.slidebars();
@@ -37,7 +37,7 @@ head.js("../assets/js/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/
 //-------------------------------------------------------------
 
 //SEARCH MENU
-head.js("../assets/js/search/jquery.quicksearch.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/search/jquery.quicksearch.js", function() {
 
     $('input#id_search').quicksearch('#menu-showhide li');
 
@@ -47,7 +47,7 @@ head.js("../assets/js/search/jquery.quicksearch.js", function() {
 
 
 //EASY PIE CHART
-head.js("../assets/js/gage/jquery.easypiechart.min.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/gage/jquery.easypiechart.min.js", function() {
 
     $(function() {
 
@@ -99,7 +99,7 @@ head.js("../assets/js/gage/jquery.easypiechart.min.js", function() {
 
 //TOOL TIP
 
-head.js("../assets/js/tip/jquery.tooltipster.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/tip/jquery.tooltipster.js", function() {
 
     $('.tooltip-tip-x').tooltipster({
         position: 'right'
@@ -154,7 +154,7 @@ head.js("../assets/js/tip/jquery.tooltipster.js", function() {
 
 //NICE SCROLL
 
-head.js("../assets/js/nano/jquery.nanoscroller.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/nano/jquery.nanoscroller.js", function() {
 
     $(".nano").nanoScroller({
         //stop: true 
@@ -176,7 +176,7 @@ head.js("../assets/js/nano/jquery.nanoscroller.js", function() {
 
 //------------------------------------------------------------- 
 //PAGE LOADER
-head.js("../assets/js/pace/pace.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/pace/pace.js", function() {
 
     paceOptions = {
         ajax: false, // disabled
@@ -192,7 +192,7 @@ head.js("../assets/js/pace/pace.js", function() {
 //------------------------------------------------------------- 
 
 //SPARKLINE CHART
-head.js("../assets/js/chart/jquery.sparkline.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/chart/jquery.sparkline.js", function() {
 
     $(function() {
         $('.inlinebar').sparkline('html', {
@@ -257,7 +257,7 @@ head.js("../assets/js/chart/jquery.sparkline.js", function() {
 //------------------------------------------------------------- 
 
 //DIGITAL CLOCK
-head.js("../assets/js/clock/jquery.clock.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/clock/jquery.clock.js", function() {
 
     //clock
     $('#digital-clock').clock({
@@ -272,7 +272,7 @@ head.js("../assets/js/clock/jquery.clock.js", function() {
 //------------------------------------------------------------- 
 
 //NEWS STICKER
-head.js("../assets/js/newsticker/jquery.newsTicker.js", function() {
+head.js("/TesisWSNSiC/faces/templateDevBuss/assets/js/newsticker/jquery.newsTicker.js", function() {
 
     var nt_title = $('#nt-title').newsTicker({
         row_height: 18,
