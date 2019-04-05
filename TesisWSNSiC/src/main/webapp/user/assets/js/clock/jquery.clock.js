@@ -76,3 +76,4 @@ jQuery.calcTime = function(offset) {
   // return time as a string
   return nd;
 };
+
