@@ -13,15 +13,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
+	
 	<!-- Le styles -->
-	<script type="text/javascript"
-		src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"/>
+	
 
 	<link rel="stylesheet" href="assets/css/style.css" />
 	<link rel="stylesheet" href="assets/css/loader-style.css" />
 	<link rel="stylesheet" href="assets/css/bootstrap.css" />
 	<link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css" />
+	
+    
+    <link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css" />
+    <link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" />
+    <link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" href="assets/js/dataTable/lib/jquery.dataTables/css/DT_bootstrap.css" />
+    <link rel="stylesheet" href="assets/js/dataTable/css/datatables.responsive.css" />
+
+	
+	
 
 
 
@@ -563,56 +574,66 @@
 
 							</div>
 
+							    <div class="content-wrap">
+               						 <div class="row">
+
+
+                    					<div class="col-sm-12">
+							
 							<div class="body-nest" id="Blank_Page_Content">
 
+								<div class="body-nest" id="Footable">
 
 								<!-- INICIO DEL FORMULARIO -->
 										
-										
 										<h:form id="NodoListForm">
-            
-            
-                <p:panel header="Listado de Nodos">
-                <p:commandButton title="Asociar Nodo" onclick="PF('nodoSelect').show();"/>
+										
+										
+										
+                     
+                <b:button value="Asociar nodo" onclick="$('.nodoSelect').modal('show')" icon="plus-sign" look="success"/>
                 <br/>
-                    <p:dataTable id="datalist" value="#{personaNodoControlador.ltsMyNodos}" var="item"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column>
+                <br/>
+                <p class="lead well">Al pulsar (Asociar nodo), encontrara un listado de todos los
+										nodos disponibles en nuestra base de datos WSNCloud la cual podrá asociarse y obtener
+										los datos correspondientes al mismo.</p>
+                
+                    <h:dataTable id="datalist" value="#{personaNodoControlador.ltsMyNodos}" var="item"
+                    styleClass="table-striped footable-res footable metro-blue" rendered="#{not empty personaNodoControlador.ltsMyNodos}">
+                                
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Id"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Descripcion"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
+                        </h:column>
                         
-                        <p:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Latitud"/>
                             </f:facet>
                             <h:outputText value="#{item.latitud}"/>
-                        </p:column>
-                        <p:column>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Logitud"/>
                             </f:facet>
                             <h:outputText value="#{item.longitud}"/>
-                        </p:column>
+                        </h:column>
                         
-                         <p:column>
+                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Sensores"/>
                             </f:facet>
@@ -621,24 +642,95 @@
 						            <h:outputText value="- #{sensores.nombreCompleto}" />
 						        		<br/>
 						    </ui:repeat>
-                        </p:column>
+                        </h:column>
                         
-                        <p:column>
+                        <h:column>
                             <f:facet name="header">
-                                <h:outputText value="Eliminar"/>
-                            </f:facet>
-                            	<p:commandButton title="x" actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" update="datalist nodoDetail"/>
+                                <h:outputText value="Accion(Eliminar)"/>
+                            </f:facet><center>
+                            	<h:commandLink actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" 
+                            	styleClass="glyphicon glyphicon-trash fa-2x" update="datalist"/></center>
 					           
-                        </p:column>
-                        
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                        </h:column>
+                    
+                    </h:dataTable>
             
-       		
+            </h:form>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-
+		
 								<!-- FIN DEL FORMULARIO -->
+						    <div class="content-wrap">
+               						 <div class="row">
+
+
+                    	<div class="col-sm-12">
+								
+							<div class="body-nest" id="Blank_Page_Content">
+
+								<div class="body-nest" id="Footable">
+								
+			<b:modal  header-class="Seleccionar Nodo" styleClass="nodoSelect" modal="true" closable="false" 
+                 closeOnEscape="true" title="Nodos WSNCloud" >
+  			
+		
+            <h:form>
+            <h:outputText value="WSNCloud no posee mas nodos que mostrar!" rendered="#{empty personaNodoControlador.ltsAllNodos}" />
+               
+            		<h:dataTable id="Alllist" value="#{personaNodoControlador.ltsAllNodos}" var="item"
+                                  styleClass="table-striped footable-res footable metro-blue"
+                                  rendered="#{not empty personaNodoControlador.ltsAllNodos}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Sensores"/>
+                            </f:facet>
+                            <ui:repeat value="#{item.ltssensores}" var="sensores">
+						        
+						            <h:outputText value="- #{sensores.nombreCompleto}" />
+						        		<br/>
+						    </ui:repeat>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Seleccionar"/>
+                            </f:facet><center>
+                            <h:commandLink title="SELECCIONAR" update="NodoListForm Alllist" actionListener="#{personaNodoControlador.asociarNodo(item)}" 
+                            onclick="$('.nodoSelect').modal('hide');" styleClass="glyphicon glyphicon-check fa-2x"/></center>
+                        </h:column>
+                        
+                    </h:dataTable>
+            </h:form>
+        
+    </b:modal>
+								
+	</div>							
+			</div>
+			</div>
+			</div>
+							
 
 
 							</div>
@@ -800,5 +892,51 @@
 
 
 </body>
+
+
+<style type="text/css">
+		/* Import the google web fonts you want to use */
+
+		/* tangerine font */
+		@import url(https://fonts.googleapis.com/css?family=Tangerine);
+
+		/* bigshot one font */
+		@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+		/* Over the rainbow font */
+		@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+		/* pacifico font */
+		@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+		/* Content styling */
+		/* fonts for the text */
+		@import
+			url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+		p.a {
+			font-family: 'Tangerine', serif;
+			font-size: 48px;
+			color: #C23B22;
+		}
+
+		p.b {
+			font-family: 'Bigshot One', serif;
+			font-size: 48px;
+			color: #317873;
+		}
+
+		p.c {
+			font-family: 'Over the Rainbow', serif;
+			font-size: 48px;
+			color: #0077BE;
+		}
+
+		p.d {
+			font-family: 'Pacifico', serif;
+			font-size: 48px;
+			color: #C23B22;
+		}
+	</style>
 
 </html>
