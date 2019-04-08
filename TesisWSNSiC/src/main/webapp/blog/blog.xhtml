@@ -7,54 +7,284 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<h:head></h:head>
-<body>
+<h:head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	<h:form>
-		<h:outputLabel value="Blogs Empresariales" />
+</h:head>
 
-		<p:dataTable value="#{publicBlog.ltsBlogs}" var="blog" rows="10">
-			
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Imagen" />
-				</f:facet>
-				<img src="data:image/png;base64,#{blog.imgBase64}" style="width: 100px; height: 100px" />
-			</p:column>
-			
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Nombre" />
-				</f:facet>
-				<h:outputText value="#{blog.nombreBlog}" />
-			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Descripcion" />
-				</f:facet>
-				<h:outputText value="#{blog.descripcion}" />
-			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Empresa" />
-				</f:facet>
-				<h:outputText value="#{blog.empresa.nombre}" />
-			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Propietario" />
-				</f:facet>
-				<h:outputText value="#{blog.empresa.personas.get(0).nombre}" />
-			</p:column>
-			<p:column>
-				<h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" />
-			</p:column>
+<header>
+  <nav>
+    <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
+    <ul>
+      <li>
+        <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar Sesion</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
+      </li>
+      <li>
+        <a href="#">Contactos</a>
+      </li>
+    </ul>
+  </nav>
+  <nav id="small">
+    <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
+    <ul>
+      <li>
+        <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar Sesion</a>
+      </li>
+      <li>
+        <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
+      </li>
+      <li>
+        <a href="#">Contacto</a>
+      </li>
+    </ul>
+  </nav>
+</header>
 
-		</p:dataTable>
+<h:form>
+<ui:repeat value="#{publicBlog.ltsBlogs}" var="blog">
+<!-- details card section starts from here -->
+<section class="details-card">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card-content">
+                    <div class="card-img">
+                        <img src="data:image/png;base64,#{blog.imgBase64}"/>
+                        <span><h4>   #{blog.nombreBlog}</h4></span>
+                    </div>
+                    <div class="card-desc">
+                        <h3>Empresa: #{blog.empresa.nombre}</h3>
+                        <p>#{blog.descripcion}</p>
+                            <h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" class="btn-card"/>   
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+</ui:repeat>
+</h:form>
+<!-- details card section starts from here -->
 
-	</h:form>
+<style type="text/css">
+
+/* card details start  */
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto+Condensed:400,400i,700,700i');
+section{
+    padding: 100px 0;
+}
+.details-card {
+	background: #ecf0f1;
+}
+
+.card-content {
+	background: #ffffff;
+	border: 4px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.card-img {
+	position: relative;
+	overflow: hidden;
+	border-radius: 0;
+	z-index: 1;
+}
+
+.card-img img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.card-img span {
+	position: absolute;
+    top: 15%;
+    left: 12%;
+    background: #1ABC9C;
+    padding: 6px;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    transform: translate(-50%,-50%);
+}
+.card-img span h4{
+        font-size: 12px;
+        margin:0;
+        padding:10px 5px;
+         line-height: 0;
+}
+.card-desc {
+	padding: 1.25rem;
+}
+
+.card-desc h3 {
+	color: #000000;
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1.3em;
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+.card-desc p {
+	color: #747373;
+    font-size: 14px;
+	font-weight: 400;
+	font-size: 1em;
+	line-height: 1.5;
+	margin: 0px;
+	margin-bottom: 20px;
+	padding: 0;
+	font-family: 'Raleway', sans-serif;
+}
+.btn-card{
+	background-color: #1ABC9C;
+	color: #fff;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    padding: .84rem 2.14rem;
+    font-size: .81rem;
+    -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    -o-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    margin: 0;
+    border: 0;
+    -webkit-border-radius: .125rem;
+    border-radius: .125rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+}
+.btn-card:hover {
+    background: orange;
+}
+a.btn-card {
+    text-decoration: none;
+    color: #fff;
+}
+/* End card section */
+
+</style>
+
+  
+        <!-- Header -->
+        
+         <style type="text/css">
+         @import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto:400,500);
+nav {
+  background: #333;
+  overflow: hidden;
+  
+  position: relative;
+  z-index: 2;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+nav h1 {
+  color: #eee;
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  float: left;
+}
+
+nav h1>a {
+  color: #3ab4a6;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 200ms linear;
+}
+
+nav h1>a:hover {
+  background: none;
+  color: #C18055;
+}
+
+ul {
+  text-align: center;
+  float: right;
+}
+
+ul li {
+  display: inline-block;
+}
+
+ul li a {
+  text-decoration: none;
+  display: block;
+  
+  margin: 0 5px;
+  color: #eee;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+  display: flex;
+   justify-content: center;
+   align-items: center;
+  
+}
+
+nav a:hover,
+nav#small a:hover {
+  color: #C18055;    ----------------------------
+  background: #fff;
+}
+
+nav#small {
+  background: #fff;
+  
+  position: fixed;
+  box-sizing: border-box;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+  
+}
+
+nav#small h1,
+nav#small a {
+  color: #333;
+}
+
+nav#small h1 {
+  font-size: 25px;
+}
+
+nav#small h1>a {
+  color: #C18055;
+}
+
+nav#small h1>a:hover {
+  color: #3ab4a6;
+}
+
+
+         
+         </style>
 
 
 
-</body>
 </html>
