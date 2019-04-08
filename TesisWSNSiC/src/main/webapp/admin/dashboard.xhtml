@@ -214,8 +214,13 @@
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-
+						
+						<h:outputText value="Para mostrar el contenido debe realizar una busqueda de nodos.!" 
+						rendered="#{empty dashboardAdmin.ltsNodo}" />
+             
+						
 							<h:dataTable id="datalist" value="#{dashboardAdmin.ltsNodo}"
+							rendered="#{not empty dashboardAdmin.ltsNodo}"
 								var="item" paginator="true" rowKey="#{item.id}" rows="5"
 								styleClass="table table-bordered">
 								<h:column style="text-align: center;">
@@ -262,8 +267,7 @@
 									<f:facet name="header">
 										<h:outputText value="Sensores" />
 									</f:facet>
-									<ui:repeat value="#{item.ltssensores}" var="sensores">
-
+									<ui:repeat value="#{item.ltssensores}" var="sensores" >
 										<h:outputText value="- #{sensores.nombreCompleto}" />
 										<br />
 									</ui:repeat>
