@@ -112,7 +112,7 @@ public class DashboardUser {
 	public void init() {
 		try {
 			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSelected");
-			System.out.println("user " + user.getId());
+			//System.out.println("user " + user.getId());
 			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
 			System.out.println("lista nodos" + ltsMyNodos.size());
 			simpleModel = new DefaultMapModel();

@@ -31,6 +31,8 @@
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fas fa-table"></i> Lista de Nodos
+					<h:commandLink action="#{nodoControlador.crearNodo()}">
+								<i class="fas fa-plus-circle fa-1x" title="CREAR NODO"></i></h:commandLink>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -114,7 +116,7 @@
 							<div class="alert alert-info">
 			    <strong>Crear Nodo! </strong>Busque los nodos por codigo de registro</div>
 								<center><h:commandLink action="#{nodoControlador.crearNodo()}">
-									<i class="fas fa-plus-circle fa-3x"></i></h:commandLink></center>
+									<i class="fas fa-plus-circle fa-3x" title="CREAR NODO"></i></h:commandLink></center>
 
 							</f:facet>
 						</h:dataTable>

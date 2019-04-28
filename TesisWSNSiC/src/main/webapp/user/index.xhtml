@@ -1,0 +1,1287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:hf="http://highfaces.org"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<meta charset="utf-8" />
+	<title>Dashboard WSN</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<!-- Le styles -->
+	
+	 <!-- Custom fonts for this template-->
+    <link href="/TesisWSNSiC/faces/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+
+
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="stylesheet" href="assets/css/loader-style.css" />
+	<link rel="stylesheet" href="assets/css/bootstrap.css" />
+
+	<link rel="stylesheet" type="text/css"
+		href="assets/js/progress-bar/number-pb.css" />
+		
+		<!-- ICOS API GOOGLE -->
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+	<style type="text/css">
+canvas#canvas4 {
+	position: relative;
+	top: 20px;
+}
+</style>
+
+
+
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+	<!-- Fav and touch icons -->
+	<link rel="shortcut icon" href="assets/ico/minus.png" />
+</h:head>
+
+	<body>
+		
+		<!-- TOP NAVBAR -->
+		<nav role="navigation" class="navbar navbar-static-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button data-target="#bs-example-navbar-collapse-1"
+					data-toggle="collapse" class="navbar-toggle" type="button">
+					<span class="entypo-menu"></span>
+				</button>
+				<button class="navbar-toggle toggle-menu-mobile toggle-left"
+					type="button">
+					<span class="entypo-list-add"></span>
+				</button>
+
+
+
+
+				<div id="logo-mobile" class="visible-xs">
+					<h1>
+						WSNCloud <span>v1</span>
+					</h1>
+				</div>
+
+			</div>
+
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div id="bs-example-navbar-collapse-1"
+				class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+
+					
+					
+					<li><a href="#"><i data-toggle="tooltip"
+							data-placement="bottom" title="Help" style="font-size: 20px;"
+							class="icon-help tooltitle"></i></a></li>
+
+				</ul>
+				<div id="nt-title-container"
+					class="navbar-left running-text visible-lg">
+					<ul class="date-top">
+						<li class="entypo-calendar" style="margin-right: 5px"></li>
+						<li id="Date"></li>
+					</ul>
+
+					<ul id="digital-clock" class="digital">
+						<li class="entypo-clock" style="margin-right: 5px"></li>
+						<li class="hour"></li>
+						<li>:</li>
+						<li class="min"></li>
+						<li>:</li>
+						<li class="sec"></li>
+						<li class="meridiem"></li>
+					</ul>
+
+					<ul id="nt-title">
+						<li><i class="wi-day-lightning"></i>&#160;&#160;Quito&#160;
+							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
+							
+						<li><i class="wi-day-lightning"></i>&#160;&#160;Guayas&#160;
+							<b>85</b><i class="wi-fahrenheit"></i>&#160;; Tonight- 72 °F
+							(22.2 °C)</li>
+
+						<li><i class="wi-day-lightning"></i>&#160;&#160;Cuenca&#160;
+							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
+
+						<li><i class="wi-day-lightning"></i>&#160;&#160;Loja&#160;
+							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
+
+						<li><i class="wi-day-lightning"></i>&#160;&#160;Morona Santiago&#160; 
+							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
+
+					</ul>
+				</div>
+
+				<ul style="margin-right: 0;" class="nav navbar-nav navbar-right">
+					<li><a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<img alt="" class="admin-pic img-circle"
+							src="http://api.randomuser.me/portraits/thumb/men/10.jpg" />Hola,
+							#{dashboardUser.user.nombre} #{dashboardUser.user.apellido}<b
+							class="caret"></b>
+					</a>
+						<ul style="margin-top: 14px;" role="menu"
+							class="dropdown-setting dropdown-menu">
+							<li><a href="profile.xhtml"> <span class="entypo-user"></span>&#160;&#160;Perfil
+									
+							</a></li>
+							<li><a href="#"> <span class="entypo-vcard"></span>&#160;&#160;Configuracion
+
+							</a></li>
+							<li><a href="#"> <span class="entypo-lifebuoy"></span>&#160;&#160;Ayuda
+							</a></li>
+							<li class="divider"></li>
+							<center><h:form>
+							<li>
+							<h:commandLink action="#{personaControlador.logout()}"
+									value=" Cerrar sesion" class="entypo-logout" style="color:#8d8d8d;"/></li>
+									</h:form></center>
+						</ul></li>
+					<li><a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="icon-gear"></span>&#160;&#160;Setting
+					</a>
+						<ul role="menu" class="dropdown-setting dropdown-menu">
+
+							<li class="theme-bg">
+								<div id="button-bg"></div>
+								<div id="button-bg2"></div>
+								<div id="button-bg3"></div>
+								<div id="button-bg5"></div>
+								<div id="button-bg6"></div>
+								<div id="button-bg7"></div>
+								<div id="button-bg8"></div>
+								<div id="button-bg9"></div>
+								<div id="button-bg10"></div>
+								<div id="button-bg11"></div>
+								<div id="button-bg12"></div>
+								<div id="button-bg13"></div>
+							</li>
+						</ul></li>
+					<li class="hidden-xs"><a class="toggle-left" href="#"> <span
+							style="font-size: 20px;" class="entypo-list-add"></span>
+					</a></li>
+				</ul>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid --> </nav>
+
+		<!-- /END OF TOP NAVBAR -->
+
+		<!-- SIDE MENU -->
+		<div id="skin-select">
+			<div id="logo">
+				<h1>
+					WSNCloud <span>v1</span>
+				</h1>
+			</div>
+
+			<a id="toggle"> <span class="entypo-menu"></span>
+			</a>
+			<div class="dark">
+				<form action="#">
+					<span> <h:inputText type="text" name="search" value=""
+							class="search rounded id_search" pt:placeholder="Search Menu..." />
+					</span>
+				</form>
+			</div>
+
+			<div class="search-hover">
+				<form id="demo-2">
+					<input type="search" pt:placeholder="Search Menu..."
+						class="id_search" />
+				</form>
+			</div>
+
+
+
+
+			<div class="skin-part">
+				<div id="tree-wrap">
+					<div class="side-bar">
+						<ul class="topnav menu-left-nest">
+							<li><a href="#" style="border-left: 0px solid !important;"
+								class="title-menu-left"> <span class="widget-menu"></span> <i
+									data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+							</a></li>
+
+							<li><a class="tooltip-tip ajax-load" href="#"
+								title="Blog App"> <i class="icon-document-edit"></i> <span>Blog
+										App</span>
+
+							</a>
+								<ul>
+									<li><a class="tooltip-tip2 ajax-load"
+										href="myBlog.xhtml" title="Blog List"><i
+											class="entypo-doc-text"></i><span>Crear Blog</span></a></li>
+									<li><a class="tooltip-tip2 ajax-load"
+										href="blog-detail.xhtml" title="Blog Detail"><i
+											class="entypo-newspaper"></i><span>Blog Details</span></a></li>
+								</ul></li>
+							<li><a class="tooltip-tip ajax-load" href="social.html"
+								title="Social"> <i class="icon-feed"></i> <span>Social</span>
+
+							</a></li>
+							<li><a class="tooltip-tip ajax-load" href="blank_page.xhtml"
+								title="Nodos"> <i class="glyphicon glyphicon-search"></i> <span>Nodos</span>
+
+							</a></li>
+						</ul>
+
+						<ul class="topnav menu-left-nest">
+							<li><a href="#" style="border-left: 0px solid !important;"
+								class="title-menu-left"> <span class="design-kit"></span> <i
+									data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+							</a></li>
+
+							<li><a class="tooltip-tip ajax-load" href="index.xhtml"
+								title="Dashboard"> <i class="icon-window"></i> <span>Dashboard</span>
+
+							</a></li>
+							<li><a class="tooltip-tip ajax-load" href="mail.html"
+								title="Mail"> <i class="icon-mail"></i> <span>mail</span>
+									<div class="noft-blue">289</div>
+							</a></li>
+
+							<li><a class="tooltip-tip ajax-load" href="icon.html"
+								title="Icons"> <i class="icon-preview"></i> <span>Icons</span>
+									<div class="noft-blue"
+										style="display: inline-block; float: none;">New</div>
+							</a></li>
+
+							<li><a class="tooltip-tip" href="#" title="Extra Pages">
+									<i class="icon-document-new"></i> <span>Extra Page</span>
+							</a>
+								<ul>
+									<li><a class="tooltip-tip2 ajax-load"
+										href="blank_page.xhtml" title="Blank Page"><i
+											class="icon-media-record"></i><span>Blank Page</span></a></li>
+									<li><a class="tooltip-tip2 ajax-load" href="profile.xhtml"
+										title="Profile Page"><i class="icon-user"></i><span>Profile
+												Page</span></a></li>
+									<li><a class="tooltip-tip2 ajax-load" href="invoice.html"
+										title="Invoice"><i class="entypo-newspaper"></i><span>Invoice</span></a>
+									</li>
+									<li><a class="tooltip-tip2 ajax-load"
+										href="pricing_table.html" title="Pricing Table"><i
+											class="fontawesome-money"></i><span>Pricing Table</span></a></li>
+									<li><a class="tooltip-tip2 ajax-load"
+										href="time-line.html" title="Time Line"><i
+											class="entypo-clock"></i><span>Time Line</span></a></li>
+									<li><a class="tooltip-tip2" href="404.xhtml"
+										title="404 Error Page"><i class="icon-thumbs-down"></i><span>404
+												Error Page</span></a></li>
+									<li><a class="tooltip-tip2" href="500.xhtml"
+										title="500 Error Page"><i class="icon-thumbs-down"></i><span>500
+												Error Page</span></a></li>
+									<li><a class="tooltip-tip2" href="lock-screen.html"
+										title="Lock Screen"><i class="icon-lock"></i><span>Lock
+												Screen</span></a></li>
+								</ul></li>
+
+							<li><a class="tooltip-tip " href="login.html" title="login">
+									<i class="icon-download"></i> <span>Login</span>
+							</a></li>
+
+						</ul>
+
+						
+
+						<div class="side-dash">
+						
+							
+							<div id="g1" style="height: 180px" class="gauge"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END OF SIDE MENU -->
+
+
+
+		<!--  PAPER WRAP -->
+		<div class="wrap-fluid">
+			<div class="container-fluid paper-wrap bevel tlbr">
+
+
+
+
+
+				<!-- CONTENT -->
+				<!--TITLE -->
+				<div class="row">
+					<div id="paper-top">
+						<div class="col-sm-3">
+							<h2 class="tittle-content-header">
+								<i class="icon-window"></i> <span>Dashboard </span>
+							</h2>
+
+						</div>
+
+						<div class="col-sm-7">
+							<div class="devider-vertical visible-lg"></div>
+							<div class="tittle-middle-header">
+
+								<div class="alert">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									<span class="tittle-alert entypo-info-circled"></span> Bienvenido
+									nuevamente,&nbsp; <strong>#{dashboardUser.user.nombre}</strong>&nbsp;&nbsp;Ultimo acceso
+									, 16:54 PM
+								</div>
+
+
+							</div>
+
+						</div>
+						<div class="col-sm-2">
+							<div class="devider-vertical visible-lg"></div>
+							<div class="btn-group btn-wigdet pull-right visible-lg">
+								<div class="btn">Widget</div>
+								<button data-toggle="dropdown" class="btn dropdown-toggle"
+									type="button">
+									<span class="caret"></span> <span class="sr-only">Toggle
+										Dropdown</span>
+								</button>
+								<ul role="menu" class="dropdown-menu">
+									<li><a href="#"> <span
+											class="entypo-plus-circled margin-iconic"></span>Add New
+									</a></li>
+									<li><a href="#"> <span
+											class="entypo-heart margin-iconic"></span>Favorite
+									</a></li>
+									<li><a href="#"> <span
+											class="entypo-cog margin-iconic"></span>Setting
+									</a></li>
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<!--/ TITLE -->
+
+				<!-- BREADCRUMB -->
+				<ul id="breadcrumb">
+					<li><span class="entypo-home"></span></li>
+					<li><i class="fa fa-lg fa-angle-right"></i></li>
+					<li><a href="#" title="Sample page 1">Home</a></li>
+					<li><i class="fa fa-lg fa-angle-right"></i></li>
+					<li><a href="#" title="Sample page 1">Dashboard</a></li>
+					<li class="pull-right">
+						<div class="input-group input-widget">
+
+							<h:inputText style="border-radius: 15px" type="text"
+								pt:placeholder="Search..." class="form-control" />
+						</div>
+					</li>
+				</ul>
+
+				<!-- END OF BREADCRUMB -->
+
+
+
+
+
+
+			
+
+				<h:form id="formulario">
+
+
+					<div class="content-wrap">
+						<div class="row">
+							<div class="col-sm-12">
+								<div id="siteClose2" class="nest">
+									<div class="title-alt">
+										<h6>
+											<span class="entypo-location"></span>&nbsp;NODOS GOOGLE MAPS
+										</h6>
+										<div class="titleClose">
+											<a class="gone" href="#siteClose"> <span
+												class="entypo-cancel"></span>
+											</a>
+										</div>
+										<div class="titleToggle">
+											<a class="nav-toggle-alt" href="#site"> <span
+												class="entypo-up-open"></span>
+											</a>
+										</div>
+									</div>
+									<div id="site" class="body-nest" style="min-height: 296px;">
+										<div class="table-responsive">
+
+
+											<!-- INICIO DEL MAPA  -->
+
+											<script type="text/javascript"
+												src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
+											<p:growl id="messages" showDetail="true" />
+
+											<p:gmap center="-2.892183,-79.0243996" zoom="13"
+												type="roadmap" style="width:100%;height:400px"
+												model="#{dashboardUser.simpleModel}">
+												<p:ajax event="overlaySelect"
+													listener="#{dashboardUser.onMarkerSelect}"
+													update="listaNodos panelDatos" />
+												<p:gmapInfoWindow id="infoWindow">
+													<p:outputPanel
+														style="text-align: center; display: block; margin: auto">
+													<span class="entypo-th-list"></span>
+														<h:outputText value="#{dashboardUser.marker.title}" />
+														<br />
+															<span class="entypo-lamp"></span>
+														<h:outputText value=" Sensores:" />
+														<br />
+														
+														<ui:repeat
+															value="#{dashboardUser.nodoSelected.ltssensores}"
+															var="sensores">
+															<span class="wi-wind-east"></span>
+															<h:outputText value="#{sensores.nombreCompleto}" />
+															<br />
+														</ui:repeat>
+
+													</p:outputPanel>
+												</p:gmapInfoWindow>
+											</p:gmap>
+
+
+											<!-- FIN DEL MAPA  -->
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					
+					
+					
+					<!--  FILTROS DE BUSQUEDA DE LOS NODOS -->
+					
+												
+            <div class="content-wrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="nest" id="inlineClose">
+                            <div class="title-alt">
+                                <h6>
+                                    FILTRO DE BUSQUEDA</h6>
+                                <div class="titleClose">
+                                    <a class="gone" href="#inlineClose">
+                                        <span class="entypo-cancel"></span>
+                                    </a>
+                                </div>
+                                <div class="titleToggle">
+                                    <a class="nav-toggle-alt" href="#inline">
+                                        <span class="entypo-up-open"></span>
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <div class="body-nest form-inline" id="inline">
+							<center>	<h:panelGrid columns="8">
+                               
+                                  
+                                     
+                                        <p:outputLabel value="Sensor:"></p:outputLabel>
+                                        <h:selectOneMenu id="listaNodos"
+											value="#{dashboardUser.sensorSeleccionado}" class="form-control">
+
+											<f:selectItems value="#{dashboardUser.ltsSensores}"
+												var="sensorItem" itemValue="#{sensorItem}"
+												itemLabel="#{sensorItem}"/>
+										</h:selectOneMenu>
+                                        
+                                
+										
+										<h:selectOneMenu value="#{dashboardUser.tipoFecha}"
+											valueChangeListener="#{dashboardUser.cambioDeFecha}" class="form-control">
+											<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
+											<f:selectItem itemValue="Diario" itemLabel="Diario" />
+											<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
+											<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
+										</h:selectOneMenu>
+                                        
+
+
+										<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+										<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" styleClass="calendar">
+											<p:ajax event="dateSelect"
+												listener="#{dashboardUser.onDateSelectInicio}" />
+										</p:calendar>
+
+										<p:outputLabel for="fechaFin" value="Fecha de fin:" />
+										<p:calendar id="fechaFin" pattern="yyyy/MM/dd" locale="es" styleClass="calendar">
+											<p:ajax event="dateSelect"
+												listener="#{dashboardUser.onDateSelectFin}" />
+										</p:calendar>
+                                        
+                                        <b:commandButton action="#{dashboardUser.grafica()}"
+											value="Graficar" update="grafica messages">
+										</b:commandButton>
+                                        
+                                      
+                                  </h:panelGrid></center>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+     
+						<!--  FIN FILTROS DE BUSQUEDA DE LOS NODOS -->				
+								
+					
+
+					<!--   INICIO DE LA TABLA DE LOS NODOS DE LOS USUARIOS -->
+
+
+					<div class="content-wrap">
+						<div class="row">
+							<div class="col-sm-12">
+								<div id="RealTimeClose" class="nest">
+									<div class="title-alt">
+										<h6>
+											<span class="fontawesome-resize-horizontal"></span>&nbsp;MIS
+											NODOS
+										</h6>
+										<div class="titleClose">
+											<a class="gone" href="#RealTimeClose"> <span
+												class="entypo-cancel"></span>
+											</a>
+										</div>
+										<div class="titleToggle">
+											<a class="nav-toggle-alt" href="#RealTime"> <span
+												class="entypo-up-open"></span>
+											</a>
+										</div>
+									</div>
+									<div id="RealTime"
+										style="min-height: 296px; padding-top: 20px;"
+										class="body-nest">
+
+
+										<!-- CODIGO PARA LA GRAFICA DE LOS NODOS SENSORES -->
+									
+										
+
+										<h:panelGroup id="panelDatos">
+       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br />
+											<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}"
+												value="Temperatura: #{dashboardUser.datoTemp}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}"
+												value="Humedad: #{dashboardUser.datoHum}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoLum != 0.0}"
+												value="Luminosidad: #{dashboardUser.datoLum}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoRui != 0.0}"
+												value="Ruido: #{dashboardUser.datoRui}" />
+											<br />
+										</h:panelGroup>
+										
+										
+										<center>
+										<b:row style="width: 100%;height: 100%;">
+											<hf:chart id="grafica"  xaxisLabel="Tiempo"
+												yaxisLabel="Valor" type="line" subTitle="">
+												<hf:chartSerie value="#{dashboardUser.ltsDataSensor}"
+													var="point" point="#{point.valor}"
+													tickLabel="#{point.fecha}"
+													name="#{dashboardUser.sensorSeleccionado}" />
+
+												<hf:chartLegend position="ne" title="Valores"
+													layout="vertical" backgroundColor="#eeeeee" />
+												<hf:chartTooltip backgroundColor="#000000" shared="true">
+													<f:facet name="header">
+														<h:outputText escape="false"
+															value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>" />
+													</f:facet>
+													<f:facet name="body">
+														<h:outputText
+															value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{dashboardUser.typeMedicion}&lt;/b>&lt;/span>&lt;br/>" />
+													</f:facet>
+												</hf:chartTooltip>
+											</hf:chart>
+										</b:row>
+									</center>
+										
+											<br/>
+											<br/>
+											<center><h:form>
+											
+									
+											
+											</h:form></center>
+											
+											<br/>
+											<br/>
+											
+											
+											
+										<!-- FIN DEL CODIGO -->
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- FIN -->
+
+
+<!-- BOTONES DE  LOS FORMATOS PARA LA DESCARGA DE LOS DATOS-->
+
+
+
+
+
+											
+											
+					<br />
+
+
+				</h:form>
+				
+											
+											<center><h:form>
+											
+												<h:commandLink action="#{dashboardUser.descargarCSV()}" title="Descargar en SVC">
+												<i class="material-icons">insert_drive_file</i></h:commandLink>
+											
+											
+											
+												<h:commandLink action="#{dashboardUser.descargarJSON()}" title="Descargar en JSON">
+												<i class="material-icons">settings_ethernet</i></h:commandLink>
+											
+											
+											
+												<h:commandLink action="#{dashboardUser.descargarPDF()}" title="Descargar en PDF">
+												<i class="material-icons">picture_as_pdf</i></h:commandLink>
+											</h:form></center>	
+		
+					
+					<!-- FOOTER -->
+                <div class="footer-space"></div>
+                <div id="footer">
+                    <div class="devider-footer-left"></div>
+                    <div class="time">
+                        <p id="spanDate"></p>
+                        <p id="clock"></p>
+                    </div>
+                    <div class="copyright">WSNCloud, Universidad Politecnica Salesiana|
+                        <span class="entypo-heart"></span>2019 </div>
+                    <div class="devider-footer"></div>
+
+
+                </div>
+                <!-- / END OF FOOTER -->
+					
+					
+
+
+			</div>
+		</div>
+		<!--  END OF PAPER WRAP -->
+
+		<!-- RIGHT SLIDER CONTENT -->
+		<div class="sb-slidebar sb-right">
+			<div class="right-wrapper">
+				<div class="row">
+					<h3>
+						<span><i class="entypo-gauge"></i>&nbsp;&nbsp;MAIN WIDGET</span>
+					</h3>
+					<div class="col-sm-12">
+
+						<div class="widget-knob">
+							<span class="chart" style="position: relative" data-percent="86">
+								<span class="percent"></span>
+							</span>
+						</div>
+						<div class="widget-def">
+							<b>Distance traveled</b> <br /> <i>86% to the check point</i>
+						</div>
+
+						<div class="widget-knob">
+							<span class="speed-car" style="position: relative"
+								data-percent="60"> <span class="percent2"></span>
+							</span>
+						</div>
+						<div class="widget-def">
+							<b>The average speed</b> <br /> <i>30KM/h avarage speed</i>
+						</div>
+
+
+						<div class="widget-knob">
+							<span class="overall" style="position: relative"
+								data-percent="25"> <span class="percent3"></span>
+							</span>
+						</div>
+						<div class="widget-def">
+							<b>Overall result</b> <br /> <i>30KM/h avarage Result</i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div style="margin-top: 0;" class="right-wrapper">
+				<div class="row">
+					<h3>
+						<span><i class="entypo-chat"></i>&nbsp;&nbsp;CHAT</span>
+					</h3>
+					<div class="col-sm-12">
+						<span class="label label-warning label-chat">Online</span>
+						<ul class="chat">
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/20.jpg" />
+								</span><b>Dave Junior</b> <br /> <i>Last seen : 08:00 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/21.jpg" />
+								</span><b>Kenneth Lucas</b> <br /> <i>Last seen : 07:21 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/22.jpg" />
+								</span><b>Heidi Perez</b> <br /> <i>Last seen : 05:43 PM</i>
+							</a></li>
+
+
+						</ul>
+
+						<span class="label label-chat">Offline</span>
+						<ul class="chat">
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-offline img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/23.jpg" />
+								</span><b>Dave Junior</b> <br /> <i>Last seen : 08:00 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-offline img-circle"
+										src="http://api.randomuser.me/portraits/thumb/women/24.jpg" />
+								</span><b>Kenneth Lucas</b> <br /> <i>Last seen : 07:21 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-offline img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/25.jpg" />
+								</span><b>Heidi Perez</b> <br /> <i>Last seen : 05:43 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-offline img-circle"
+										src="http://api.randomuser.me/portraits/thumb/women/25.jpg" />
+								</span><b>Kenneth Lucas</b> <br /> <i>Last seen : 07:21 PM</i>
+							</a></li>
+							<li><a href="#"> <span> <img alt=""
+										class="img-chat img-offline img-circle"
+										src="http://api.randomuser.me/portraits/thumb/men/26.jpg" />
+								</span><b>Heidi Perez</b> <br /> <i>Last seen : 05:43 PM</i>
+							</a></li>
+
+						</ul>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<!-- END OF RIGHT SLIDER CONTENT-->
+		
+		<script src="assets/js/progress-bar/src/jquery.velocity.min.js"></script>
+		<script src="assets/js/progress-bar/number-pb.js"></script>
+		<script src="assets/js/progress-bar/progress-app.js"></script>
+
+		
+
+
+		<!-- MAIN EFFECT -->
+		<script type="text/javascript" src="assets/js/preloader.js"></script>
+		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+		<script type="text/javascript" src="assets/js/app.js"></script>
+		<script type="text/javascript" src="assets/js/load.js"></script>
+		<script type="text/javascript" src="assets/js/main.js"></script>
+
+
+
+
+		<!-- GAGE -->
+
+
+		<script type="text/javascript" src="assets/js/chart/jquery.flot.js"></script>
+		<script type="text/javascript"
+			src="assets/js/chart/jquery.flot.resize.js"></script>
+		<script type="text/javascript" src="assets/js/chart/realTime.js"></script>
+		<script type="text/javascript"
+			src="assets/js/speed/canvasgauge-coustom.js"></script>
+		<script type="text/javascript"
+			src="assets/js/countdown/jquery.countdown.js"></script>
+
+
+
+		<script src="assets/js/jhere-custom.js"></script>
+
+		<script>
+    var gauge4 = new Gauge("canvas4", {
+        'mode': 'needle',
+        'range': {
+            'min': 0,
+            'max': 90
+        }
+    });
+    gauge4.draw(Math.floor(Math.random() * 90));
+    var run = setInterval(function() {
+        gauge4.draw(Math.floor(Math.random() * 90));
+    }, 3500);
+    </script>
+    
+    
+    
+    
+    		<script type="text/javascript">
+    /* Javascript
+     *
+     * See http://jhere.net/docs.html for full documentation
+     */
+    $(window).on('load', function() {
+        $('#mapContainer').jHERE({
+            center: [52.500556, 13.398889],
+            type: 'smart',
+            zoom: 10
+        }).jHERE('marker', [52.500556, 13.338889], {
+            icon: 'assets/img/marker.png',
+            anchor: {
+                x: 12,
+                y: 32
+            },
+            click: function() {
+                alert('Hallo from Berlin!');
+            }
+        })
+            .jHERE('route', [52.711, 13.011], [52.514, 13.453], {
+                color: '#FFA200',
+                marker: {
+                    fill: '#86c440',
+                    text: '#'
+                }
+            });
+    });
+    </script>
+		<script type="text/javascript">
+    var output, started, duration, desired;
+
+    // Constants
+    duration = 5000;
+    desired = '50';
+
+    // Initial setup
+    output = $('#speed');
+    started = new Date().getTime();
+
+    // Animate!
+    animationTimer = setInterval(function() {
+        // If the value is what we want, stop animating
+        // or if the duration has been exceeded, stop animating
+        if (output.text().trim() === desired || new Date().getTime() - started > duration) {
+           // console.log('animating');
+            // Generate a random string to use for the next animation step
+            output.text('' + Math.floor(Math.random() * 60)
+
+            );
+
+        } else {
+            //console.log('animating');
+            // Generate a random string to use for the next animation step
+            output.text('' + Math.floor(Math.random() * 120)
+
+            );
+        }
+    }, 5000);
+    </script>
+		<script type="text/javascript">
+    $('#getting-started').countdown('2015/01/01', function(event) {
+        $(this).html(event.strftime(
+
+            '<span>%M</span>' + '<span class="start-min">:</span>' + '<span class="start-min">%S</span>'));
+    });
+    </script>
+
+	
+	
+	
+	<script type="text/javascript">
+
+	PrimeFaces.locales ['es'] = {
+	    closeText: 'Close',
+	    prevText: 'Previous',
+	    nextText: 'Next',
+	    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+	    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+	    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+	    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+	    dayNamesMin: ['D', 'L', 'M', 'M ', 'J', 'V ', 'S'],
+	    weekHeader: 'Week',
+	    firstDay: 1,
+	    isRTL: false,
+	    showMonthAfterYear: false,
+	    yearSuffix:'',
+	    timeOnlyTitle: 'Only Time',
+	    timeText: 'Time',
+	    hourText: 'Time',
+	    minuteText: 'Minute',
+	    secondText: 'Second',
+	    currentText: 'Current Date',
+	    ampm: false,
+	    month: 'Month',
+	    week: 'week',
+	    day: 'Day',
+	    allDayText: 'All Day',
+	    messages: {
+	        'javax.faces.component.UIInput.REQUIRED': '{0}: Validation Error: Value is required.',
+	        'javax.faces.converter.IntegerConverter.INTEGER': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.IntegerConverter.INTEGER_detail': '{2}: \'{0}\' must be a number between -2147483648 and 2147483647 Example: {1}',
+	        'javax.faces.converter.DoubleConverter.DOUBLE': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.DoubleConverter.DOUBLE_detail': '{2}: \'{0}\' must be a number between 4.9E-324 and 1.7976931348623157E308  Example: {1}',
+	        'javax.faces.converter.BigDecimalConverter.DECIMAL': '{2}: \'{0}\' must be a signed decimal number.',
+	        'javax.faces.converter.BigDecimalConverter.DECIMAL_detail': '{2}: \'{0}\' must be a signed decimal number consisting of zero or more digits, that may be followed by a decimal point and fraction.  Example: {1}',
+	        'javax.faces.converter.BigIntegerConverter.BIGINTEGER': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.BigIntegerConverter.BIGINTEGER_detail': '{2}: \'{0}\' must be a number consisting of one or more digits. Example: {1}',
+	        'javax.faces.converter.ByteConverter.BYTE': '{2}: \'{0}\' must be a number between 0 and 255.',
+	        'javax.faces.converter.ByteConverter.BYTE_detail': '{2}: \'{0}\' must be a number between 0 and 255.  Example: {1}',
+	        'javax.faces.converter.CharacterConverter.CHARACTER': '{1}: \'{0}\' must be a valid character.',
+	        'javax.faces.converter.CharacterConverter.CHARACTER_detail': '{1}: \'{0}\' must be a valid ASCII character.',
+	        'javax.faces.converter.ShortConverter.SHORT': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.ShortConverter.SHORT_detail': '{2}: \'{0}\' must be a number between -32768 and 32767 Example: {1}',
+	        'javax.faces.converter.BooleanConverter.BOOLEAN': '{1}: \'{0}\' must be \'true\' or \'false\'',
+	        'javax.faces.converter.BooleanConverter.BOOLEAN_detail': '{1}: \'{0}\' must be \'true\' or \'false\'.  Any value other than \'true\' will evaluate to \'false\'.',
+	        'javax.faces.validator.LongRangeValidator.MAXIMUM': '{1}: Validation Error: Value is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.LongRangeValidator.MINIMUM': '{1}: Validation Error: Value is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.LongRangeValidator.NOT_IN_RANGE': '{2}: Validation Error: Specified attribute is not between the expected values of {0} and {1}.',
+	        'javax.faces.validator.LongRangeValidator.TYPE={0}': 'Validation Error: Value is not of the correct type.',
+	        'javax.faces.validator.DoubleRangeValidator.MAXIMUM': '{1}: Validation Error: Value is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.DoubleRangeValidator.MINIMUM': '{1}: Validation Error: Value is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.DoubleRangeValidator.NOT_IN_RANGE': '{2}: Validation Error: Specified attribute is not between the expected values of {0} and {1}',
+	        'javax.faces.validator.DoubleRangeValidator.TYPE={0}': 'Validation Error: Value is not of the correct type',
+	        'javax.faces.converter.FloatConverter.FLOAT': '{2}: \'{0}\' must be a number consisting of one or more digits.',
+	        'javax.faces.converter.FloatConverter.FLOAT_detail': '{2}: \'{0}\' must be a number between 1.4E-45 and 3.4028235E38  Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.DATE': '{2}: \'{0}\' could not be understood as a date.',
+	        'javax.faces.converter.DateTimeConverter.DATE_detail': '{2}: \'{0}\' could not be understood as a date. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.TIME': '{2}: \'{0}\' could not be understood as a time.',
+	        'javax.faces.converter.DateTimeConverter.TIME_detail': '{2}: \'{0}\' could not be understood as a time. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.DATETIME': '{2}: \'{0}\' could not be understood as a date and time.',
+	        'javax.faces.converter.DateTimeConverter.DATETIME_detail': '{2}: \'{0}\' could not be understood as a date and time. Example: {1}',
+	        'javax.faces.converter.DateTimeConverter.PATTERN_TYPE': '{1}: A \'pattern\' or \'type\' attribute must be specified to convert the value \'{0}\'',
+	        'javax.faces.converter.NumberConverter.CURRENCY': '{2}: \'{0}\' could not be understood as a currency value.',
+	        'javax.faces.converter.NumberConverter.CURRENCY_detail': '{2}: \'{0}\' could not be understood as a currency value. Example: {1}',
+	        'javax.faces.converter.NumberConverter.PERCENT': '{2}: \'{0}\' could not be understood as a percentage.',
+	        'javax.faces.converter.NumberConverter.PERCENT_detail': '{2}: \'{0}\' could not be understood as a percentage. Example: {1}',
+	        'javax.faces.converter.NumberConverter.NUMBER': '{2}: \'{0}\' could not be understood as a date.',
+	        'javax.faces.converter.NumberConverter.NUMBER_detail': '{2}: \'{0}\' is not a number. Example: {1}',
+	        'javax.faces.converter.NumberConverter.PATTERN': '{2}: \'{0}\' is not a number pattern.',
+	        'javax.faces.converter.NumberConverter.PATTERN_detail': '{2}: \'{0}\' is not a number pattern. Example: {1}',
+	        'javax.faces.validator.LengthValidator.MINIMUM': '{1}: Validation Error: Length is less than allowable minimum of \'{0}\'',
+	        'javax.faces.validator.LengthValidator.MAXIMUM': '{1}: Validation Error: Length is greater than allowable maximum of \'{0}\'',
+	        'javax.faces.validator.RegexValidator.PATTERN_NOT_SET': 'Regex pattern must be set.',
+	        'javax.faces.validator.RegexValidator.PATTERN_NOT_SET_detail': 'Regex pattern must be set to non-empty value.',
+	        'javax.faces.validator.RegexValidator.NOT_MATCHED': 'Regex Pattern not matched',
+	        'javax.faces.validator.RegexValidator.NOT_MATCHED_detail': 'Regex pattern of \'{0}\' not matched',
+	        'javax.faces.validator.RegexValidator.MATCH_EXCEPTION': 'Error in regular expression.',
+	        'javax.faces.validator.RegexValidator.MATCH_EXCEPTION_detail': 'Error in regular expression, \'{0}\''
+    }
+};
+	
+	</script>
+	
+	
+	
+	<style type="text/css">
+	
+		@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+* {
+		font-family: "Roboto", Arial, sans-serif;
+}
+
+
+i.material-icons {
+		font-size: 1.5rem;
+		color: white;
+		position: relative;
+		border-radius: 50%;
+		padding: 5px;
+		margin: 3px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+}
+
+i.material-icons:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: solid 2px;
+		transform: scale(0.8);
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+}
+
+i.material-icons:hover:after {
+		transform: scale(1);
+		box-shadow: 10px 0 20px rgba(0, 0, 0, 0.19), 6px 0 6px rgba(0, 0, 0, 0.23);
+}
+
+
+i.material-icons:nth-of-type(1) {
+		background-color: #cd8484;
+}
+
+i.material-icons:nth-of-type(1):hover {
+		color: #cd8484;
+}
+
+i.material-icons:nth-of-type(1):after {
+		border-color: #cd8484;
+}
+
+i.material-icons:nth-of-type(2) {
+		background-color: #8897b9;
+}
+
+i.material-icons:nth-of-type(2):hover {
+		color: #8897b9;
+}
+
+i.material-icons:nth-of-type(2):after {
+		border-color: #8897b9;
+}
+
+i.material-icons:nth-of-type(3) {
+		background-color: #d59acb;
+}
+
+i.material-icons:nth-of-type(3):hover {
+		color: #d59acb;
+}
+
+i.material-icons:nth-of-type(3):after {
+		border-color: #d59acb;
+}
+
+i.material-icons:hover {
+		background-color: transparent;
+		transform: rotate(90deg);
+		cursor: pointer;
+		box-shadow: none;
+}
+
+p {
+		color: #999;
+		font-weight: 300;
+		margin-top: 20px;
+}
+
+@media (min-width:601px) {
+	i.material-icons {
+		padding:10px;
+		margin:5px;
+		font-size:2rem;
+	}
+}
+
+@media (min-width:993px) {
+	i.material-icons {
+		padding:20px;
+		margin:10px;
+		font-size:4rem;
+	}
+	i.material-icons:after {
+		border-width:3px;
+		top:-3px;
+		left:-3px;
+	}
+}
+		
+	
+	</style>
+	
+	
+	<style type="text/css">
+
+.ui-datepicker .ui-datepicker-header,
+.ui-datepicker .ui-datepicker-title,
+.ui-datepicker .ui-datepicker-title,
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.ui-datepicker table,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-default {
+  background: #fff;
+  text-align:center !Important;
+
+}
+
+.ui-datepicker-inline {
+  padding: 0;
+}
+
+.ui-widget-header {
+  border: none;
+
+}
+
+.ui-datepicker .ui-datepicker-header {
+  padding: 0.5em 0;
+  border-radius: 0 !Important;
+  border-bottom: 1px solid #E8ECF0;
+
+}
+
+
+.ui-datepicker .ui-datepicker-prev
+{
+  top: 6px;
+
+}
+
+.ui-datepicker .ui-datepicker-next {
+  top: 7px;
+}
+
+.ui-datepicker-prev {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+}
+
+.ui-datepicker-next {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+  padding: 5px 5px !Important;
+  background-color: #fff !Important;
+  border-radius: 5px !Important;
+  margin-right:5px;
+
+}
+
+.ui-datepicker-next-hover {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_left_black.png) !important;
+        background-position: 0px 0px !important;
+  padding: 5px 5px !Important;
+  background-color: #fff !Important;
+  border-radius: 5px !Important;
+  margin-right:5px;
+}
+
+.ui-icon,
+.ui-datepicker-month,
+.ui-datepicker-year {
+  color: #405E7C;
+
+}
+
+a.ui-state-default
+{
+  color: #000 !important;
+  padding: 4px !Important;
+  border-radius:50px;
+  text-align:center;
+  border: 1px solid transparent !important;
+}
+
+.ui-datepicker th {
+  color: #909090 !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.ui-datepicker {
+  width: 20.4em;
+  font-family: "Noto Sans", san-serif !important;
+  text-transform: uppercase;
+  border-color:#E8ECF0;
+
+}
+
+.ui-datepicker td {
+ padding: 8px;
+  border: 1px solid transparent;
+  text-align:center;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+  color: #f5f5f5 !important;
+
+}
+
+.ui-datepicker .ui-state-highlight {
+    background-color: #E8ECF0;
+  color: #405E7C !important;
+  font-weight:bold;
+  padding: 13px;
+  border-radius:50px;
+  width:23px;
+  height:26px;
+  text-align:center;
+}
+
+.ui-datepicker .ui-state-hover {
+   background-color: #1E73E9;
+  color: #fff !important;
+  padding: 13px;
+  border-radius:50px;
+  width:23px;
+  height:26px;
+  text-align:center;
+}
+
+</style>
+
+
+<script type="text/javascript">
+$(function() {
+    $( "#datepicker" ).datepicker();
+  });
+
+$( "#datepicker" ).datepicker({
+  // altField: "#datepicker-input",
+  // altFormat: "yy-mm-dd",
+  // hideIfNoPrevNext = true,
+  dateFormat: "dd/mm/yy",
+  yearRange: "c-100:c+10",
+   dayNamesMin : [ "S", "M", "T", "W", "T", "F", "S" ],
+  // defaultDate: +1,
+});
+</script>
+
+
+	</body>
+
+</html>
