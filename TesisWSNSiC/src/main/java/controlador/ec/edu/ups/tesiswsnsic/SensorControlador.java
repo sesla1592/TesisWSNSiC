@@ -3,22 +3,27 @@ package controlador.ec.edu.ups.tesiswsnsic;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
 import dao.ec.edu.ups.tesiswsnsic.SensorDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class SensorControlador {
 	
 	@Inject
 	private SensorDAO senDAO;
+	
+	@Inject
+	private NodoDAO nodoDAO;
 	
 	Nodo nodo;
 	private Sensor sensor;
@@ -29,11 +34,15 @@ public class SensorControlador {
 	
 	@PostConstruct
 	public void init() {
+		System.out.println("-----entro detalle sensor-----");
 		nodo = (Nodo) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("nodoSelected");
 		System.out.println("nodo s"+nodo.toString());
 		sensor = new Sensor();
-		ltsSensor=senDAO.getLtsSensorByNodo(nodo.getId());
+		//ltsSensor=senDAO.getLtsSensorByNodo(nodo.getId());
+		int idNodo = nodo.getId();
+		nodo = nodoDAO.getAllSensor(idNodo);
+		ltsSensor = nodo.getLtssensores();
 		
 	}
 
@@ -92,6 +101,7 @@ public class SensorControlador {
 		try{
 			sensor.setEstado(true);
 			System.out.println(sensor.toString());
+			sensor.setNombre(sensor.getNombreCompleto().substring(0, 1));
 			sensor.setNodo(nodo);
 			senDAO.insertarSensor(sensor);
 			sensor = new Sensor();
@@ -125,5 +135,21 @@ public class SensorControlador {
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	public void removeSensor(Sensor sensor) {
+		//senDAO.eliminarSensor(sensor);
+		if(nodo.getLtssensores().remove(sensor)) {
+			nodoDAO.update(nodo);
+			
+			try {
+				FacesContext contex = FacesContext.getCurrentInstance();
+				contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/nodo/detalleSensor.xhtml");
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
 	}
 }

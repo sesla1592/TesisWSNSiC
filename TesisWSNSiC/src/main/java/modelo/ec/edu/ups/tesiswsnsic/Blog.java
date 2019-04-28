@@ -26,7 +26,8 @@ public class Blog {
 	@Column(name = "blo_nombreBlog")
 	private String nombreBlog;
 	
-	@Column(name = "blo_descripcion")
+
+	@Column(name = "blo_descripcion",length=8192)
 	private String descripcion;
 	
 	@Column(name = "blo_img64")

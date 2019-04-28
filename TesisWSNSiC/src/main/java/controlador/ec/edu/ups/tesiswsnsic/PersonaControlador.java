@@ -1,8 +1,8 @@
 package controlador.ec.edu.ups.tesiswsnsic;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.RolDAO;
-import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
 import modelo.ec.edu.ups.tesiswsnsic.Rol;
 import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
@@ -35,15 +33,8 @@ public class PersonaControlador {
 	@Inject
 	private RolDAO rolDAO;
 	
-	@Inject
-	private EmpresaDAO edao;
-	
 	public static int miEmpresa;
 	
-	private static String roldev = "developer";
-	private static String rolbad = "businessadmin";
-
-	private String Loginexiste;
 	private Persona personas;
 	private String coincidencia;
 	
@@ -159,6 +150,8 @@ public class PersonaControlador {
 				if(miUsuario.getRolPerson().getId()==1) {//es admin
 					System.out.println("es admin");
 					try{
+						HttpSession session = SessionUtils.getSession();
+						session.setAttribute("username", user);
 						contex.getExternalContext().redirect("/TesisWSNSiC/faces/admin/dashboard.xhtml");
 					}catch (Exception e) {
 						// TODO: handle exception
@@ -167,6 +160,8 @@ public class PersonaControlador {
 				
 				if(miUsuario.getRolPerson().getId()==2) {//es usuario
 					System.out.println("es user "+miUsuario.toString());
+					HttpSession session = SessionUtils.getSession();
+					session.setAttribute("username", user);
 					if(miUsuario.getEmpresa()!=null) {
 						System.out.println("ya tiene empresa");
 						try{
@@ -184,9 +179,13 @@ public class PersonaControlador {
 					}
 				}
 			}
-			
+//			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Login","Login exitoso");
+//	        FacesContext.getCurrentInstance().addMessage(null, msg);
 			
 		}else {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login","Error de  redenciales.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	        
 			System.out.println("login fallido");
 		}
 	}
@@ -227,7 +226,8 @@ public class PersonaControlador {
 		System.out.println("Cerrando Sesion...");
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+	        //HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+			HttpSession session = SessionUtils.getSession();
 	        if (session != null) {
 	            session.invalidate(); //Cierre de sesion  
 	            miUsuario = new Persona();
@@ -281,7 +281,9 @@ public class PersonaControlador {
 					pdao.grabarPersona(personas);
 					inicializar();
 					this.coincidencia = "Grabado exitoso!";
-					
+					FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario","Usuario creado exitosamente.");
+			        FacesContext.getCurrentInstance().addMessage(null, msg);
+			        
 					personas = new Persona();
 					
 				}else {

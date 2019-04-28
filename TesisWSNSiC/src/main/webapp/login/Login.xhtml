@@ -39,6 +39,8 @@
 
     </h:head>
     <h:form>
+
+    
 	<header>
   <nav>
     <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
@@ -112,6 +114,7 @@
                             </div>
                             <div class="form-bottom">
 			                    <h:form class="login-form">
+			                       	<p:growl id="messages" showDetail="true"/>
 			                    	<div class="inputWithIcon inputIconBg">
 			                    		<h:inputText value="#{personaControlador.user}"
 														name="usuario" class="login-form" id="usuario"
@@ -134,8 +137,9 @@
 										<div class="login-form">					
 			                        	<h:commandButton action="#{personaControlador.login()}"
 													value="Acceder"
-													class="btn btn-lg btn-success btn-block btn-signin text-uppercase">
-												<f:ajax render="mensaje usuario contrasena"
+													class="btn btn-lg btn-success btn-block btn-signin text-uppercase"
+													>
+												<f:ajax render="mensaje usuario contrasena messages"
 														execute="usuario contrasenia" />
 														
 														<br/>

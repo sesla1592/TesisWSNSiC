@@ -125,7 +125,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 		</h:selectOneMenu> 
 
 		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-        <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
+        <p:calendar id="fechaIni" pattern="dd/MM/yyyy">
         		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectInicio}" />
         </p:calendar>
         

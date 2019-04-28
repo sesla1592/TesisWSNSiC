@@ -73,6 +73,16 @@ public class NodoDAO {
 		}
 		return n;
 	}
+	
+	public Nodo getAllSensor(int idN) {
+		Nodo n =em.find(Nodo.class, idN);
+		
+		System.out.println("Iniciando LAZY.. "+"Line:64, NodoDAO.java" );
+		//Iniciando lazy
+		n.getLtssensores().size();
+		return n;
+	}
+	
 	public List<Nodo> listNodos(){
 		String jpql ="Select n from Nodo n";
 		TypedQuery<Nodo> query = em.createQuery(jpql, Nodo.class);

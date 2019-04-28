@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Files;
@@ -595,11 +596,10 @@ public class DashboardUser {
 	public void crearCSV() {
 		String[] ltsCabecera = { "Codigo Sensor", "Fecha", "Latitud", "Longitud", "Sensor", "Valor" };
 		try {
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			Writer writer = Files.newBufferedWriter(Paths.get(URL_FOLDER + "data_1.csv"));
+			StringWriter sw = new StringWriter();
 			CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(ltsCabecera);
 			// writer.
-			CSVPrinter csvPrinter = new CSVPrinter(writer, csvFormat);
+			CSVPrinter csvPrinter = new CSVPrinter(sw, csvFormat);
 			for (int i = 0; i < ltsReporte.size(); i++) {
 				List<Object> colum = new ArrayList<>();
 				colum.add(ltsReporte.get(i).getCodSensor());
@@ -610,9 +610,8 @@ public class DashboardUser {
 				colum.add(ltsReporte.get(i).getValor());
 				csvPrinter.printRecord(colum);
 			}
-			csvPrinter.flush();
-			InputStream inputstream = new FileInputStream(URL_FOLDER + "data_1.csv");
-
+			sw.flush();
+			
 			String nameFile = "file.csv";
 			// descargar
 			FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -628,7 +627,7 @@ public class DashboardUser {
 			// Open response output stream
 			OutputStream responseOutputStream = response.getOutputStream();
 
-			byte[] backByte = csvPrinter.toString().getBytes();
+			byte[] backByte = sw.toString().getBytes();
 			responseOutputStream.write(backByte);
 			// Make sure that everything is out
 			responseOutputStream.flush();

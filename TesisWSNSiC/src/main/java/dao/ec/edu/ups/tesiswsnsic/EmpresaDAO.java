@@ -59,11 +59,17 @@ public class EmpresaDAO {
 	}
 	
 	public List<Empresa> getAllEmpresas(){
-		List<Empresa> empresas = new ArrayList<Empresa>();
-		String jpql = "Select e from Empresa e order by e.id";
-		TypedQuery<Empresa> query = em.createQuery(jpql, Empresa.class);
-		empresas = query.getResultList();
-		return empresas;
+		try {
+			List<Empresa> empresas = new ArrayList<Empresa>();
+			String jpql = "Select e from Empresa e order by e.id";
+			TypedQuery<Empresa> query = em.createQuery(jpql, Empresa.class);
+			empresas = query.getResultList();
+			return empresas;
+		} catch (Exception e) {
+			System.out.println("error getAllEmpresas "+this.getClass().getName());
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public Empresa selectEmpresa(int idem) {

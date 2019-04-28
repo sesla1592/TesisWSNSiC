@@ -17,6 +17,7 @@
 		</h:head>
 
 		<h:form id="SensorListForm">
+		
 			<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="../dashboard.xhtml">Dashboard</a>
@@ -30,7 +31,7 @@
 
 
 			<p class="b">Nodo: #{sensorControlador.nodo.nombre}</p>
-
+			
 
 			<div class="card mb-3">
 				<div class="card-header">
@@ -38,7 +39,7 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-
+						
 						<h:dataTable id="datalist" value="#{sensorControlador.ltsSensor}"
 							var="sensor" paginator="true" rowKey="#{item.id}" rows="10"
 							styleClass="table table-bordered" style="bacground:#DCDCDC">
@@ -82,8 +83,10 @@
 										<f:facet name="header">
 											<h:outputText value="Eliminar" />
 										</f:facet>
-										<p:commandLink title="eliminar">
+										<p:commandLink title="eliminar" action="#{sensorControlador.removeSensor(sensor)}" update="datalist">
 											<i class="fas fa-trash fa-2x"></i>
+											<f:ajax render="messages"
+														execute="usuario contrasenia" />
 										</p:commandLink>
 									</center>
 
@@ -143,7 +146,7 @@
 
 						<div class="form-group">
 							<h:inputText id="nombre"
-								value="#{sensorControlador.sensorSelected.nombre}"
+								value="#{sensorControlador.sensorSelected.nombreCompleto}"
 								class="form-control" style="height:40px" />
 						</div>
 						<br />
@@ -198,7 +201,7 @@
 
 						<div class="form-group">
 							<h:inputText id="nombre"
-								value="#{sensorControlador.sensor.nombre}" class="form-control" />
+								value="#{sensorControlador.sensor.nombreCompleto}" class="form-control" required="true" requiredMessage="Ingrese un nombre" />
 						</div>
 						<br />
 						<br />
@@ -208,7 +211,7 @@
 						<div class="form-group">
 							<h:inputText id="descripcion"
 								value="#{sensorControlador.sensor.descripcion}"
-								style="height:200px" class="form-control" />
+								style="height:200px" class="form-control" required="true" requiredMessage="Ingrese una Descripcion"/>
 						</div>
 
 					</h:panelGrid>

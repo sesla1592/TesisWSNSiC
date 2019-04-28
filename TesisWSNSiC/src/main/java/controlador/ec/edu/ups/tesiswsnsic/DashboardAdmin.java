@@ -115,7 +115,7 @@ public class DashboardAdmin {
 				}
 			}
 			// empresas
-
+			System.out.println("acabo sensor ");
 			ltsEmpresa = empresaDAO.getAllEmpresas();
 			for (int i = 0; i < ltsEmpresa.size(); i++) {
 				if (ltsEmpresa.get(i).getEstado().equals("activo")) {
@@ -124,12 +124,13 @@ public class DashboardAdmin {
 					empresaInactiva++;
 				}
 			}
+			System.out.println("acabo empresa ");
 			Date date = new Date();
 			// Caso 2: obtener la fecha y salida por pantalla con formato:
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			fechaFin = dateFormat.format(date) + " 23:59:59";
 			System.out.println("Fecha: fin-->" + fechaFin);
-
+			System.out.println("acabo fecha ");
 			addMarker();
 			ltsSData = new ArrayList<>();
 		} catch (Exception e) {

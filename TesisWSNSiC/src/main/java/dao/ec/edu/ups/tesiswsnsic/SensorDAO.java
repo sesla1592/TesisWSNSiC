@@ -36,14 +36,23 @@ public class SensorDAO {
 		}
 	}
 
-	public boolean eliminarSensor(int idS) {
-		Sensor sen = selectSensor(idS);
+	public boolean eliminarSensor(Sensor sensor) {
+		
 		try {
-			em.remove(sen);
-			System.out.println("Eliminando " + sen.getId());
+			System.out.println("eliminar " + sensor.getId());
+			//Sensor s = selectSensor(sensor.getId());
+//			em.remove(em.find(Sensor.class, sensor.getId()));
+//			em.flush();
+//		    em.clear();
+			Sensor s = em.find(Sensor.class, 1);
+
+			  em.getTransaction().begin();
+			  em.remove(s);
+			  em.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
 			System.out.println("Error al eliminar");
+			e.printStackTrace();
 			return false;
 		}
 	}
