@@ -1,173 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
- 	  xmlns:hs="http://xmlns.jcp.org/jsf/html"
- 	  xmlns:p="http://primefaces.org/ui"
- 	  xmlns:b="http://bootsfaces.net/ui"
- 	  xmlns:hf="http://highfaces.org"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"> 
-
-<h:head></h:head> 
-<body> 
-	
-
-<h:form>
-
- <!-- Breadcrumbs-->
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="dashboard.xhtml">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Overview</li>
-          </ol>
-
-<h2>Bienvenido: #{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</h2>
-<h2>Rol: #{dashboardAdmin.user.rolPerson.descripcion}</h2>
-<br/>
-<br/>
-<h:commandLink action="#{personaControlador.logout()}" value="Salir" />
-<br/>
-		<script type="text/javascript" 
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
-
-	<div id="almacenamiento">
-	<p:growl id="messages" showDetail="true" /> 
-		<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{dashboardAdmin.simpleModel}" >
-	       <p:ajax event="overlaySelect" listener="#{dashboardAdmin.onMarkerSelect}" update="listaNodos panelDatos"/>
-	       <p:gmapInfoWindow id="infoWindow">
-	            <p:outputPanel style="text-align: center; display: block; margin: auto">
-	 
-	                    <h:outputText value="#{dashboardAdmin.marker.title}" />
-	                    <br/>
-	                    <h:outputText value="Sensores:" />
-	                    <br/>
-	                    <ui:repeat value="#{dashboardAdmin.nodoSelected.ltssensores}" var="sensores">
-						        
-						            <h:outputText value="- #{sensores.nombreCompleto}" />
-						        		<br/>
-						    </ui:repeat>
-	 
-	            </p:outputPanel>
-	        </p:gmapInfoWindow>
-	       </p:gmap>
-	       <h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardAdmin.nodoSelected.nombre}<br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}" value="Temperatura: #{dashboardAdmin.datoTemp}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}" value="Humedad: #{dashboardAdmin.datoHum}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}" value="Luminosidad: #{dashboardAdmin.datoLum}" /><br/>
-       	<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}" value="Ruido: #{dashboardAdmin.datoRui}" /><br/>
-       </h:panelGroup>
-	       <p:dataTable id="datalist" value="#{dashboardAdmin.ltsNodo}" var="item"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="5"
-                                 rowsPerPageTemplate="10,20,30,40,50">
-                        <p:column style="text-align: center;">
-                            <f:facet name="header">
-                                <h:outputText value="Estado"/>
-                            </f:facet>
-                            <h:graphicImage rendered="#{item.estado == true}" value="/image/ic_active.png" style="width:50px;height;50px"></h:graphicImage> 
-                            <h:graphicImage rendered="#{item.estado == false}" value="/image/ic_desactive.png" style="width:50px;height;50px"></h:graphicImage> 
-                            
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Descripcion"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Idenfiticador"/>
-                            </f:facet>
-                            <h:outputText value="#{item.identificador}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Latitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.latitud}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Logitud"/>
-                            </f:facet>
-                            <h:outputText value="#{item.longitud}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Sensores"/>
-                            </f:facet>
-                            <ui:repeat value="#{item.ltssensores}" var="sensores">
-						        
-						            <h:outputText value="- #{sensores.nombreCompleto}" />
-						        		<br/>
-						    </ui:repeat>
-                        </p:column>
-                        
-                    </p:dataTable>
-		<h:selectOneMenu id="listaNodos" value="#{dashboardAdmin.sensorSeleccionado}" >
-			<f:selectItems value="#{dashboardAdmin.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
-			
-		</h:selectOneMenu>
-		<h:selectOneMenu value = "#{dashboardAdmin.tipoFecha}" valueChangeListener="#{dashboardAdmin.cambioDeFecha}"> 
-		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
-		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
-		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
-		</h:selectOneMenu> 
-
-		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-        <p:calendar id="fechaIni" pattern="dd/MM/yyyy">
-        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectInicio}" />
-        </p:calendar>
-        
-        <p:outputLabel for="fechaFin" value="Fecha de fin:" />
-        <p:calendar id="fechaFin" pattern="dd/MM/yyyy">
-        		<p:ajax event="dateSelect" listener="#{dashboardAdmin.onDateSelectFin}" />
-        </p:calendar>
-		<br /><br />
-		
-		<b:row>
-				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
-					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{dashboardAdmin.ltsSData}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="#{dashboardAdmin.sensorSeleccionado}"
-									/>
-					
-									
-									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
-									<hf:chartTooltip  backgroundColor="#000000" shared="true">
-									<f:facet name="header">
-            						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
-        							</f:facet>
-        							<f:facet name="body">
-        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{dashboardAdmin.typeMedicion}&lt;/b>&lt;/span>&lt;br/>"/>
-        							</f:facet>
-									</hf:chartTooltip>									
-				</hf:chart>
-		</b:row>		
-		<b:commandButton action="#{dashboardAdmin.graficaDatos()}" value="Graficar" update="grafica messages">
-		</b:commandButton>
-		
-	</div>
-	
-</h:form>
-
-</body> 
-</html>
-=======
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -486,7 +316,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 
 
 								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-								<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" mode="popup" styleClass="calendar">
+								<p:calendar id="fechaIni" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
 									<p:ajax event="dateSelect"
 										listener="#{dashboardAdmin.onDateSelectInicio}" />
 								</p:calendar>
@@ -513,19 +343,38 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF
 
 
 									<h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardAdmin.nodoSelected.nombre}<br />
-										<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
-											value="Temperatura: #{dashboardAdmin.datoTemp}" />
+									
+									
+									
+								<div class="card">
+								  <div class="card-header">
+								    Informacion del Nodo (#{dashboardAdmin.nodoSelected.nombre})
+								  </div>
+								  <div class="card-body">
+								    <blockquote class="blockquote mb-0">
+								      <p>
+								      	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
+											value="Temperatura: #{dashboardAdmin.datoTemp}#{dashboardAdmin.descpDatoTemp}" />
+											
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}"
-											value="Humedad: #{dashboardAdmin.datoHum}" />
+											value="Humedad: #{dashboardAdmin.datoHum} #{dashboardAdmin.descpDatoHum}"/>
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}"
 											value="Luminosidad: #{dashboardAdmin.datoLum}" />
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}"
-											value="Ruido: #{dashboardAdmin.datoRui}" />
-										<br />
+											value="Ruido: #{dashboardAdmin.datoRui}#{dashboardAdmin.descpDatoTemp}" />
+								      
+								      </p>
+								    </blockquote>
+								  </div>
+								</div>
+									
+									
+									
+       								
+										
 									</h:panelGroup>
 
 									<br />
@@ -855,4 +704,3 @@ $( "#datepicker" ).datepicker({
 
 	</ui:define>
 </ui:composition>
->>>>>>> branch 'master' of https://github.com/sesla1592/TesisWSNSiC.git
