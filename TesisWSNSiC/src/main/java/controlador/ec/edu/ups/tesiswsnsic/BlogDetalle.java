@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -95,7 +96,14 @@ public class BlogDetalle {
 	public void init() {
 
 		try {
-			blog = (Blog) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("blogSelected");
+			FacesContext context = FacesContext.getCurrentInstance ();
+			Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+	        int idBlog = Integer.parseInt(paramMap.get ("idBlog"));
+	        System.out.println("------------> "+idBlog);
+	        
+			//// comentar
+			
+			blog = blogDAO.findById(idBlog);
 			System.out.println("blog " + blog.toString());
 			// comentarios
 			ltsComentarios = comentarioDAO.allComByBlog(blog.getId());

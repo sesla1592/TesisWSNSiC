@@ -59,7 +59,7 @@ public class PublicBlog {
 		FacesContext contex = FacesContext.getCurrentInstance();
 		contex.getExternalContext().getSessionMap().put("blogSelected", blog);
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/blog/blogDetalle.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/blog/blogDetalle.xhtml?idBlog="+blog.getId());
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

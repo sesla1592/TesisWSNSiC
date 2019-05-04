@@ -24,8 +24,8 @@ public class AuthorizationFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		try {
 
 			HttpServletRequest reqt = (HttpServletRequest) request;
@@ -34,29 +34,40 @@ public class AuthorizationFilter implements Filter {
 
 			String reqURI = reqt.getRequestURI();
 			if (reqURI.indexOf("/faces/homepage/home.xhtml") >= 0
-//					|| (ses == null && ses.getAttribute("username") == null)
-//					|| reqURI.indexOf("/public/") >= 0
-//					|| reqURI.contains("javax.faces.resource")
-					) {
+			// || (ses == null && ses.getAttribute("username") == null)
+			// || reqURI.indexOf("/public/") >= 0
+			// || reqURI.contains("javax.faces.resource")
+			) {
 				chain.doFilter(request, response);
-				
-			}else if (reqURI.indexOf("/faces/login/Registrar.xhtml") >= 0
-//					|| (ses == null && ses.getAttribute("username") == null)
-//					|| reqURI.indexOf("/public/") >= 0
-//					|| reqURI.contains("javax.faces.resource")
-					) {
+
+			} else if (reqURI.indexOf("/faces/login/Registrar.xhtml") >= 0
+			// || (ses == null && ses.getAttribute("username") == null)
+			// || reqURI.indexOf("/public/") >= 0
+			// || reqURI.contains("javax.faces.resource")
+			) {
 				chain.doFilter(request, response);
-				
+
+			} else if (reqURI.indexOf("/faces/blog/blog.xhtml") >= 0
+			// || (ses == null && ses.getAttribute("username") == null)
+			// || reqURI.indexOf("/public/") >= 0
+			// || reqURI.contains("javax.faces.resource")
+			) {
+				chain.doFilter(request, response);
+			} else if (reqURI.indexOf("/faces/blog/blogDetalle.xhtml") >= 0
+			// || (ses == null && ses.getAttribute("username") == null)
+			// || reqURI.indexOf("/public/") >= 0
+			// || reqURI.contains("javax.faces.resource")
+			) {
+				chain.doFilter(request, response);
 			}
-			
+
 			else if (reqURI.indexOf("/faces/login/Login.xhtml") >= 0
-						|| (ses != null && ses.getAttribute("username") != null)
-						|| reqURI.indexOf("/public/") >= 0
-						|| reqURI.contains("javax.faces.resource"))
-					chain.doFilter(request, response);
-				else
-					resp.sendRedirect(reqt.getContextPath() + "/faces/login/Login.xhtml");
-			
+					|| (ses != null && ses.getAttribute("username") != null) || reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource"))
+				chain.doFilter(request, response);
+			else
+				resp.sendRedirect(reqt.getContextPath() + "/faces/login/Login.xhtml");
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

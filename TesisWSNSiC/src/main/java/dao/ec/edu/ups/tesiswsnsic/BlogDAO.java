@@ -45,6 +45,16 @@ public class BlogDAO {
 		}
 	}
 	
+	public Blog findById(int idblog){
+		try {
+			return em.find(Blog.class, idblog);
+		} catch (Exception e) {
+			System.out.println("error al eliminar "+this.getClass().getName());
+			// TODO: handle exception
+			return null;
+		}
+	}
+	
 	public List<Blog> allBlogs(){
 		try {
 			TypedQuery<Blog> query = em.createQuery(
