@@ -4,129 +4,380 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:hs="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
 	xmlns:hf="http://highfaces.org"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<h:head></h:head>
+<h:head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="icon"
+		href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-WCPiR71SqcEE42ZLTsFSI8826I0N668APBtGIYjCWWVZDx46" />
+	<title>WSNCloud Blog Detalle</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<link rel="stylesheet" href="css/themify-icons.css" />
+	<link rel="stylesheet" href="css/flaticon.css" />
+	<link rel="stylesheet" href="vendors/fontawesome/css/all.min.css" />
+	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+	<link rel="stylesheet" href="vendors/animate-css/animate.css" />
+	<!-- main css -->
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/responsive.css" />
+</h:head>
 <body>
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
 
-<script type="text/javascript" 
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
+	<!-- Start header Menu Area -->
+	<header id="header" class="header_area">
+	<div class="main_menu">
+		<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="container">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse offset"
+				id="navbarSupportedContent">
+				<ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+					<li class="nav-item active"><a class="nav-link"
+						href="../homepage/home.xhtml">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="../login/Login.xhtml">Iniciar sesion</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="../login/Registrar.xhtml">Registrarse</a></li>
+					<li class="nav-item submenu dropdown"><a href="#"
+						class="nav-link dropdown-toggle" data-toggle="dropdown"
+						role="button" aria-haspopup="true" aria-expanded="false">Blogs</a>
+						<ul class="dropdown-menu">
+							<li class="nav-item"><a class="nav-link"
+								href="../homepage/blogs.xhtml">Todos los Blogs</a></li>
 
-	<h:form>
-		<h:outputLabel value="#{blogDetalle.blog.nombreBlog}" /><br/>
-		<h:outputLabel value="Descripcion #{blogDetalle.blog.descripcion}" /><br/>
-		<h:outputLabel value="Empresa: #{blogDetalle.blog.empresa.nombre}" /><br/>
-		<h:outputLabel value="Descripcion Empresa: #{blogDetalle.blog.empresa.descripcion}" /><br/>
-		<h:outputLabel value="Autor: #{blogDetalle.blog.empresa.personas.get(0).nombre} #{blogDetalle.blog.empresa.personas.get(0).apellido}" /><br/>
-		<h:outputLabel value="Fecha de publicacion: #{blogDetalle.blog.fechaPub}" /><br/>
-		<h:outputLabel value="Correo: #{blogDetalle.blog.empresa.correo}" /><br/>
-		<h:outputLabel value="Direccion: #{blogDetalle.blog.empresa.direccion}" /><br/>
-		<h:outputLabel value="Cuidad: #{blogDetalle.blog.empresa.ciudad}" /><br/>	
-		<h:outputLabel value="Numero de visitas: #{blogDetalle.blog.visitas}" /><br/>	
-		<img src="data:image/png;base64,#{blogDetalle.imageString}" />
-	</h:form>
+						</ul></li>
+
+				</ul>
+			</div>
+		</div>
+		</nav>
+	</div>
+	</header>
+	<!-- End header MEnu Area -->
+
+
+	<!--================Home Banner Area =================-->
+	<section class="banner_area">
+	<div class="banner_inner d-flex align-items-center">
+		<div class="container">
+			<div
+				class="banner_content d-md-flex justify-content-between align-items-center">
+				<div class="mb-3 mb-md-0">
+					<h2>Blog</h2>
+				</div>
+				<div class="page_link">
+					<a href="../homepage/home.xhtml">Inicio</a> <a href="contact.html">Blog
+						Details</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+
+
+	<!--================Blog Area =================-->
+
+	<section class="blog_area single-post-area area-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 posts-list">
+				<div class="single-post">
+					<h2>
+						<h:outputLabel value="#{blogDetalle.blog.nombreBlog}" />
+					</h2>
+					<br></br>
+					<div class="feature-img">
+						<center>
+							<img class="img-fluid"
+								src="data:image/png;base64,#{blogDetalle.imageString}"
+								height="250" width="250" alt="" />
+						</center>
+					</div>
+
+					<div class="blog_details">
+						<h:form>
+
+							<ul class="blog-info-link mt-3 mb-4">
+								<li><a href="#"><i class="far fa-building"></i> <h:outputLabel
+											value="Empresa: #{blogDetalle.blog.empresa.nombre}"></h:outputLabel></a></li>
+								<li><a href="#"><i class="far fa-comments"></i> 03
+										Comments</a></li>
+								<li><a href="#"><i class="far fa-user"></i> <h:outputLabel
+											value="Autor: #{blogDetalle.blog.empresa.personas.get(0).nombre} #{blogDetalle.blog.empresa.personas.get(0).apellido}"></h:outputLabel>
+								</a></li>
+								<li><a href="#"><i class="far fa-calendar-alt"></i> <h:outputLabel
+											value="Fecha de publicacion: #{blogDetalle.blog.fechaPub}" /></a></li>
+								<li><a href="#"><i class="far fa-envelope"></i> <h:outputLabel
+											value="#{blogDetalle.blog.empresa.correo}" /></a></li>
+
+							</ul>
+							<p class="excert">
+
+								<h:outputLabel value="#{blogDetalle.blog.descripcion}"></h:outputLabel>
+							</p>
+						</h:form>
+						<h:form>
+							<div class="quote-wrapper">
+								<div class="">
+
+									<!-- MAPA DEL BLOG -->
+
+
+									<p:growl id="messages" showDetail="true" />
+
+									<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap"
+										style="width:100%;height:400px"
+										model="#{blogDetalle.simpleModel}">
+										<p:ajax event="overlaySelect"
+											listener="#{blogDetalle.onMarkerSelect}"
+											update="panelDatos listaNodos" />
+										<p:gmapInfoWindow id="infoWindow">
+											<p:outputPanel
+												style="text-align: center; display: block; margin: auto">
+
+												<h:outputText value="#{blogDetalle.marker.title}" />
+												<br />
+												<h:outputText value="Sensores:" />
+												<br />
+												<ui:repeat value="#{blogDetalle.nodoSelected.ltssensores}"
+													var="sensores">
+
+													<h:outputText value="- #{sensores.nombreCompleto}" />
+													<br />
+												</ui:repeat>
+
+											</p:outputPanel>
+										</p:gmapInfoWindow>
+									</p:gmap>
+
+									<!-- TERMINA MAPA DEL BLOG -->
+
+								</div>
+							</div>
+							<p>
+								<h:panelGroup id="panelDatos">
+									<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}"
+										value="Temperatura: #{blogDetalle.datoTemp}" />
+									<br />
+									<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}"
+										value="Humedad: #{blogDetalle.datoHum}" />
+									<br />
+									<h:outputText rendered="#{blogDetalle.datoLum != 0.0}"
+										value="Luminosidad: #{blogDetalle.datoLum}" />
+									<br />
+									<h:outputText rendered="#{blogDetalle.datoRui != 0.0}"
+										value="Ruido: #{blogDetalle.datoRui}" />
+									<br />
+								</h:panelGroup>
+								<br />
+								<br />
+
+								<h:selectOneMenu id="listaNodos"
+									value="#{blogDetalle.sensorSeleccionado}">
+									<f:selectItems value="#{blogDetalle.ltsSensores}"
+										var="sensorItem" itemValue="#{sensorItem}"
+										itemLabel="#{sensorItem}" />
+								</h:selectOneMenu>
+								<h:selectOneMenu value="#{blogDetalle.tipoFecha}"
+									valueChangeListener="#{blogDetalle.cambioDeFecha}">
+									<f:selectItem itemValue="Diario" itemLabel="Diario" />
+									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
+									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
+								</h:selectOneMenu>
+								<br />
+								<br />
+								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+								<p:calendar id="fechaIni" pattern="yyyy/MM/dd">
+									<p:ajax event="dateSelect"
+										listener="#{blogDetalle.onDateSelectInicio}" />
+								</p:calendar>
+								<br />
+								<br />
+								<p:outputLabel for="fechaFin" value="Fecha de fin:  " />
+								<p:calendar id="fechaFin" pattern="yyyy/MM/dd	">
+									<p:ajax event="dateSelect"
+										listener="#{blogDetalle.onDateSelectFin}" />
+								</p:calendar>
+								<br />
+								<br />
+								<br />
+								<br />
+								<center><h2>MEDICIONES SENSORES EN LA NUBE</h2>
+								<b:row style="width: 100%;height: 100%;">
+									<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
+										yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
+										<hf:chartSerie value="#{blogDetalle.ltsSData}" var="point"
+											point="#{point.valor}" tickLabel="#{point.fecha}"
+											name="#{blogDetalle.sensorSeleccionado}" />
+
+										<hf:chartLegend position="ne" title="Valores"
+											layout="vertical" backgroundColor="#eeeeee" />
+										<hf:chartTooltip backgroundColor="#000000" shared="true">
+											<f:facet name="header">
+												<h:outputText escape="false"
+													value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>" />
+											</f:facet>
+											<f:facet name="body">
+												<h:outputText
+													value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{blogDetalle.typeMedicion}&lt;/b>&lt;/span>&lt;br/>" />
+											</f:facet>
+										</hf:chartTooltip>
+									</hf:chart>
+								</b:row>
+								</center>
+								<b:commandButton action="#{blogDetalle.grafica()}"
+									value="Graficar" update="grafica messages" look="primary">
+								</b:commandButton>
+
+
+							</p>
+
+						</h:form>
+
+					</div>
+				</div>
+				<div class="navigation-top">
+					<div class="d-sm-flex justify-content-between text-center">
+						<p class="like-info">
+							<span class="align-middle"><i class="fas fa-city"></i></span>
+							<h:outputLabel value="#{blogDetalle.blog.empresa.ciudad}" />
+						</p>
+						<div class="col-sm-4 text-center my-2 my-sm-0">
+							<p class="comment-count">
+								<span class="align-middle"><i class="far fa-address-card"></i></span>
+								<h:outputLabel value=" #{blogDetalle.blog.empresa.direccion}" />
+							</p>
+						</div>
+						<ul class="social-icons">
+							<li><a href="#"><i class="fa fa-heart"></i></a> <h:outputLabel
+									value="Visitas: #{blogDetalle.blog.visitas} " /><br /></li>
+
+						</ul>
+					</div>
+
+
+				</div>
+
+
+				<div class="blog-author">
+					<div class="media align-items-center">
+						<img src="img/blog/author.png" alt="" />
+						<div class="media-body">
+							<a href="#">
+								<h4>
+									<h:outputLabel
+										value="Empresa: #{blogDetalle.blog.empresa.nombre}" />
+									<br />
+								</h4>
+							</a>
+							<p>
+								<h:outputLabel
+									value="Descripcion Empresa: #{blogDetalle.blog.empresa.descripcion}" />
+							</p>
+						</div>
+					</div>
+				</div>
 <h:form>
+				<div class="comments-area">
+					<h4>Comentarios</h4>
+					<ui:repeat var="comentarios" value="#{blogDetalle.ltsComentarios}" id="dataCom">
+					<div class="comment-list">
+						<div class="single-comment justify-content-between d-flex">
+							<div class="user justify-content-between d-flex">
+								<div class="thumb">
+									<img src="img/blog/c1.png" alt="" />
+								</div>
+								<div class="desc">
+									<p class="comment"><h:outputText value="#{comentarios.cometario}"/></p>
 
-<p:growl id="messages" showDetail="true" /> 
+									<div class="d-flex justify-content-between">
+										<div class="d-flex align-items-center">
+											<h5>
+												<a href="#"> <h:outputText value="Post:#{comentarios.email}"/></a>
+											</h5>
+											<p class="date">Cuenca, 04/05/2019</p>
+										</div>
 
-<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap" style="width:100%;height:400px"  model="#{blogDetalle.simpleModel}" >
-	       <p:ajax event="overlaySelect" listener="#{blogDetalle.onMarkerSelect}"  update="panelDatos listaNodos"/>
-	       <p:gmapInfoWindow id="infoWindow">
-	            <p:outputPanel style="text-align: center; display: block; margin: auto">
-	 
-	                    <h:outputText value="#{blogDetalle.marker.title}" />
-	                    <br/>
-	                    <h:outputText value="Sensores:" />
-	                    <br/>
-	                    <ui:repeat value="#{blogDetalle.nodoSelected.ltssensores}" var="sensores">
-						        
-						            <h:outputText value="- #{sensores.nombreCompleto}" />
-						        		<br/>
-						    </ui:repeat>
-	 
-	            </p:outputPanel>
-	        </p:gmapInfoWindow>
-       </p:gmap>
+										<div class="reply-btn">
+											<a href="#" class="btn-reply text-uppercase">reply</a>
+										</div>
+									</div>
 
-<h:panelGroup id="panelDatos">
-       	<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}" value="Temperatura: #{blogDetalle.datoTemp}" /><br/>
-       	<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}" value="Humedad: #{blogDetalle.datoHum}" /><br/>
-       	<h:outputText rendered="#{blogDetalle.datoLum != 0.0}" value="Luminosidad: #{blogDetalle.datoLum}" /><br/>
-       	<h:outputText rendered="#{blogDetalle.datoRui != 0.0}" value="Ruido: #{blogDetalle.datoRui}" /><br/>
-       </h:panelGroup>
-       <h:selectOneMenu id="listaNodos" value="#{blogDetalle.sensorSeleccionado}" >
-		    
-			<f:selectItems value="#{blogDetalle.ltsSensores}" var="sensorItem" itemValue="#{sensorItem}" itemLabel="#{sensorItem}"/>
-		</h:selectOneMenu>
-		<h:selectOneMenu value = "#{blogDetalle.tipoFecha}" valueChangeListener="#{blogDetalle.cambioDeFecha}"> 
-		   <f:selectItem itemValue = "Diario" itemLabel = "Diario" /> 
-		   <f:selectItem itemValue = "Semanal" itemLabel = "Semanal" /> 
-		   <f:selectItem itemValue = "Mensual" itemLabel = "Mensual" /> 
-		</h:selectOneMenu> 
-		
-		<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-        <p:calendar id="fechaIni" pattern="yyyy/MM/dd">
-        		<p:ajax event="dateSelect" listener="#{blogDetalle.onDateSelectInicio}" />
-        </p:calendar>
-        
-        <p:outputLabel for="fechaFin" value="Fecha de fin:" />
-        <p:calendar id="fechaFin" pattern="yyyy/MM/dd	">
-        		<p:ajax event="dateSelect" listener="#{blogDetalle.onDateSelectFin}" />
-        </p:calendar>
-        
-		<b:row style="width: 100%;height: 100%;">
-				<hf:chart id="grafica" title="Mediciones" xaxisLabel="Tiempo"
-					yaxisLabel="Valor" type="line" subTitle="Sensors into Cloud">
-					<hf:chartSerie value="#{blogDetalle.ltsSData}" 
-									var="point" 
-									point="#{point.valor}" 
-									tickLabel="#{point.fecha}"
-									name="#{blogDetalle.sensorSeleccionado}"
-									/>
-									
-									<hf:chartLegend position="ne" title="Valores" layout="vertical" backgroundColor="#eeeeee"/>
-									<hf:chartTooltip  backgroundColor="#000000" shared="true">
-									<f:facet name="header">
-            						<h:outputText escape="false" value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>"/>
-        							</f:facet>
-        							<f:facet name="body">
-        							<h:outputText value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{blogDetalle.typeMedicion}&lt;/b>&lt;/span>&lt;br/>"/>
-        							</f:facet>
-									</hf:chartTooltip>									
-				</hf:chart>
-		</b:row>		
-		<b:commandButton action="#{blogDetalle.grafica()}" value="Graficar" update="grafica messages">
-		</b:commandButton>
-	 </h:form>
-       <h:form id="formularioComentario">
-       <h:panelGrid id="panelComentarios" columns="2">
-      	<h:outputLabel value="Email"/>
-		<h:inputText id="email" value="#{blogDetalle.comentario.email}" size="50" required="true"/>
-      	
-      	<h:outputLabel value="Comentario"/>
-		<h:inputText id="nombre" value="#{blogDetalle.comentario.cometario}" size="50" required="true"/>
-		
-      	</h:panelGrid>
-      	<br/>
-		
-		<h:commandButton value="Agregar Comentario 2" action="#{blogDetalle.guardarComentario()}">
-			<f:ajax  execute="@form"  render=":dataCom formularioComentario" /> 
-		</h:commandButton>
-		</h:form>
-       <p:dataTable id="dataCom" value="#{blogDetalle.ltsComentarios}" var="comentarios">
-       		<p:column>
-				<f:facet name="header">
-                		<h:outputText value="Comentarios"/>
-                 </f:facet>
-                            <h:outputText value="#{comentarios.cometario}"/>
-                            <br/>
-                             <h:outputText value="Por #{comentarios.email}"/>
-			</p:column>
-      	</p:dataTable>
-      	
-       
+								</div>
+							</div>			
+						</div>
+					</div>
+				</ui:repeat>
+				</div>
+				</h:form>
+				
+				<div class="comment-form">
+					<h4>Deja tu respuesta</h4>
+					<h:form class="form-contact comment_form" id="formularioComentario">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<h:inputTextarea class="form-control w-100" value="#{blogDetalle.comentario.cometario}"
+										id="nombre" cols="30" rows="9" pt:placeholder="Escribe un comentario"/>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<h:inputText class="form-control" id="email" value="#{blogDetalle.comentario.email}"
+										pt:placeholder="Ingrese su correo electronico" />
+								</div>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<h:commandButton class="button button-contactForm" value="Agregar Comentario" action="#{blogDetalle.guardarComentario()}">
+							<f:ajax  execute="@form"  render=":dataCom formularioComentario" /> 
+							</h:commandButton>
+						</div>
+					</h:form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	</section>
+
+	<!--================Blog Area end =================-->
+
+	<!-- ================ Instargram Area Starts ================= -->
+
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/stellar.js"></script>
+	<script src="vendors/popup/jquery.magnific-popup.min.js"></script>
+	<script src="js/jquery.ajaxchimp.min.js"></script>
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/mail-script.js"></script>
+	<script src="js/contact.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/mail-script.js"></script>
+	<script src="js/theme.js"></script>
 </body>
 </html>

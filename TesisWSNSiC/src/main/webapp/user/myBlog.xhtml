@@ -244,6 +244,12 @@
                             </a>
                         </li>
 
+							<li>
+                            <a class="tooltip-tip " href="profile.xhtml" title="login">
+                                <i class="icon-user"></i>
+                                <span>Perfil</span>
+                            </a>
+                        </li>
                         <li>
                             <a class="tooltip-tip ajax-load" href="dashboard.xhtml" title="Dashboard">
                                 <i class="icon-window"></i>
@@ -251,6 +257,7 @@
 
                             </a>
                         </li>
+                         
                                             </ul>
 
 
@@ -428,13 +435,13 @@
 
                                     <h2>Cuarto paso: Logo Blog</h2>
                                     <section><center>
-                                    
+                                     <p class="b">Imagen del blog</p><br/><br/>
 											</center>
 										</section>
 										
 										
 										<br/><br/><br/>
-										<p class="b">Logo de la empresa</p><br/>
+										
                                     
                                     
                                      
@@ -444,7 +451,7 @@
                                 	<center>
                                 	<p:fileUpload fileUploadListener="#{blogControlador.handleFileUpload}" 
 							mode="advanced" dragDropSupport="false" style="width:400px"
-                 			 update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                 			 update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
  								<p:growl id="messages" showDetail="true" /><br/><br/><br/><br/>
 
 										

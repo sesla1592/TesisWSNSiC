@@ -9,26 +9,27 @@
 
 <h:head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
+        <link rel="stylesheet" href="../login/assets/css/style.css"/>
 </h:head>
 
-<header>
+	<header>
   <nav>
     <h1><a href="/TesisWSNSiC/faces/homepage/home.xhtml" target="_blank">WSN</a>Cloud</h1>
     <ul>
       <li>
         <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
       </li>
-      <li>
-        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar Sesion</a>
+       <li>
+        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar sesion</a>
       </li>
       <li>
         <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
       </li>
       <li>
-        <a href="#">Contactos</a>
+        <a href="#">Contacto</a>
       </li>
     </ul>
   </nav>
@@ -38,8 +39,8 @@
       <li>
         <a href="/TesisWSNSiC/faces/homepage/home.xhtml">Inicio</a>
       </li>
-      <li>
-        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar Sesion</a>
+       <li>
+        <a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar sesion</a>
       </li>
       <li>
         <a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Crear cuenta</a>
@@ -50,31 +51,35 @@
     </ul>
   </nav>
 </header>
+<br/>
+<br/>
 
 <h:form>
-<ui:repeat value="#{publicBlog.ltsBlogs}" var="blog">
+
 <!-- details card section starts from here -->
-<section class="details-card">
+
     <div class="container">
         <div class="row">
+        <ui:repeat value="#{publicBlog.ltsBlogs}" var="blog">
             <div class="col-md-4">
                 <div class="card-content">
                     <div class="card-img">
-                        <img src="data:image/png;base64,#{blog.imgBase64}"/>
+                        <img src="data:image/png;base64,#{blog.imgBase64}" height="15" width="10"/>
                         <span><h4>   #{blog.nombreBlog}</h4></span>
                     </div>
                     <div class="card-desc">
-                        <h3>Empresa: #{blog.empresa.nombre}</h3>
+                        <p class="b"> #{blog.empresa.nombre}</p>
                         <p>#{blog.descripcion}</p>
+                        <p class="d">Visitas #{blog.visitas}</p>
                             <h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" class="btn-card"/>   
                     </div>
                 </div>
             </div>
-            
+            </ui:repeat>
         </div>
     </div>
-</section>
-</ui:repeat>
+
+
 </h:form>
 <!-- details card section starts from here -->
 
@@ -83,16 +88,24 @@
 /* card details start  */
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto+Condensed:400,400i,700,700i');
 section{
-    padding: 100px 0;
+  float: left;
+  width: 50%;
+  padding: 30px;
+  
+ 
+  
 }
 .details-card {
-	background: #ecf0f1;
+	background: #ffff;
 }
 
 .card-content {
 	background: #ffffff;
 	border: 4px;
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+	 
+}
+	
 }
 
 .card-img {
@@ -105,15 +118,15 @@ section{
 .card-img img {
 	width: 100%;
 	height: auto;
-	display: block;
+	display: ;
 }
 
 .card-img span {
 	position: absolute;
-    top: 15%;
-    left: 12%;
+    top: 5%;
+    left: -6%;
     background: #1ABC9C;
-    padding: 6px;
+    padding: 20px;
     color: #fff;
     font-size: 12px;
     border-radius: 4px;
@@ -121,12 +134,12 @@ section{
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
-    transform: translate(-50%,-50%);
+   
 }
 .card-img span h4{
-        font-size: 12px;
-        margin:0;
-        padding:10px 5px;
+        font-size: 14px;
+        margin:10;
+        padding:0px 15px;
          line-height: 0;
 }
 .card-desc {
@@ -177,22 +190,24 @@ section{
 }
 .btn-card:hover {
     background: orange;
+    
 }
 a.btn-card {
     text-decoration: none;
     color: #fff;
+    
 }
 /* End card section */
 
 </style>
 
-  
+    
         <!-- Header -->
         
          <style type="text/css">
          @import url(https://fonts.googleapis.com/css?family=Pacifico|Roboto:400,500);
 nav {
-  background: #333;
+  background: #210e38;
   overflow: hidden;
   
   position: relative;
@@ -284,7 +299,50 @@ nav#small h1>a:hover {
 
          
          </style>
+  
+<style type="text/css">
+/* Import the google web fonts you want to use */
 
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
 
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 20px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 20px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+</style>
 
 </html>
