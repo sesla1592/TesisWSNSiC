@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -6,509 +6,596 @@
 	xmlns:hs="http://xmlns.jcp.org/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
-<title>WSNCloud</title>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="description" content="HostSpace template project"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css"/>
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css"/>
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css"/>
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css"/>
-<link rel="stylesheet" type="text/css" href="styles/main_styles.css"/>
-<link rel="stylesheet" type="text/css" href="styles/responsive.css"/>
+	<title>WSNCloud</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="HostSpace template project" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css"
+		href="styles/bootstrap-4.1.2/bootstrap.min.css" />
+	<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/animate.css" />
+	<link rel="stylesheet" type="text/css" href="styles/main_styles.css" />
+	<link rel="stylesheet" type="text/css" href="styles/responsive.css" />
 </h:head>
 <body>
 
-<div class="super_container">
-	
-	<!-- Header -->
+	<div class="super_container">
 
-	<header class="header trans_400">
+		<!-- Header -->
+
+		<header class="header trans_400">
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
-						<div class="logo"><a href="#">WSN<span>Cloud</span></a></div>
+					<div
+						class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+						<div class="logo">
+							<a href="home.xhtml">WSN<span>Cloud</span></a>
+						</div>
 						<nav class="main_nav ml-auto mr-auto">
-							<ul class="d-flex flex-row align-items-center justify-content-start">
-								<li class="active"><a href="index.xhtml">Inicio</a></li>
-								<li><a href="about.html">Acerca</a></li>
-								<li><a href="services.html">Servicios</a></li>
-								<li><a href="blog.html">Noticias</a></li>
-								<li><a href="../blog/blog.xhtml">Blogs</a></li>
-							</ul>
+						<ul
+							class="d-flex flex-row align-items-center justify-content-start">
+							<li class="active"><a href="index.xhtml">Inicio</a></li>
+							<li><a href="about.html">Acerca</a></li>
+							<li><a href="services.html">Servicios</a></li>
+							<li><a href="blogs.xhtml">Blogs</a></li>
+						</ul>
 						</nav>
 						<div class="log_reg">
-							<div class="log_reg_content d-flex flex-row align-items-center justify-content-start">
-								<div class="login log_reg_text"><a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar Sesion</a></div>
-								<div class="register log_reg_text"><a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Registrate</a></div>
+							<div
+								class="log_reg_content d-flex flex-row align-items-center justify-content-start">
+								<div class="login log_reg_text">
+									<a href="/TesisWSNSiC/faces/login/Login.xhtml">Iniciar
+										Sesion</a>
+								</div>
+								<div class="register log_reg_text">
+									<a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Registrate</a>
+								</div>
 							</div>
 						</div>
-						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+						<div class="hamburger ml-auto">
+							<i class="fa fa-bars" aria-hidden="true"></i>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</header>
+		</header>
 
-	<!-- Menu -->
-	
-	
-	<div class="menu_overlay trans_400"></div>
-	<div class="menu trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="log_reg">
-			<div class="log_reg_content d-flex flex-row align-items-center justify-content-end">
-				<div class="login log_reg_text"><a href="#">Login</a></div>
-				<div class="register log_reg_text"><a href="#">Register</a></div>
+		<!-- Menu -->
+
+
+		<div class="menu_overlay trans_400"></div>
+		<div class="menu trans_400">
+			<div class="menu_close_container">
+				<div class="menu_close">
+					<div></div>
+					<div></div>
+				</div>
 			</div>
-		</div>
-		<nav class="menu_nav">
+			<div class="log_reg">
+				<div
+					class="log_reg_content d-flex flex-row align-items-center justify-content-end">
+					<div class="login log_reg_text">
+						<a href="#">Login</a>
+					</div>
+					<div class="register log_reg_text">
+						<a href="#">Register</a>
+					</div>
+				</div>
+			</div>
+			<nav class="menu_nav">
 			<ul>
-						
+
 				<li><a href="index.xhtml">Inicio</a></li>
 				<li><a href="about.html">Acerca</a></li>
 				<li><a href="services.html">Servicios</a></li>
-				<li><a href="blog.html">Noticias</a></li>
-				<li><a href="../blog/blog.xhtml">Blogs</a></li>
+				<li><a href="blogs.xhtml">Blogs</a></li>
 
 			</ul>
-		</nav>
-	</div>
+			</nav>
+		</div>
 
-	<!-- Home -->
+		<!-- Home -->
 
-	<div class="home">
-		<div class="home_background"></div>
-		<div class="background_image background_city" style="background-image:url(images/city.png)"></div>
-		<div class="cloud cloud_1"><img src="images/cloud.png" alt=""/></div>
-		<div class="cloud cloud_2"><img src="images/cloud.png" alt=""/></div>
-		<div class="cloud cloud_3"><img src="images/cloud_full.png" alt=""/></div>
-		<div class="cloud cloud_4"><img src="images/cloud.png" alt=""/></div>
-		<div class="home_container">
+		<div class="home">
+			<div class="home_background"></div>
+			<div class="background_image background_city"
+				style="background-image: url(images/city.png)"></div>
+			<div class="cloud cloud_1">
+				<img src="images/cloud.png" alt="" />
+			</div>
+			<div class="cloud cloud_2">
+				<img src="images/cloud.png" alt="" />
+			</div>
+			<div class="cloud cloud_3">
+				<img src="images/cloud_full.png" alt="" />
+			</div>
+			<div class="cloud cloud_4">
+				<img src="images/cloud.png" alt="" />
+			</div>
+			<div class="home_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content text-center">
+								<div class="home_title">Operador WSN</div>
+								<div class="home_text">Disfruta de nuestra plataforma,
+									donde podras elegir los nodos disponibles y obtener graficas
+									estadisticas en tiempo real sobre los factores que afectan
+									nuestro medio ambiente.</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-10 offset-lg-1">
+				<h1>
+					<a href="" class="typewrite" data-period="2000"
+						data-type='[ "Hi, Im VipulM.", "I am Creative.", "I Love Design.", "I Love to Develop." ]'>
+						<span class="wrap"></span>
+					</a>
+				</h1>
+			</div>
+		</div>
+
+
+		<!-- Intro -->
+
+		<div class="intro">
+			<div class="container">
+				<div class="row">
+					<div class="col magic_fade_in">
+						<div class="section_title text-center">
+							<h2>Como empezar</h2>
+						</div>
+					</div>
+				</div>
+
+				<div class="row intro_row">
+					<div class="intro_dots magic_fade_in"
+						style="background-image: url(images/dots.png)"></div>
+
+					<!-- Intro Item -->
+					<div class="col-lg-4 intro_col magic_fade_in">
+						<div
+							class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+							<div
+								class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+								<div class="intro_icon">
+									<img src="images/icon_1.svg"
+										alt="https://www.flaticon.com/authors/freepik" />
+								</div>
+							</div>
+							<div class="intro_item_content">
+								<div class="intro_item_title">Suscribete a nuestra
+									plaforma</div>
+								<div class="intro_item_text">
+									<p>Ingresa a nuestra plataforma y obten informacion del medio ambiente
+									a traves de sensores IoT que se encuentran distribuidos en la ciudad de Cuenca</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Intro Item -->
+					<div class="col-lg-4 intro_col magic_fade_in">
+						<div
+							class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+							<div
+								class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+								<div class="intro_icon">
+									<img src="images/icon_2.svg"
+										alt="https://www.flaticon.com/authors/freepik" />
+								</div>
+							</div>
+							<div class="intro_item_content">
+								<div class="intro_item_title">Obten datos ya almacenados</div>
+								<div class="intro_item_text">
+									<p>La informacion se encuentra almacenada en el Cloud de google
+									Platform haciendo uso del Big Data para mejora le experiencia
+									de una plataforma hibrida</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Intro Item -->
+					<div class="col-lg-4 intro_col magic_fade_in">
+						<div
+							class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
+							<div
+								class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
+								<div class="intro_icon">
+									<img src="images/icon_3.svg"
+										alt="https://www.flaticon.com/authors/freepik" />
+								</div>
+							</div>
+							<div class="intro_item_content">
+								<div class="intro_item_title">Publica tu blog</div>
+								<div class="intro_item_text">
+									<p>Crea micrositios, publica y expon informacion ambiental para 
+									los usuarios.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<div class="intro_button text-center trans_200 ml-auto mr-auto">
+							<a href="../login/Registrar.xhtml">Inicia $9.90/mes</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Services -->
+		<h:form>
+			<div class="services">
+				<div class="parallax_background parallax-window"
+					data-parallax="scroll" data-image-src="images/services.jpg"
+					data-speed="0.8"></div>
+				<div class="container">
+					<div class="row">
+						<div class="col magic_fade_in">
+							<div class="section_title text-center">
+								<h2>BLOGS MAS VISITADOS</h2>
+							</div>
+						</div>
+					</div>
+
+					<div class="row services_row">
+
+						<!-- Service -->
+						<ui:repeat value="#{publicBlog.ltsBlogs}" var="blog">
+							<div class="col-lg-4 service_col magic_fade_in">
+								<div
+									class="service d-flex flex-column align-items-center justify-content-start text-center trans_200">
+									<div class="service_icon">
+										<img src="data:image/png;base64,#{blog.imgBase64}" />
+									</div>
+									<div class="service_title">
+										<h3>#{blog.nombreBlog}</h3>
+									</div>
+									<div class="service_text">
+										<p class="b">#{blog.empresa.nombre}</p>
+										<p>#{blog.descripcion}</p>
+										<p class="d">Visitas #{blog.visitas}</p>
+										
+									</div>
+
+									<p:commandButton value="Leer Mas"
+										action="#{publicBlog.irDetalle(blog)}"
+										class="service_button trans_200" />
+								</div>
+							</div>
+						</ui:repeat>
+
+
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<!-- Pricing -->
+
+		<div class="pricing">
 			<div class="container">
 				<div class="row">
 					<div class="col">
-						<div class="home_content text-center">
-							<div class="home_title">Operador WSN</div>
-							<div class="home_text">Disfruta de nuestra plataforma, donde podras elegir los nodos
-													disponibles y obtener graficas estadisticas en tiempo real sobre los
-													factores que afectan nuestro medio ambiente.</div>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
-<div class="row">
-					<div class="col-lg-10 offset-lg-1">
-<h1>
-  <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, Im VipulM.", "I am Creative.", "I Love Design.", "I Love to Develop." ]'>
-    <span class="wrap"></span>
-  </a>
-</h1>
-</div>
-	</div>
+						<div
+							class="pricing_container d-flex flex-row align-items-start justify-content-start flex-wrap">
 
-
-	<!-- Intro -->
-
-	<div class="intro">
-		<div class="container">
-			<div class="row">
-				<div class="col magic_fade_in">
-					<div class="section_title text-center"><h2>How to get started</h2></div>
-				</div>
-			</div>
-			<h:form>
-			<div id="blogsDestacados">
-				<p:dataTable value="#{publicBlog.ltsBlogsDestacados}" var="blog" rows="10">
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Imagen" />
-						</f:facet>
-						<img src="data:image/png;base64,#{blog.imgBase64}" style="width: 100px; height: 100px" />
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Nombre" />
-						</f:facet>
-						<h:outputText value="#{blog.nombreBlog}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Descripcion" />
-						</f:facet>
-						<h:outputText value="#{blog.breve_descripcion}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Empresa" />
-						</f:facet>
-						<h:outputText value="#{blog.empresa.nombre}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Propietario" />
-						</f:facet>
-						<h:outputText value="#{blog.empresa.personas.get(0).nombre}" />
-					</p:column>
-					<p:column>
-						<h:commandButton value="leer mas..." action="#{publicBlog.irDetalle(blog)}" />
-					</p:column>
-				</p:dataTable>
-				
-			</div>
-			</h:form>
-			<div class="row intro_row">
-				<div class="intro_dots magic_fade_in" style="background-image:url(images/dots.png)"></div>
-				
-				<!-- Intro Item -->
-				<div class="col-lg-4 intro_col magic_fade_in">
-					<div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
-						<div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
-							<div class="intro_icon"><img src="images/icon_1.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						</div>
-						<div class="intro_item_content">
-							<div class="intro_item_title">Buy your Domain</div>
-							<div class="intro_item_text">
-								<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Intro Item -->
-				<div class="col-lg-4 intro_col magic_fade_in">
-					<div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
-						<div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
-							<div class="intro_icon"><img src="images/icon_2.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						</div>
-						<div class="intro_item_content">
-							<div class="intro_item_title">Get your Hosting</div>
-							<div class="intro_item_text">
-								<p>Ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis. Proin ac urna at lectus.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Intro Item -->
-				<div class="col-lg-4 intro_col magic_fade_in">
-					<div class="intro_item d-flex flex-column align-items-center justify-content-start text-center">
-						<div class="intro_icon_container d-flex flex-column align-items-center justify-content-center">
-							<div class="intro_icon"><img src="images/icon_3.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						</div>
-						<div class="intro_item_content">
-							<div class="intro_item_title">Set your Website</div>
-							<div class="intro_item_text">
-								<p>Suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis. Proin ac urna at lectus volutpat lobortis.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-			<div class="row">
-				<div class="col text-center">
-					<div class="intro_button text-center trans_200 ml-auto mr-auto"><a href="#">Start from $9.90/month</a></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Services -->
-
-	<div class="services">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/services.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col magic_fade_in">
-					<div class="section_title text-center"><h2>Our Services</h2></div>
-				</div>
-			</div>
-			<div class="row services_row">
-				
-				<!-- Service -->
-				<div class="col-lg-4 service_col magic_fade_in">
-					<div class="service d-flex flex-column align-items-center justify-content-start text-center trans_200">
-						<div class="service_icon"><img class="svg" src="images/icon_4.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						<div class="service_title"><h3>Cloud Backup</h3></div>
-						<div class="service_text">
-							<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis ege.</p>
-						</div>
-						<div class="service_button trans_200"><a href="#">Read More</a></div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-lg-4 service_col magic_fade_in">
-					<div class="service d-flex flex-column align-items-center justify-content-start text-center trans_200">
-						<div class="service_icon"><img class="svg" src="images/icon_5.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						<div class="service_title"><h3>Data Migration</h3></div>
-						<div class="service_text">
-							<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis ege.</p>
-						</div>
-						<div class="service_button trans_200"><a href="#">Read More</a></div>
-					</div>
-				</div>
-
-				<!-- Service -->
-				<div class="col-lg-4 service_col magic_fade_in">
-					<div class="service d-flex flex-column align-items-center justify-content-start text-center trans_200">
-						<div class="service_icon"><img class="svg" src="images/icon_6.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-						<div class="service_title"><h3>VPS Hosting</h3></div>
-						<div class="service_text">
-							<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis ege.</p>
-						</div>
-						<div class="service_button trans_200"><a href="#">Read More</a></div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Pricing -->
-
-	<div class="pricing">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="pricing_container d-flex flex-row align-items-start justify-content-start flex-wrap">
-						
-						<!-- Pricing Item -->
-						<div class="pricing_item text-center magic_fade_in">
-							<div class="pricing_title">Starter Pack</div>
-							<div class="pricing_content">
-								<div class="package_price">$ 9.90<span>/Month</span></div>
-								<div class="pricing_list">
-									<ul>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>50 GB Disk Space</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>1 sub-domain</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>5 E-mail Accounts</span>
-										</li>
-										<li class="d-flex flex-row align-items-center justify-content-center">
-											<img src="images/x.png" alt=""/>
-											<span>24/7 Support</span>
-										</li>
-										<li class="d-flex flex-row align-items-center justify-content-center">
-											<img src="images/x.png" alt=""/>
-											<span>Control Panel</span>
-										</li>
-									</ul>
+							<!-- Pricing Item -->
+							<div class="pricing_item text-center magic_fade_in">
+								<div class="pricing_title">Starter Pack</div>
+								<div class="pricing_content">
+									<div class="package_price">
+										$ 9.90<span>/Month</span>
+									</div>
+									<div class="pricing_list">
+										<ul>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>50 GB Disk
+													Space</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>1 sub-domain</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>5 E-mail
+													Accounts</span>
+											</li>
+											<li
+												class="d-flex flex-row align-items-center justify-content-center">
+												<img src="images/x.png" alt="" /> <span>24/7 Support</span>
+											</li>
+											<li
+												class="d-flex flex-row align-items-center justify-content-center">
+												<img src="images/x.png" alt="" /> <span>Control Panel</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing_button ml-auto mr-auto">
+										<a href="#">Buy Now</a>
+									</div>
 								</div>
-								<div class="pricing_button ml-auto mr-auto"><a href="#">Buy Now</a></div>
 							</div>
-						</div>
 
-						<!-- Pricing Item -->
-						<div class="pricing_item text-center magic_fade_in">
-							<div class="pricing_title">Basic Pack</div>
-							<div class="pricing_content">
-								<div class="package_price">$ 19.90<span>/Month</span></div>
-								<div class="pricing_list">
-									<ul>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>70 GB Disk Space</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>3 sub-domain</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>7 E-mail Accounts</span>
-										</li>
-										<li class="d-flex flex-row align-items-center justify-content-center">
-											<img src="images/x.png" alt=""/>
-											<span>24/7 Support</span>
-										</li>
-										<li class="d-flex flex-row align-items-center justify-content-center">
-											<img src="images/x.png" alt=""/>
-											<span>Control Panel</span>
-										</li>
-									</ul>
+							<!-- Pricing Item -->
+							<div class="pricing_item text-center magic_fade_in">
+								<div class="pricing_title">Basic Pack</div>
+								<div class="pricing_content">
+									<div class="package_price">
+										$ 19.90<span>/Month</span>
+									</div>
+									<div class="pricing_list">
+										<ul>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>70 GB Disk
+													Space</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>3 sub-domain</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>7 E-mail
+													Accounts</span>
+											</li>
+											<li
+												class="d-flex flex-row align-items-center justify-content-center">
+												<img src="images/x.png" alt="" /> <span>24/7 Support</span>
+											</li>
+											<li
+												class="d-flex flex-row align-items-center justify-content-center">
+												<img src="images/x.png" alt="" /> <span>Control Panel</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing_button ml-auto mr-auto">
+										<a href="#">Buy Now</a>
+									</div>
 								</div>
-								<div class="pricing_button ml-auto mr-auto"><a href="#">Buy Now</a></div>
 							</div>
-						</div>
 
-						<!-- Pricing Item -->
-						<div class="pricing_item text-center magic_fade_in">
-							<div class="pricing_title">Premium Pack</div>
-							<div class="pricing_content">
-								<div class="package_price">$ 39.90<span>/Month</span></div>
-								<div class="pricing_list">
-									<ul>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>90 GB Disk Space</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>5 sub-domain</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>10 E-mail Accounts</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>24/7 Support</span>
-										</li>
-										<li class="d-flex flex-row align-items-center justify-content-center">
-											<img src="images/x.png" alt=""/>
-											<span>Control Panel</span>
-										</li>
-									</ul>
+							<!-- Pricing Item -->
+							<div class="pricing_item text-center magic_fade_in">
+								<div class="pricing_title">Premium Pack</div>
+								<div class="pricing_content">
+									<div class="package_price">
+										$ 39.90<span>/Month</span>
+									</div>
+									<div class="pricing_list">
+										<ul>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>90 GB Disk
+													Space</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>5 sub-domain</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>10 E-mail
+													Accounts</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>24/7 Support</span>
+											</li>
+											<li
+												class="d-flex flex-row align-items-center justify-content-center">
+												<img src="images/x.png" alt="" /> <span>Control Panel</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing_button ml-auto mr-auto">
+										<a href="#">Buy Now</a>
+									</div>
 								</div>
-								<div class="pricing_button ml-auto mr-auto"><a href="#">Buy Now</a></div>
 							</div>
-						</div>
 
-						<!-- Pricing Item -->
-						<div class="pricing_item text-center magic_fade_in">
-							<div class="pricing_title">Pro Pack</div>
-							<div class="pricing_content">
-								<div class="package_price">$ 59.90<span>/Month</span></div>
-								<div class="pricing_list">
-									<ul>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>120 GB Disk Space</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>7 sub-domain</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>15 E-mail Accounts</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>24/7 Support</span>
-										</li>
-										<li class="pack_ok d-flex flex-row align-items-center justify-content-center">
-											<img src="images/ok.png" alt=""/>
-											<span>Control Panel</span>
-										</li>
-									</ul>
+							<!-- Pricing Item -->
+							<div class="pricing_item text-center magic_fade_in">
+								<div class="pricing_title">Pro Pack</div>
+								<div class="pricing_content">
+									<div class="package_price">
+										$ 59.90<span>/Month</span>
+									</div>
+									<div class="pricing_list">
+										<ul>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>120 GB Disk
+													Space</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>7 sub-domain</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>15 E-mail
+													Accounts</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>24/7 Support</span>
+											</li>
+											<li
+												class="pack_ok d-flex flex-row align-items-center justify-content-center">
+												<img src="images/ok.png" alt="" /> <span>Control
+													Panel</span>
+											</li>
+										</ul>
+									</div>
+									<div class="pricing_button ml-auto mr-auto">
+										<a href="#">Buy Now</a>
+									</div>
 								</div>
-								<div class="pricing_button ml-auto mr-auto"><a href="#">Buy Now</a></div>
 							</div>
-						</div>
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Why Choose Us -->
-
-	<div class="choice">
-		<div class="container">
-			<div class="row row-lg-eq-height">
-				
-				<!-- Choice Image -->
-				<div class="col-lg-6 choice_col magic_fade_in">
-					<div class="choice_image"><img src="images/choice.png" alt=""/></div>
-				</div>
-
-				<!-- Choice Content -->
-				<div class="col-lg-6 choice_col magic_fade_in">
-					<div class="choice_content">
-						<div class="section_title magic_fade_in"><h2>Why Choose us?</h2></div>
-						<div class="choice_text">
-							<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis. Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.</p>
-						</div>
-						<div class="choice_list">
-							<ul class="d-flex flex-row align-items-start justify-content-between">
-								<li class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
-									<div class="choice_icon"><img src="images/icon_7.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-									<div class="choice_title">Marketing</div>
-								</li>
-								<li class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
-									<div class="choice_icon"><img src="images/icon_8.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-									<div class="choice_title">Stats</div>
-								</li>
-								<li class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
-									<div class="choice_icon"><img src="images/icon_9.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-									<div class="choice_title">Servers</div>
-								</li>
-								<li class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
-									<div class="choice_icon"><img src="images/icon_10.svg" alt="https://www.flaticon.com/authors/freepik"/></div>
-									<div class="choice_title">Quality</div>
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- CTA -->
+		<!-- Why Choose Us -->
 
-	<div class="cta">
+		<div class="choice">
+			<div class="container">
+				<div class="row row-lg-eq-height">
+
+					<!-- Choice Image -->
+					<div class="col-lg-6 choice_col magic_fade_in">
+						<div class="choice_image">
+							<img src="images/choice.png" alt="" />
+						</div>
+					</div>
+
+					<!-- Choice Content -->
+					<div class="col-lg-6 choice_col magic_fade_in">
+						<div class="choice_content">
+							<div class="section_title magic_fade_in">
+								<h2>Why Choose us?</h2>
+							</div>
+							<div class="choice_text">
+								<p>Nullam lacinia ex eleifend orci porttitor, suscipit
+									interdum augue condimentum. Etiam pretium turpis eget nibh
+									laoreet iaculis. Nullam lacinia ex eleifend orci porttitor,
+									suscipit interdum augue condimentum. Etiam pretium turpis eget
+									nibh laoreet iaculis.</p>
+							</div>
+							<div class="choice_list">
+								<ul
+									class="d-flex flex-row align-items-start justify-content-between">
+									<li
+										class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
+										<div class="choice_icon">
+											<img src="images/icon_7.svg"
+												alt="https://www.flaticon.com/authors/freepik" />
+										</div>
+										<div class="choice_title">Marketing</div>
+									</li>
+									<li
+										class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
+										<div class="choice_icon">
+											<img src="images/icon_8.svg"
+												alt="https://www.flaticon.com/authors/freepik" />
+										</div>
+										<div class="choice_title">Stats</div>
+									</li>
+									<li
+										class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
+										<div class="choice_icon">
+											<img src="images/icon_9.svg"
+												alt="https://www.flaticon.com/authors/freepik" />
+										</div>
+										<div class="choice_title">Servers</div>
+									</li>
+									<li
+										class="d-flex flex-column align-items-center justify-content-center magic_fade_in">
+										<div class="choice_icon">
+											<img src="images/icon_10.svg"
+												alt="https://www.flaticon.com/authors/freepik" />
+										</div>
+										<div class="choice_title">Quality</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- CTA -->
+
+		<div class="cta">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div
+							class="cta_content d-flex flex-lg-row flex-column align-items-center justify-content-lg-between justify-content-center magic_fade_in">
+							<div class="cta_title">Start building your website now!</div>
+							<div class="cta_price">
+								<span>from</span>$9.90<span>/month</span>
+							</div>
+							<div class="cta_button">
+								<a href="#">Start Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+
+		<footer class="footer magic_fade_in">
 		<div class="container">
 			<div class="row">
-				<div class="col">
-					<div class="cta_content d-flex flex-lg-row flex-column align-items-center justify-content-lg-between justify-content-center magic_fade_in">
-						<div class="cta_title">Start building your website now!</div>
-						<div class="cta_price"><span>from</span>$9.90<span>/month</span></div>
-						<div class="cta_button"><a href="#">Start Now</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<!-- Footer -->
-
-	<footer class="footer magic_fade_in">
-		<div class="container">
-			<div class="row">
-				
 				<div class="col-lg-6 footer_col magic_fade_in">
 					<div class="footer_about">
-						<div class="footer_logo">Host<span>Space</span></div>
-						<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</div>
+						<div class="footer_logo">
+							Host<span>Space</span>
+						</div>
+						<div class="copyright">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script>
+							All rights reserved | This template is made with <i
+								class="fa fa-heart-o" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
 						<div class="footer_text">
-							<p>Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis. Nullam lacinia ex eleifend orci porttitor, suscipit interdum augue condimentum. Etiam pretium turpis eget nibh laoreet iaculis.</p>
+							<p>Nullam lacinia ex eleifend orci porttitor, suscipit
+								interdum augue condimentum. Etiam pretium turpis eget nibh
+								laoreet iaculis. Nullam lacinia ex eleifend orci porttitor,
+								suscipit interdum augue condimentum. Etiam pretium turpis eget
+								nibh laoreet iaculis.</p>
 						</div>
 						<div class="contact_container">
 							<form action="#" id="contact_form" class="contact_form">
 								<div class="row">
 									<div class="col-md-6">
-										<input type="text" class="contact_input" placeholder="Your Name" required="required"/>
+										<input type="text" class="contact_input"
+											placeholder="Your Name" required="required" />
 									</div>
 									<div class="col-md-6">
-										<input type="email" class="contact_input" placeholder="Your e-mail" required="required"/>
+										<input type="email" class="contact_input"
+											placeholder="Your e-mail" required="required" />
 									</div>
 								</div>
 								<div>
-									<textarea class="contact_input contact_textarea" placeholder="Message" required="required"/>
+									<textarea class="contact_input contact_textarea"
+										placeholder="Message" required="required" />
 								</div>
 								<button class="contact_button">Send</button>
 							</form>
@@ -563,7 +650,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 										<li><a href="#">Premium Domain Names</a></li>
 										<li><a href="#">Web Hosting</a></li>
 									</ul>
-								</div>	
+								</div>
 							</div>
 						</div>
 					</div>
@@ -571,30 +658,67 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 			</div>
 		</div>
-	</footer>
-</div>
+		</footer>
+	</div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap-4.1.2/popper.js"></script>
-<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="plugins/greensock/TweenMax.min.js"></script>
-<script src="plugins/greensock/TimelineMax.min.js"></script>
-<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="plugins/greensock/animation.gsap.min.js"></script>
-<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/progressbar/progressbar.min.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/custom.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="styles/bootstrap-4.1.2/popper.js"></script>
+	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+	<script src="plugins/greensock/TweenMax.min.js"></script>
+	<script src="plugins/greensock/TimelineMax.min.js"></script>
+	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="plugins/greensock/animation.gsap.min.js"></script>
+	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="plugins/easing/easing.js"></script>
+	<script src="plugins/progressbar/progressbar.min.js"></script>
+	<script src="plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="js/custom.js"></script>
 </body>
 
-<script type="text/javascript">
+<style type="text/css">
+/* Import the google web fonts you want to use */
 
-</script>
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
 
-<style type="text/css"> 
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
 
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 20px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 20px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 20px;
+	color: #C23B22;
+}
 </style>
 
 </html>
