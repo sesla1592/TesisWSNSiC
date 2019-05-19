@@ -316,7 +316,7 @@
 
 
 								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-								<p:calendar id="fechaIni" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
+								<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" mode="popup" styleClass="calendar">
 									<p:ajax event="dateSelect"
 										listener="#{dashboardAdmin.onDateSelectInicio}" />
 								</p:calendar>
@@ -354,17 +354,17 @@
 								    <blockquote class="blockquote mb-0">
 								      <p>
 								      	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
-											value="Temperatura: #{dashboardAdmin.datoTemp}#{dashboardAdmin.descpDatoTemp}" />
+											value="Temperatura: #{dashboardAdmin.datoTemp}" />
 											
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}"
-											value="Humedad: #{dashboardAdmin.datoHum} #{dashboardAdmin.descpDatoHum}"/>
+											value="Humedad: #{dashboardAdmin.datoHum}"/>
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}"
 											value="Luminosidad: #{dashboardAdmin.datoLum}" />
 										<br />
 										<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}"
-											value="Ruido: #{dashboardAdmin.datoRui}#{dashboardAdmin.descpDatoTemp}" />
+											value="Ruido: #{dashboardAdmin.datoRui}" />
 								      
 								      </p>
 								    </blockquote>
