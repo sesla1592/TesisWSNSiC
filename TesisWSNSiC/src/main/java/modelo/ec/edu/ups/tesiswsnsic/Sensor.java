@@ -24,6 +24,12 @@ public class Sensor {
 	
 	@Column(name = "sen_descripcion")
 	private String descripcion;
+	
+	@Column(name = "sen_descripcion_web",length=8192)
+	private String descripcion_web;
+	
+	@Column(name = "sen_medicion")
+	private String medicion;
 
 	@Column(name = "sen_estado")
 	private boolean estado;
@@ -88,6 +94,23 @@ public class Sensor {
 
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
+	}
+
+	
+	public String getDescripcion_web() {
+		return descripcion_web;
+	}
+
+	public void setDescripcion_web(String descripcion_web) {
+		this.descripcion_web = descripcion_web;
+	}
+
+	public String getMedicion() {
+		return medicion;
+	}
+
+	public void setMedicion(String medicion) {
+		this.medicion = medicion;
 	}
 
 	@Override

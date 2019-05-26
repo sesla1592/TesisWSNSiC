@@ -229,15 +229,23 @@ public class NodoControlador {
 						sensor.setEstado(true);
 						if(sensorM.getString("m").equals("T")) {
 							sensor.setNombreCompleto("Temperatura");
+							sensor.setMedicion("C");
+							sensor.setDescripcion_web("La temperatura está relacionada con la energía interior de los sistemas termodinámicos, de acuerdo al movimiento de sus partículas, y cuantifica la actividad de las moléculas de la materia: a mayor energía sensible, más temperatura.");
 						}
 						if(sensorM.getString("m").equals("H")) {
 							sensor.setNombreCompleto("Humedad");
+							sensor.setMedicion("%");
+							sensor.setDescripcion_web("La humedad es un elemento de l clima, al igual que la temperatura y la presión atmosférica, y se define como la cantidad de vapor de agua contenida en la atmósfera. La rama de las Ciencias físicas que tiene por objeto estudiar la proporción de humedad en la atmósfera es la Higrometría, y el aparato que mide la humedad se llama higrómetro.");
 						}
 						if(sensorM.getString("m").equals("R")) {
 							sensor.setNombreCompleto("Ruido");
+							sensor.setMedicion("dbs");
+							sensor.setDescripcion_web("El ruido es la sensación auditiva inarticulada generalmente desagradable. En el medio ambiente, se define como todo lo molesto para el oído o, más exactamente, como todo sonido no deseado. Desde ese punto de vista, la más excelsa música puede ser calificada como ruido por aquella persona que en cierto momento no desee oírla.");
 						}
 						if(sensorM.getString("m").equals("L")) {
 							sensor.setNombreCompleto("Luminosidad");
+							sensor.setMedicion("lux");
+							sensor.setDescripcion_web("La luminosidad, también llamada claridad, es una propiedad de los colores. Ella da una indicación sobre el aspecto luminoso del color estudiado: cuanto más oscuro es el color, la luminosidad es más débil. Este término se asocia a veces con el concepto de valor, luminancia, brillo, luz... el vocabulario utilizado en esta área es muy rico.");
 						}
 						ltsSensor.add(sensor);
 					}

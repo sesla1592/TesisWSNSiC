@@ -23,7 +23,7 @@ import validacionesnegocio.ec.edu.ups.tesiswsnsic.Validacion;
 
 @ManagedBean
 @SessionScoped
-public class PersonaControlador {
+public class PersonaControlador{
 //	@Inject
 //	private Logger log;
 
@@ -46,12 +46,16 @@ public class PersonaControlador {
 	private String password;
 
 	public Persona miUsuario;
-
+	
+	public String prueba = "holaaa";
+	
 	@PostConstruct
 	public void init() {
 		personas = new Persona();
 		v = new  Validacion();
+		
 	}
+	
 	
 	/**
 	 * IniciarSesion inicilizar una Sesion HTTP y establecimiento de parametros en
@@ -388,4 +392,13 @@ public class PersonaControlador {
 	public void logout2() {
 		
 	}
+
+	public String getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(String prueba) {
+		this.prueba = prueba;
+	}
+	
 }

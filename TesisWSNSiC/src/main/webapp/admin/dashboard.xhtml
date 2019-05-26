@@ -381,28 +381,12 @@
 
 									<p:row>
 										<center>
-											<hf:chart id="grafica" title="" xaxisLabel="Tiempo"
-												yaxisLabel="Valor" type="line" width="1600">
-
-												<hf:chartSerie value="#{dashboardAdmin.ltsSData}"
-													var="point" point="#{point.valor}"
-													tickLabel="#{point.fecha}"
-													name="#{dashboardAdmin.sensorSeleccionado}" />
-
-
-												<hf:chartLegend position="ne" title="Valores"
-													layout="vertical" backgroundColor="#eeeeee" />
-												<hf:chartTooltip backgroundColor="#000000" shared="true">
-													<f:facet name="header">
-														<h:outputText escape="false"
-															value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>" />
-													</f:facet>
-													<f:facet name="body">
-														<h:outputText
-															value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}&lt;/b>&lt;/span>&lt;br/>" />
-													</f:facet>
-												</hf:chartTooltip>
-											</hf:chart>
+											<div >
+				<h:outputText id="descripcion" value="#{dashboardAdmin.sensorDescripcion}" />
+				<p:chart id ="grafica" type="line" model="#{dashboardAdmin.lineModel2}" style="height:300px;" widgetVar="chart" />
+				<br />    
+				<p:commandButton type="button" value="Reset" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
+			</div>
 										</center>
 									</p:row>
 								</div>
@@ -418,7 +402,7 @@
 				<br />
 
 			</div>
-
+			
 
 
 		</h:form>

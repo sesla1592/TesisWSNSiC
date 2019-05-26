@@ -3,6 +3,9 @@ package controlador.ec.edu.ups.tesiswsnsic;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +24,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.HorizontalBarChartModel;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -68,10 +78,13 @@ public class DashboardAdmin {
 	List<Empresa> ltsEmpresa;
 	Marker marker;
 	Nodo nodoSelected;
+	private String sensorDescripcion;
 	public MapModel simpleModel;
 	public String tipoFecha;
 	public String typeMedicion = "";
-
+	
+	private LineChartModel lineModel2 = new LineChartModel();
+	
 	@Inject
 	NodoDAO nodoDAO;
 	@Inject
@@ -309,6 +322,14 @@ public class DashboardAdmin {
 		this.tipoFecha = tipoFecha;
 	}
 
+	public String getSensorDescripcion() {
+		return sensorDescripcion;
+	}
+
+	public void setSensorDescripcion(String sensorDescripcion) {
+		this.sensorDescripcion = sensorDescripcion;
+	}
+
 	public void crearTipoEmpresa() {
 		try {
 			contex = FacesContext.getCurrentInstance();
@@ -385,6 +406,14 @@ public class DashboardAdmin {
 
 	public void setLtsSData(List<MedValFec> ltsSData) {
 		this.ltsSData = ltsSData;
+	}
+
+	public LineChartModel getLineModel2() {
+		return lineModel2;
+	}
+
+	public void setLineModel2(LineChartModel lineModel2) {
+		this.lineModel2 = lineModel2;
 	}
 
 	public void addMarker() {
@@ -487,6 +516,7 @@ public class DashboardAdmin {
 	}
 
 	public void graficaDatos() {
+		
 		if (nodoSelected != null) {
 			ltsSData = new ArrayList<>();
 			System.out.println("boolean typo calendario " + typeCalendar);
@@ -517,6 +547,18 @@ public class DashboardAdmin {
 
 			} else {
 				System.out.println("fecha por calendario");
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				String fec_Inicio = df.format(fechaInicio);
+				DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate fecha_Ini = LocalDate.parse(fec_Inicio, fmt);
+
+				String fec_fin = df.format(fechaInicio);
+				LocalDate fecha_fin = LocalDate.parse(fec_fin, fmt);
+
+				Period periodo = Period.between(fecha_Ini, fecha_fin);
+				
+				System.out.println("total de dias "+periodo.getDays());
+				
 			}
 
 			System.out.println("sensor seleccionado: " + sensorSeleccionado);
@@ -563,6 +605,7 @@ public class DashboardAdmin {
 
 			}
 			System.out.println("Connection Succesfull");
+			prueba();
 		}
 
 	}
@@ -589,4 +632,68 @@ public class DashboardAdmin {
 		typeCalendar = false;
 	}
 
+	
+	public void prueba() {
+		Sensor sensor= new Sensor();
+		for (int i = 0; i < ltsSensor.size(); i++) {
+			if(ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
+				sensor = ltsSensor.get(i);
+			}
+		}
+		int max =0;
+		int min =50;
+		for (int i = 0; i < ltsSData.size(); i++) {
+			if(ltsSData.get(i).getValor()>max) {
+				max = (int) ltsSData.get(i).getValor();
+			}
+			if(ltsSData.get(i).getValor()<min) {
+				min = (int) ltsSData.get(i).getValor();
+			}
+		}
+		max = max +5;
+		if(min<=5) {
+			min=0;
+		}else {
+			min = min -5;
+		}
+		lineModel2 = initCategoryModel();
+        lineModel2.setTitle(sensorSeleccionado);
+        lineModel2.setAnimate(true);
+        lineModel2.setZoom(true);
+        lineModel2.setLegendPosition("e");
+        lineModel2.setShowPointLabels(true);
+        lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+        sensorDescripcion=sensor.getDescripcion_web();
+        
+        Axis yAxis = lineModel2.getAxis(AxisType.Y);
+        yAxis.setLabel(sensor.getMedicion());
+        
+        yAxis.setMin(min);
+        yAxis.setMax(max);
+        
+        DateAxis axis = new DateAxis();
+        axis.setTickAngle(-50);
+        axis.setTickFormat("%b %#d, %Y");
+ 
+        lineModel2.getAxes().put(AxisType.X, axis);
+	}
+	
+	private LineChartModel initCategoryModel() {
+		LineChartModel model = new LineChartModel();
+ 
+        ChartSeries series1 = new ChartSeries();
+        series1.setLabel(sensorSeleccionado);
+        for (int i = 0; i < ltsSData.size(); i++) {
+        		series1.set( ltsSData.get(i).fecha, ltsSData.get(i).getValor());
+		}
+//        series1.set(1, 2);
+//        series1.set(2, 1);
+//        series1.set(3, 3);
+//        series1.set(4, 6);
+//        series1.set(5, 8);
+ 
+        model.addSeries(series1);
+ 
+        return model;
+    }
 }
