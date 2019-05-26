@@ -1,0 +1,432 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>WSNSiC - Quienes somos</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="HostSpace template project" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
+	<link rel="stylesheet" type="text/css"
+		href="styles/bootstrap-4.1.2/bootstrap.min.css" />
+	<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/owl.carousel.css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css" />
+	<link rel="stylesheet" type="text/css"
+		href="plugins/OwlCarousel2-2.2.1/animate.css" />
+	<link href="plugins/colorbox/colorbox.css" rel="stylesheet"
+		type="text/css" />
+	<link rel="stylesheet" type="text/css" href="styles/about.css" />
+	<link rel="stylesheet" type="text/css"
+		href="styles/about_responsive.css" />
+</h:head>
+<body>
+
+	<div class="super_container">
+
+		<!-- Header -->
+
+		<header class="header trans_400">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div
+						class="header_content d-flex flex-row align-items-center justify-content-start trans_400">
+						<div class="logo">
+							<a href="home.xhtml">WSN<span>SiC</span></a>
+						</div>
+						<nav class="main_nav ml-auto mr-auto">
+						<ul
+							class="d-flex flex-row align-items-center justify-content-start">
+							<li><a href="home.xhtml">INICIO</a></li>
+							<li class="active"><a href="about.xhtml">QUIENES SOMOS</a></li>
+							<li><a href="services.xhtml">SOLUCIONES</a></li>
+							<li><a href="blogs.xhtml">BLOGS</a></li>
+						</ul>
+						</nav>
+						<div class="log_reg">
+							<div
+								class="log_reg_content d-flex flex-row align-items-center justify-content-start">
+								<div class="login log_reg_text">
+									<a href="/TesisWSNSiC/faces/login/Login.xhtml">INICIAR SESION</a>
+								</div>
+								<div class="register log_reg_text">
+									<a href="/TesisWSNSiC/faces/login/Registrar.xhtml">REGISTRATE</a>
+								</div>
+							</div>
+						</div>
+						<div class="hamburger ml-auto">
+							<i class="fa fa-bars" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</header>
+
+		<!-- Menu -->
+
+		<div class="menu_overlay trans_400"></div>
+		<div class="menu trans_400">
+			<div class="menu_close_container">
+				<div class="menu_close">
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div class="log_reg">
+				<div
+					class="log_reg_content d-flex flex-row align-items-center justify-content-end">
+					<div class="login log_reg_text">
+						<a href="/TesisWSNSiC/faces/login/Login.xhtml">INICIAR SESION</a>
+					</div>
+					<div class="register log_reg_text">
+						<a href="/TesisWSNSiC/faces/login/Registrar.xhtml">REGISTRATE</a>
+					</div>
+				</div>
+			</div>
+			<nav class="menu_nav">
+			<ul>
+				<li><a href="home.xhtml">INICIO</a></li>
+				<li><a href="about.xhtml">QUIENES SOMOS</a></li>
+				<li><a href="services.xhtml">SOLUCIONES</a></li>
+				<li><a href="blogs.xhtml">BLOGS</a></li>
+			</ul>
+			</nav>
+		</div>
+
+		<!-- Home -->
+
+		<div class="home">
+			<div class="home_background"></div>
+			<div class="background_image background_city"
+				style="background-image: url(images/citycuenca01.svg)"></div>
+			<div class="cloud cloud_1">
+				<img src="images/cloud_full_2.png" alt="" />
+			</div>
+			<div class="cloud cloud_2">
+				<img src="images/cloud_full_2.png" alt="" />
+			</div>
+			<div class="cloud cloud_3">
+				<img src="images/cloud_full_2.png" alt="" />
+			</div>
+			<div class="cloud cloud_4">
+				<img src="images/cloud_full_2.png" alt="" />
+			</div>
+			<div class="home_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content">
+								<div class="home_title">Quienes somos</div>
+								<div class="breadcrumbs">
+									<ul
+										class="d-flex flex-row align-items-center justify-content-start">
+										<li><a href="home.xhtml">Inicio</a></li>
+										<li>Quienes somos</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Domain Search -->
+
+		<div class="domain_search">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 offset-lg-1">
+						<div
+							class="domain_search_form_container d-flex flex-column align-items-center justify-content-center">
+							<form action="#" id="domain_search_form"
+								class="domain_search_form d-flex flex-md-row flex-column align-items-center justify-content-start">
+								<div
+									class="d-flex flex-row align-items-center justify-content-start">
+									<h1 class="home_title">WSNSiC CORPORATION</h1>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Why Choose Us -->
+
+		<div class="why">
+			<div class="container">
+				<div class="row">
+
+					<!-- Why Choose Us Content -->
+					<div class="col-lg-6 why_col magic_fade_in">
+						<div class="section_title">
+							<h2>Nuestro equipo</h2>
+						</div>
+
+						<p>Contamos con un equipo de trabajo competente esto a hecho
+							que nuestros clientes continuen depositando confianza en nuestra
+							plataforma.</p>
+						<div class="section_title">
+							<h2>Porqué elegirnos?</h2>
+						</div>
+						<p>Se han realizado mejoras con la implementación de las
+							tecnologías más innovadoras dentro del mercado de las TICs así
+							como trabajar día a día por la optimización de la plataforma y
+							monitorización de nuestra infraestructura. Las comunidades de
+							Software Libre, de las que yacen las tecnologías que utilizamos,
+							se encuentran disponibles para los usuarios.</p>
+						<p>Con el respaldo de las mejores marcas:</p>
+
+						<div class="why_list">
+							<ul>
+								<li
+									class="d-flex flex-row align-items-center justify-content-start"><div></div>OpenStack
+									: Software de la nube.</li>
+								<li
+									class="d-flex flex-row align-items-center justify-content-start"><div></div>MongoDB
+									: La Base de Datos para bigdata.</li>
+								<li
+									class="d-flex flex-row align-items-center justify-content-start"><div></div>MQTT
+									: Protocolo de comunicación para IoT</li>
+								<li
+									class="d-flex flex-row align-items-center justify-content-start"><div></div>Google
+									Cloud : Nube pública</li>
+								<li
+									class="d-flex flex-row align-items-center justify-content-start"><div></div>Python
+									: Lenguaje utilizado</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Why Choose Us Image -->
+					<div class="col-lg-6 why_col magic_fade_in">
+						<div class="why_image">
+							<img src="../image/BASECOLOR_LOGO_TRANSPARENTE.PNG" alt=""
+								height="450" width="760" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Video -->
+
+		<div class="video">
+			<div class="parallax_background parallax-window"
+				data-parallax="scroll" data-image-src="images/video.jpg"
+				data-speed="0.8"></div>
+			<div
+				class="video_content d-flex flex-column align-items-center justify-content-center text-center">
+				<div class="video_play_icon magic_fade_in">
+					<a
+						class="vimeo video_button d-flex flex-column align-items-center justify-content-center"
+						href="https://player.vimeo.com/video/99340873?autoplay"><i
+						class="fa fa-play trans_200" aria-hidden="true"></i></a>
+				</div>
+				<div class="video_title magic_fade_in">Más acerca de nuestra
+					corporación</div>
+			</div>
+		</div>
+
+		<!-- Team -->
+
+		<div class="team">
+			<div class="container">
+				<div class="row">
+					<div class="col text-center magic_fade_in">
+						<div class="section_title">
+							<h2>Conoce nuestro equipo de colaboradores</h2>
+						</div>
+						<div class="section_text">
+							<p>Nuestro equipo de trabajo está compuesto por profesionales
+								competentes que cada día innovan nuestra plataforma, con la
+								finalidad de brindar el mejor servicio, enfocado en el core del
+								negocio y en la satisfacción de los clientes..</p>
+						</div>
+					</div>
+				</div>
+				<div class="row team_row">
+
+					<!-- Team Member -->
+					<div class="col-xl-3 col-md-6 team_col magic_fade_in">
+						<div class="team_item">
+							<div class="team_image">
+								<img src="../image/desarrollador1.jpg" alt="" height="300" />
+							</div>
+							<div class="team_content">
+								<div class="team_name">
+									<a href="#">Rommel Inga</a>
+								</div>
+								<div class="team_title">Developer</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Team Member -->
+					<div class="col-xl-3 col-md-6 team_col magic_fade_in">
+						<div class="team_item">
+							<div class="team_image">
+								<img src="../image/disenador1.jpg" alt="" height="300" />
+							</div>
+							<div class="team_content">
+								<div class="team_name">
+									<a href="#">Ricardo Pozo</a>
+								</div>
+								<div class="team_title">Developer</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Ads -->
+
+		<div class="extra_section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 extra_col magic_fade_in">
+						<div class="extra_container">
+							<a href="#">
+								<div
+									class="extra_content extra_1 d-flex flex-column align-items-start justify-content-center">
+									<div class="extra_icon">
+										<img src="images/icon_10.svg" alt="" />
+									</div>
+									<div class="extra_title">
+										<span>Lenguajes</span> de programación
+									</div>
+									<div class="extra_text">
+										<p>El conocimiento adquirido en los lenguajes de
+											programación implementados en el proyecto ha hecho de nuestro
+											portafolio de soluciones un medio atractivo para el cliente.</p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-6 extra_col magic_fade_in">
+						<div class="extra_container">
+							<a href="#">
+								<div
+									class="extra_content extra_2 d-flex flex-column align-items-start justify-content-center">
+									<div class="extra_icon">
+										<img src="images/icon_11.svg" alt="" />
+									</div>
+									<div class="extra_title">
+										<span>Más</span> acerca del equipo
+									</div>
+									<div class="extra_text">
+										<p>Un equipo que se enfoca en el desarrollo profesional
+											como el humano, esto ha hecho la mejor de las fusiones que se
+											reflejan en la satisfacción de nuestros clientes.</p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- CTA -->
+
+		<div class="cta">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div
+							class="cta_content d-flex flex-lg-row flex-column align-items-center justify-content-lg-between justify-content-center magic_fade_in">
+							<div class="cta_title">Inicia con la suscripción, ahora!</div>
+							<div class="cta_price"></div>
+							<div class="cta_button">
+								<a href="/TesisWSNSiC/faces/login/Registrar.xhtml">Suscribirse</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+
+		<footer class="footer magic_fade_in">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-6 footer_col magic_fade_in">
+					<div class="footer_about">
+						<div class="footer_logo">
+							WSN<span>SiC</span>
+						</div>
+						<div class="copyright">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script>
+							All rights reserved
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
+						<div class="footer_text">
+							<p>Este sitio fue diseñado para fines educativos, donde se
+								pretende demostrar el modelo de negocio de 3 lados, llevando a
+								un nuevo enfoque a los negocios basados en IoT, donde además se
+								hace uso de plataformas, lenguajes como dispositivos más
+								recientes tanto en el mercado de IoT como de TICs.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6 footer_col">
+					<div class="footer_links">
+						<div class="row">
+							<div class="col-sm-6 footer_list_col magic_fade_in">
+								<div class="footer_list_container">
+									<div class="footer_list_title">Protegido por:</div>
+									<ul class="footer_list">
+										<li><a href="https://www.openstack.org/">OpenStack</a></li>
+										<li><a href="https://cloud.google.com/">Google Cloud
+												Platform</a></li>
+										<li><a href="https://www.mongodb.com/">MongoDB</a></li>
+										<li><a href="https://www.python.org/">Python</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="styles/bootstrap-4.1.2/popper.js"></script>
+	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+	<script src="plugins/greensock/TweenMax.min.js"></script>
+	<script src="plugins/greensock/TimelineMax.min.js"></script>
+	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="plugins/greensock/animation.gsap.min.js"></script>
+	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="plugins/easing/easing.js"></script>
+	<script src="plugins/progressbar/progressbar.min.js"></script>
+	<script src="plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+	<script src="js/about.js"></script>
+</body>
+</html>

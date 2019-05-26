@@ -15,7 +15,7 @@
 		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<link rel="icon"
 		href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-WCPiR71SqcEE42ZLTsFSI8826I0N668APBtGIYjCWWVZDx46" />
-	<title>WSNCloud Blog Detalle</title>
+	<title>WSNSiC - Blogs Detalle</title>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="css/bootstrap.css" />
 	<link rel="stylesheet" href="css/themify-icons.css" />
@@ -47,22 +47,12 @@
 			<div class="collapse navbar-collapse offset"
 				id="navbarSupportedContent">
 				<ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="../homepage/home.xhtml">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../login/Login.xhtml">Iniciar sesion</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../login/Registrar.xhtml">Registrarse</a></li>
-					<li class="nav-item submenu dropdown"><a href="#"
-						class="nav-link dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">Blogs</a>
-						<ul class="dropdown-menu">
-							<li class="nav-item"><a class="nav-link"
-								href="../homepage/blogs.xhtml">Todos los Blogs</a></li>
+												<li><a href="home.xhtml">INICIO</a></li>
+							<li><a href="about.xhtml">QUIENES SOMOS</a></li>
+							<li><a href="services.xhtml">SOLUCIONES</a></li>
+							<li class="active"><a href="../homepage/blogs.xhtml">BLOGS</a></li>
 
-						</ul></li>
-
-				</ul>
+						</ul>
 			</div>
 		</div>
 		</nav>
@@ -99,14 +89,14 @@
 			<div class="col-lg-8 posts-list">
 				<div class="single-post">
 					<h2>
-						<h:outputLabel value="#{blogDetalle.blog.nombreBlog}" />
+						<h:outputLabel class="tituloblog" value="#{blogDetalle.blog.nombreBlog}" />
 					</h2>
 					<br></br>
 					<div class="feature-img">
 						<center>
 							<img class="img-fluid"
 								src="data:image/png;base64,#{blogDetalle.imageString}"
-								height="250" width="250" alt="" />
+								height="350" width="550" alt="" />
 						</center>
 					</div>
 
@@ -129,7 +119,7 @@
 							</ul>
 							<p class="excert">
 
-								<h:outputLabel value="#{blogDetalle.blog.descripcion}"></h:outputLabel>
+								<h:outputLabel id="descripcion" value="#{blogDetalle.blog.descripcion}"></h:outputLabel>
 							</p>
 						</h:form>
 						<h:form>
