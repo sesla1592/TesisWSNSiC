@@ -1452,16 +1452,16 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .blog-info-link li {
   float: left;
-  font-size: 14px; }
+  font-size: 18px; }
   .blog-info-link li a {
     color: #999999; }
   .blog-info-link li i, .blog-info-link li span {
-    font-size: 13px;
+    font-size: 18px;
     margin-right: 5px; }
   .blog-info-link li::after {
     content: "|";
-    padding-left: 10px;
-    padding-right: 10px; }
+    padding-left: 5px;
+    padding-right: 5px; }
   .blog-info-link li:last-child::after {
     display: none; }
 .blog-info-link::after {
@@ -1913,6 +1913,14 @@ body.mobile-nav-active #mobile-nav-toggle {
     /* Firefox 18- */
     font-size: 13px;
     color: #777; }
+    
+    .tituloblog {
+    font-size: 35px;
+    }
+    
+    label {
+    font-size: 20px;
+    }
 
 /*============ End Blog Single Styles  =============*/
 /*---------------------------------------------------- */

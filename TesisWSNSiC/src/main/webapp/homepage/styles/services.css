@@ -325,8 +325,8 @@ section
 }
 .main_nav ul li a
 {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: bold;
 	color: #FFFFFF;
 }
 .main_nav ul li.active a,
@@ -347,8 +347,8 @@ section
 }
 .log_reg_text a
 {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 17px;
+	font-weight: bold;
 	color: #FFFFFF;
 }
 .log_reg_text a:hover
@@ -611,11 +611,14 @@ section
 .breadcrumbs
 {
 	margin-top: 15px;
+		border-radius: 15px;
+	background-color: #6f42c1;
+	
 }
 .breadcrumbs ul li,
 .breadcrumbs ul li a
 {
-	font-size: 14px;
+	font-size: 25px;
 	font-weight: 500;
 	color: #FFFFFF;
 }

@@ -326,8 +326,8 @@ section
 }
 .main_nav ul li a
 {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: bold;
 	color: #FFFFFF;
 }
 .main_nav ul li.active a,
@@ -348,8 +348,8 @@ section
 }
 .log_reg_text a
 {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 17px;
+	font-weight: bold;
 	color: #FFFFFF;
 }
 .log_reg_text a:hover
@@ -384,9 +384,21 @@ section
 }
 .hamburger i
 {
-	font-size: 20px;
+	font-size: 24px;
 	color: #FFFFFF;
 	padding: 5px;
+}
+
+.fraseprinc {
+	font-family: inherit;
+	font-size: 24px;
+	font-weight: bolder;
+}
+
+#fraseprinc div
+{
+	background-color: #6f42c1;
+	border-radius: 5px;
 }
 
 /*********************************
