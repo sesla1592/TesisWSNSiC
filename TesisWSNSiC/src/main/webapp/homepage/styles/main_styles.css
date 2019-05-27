@@ -275,7 +275,7 @@ section
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100vw;
+	width: 100%;
 	background: transparent;
 	z-index: 100;
 }
@@ -392,13 +392,12 @@ section
 .fraseprinc {
 	font-family: inherit;
 	font-size: 24px;
-	font-weight: bolder;
 }
 
 #fraseprinc div
 {
-	background-color: #6f42c1;
-	border-radius: 5px;
+	background-color: #26064cff;
+	border-radius: 25px;
 }
 
 /*********************************
