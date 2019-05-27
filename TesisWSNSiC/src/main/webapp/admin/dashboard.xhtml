@@ -292,6 +292,7 @@
 						<h:panelGrid columns="8" style="margin-bottom:10px"
 							cellpadding="5">
 							<p class="a">Seleccione los datos a graficar:</p>
+							<p:growl id="messages" showDetail="true" />
 							<center>
 
 								<h:selectOneMenu id="listaNodos" class="custom-select"
@@ -316,7 +317,7 @@
 
 
 								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-								<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" mode="popup" styleClass="calendar">
+								<p:calendar id="fechaIni" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
 									<p:ajax event="dateSelect"
 										listener="#{dashboardAdmin.onDateSelectInicio}" />
 								</p:calendar>
@@ -394,7 +395,7 @@
 						</div>
 
 						<p:commandButton action="#{dashboardAdmin.graficaDatos()}"
-				value="Graficar" update="grafica " style="margin-right:20px;"
+				value="Graficar" update="grafica messages" style="margin-right:20px;"
 				styleClass="ui-priority-primary">
 			</p:commandButton>
 

@@ -516,13 +516,14 @@ public class DashboardAdmin {
 	}
 
 	public void graficaDatos() {
-
+		boolean graficar = false;
 		if (nodoSelected != null) {
 			ltsSData = new ArrayList<>();
 			System.out.println("boolean typo calendario " + typeCalendar);
 			if (typeCalendar == false) {
 				System.out.println("fecha por combo :" + tipoFecha);
 				// cambio las fechas
+				graficar=true;
 
 				if (tipoFecha.equals("Diario")) {
 					Date date = new Date();
@@ -557,11 +558,22 @@ public class DashboardAdmin {
 				LocalDate fecha_fin = LocalDate.parse(fechaFin.substring(0, fechaFin.length() - 9), fmt);
 
 				Period periodo = Period.between(fecha_Ini, fecha_fin);
-
 				System.out.println("total de dias " + periodo.getDays());
-
+				
+				if(periodo.getDays()>=0) {
+					graficar=true;
+				}else {
+					graficar=false;
+				}
+				ltsSData = new ArrayList<>();
 			}
-
+			System.out.println("hay q graficar "+graficar);
+			if(!graficar) {
+				//muestra un mensaje de fechas invalidas
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Graficas","Fechas invalidas.");
+		        FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			
 			System.out.println("sensor seleccionado: " + sensorSeleccionado);
 			System.out.println("fache inicio : " + fechaInicio);
 			System.out.println("fache fin : " + fechaFin);
@@ -675,8 +687,8 @@ public class DashboardAdmin {
 		axis.setTickAngle(-50);
 		axis.setTickFormat("%b %#d, %Y");
 
-		System.out.println("fecha dato "+ltsSData.get(0).fecha);
-		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
+//		System.out.println("fecha dato "+ltsSData.get(0).fecha);
+//		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
 		lineModel2.getAxes().put(AxisType.X, axis);
 	}
 
