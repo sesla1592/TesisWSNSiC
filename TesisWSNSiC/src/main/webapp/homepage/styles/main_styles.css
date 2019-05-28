@@ -391,13 +391,12 @@ section
 
 .fraseprinc {
 	font-family: inherit;
-	font-size: 24px;
+	font-size: 22px;
 }
 
 #fraseprinc div
 {
-	background-color: #26064cff;
-	border-radius: 25px;
+	border-radius: 23px;
 }
 
 /*********************************
