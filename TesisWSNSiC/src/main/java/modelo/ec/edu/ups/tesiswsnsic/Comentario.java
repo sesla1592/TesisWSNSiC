@@ -25,6 +25,9 @@ public class Comentario {
 	@Column(name = "com_comentario")
 	private String cometario;
 	
+	@Column(name = "com_fecha")
+	private String fecha;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="blog_id_pk")
 	private Blog blog;
@@ -61,6 +64,14 @@ public class Comentario {
 		this.blog = blog;
 	}
 
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,6 +79,7 @@ public class Comentario {
 		result = prime * result + ((blog == null) ? 0 : blog.hashCode());
 		result = prime * result + ((cometario == null) ? 0 : cometario.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + id;
 		return result;
 	}
@@ -96,6 +108,11 @@ public class Comentario {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
 		if (id != other.id)
 			return false;
 		return true;
@@ -103,8 +120,7 @@ public class Comentario {
 
 	@Override
 	public String toString() {
-		return "Comentario [id=" + id + ", email=" + email + ", cometario=" + cometario + "]";
+		return "Comentario [id=" + id + ", email=" + email + ", cometario=" + cometario + ", fecha=" + fecha + "]";
 	}
-	
 	
 }

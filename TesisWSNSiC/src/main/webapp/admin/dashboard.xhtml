@@ -372,7 +372,7 @@
 								  </div>
 								</div>
 									
-									
+								<h:outputText id="descripcion_sensor" value="#{dashboardAdmin.sensorDescripcion}" />	
 									
        								
 										
@@ -395,7 +395,7 @@
 						</div>
 
 						<p:commandButton action="#{dashboardAdmin.graficaDatos()}"
-				value="Graficar" update="grafica messages" style="margin-right:20px;"
+				value="Graficar" update="grafica messages descripcion_sensor" style="margin-right:20px;"
 				styleClass="ui-priority-primary">
 			</p:commandButton>
 

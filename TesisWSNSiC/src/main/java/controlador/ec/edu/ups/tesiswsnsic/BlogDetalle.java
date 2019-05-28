@@ -510,6 +510,9 @@ public class BlogDetalle {
 
 	public void guardarComentario() {
 		System.out.println("cometario " + comentario.toString());
+		Date date = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		comentario.setFecha(dateFormat.format(date));
 		comentario.setBlog(blog);
 		comentarioDAO.insert(comentario);
 		comentario = new Comentario();
