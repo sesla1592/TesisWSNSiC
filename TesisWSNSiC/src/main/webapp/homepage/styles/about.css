@@ -629,7 +629,6 @@ section
 
 .breadcrumbs{
 	border-radius: 15px;
-	background-color: #6f42c1;
 }
 .breadcrumbs ul li:not(:last-of-type)::after
 {
