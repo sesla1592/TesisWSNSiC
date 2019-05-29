@@ -13,11 +13,9 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
        	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-        <title>Sign in</title>
+        <title>WSNSiC - Registrarse</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="assets/css/form-elements.css"/>
@@ -25,14 +23,11 @@
 
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
+        	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png"/>
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png"/>
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png"/>
         <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"/>
-         <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.0/sweetalert2.min.css" rel="stylesheet" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.0/sweetalert2.min.js"></script>
 		
 			<link rel="stylesheet" type="text/css"
 		href="styles/bootstrap-4.1.2/bootstrap.min.css" />
@@ -92,7 +87,36 @@
 	</div>
 	</header>
 	
-	
+		<!-- Menu -->
+
+		<div class="menu_overlay trans_400"></div>
+		<div class="menu trans_400">
+			<div class="menu_close_container">
+				<div class="menu_close">
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div class="log_reg">
+				<div
+					class="log_reg_content d-flex flex-row align-items-center justify-content-end">
+					<div class="login log_reg_text">
+						<a href="/TesisWSNSiC/faces/login/Login.xhtml">INICIAR SESION</a>
+					</div>
+					<div class="register log_reg_text">
+						<a href="/TesisWSNSiC/faces/login/Registrar.xhtml">REGISTRATE</a>
+					</div>
+				</div>
+			</div>
+			<nav class="menu_nav">
+			<ul>
+				<li><a href="/TesisWSNSiC/faces/homepage/home.xhtml">INICIO</a></li>
+				<li><a href="/TesisWSNSiC/faces/homepage/about.xhtml">QUIENES SOMOS</a></li>
+				<li><a href="/TesisWSNSiC/faces/homepage/services.xhtml">SOLUCIONES</a></li>
+				<li><a href="/TesisWSNSiC/faces/homepage/blogs.xhtml">BLOGS</a></li>
+							</ul>
+			</nav>
+		</div>
 
 
 
@@ -474,21 +498,18 @@ nav#small h1>a:hover {
          </style>
 
 
-	<!-- Script para mensajes de alerta 
-	<script type="text/javascript">
-			                       $('#Crear').click(function(){
-			                    	    swal({
-			                    	        title: "Seguro que quieres hacer esto?",
-			                    	          text: "Esta acción ya no se podrá deshacer, Así que piénsalo bien.",
-			                    	          type: "warning",
-			                    	          showCancelButton: true,
-			                    	          confirmButtonColor: '#3085d6',
-			                    	          cancelButtonColor: '#d33',
-			                    	          confirmButtonText: 'Si, estoy seguro',
-			                    	          cancelButtonText: "Cancelar"
-			                    	        });
-			                    	});
-			                       </script>-->
+	<script src="styles/bootstrap-4.1.2/popper.js"></script>
+	<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+	<script src="plugins/greensock/TweenMax.min.js"></script>
+	<script src="plugins/greensock/TimelineMax.min.js"></script>
+	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="plugins/greensock/animation.gsap.min.js"></script>
+	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="plugins/easing/easing.js"></script>
+	<script src="plugins/progressbar/progressbar.min.js"></script>
+	<script src="plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="js/services.js"></script>
 
 
 
