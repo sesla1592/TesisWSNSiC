@@ -618,7 +618,7 @@ public class DashboardAdmin {
 
 			}
 			System.out.println("Connection Succesfull");
-			prueba();
+			grafica();
 		}
 
 	}
@@ -645,7 +645,10 @@ public class DashboardAdmin {
 		typeCalendar = false;
 	}
 
-	public void prueba() {
+	public void grafica() {
+		//filtro de 12 datos
+		
+		
 		Sensor sensor = new Sensor();
 		for (int i = 0; i < ltsSensor.size(); i++) {
 			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
@@ -685,7 +688,7 @@ public class DashboardAdmin {
 
 		DateAxis axis = new DateAxis();
 		axis.setTickAngle(-50);
-		axis.setTickFormat("%b %#d, %Y");
+		axis.setTickFormat("%b %#d, %Y %H:%M");
 
 //		System.out.println("fecha dato "+ltsSData.get(0).fecha);
 //		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
@@ -697,6 +700,12 @@ public class DashboardAdmin {
 
 		ChartSeries series1 = new ChartSeries();
 		series1.setLabel(sensorSeleccionado);
+		System.out.println("tam lista "+ltsSData.size());
+		while(ltsSData.size()>=13) {
+			int pos = (int) (Math.random() * ltsSData.size());
+			ltsSData.remove(pos);
+		}
+		System.out.println("tam lista "+ltsSData.size());
 		for (int i = 0; i < ltsSData.size(); i++) {
 			series1.set(ltsSData.get(i).fecha, ltsSData.get(i).getValor());
 		}
