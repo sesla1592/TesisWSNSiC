@@ -15,16 +15,19 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
 
-    <title>Developer - Dashboard</title>
-
+    <title>WSISiC - Dashboard Developer</title>
+	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
     <!-- Bootstrap core CSS-->	
     <link href="/TesisWSNSiC/faces/dashboard/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Custom fonts for this template-->
     <link href="/TesisWSNSiC/faces/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/TesisWSNSiC/faces/dashboard/vendor/fontawesome-free/css/fontawesome.css" rel="stylesheet" type="text/css"/>
     <!-- Page level plugin CSS-->
     <link href="/TesisWSNSiC/faces/dashboard/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"/>
     <!-- Custom styles for this template-->
     <link href="/TesisWSNSiC/faces/dashboard/css/sb-admin.css" rel="stylesheet"/>
+    <!-- ESTILOS BY SESLA -->
+    <link rel="stylesheet" type="text/css" href="styles/diseno.css" />
     
     <ui:insert name="head" />
     
@@ -36,7 +39,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="/TesisWSNSiC/faces/admin/dashboard.xhtml">Desarrollador: #{dashboardAdmin.user.correo}</a>
+      <a class="navbar-brand mr-1" href="/TesisWSNSiC/faces/admin/dashboard.xhtml"><center><h5>Desarrollador:</h5></center>#{dashboardAdmin.user.correo}</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -50,9 +53,10 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <h:commandLink action="#{personaControlador.logout()}" value="Editar usuario" class="dropdown-item" data-toggle="modal"/>
             <div class="dropdown-divider"></div>
             <a>
-            <h:commandLink action="#{personaControlador.logout()}" value="Logout" class="dropdown-item" data-toggle="modal"/></a>
+            <h:commandLink action="#{personaControlador.logout()}" value="Cerrar sesion" class="dropdown-item" data-toggle="modal"/></a>
           </div>
         </li>
       </ul>
