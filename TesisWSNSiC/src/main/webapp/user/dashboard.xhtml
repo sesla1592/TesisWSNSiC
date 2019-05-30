@@ -563,28 +563,12 @@ canvas#canvas4 {
 										
 										
 										<center>
-										<b:row style="width: 100%;height: 100%;">
-											<hf:chart id="grafica"  xaxisLabel="Tiempo"
-												yaxisLabel="Valor" type="line" subTitle="">
-												<hf:chartSerie value="#{dashboardUser.ltsDataSensor}"
-													var="point" point="#{point.valor}"
-													tickLabel="#{point.fecha}"
-													name="#{dashboardUser.sensorSeleccionado}" />
-
-												<hf:chartLegend position="ne" title="Valores"
-													layout="vertical" backgroundColor="#eeeeee" />
-												<hf:chartTooltip backgroundColor="#000000" shared="true">
-													<f:facet name="header">
-														<h:outputText escape="false"
-															value="&lt;table>&lt;tr>&lt;td style='color:white;font-weight:bold;padding-right:5px;'>{point.key}&lt;/td>&lt;td style='border-left:1px solid white;padding-left: 10px;'>" />
-													</f:facet>
-													<f:facet name="body">
-														<h:outputText
-															value="&lt;span style='color:white'>{series.name}: &lt;b>{point.y}#{dashboardUser.typeMedicion}&lt;/b>&lt;/span>&lt;br/>" />
-													</f:facet>
-												</hf:chartTooltip>
-											</hf:chart>
-										</b:row>
+										<div >
+				
+				<p:chart id ="grafica" type="line" model="#{dashboardUser.lineModel2}" style="height:700px;" widgetVar="chart" />
+				<br />    
+				<p:commandButton type="button" value="Reset" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
+			</div>
 									</center>
 										
 											<br/>

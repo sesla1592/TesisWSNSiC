@@ -217,7 +217,7 @@ public class PersonaControlador{
 		//http://localhost:8080/TesisWSNSiC/faces/login/sendEmail.xhtml
 		FacesContext contex = FacesContext.getCurrentInstance();
 		try{
-			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/sendEmail.xhtml");
+			contex.getExternalContext().redirect("/TesisWSNSiC/faces/login/resetPassword.xhtml");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

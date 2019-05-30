@@ -33,6 +33,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -58,10 +64,14 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaNodoDAO;
+import dao.ec.edu.ups.tesiswsnsic.SensorDAO;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import modelo.ec.edu.ups.tesiswsnsic.PersonaNodo;
+import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 import utilidades.ec.edu.ups.tesiswsnsic.DBConnection;
 import utilidades.ec.edu.ups.tesiswsnsic.Reporte;
 
@@ -71,6 +81,8 @@ public class DashboardUser {
 
 	@Inject
 	PersonaNodoDAO personaNodoDAO;
+	@Inject
+	NodoDAO nodoDAO;
 
 	private Marker marker;
 	Persona user;
@@ -78,7 +90,8 @@ public class DashboardUser {
 	List<Nodo> ltsMyNodos = new ArrayList<>();
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
-
+	List<Sensor> ltsSensor;
+	
 	boolean typeCalendar; // true= calendario ; false = combo
 
 	protected List<MedValFec> ltsDataSensor;
@@ -107,13 +120,30 @@ public class DashboardUser {
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLDITALIC);
 	private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
 	private static final Font headerTable = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
+	
+	private LineChartModel lineModel2 = new LineChartModel();
+	
+	///nuevo
+	List<Nodo> ltsAllNodos= new ArrayList<>();
 
+	@Inject
+	SensorDAO sensorDAO;
+	
 	@PostConstruct
 	public void init() {
 		try {
 			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSelected");
 			//System.out.println("user " + user.getId());
 			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+			ltsAllNodos = nodoDAO.getAllNodos();
+			for (int i = 0; i < ltsAllNodos.size(); i++) {
+				for (int j = 0; j < ltsMyNodos.size(); j++) {
+					if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
+						ltsAllNodos.remove(i);
+					}
+				}
+			}
+			////
 			System.out.println("lista nodos" + ltsMyNodos.size());
 			simpleModel = new DefaultMapModel();
 
@@ -128,6 +158,7 @@ public class DashboardUser {
 			System.out.println("Fecha: fin-->" + fechaFin);
 			// lineModel1 = new LineChartModel();
 			// createLineModels();
+			ltsSensor = sensorDAO.getAllSensor();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -323,6 +354,23 @@ public class DashboardUser {
 		this.typeCalendar = typeCalendar;
 	}
 
+	
+	public LineChartModel getLineModel2() {
+		return lineModel2;
+	}
+
+	public void setLineModel2(LineChartModel lineModel2) {
+		this.lineModel2 = lineModel2;
+	}
+	
+	public List<Nodo> getLtsAllNodos() {
+		return ltsAllNodos;
+	}
+
+	public void setLtsAllNodos(List<Nodo> ltsAllNodos) {
+		this.ltsAllNodos = ltsAllNodos;
+	}
+
 	public void addMarker() {
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
 			String descripcion = "Sensores\n";
@@ -372,10 +420,6 @@ public class DashboardUser {
 	}
 
 	public void grafica() {
-		// ltsSHum = new ArrayList<>();
-		// ltsSTemp = new ArrayList<>();
-		// ltsSLum = new ArrayList<>();
-		// ltsSRui = new ArrayList<>();
 		if (nodoSelected != null) {
 			System.out.println("boolean typo calendario " + typeCalendar);
 			if (typeCalendar == false) {
@@ -430,7 +474,7 @@ public class DashboardUser {
 
 				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
 				fec = obj.get("fecha").toString();
-				fec = fec.substring(0, 10);
+				//fec = fec.substring(0, 10);
 				for (int i = 0; i < ltsMediciones.length(); i++) {
 					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
 					medici = gsonObj2.get("m").toString();// va el nombre del sensor
@@ -449,6 +493,7 @@ public class DashboardUser {
 			}
 
 			System.out.println("Connection Succesfull");
+			graficaModel();
 		}
 
 	}
@@ -589,7 +634,7 @@ public class DashboardUser {
 
 			}
 		}
-
+		
 		System.out.println("tam reporte " + ltsReporte.size());
 	}
 
@@ -856,82 +901,122 @@ public class DashboardUser {
 		}
 	}
 
-	// prueba graficas
-	//
-	// private LineChartModel lineModel1;
-	//
-	// private void createLineModels() {
-	// lineModel1 = initLinearModel();
-	// lineModel1.setTitle("Linear Chart");
-	// lineModel1.setLegendPosition("e");
-	//
-	// lineModel1.setShowPointLabels(true);
-	// lineModel1.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-	//
-	// Axis yAxis = lineModel1.getAxis(AxisType.Y);
-	// yAxis.setMin(0);
-	// yAxis.setMax(70);
-	//
-	//
-	//
-	//
-	//
-	// yAxis = lineModel1.getAxis(AxisType.Y);
-	// yAxis.setLabel("Births");
-	//
-	// }
-	//
-	// private LineChartModel initLinearModel() {
-	// LineChartModel model = new LineChartModel();
-	//
-	// ChartSeries sTemperatura = new ChartSeries();
-	// sTemperatura.setLabel("Temperatura");
-	// for (int i = 0; i < ltsSTemp.size(); i++) {
-	// sTemperatura.set("n"+i, ltsSTemp.get(i).getValor());
-	// }//ltsSTemp.get(i).getFecha()
-	//
-	// ChartSeries sHumedad = new ChartSeries();
-	// sHumedad.setLabel("Humedad");
-	//
-	// for (int i = 0; i < ltsSHum.size(); i++) {
-	// sHumedad.set("n"+i, ltsSHum.get(i).getValor());
-	// }//ltsSHum.get(i).getFecha()
-	//
-	// ChartSeries sLuminosidad = new ChartSeries();
-	// sLuminosidad.setLabel("Luminosidad");
-	//
-	// for (int i = 0; i < ltsSLum.size(); i++) {
-	// sLuminosidad.set(ltsSLum.get(i).getFecha(), ltsSLum.get(i).getValor());
-	// }
-	//
-	// ChartSeries sRuido = new ChartSeries();
-	// sRuido.setLabel("Ruido");
-	// for (int i = 0; i < ltsSRui.size(); i++) {
-	// sRuido.set(ltsSRui.get(i).getFecha(), ltsSRui.get(i).getValor());
-	// }
-	//
-	// if(ltsSTemp.size()>0) {
-	// model.addSeries(sTemperatura);
-	// }
-	// if(ltsSHum.size()>0) {
-	// model.addSeries(sHumedad);
-	// }
-	// if(ltsSLum.size()>0) {
-	// model.addSeries(sLuminosidad);
-	// }
-	// if(ltsSRui.size()>0) {
-	// model.addSeries(sRuido);
-	// }
-	//
-	// return model;
-	// }
-	//
-	// public LineChartModel getLineModel1() {
-	// return lineModel1;
-	// }
-	//
-	// public void setLineModel1(LineChartModel lineModel1) {
-	// this.lineModel1 = lineModel1;
-	// }
+	
+	public void graficaModel() {
+		//filtro de 12 datos
+		
+		
+		Sensor sensor = new Sensor();
+		for (int i = 0; i < ltsSensor.size(); i++) {
+			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
+				sensor = ltsSensor.get(i);
+			}
+		}
+		int max = 0;
+		int min = 50;
+		for (int i = 0; i < ltsDataSensor.size(); i++) {
+			if (ltsDataSensor.get(i).getValor() > max) {
+				max = (int) ltsDataSensor.get(i).getValor();
+			}
+			if (ltsDataSensor.get(i).getValor() < min) {
+				min = (int) ltsDataSensor.get(i).getValor();
+			}
+		}
+		max = max + 5;
+		if (min <= 5) {
+			min = 0;
+		} else {
+			min = min - 5;
+		}
+		lineModel2 = initCategoryModel();
+		lineModel2.setTitle(sensorSeleccionado);
+		lineModel2.setAnimate(true);
+		lineModel2.setZoom(true);
+		lineModel2.setLegendPosition("e");
+		lineModel2.setShowPointLabels(true);
+		lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+		//sensorDescripcion = sensor.getDescripcion_web();
+
+		Axis yAxis = lineModel2.getAxis(AxisType.Y);
+		yAxis.setLabel(sensor.getMedicion());
+
+		yAxis.setMin(min);
+		yAxis.setMax(max);
+
+		DateAxis axis = new DateAxis();
+		axis.setTickAngle(-50);
+		axis.setTickFormat("%b %#d, %Y %H:%M");
+
+//		System.out.println("fecha dato "+ltsSData.get(0).fecha);
+//		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
+		lineModel2.getAxes().put(AxisType.X, axis);
+	}
+
+	private LineChartModel initCategoryModel() {
+		LineChartModel model = new LineChartModel();
+
+		ChartSeries series1 = new ChartSeries();
+		series1.setLabel(sensorSeleccionado);
+		System.out.println("tam lista "+ltsDataSensor.size());
+		while(ltsDataSensor.size()>=13) {
+			int pos = (int) (Math.random() * ltsDataSensor.size());
+			ltsDataSensor.remove(pos);
+		}
+		System.out.println("tam lista "+ltsDataSensor.size());
+		for (int i = 0; i < ltsDataSensor.size(); i++) {
+			series1.set(ltsDataSensor.get(i).getFecha(), ltsDataSensor.get(i).getValor());
+		}
+		// series1.set(1, 2);
+		// series1.set(2, 1);
+		// series1.set(3, 3);
+		// series1.set(4, 6);
+		// series1.set(5, 8);
+
+		model.addSeries(series1);
+
+		return model;
+	}
+	
+	public void asociarNodo(Nodo nodo) {
+		System.out.println("nodo "+nodo.getNombre());
+		PersonaNodo personaNodo = new PersonaNodo();
+		personaNodo.setEstado("true");
+		personaNodo.setNodo(nodo);
+		personaNodo.setPersona(user);
+		personaNodoDAO.insertPersonaNodo(personaNodo);
+		ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+		ltsAllNodos = nodoDAO.getAllNodos();
+		System.out.println("nodos que tengo "+ltsMyNodos.size());
+		System.out.println("nodos hay en la bd "+ltsAllNodos.size());
+		for (int i = 0; i < ltsAllNodos.size(); i++) {
+			for (int j = 0; j < ltsMyNodos.size(); j++) {
+				if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
+					ltsAllNodos.remove(i);
+				}
+			}
+		}
+		System.out.println("nodos filtrados "+ltsAllNodos.size());
+	}
+	
+	public void eliminarAsoNodo(Nodo nodo) {
+		System.out.println("=------> entro a alieminar");
+		PersonaNodo personNodo = personaNodoDAO.getByPersonNodo(user.getId(),nodo.getId());
+		if(personNodo==null) {
+			//error al buscar nodo
+			System.out.println("error al buscar pernona nodo");
+		}else{
+			personaNodoDAO.remove(personNodo);
+			ltsMyNodos = personaNodoDAO.ltsNodosByUser(user.getId());
+			ltsAllNodos = nodoDAO.getAllNodos();
+			for (int i = 0; i < ltsAllNodos.size(); i++) {
+				for (int j = 0; j < ltsMyNodos.size(); j++) {
+					if(ltsAllNodos.get(i).getId()==ltsMyNodos.get(j).getId()) {
+						ltsAllNodos.remove(i);
+					}
+				}
+			}
+			
+		}
+	}
 
 }

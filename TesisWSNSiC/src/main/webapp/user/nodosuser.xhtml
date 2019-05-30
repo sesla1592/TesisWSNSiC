@@ -412,8 +412,8 @@
 										nodos disponibles en nuestra base de datos WSNCloud la cual podrá asociarse y obtener
 										los datos correspondientes al mismo.</p>
                 
-                    <h:dataTable id="datalist" value="#{personaNodoControlador.ltsMyNodos}" var="item"
-                    styleClass="table-striped footable-res footable metro-blue" rendered="#{not empty personaNodoControlador.ltsMyNodos}">
+                    <h:dataTable id="datalist" value="#{dashboardUser.ltsMyNodos}" var="item"
+                    styleClass="table-striped footable-res footable metro-blue" rendered="#{not empty dashboardUser.ltsMyNodos}">
                                 
                         <h:column>
                             <f:facet name="header">
@@ -462,7 +462,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Accion(Eliminar)"/>
                             </f:facet><center>
-                            	<h:commandLink actionListener="#{personaNodoControlador.eliminarAsoNodo(item)}" 
+                            	<h:commandLink actionListener="#{dashboardUser.eliminarAsoNodo(item)}" 
                             	styleClass="glyphicon glyphicon-trash fa-2x" update="datalist"/></center>
 					           
                         </h:column>
@@ -493,11 +493,11 @@
   			
 		
             <h:form>
-            <h:outputText value="WSNCloud no posee mas nodos que mostrar!" rendered="#{empty personaNodoControlador.ltsAllNodos}" />
+            <h:outputText value="WSNCloud no posee mas nodos que mostrar!" rendered="#{empty dashboardUser.ltsAllNodos}" />
                
-            		<h:dataTable id="Alllist" value="#{personaNodoControlador.ltsAllNodos}" var="item"
+            		<h:dataTable id="Alllist" value="#{dashboardUser.ltsAllNodos}" var="item"
                                   styleClass="table-striped footable-res footable metro-blue"
-                                  rendered="#{not empty personaNodoControlador.ltsAllNodos}">
+                                  rendered="#{not empty dashboardUser.ltsAllNodos}">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Id"/>
@@ -531,7 +531,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Seleccionar"/>
                             </f:facet><center>
-                            <h:commandLink title="SELECCIONAR" update="NodoListForm Alllist" actionListener="#{personaNodoControlador.asociarNodo(item)}" 
+                            <h:commandLink title="SELECCIONAR" update="NodoListForm Alllist" actionListener="#{dashboardUser.asociarNodo(item)}" 
                             onclick="$('.nodoSelect').modal('hide');" styleClass="glyphicon glyphicon-check fa-2x"/></center>
                         </h:column>
                         

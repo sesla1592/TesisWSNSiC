@@ -546,7 +546,7 @@ public class DashboardAdmin {
 					System.out.println("fecha mensual " + fechaInicio);
 				}
 
-			} else {
+			} 
 				System.out.println("fecha por calendario " + fechaInicio.substring(0, fechaInicio.length() - 9) + " - "
 						+ fechaFin.substring(0, fechaFin.length() - 9));
 				// String fec_Inicio =
@@ -560,13 +560,13 @@ public class DashboardAdmin {
 				Period periodo = Period.between(fecha_Ini, fecha_fin);
 				System.out.println("total de dias " + periodo.getDays());
 				
-				if(periodo.getDays()>=0) {
+				if(periodo.getDays()>0) {
 					graficar=true;
 				}else {
 					graficar=false;
 				}
 				ltsSData = new ArrayList<>();
-			}
+			
 			System.out.println("hay q graficar "+graficar);
 			if(!graficar) {
 				//muestra un mensaje de fechas invalidas
