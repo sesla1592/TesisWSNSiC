@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +32,12 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -46,10 +55,12 @@ import com.mongodb.MongoClientURI;
 import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
 import dao.ec.edu.ups.tesiswsnsic.ComentariosDAO;
 import dao.ec.edu.ups.tesiswsnsic.PersonaNodoDAO;
+import dao.ec.edu.ups.tesiswsnsic.SensorDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
 import modelo.ec.edu.ups.tesiswsnsic.Comentario;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
 import modelo.ec.edu.ups.tesiswsnsic.Nodo;
+import modelo.ec.edu.ups.tesiswsnsic.Sensor;
 import utilidades.ec.edu.ups.tesiswsnsic.DBConnection;
 
 @ManagedBean
@@ -67,6 +78,9 @@ public class BlogDetalle {
 
 	@Inject
 	ComentariosDAO comentarioDAO;
+	
+	@Inject
+	SensorDAO sensorDAO;
 
 	public MapModel simpleModel;
 	public Nodo nodoSelected;
@@ -91,6 +105,9 @@ public class BlogDetalle {
 	String imageString;
 	boolean typeCalendar;
 	public String typeMedicion = "";
+	boolean graficar=false;
+	List<Sensor> ltsSensor;
+	private LineChartModel lineModel2 = new LineChartModel();
 
 	@PostConstruct
 	public void init() {
@@ -111,6 +128,7 @@ public class BlogDetalle {
 			//
 			ltsNodos = personaNodoDAO.ltsNodosByUser(blog.getEmpresa().getPersonas().get(0).getId());
 			System.out.println("tam nodos em " + ltsNodos.size());
+			ltsSensor = sensorDAO.getAllSensor();
 			ltsSData = new ArrayList<>();
 			simpleModel = new DefaultMapModel();
 			// recuperaDatos();
@@ -319,6 +337,14 @@ public class BlogDetalle {
 		this.typeMedicion = typeMedicion;
 	}
 
+	public LineChartModel getLineModel2() {
+		return lineModel2;
+	}
+
+	public void setLineModel2(LineChartModel lineModel2) {
+		this.lineModel2 = lineModel2;
+	}
+
 	public void addMarker() {
 		for (int i = 0; i < ltsNodos.size(); i++) {
 			String descripcion = "Sensores\n";
@@ -439,9 +465,35 @@ public class BlogDetalle {
 					System.out.println("fecha mensual " + fechaInicio);
 				}
 
-			} else {
-				System.out.println("fecha por calendario");
 			}
+			
+			System.out.println("fecha por calendario " + fechaInicio.substring(0, fechaInicio.length() - 9) + " - "
+					+ fechaFin.substring(0, fechaFin.length() - 9));
+			// String fec_Inicio =
+			// df.format(fechaInicio.substring(0,fechaInicio.length()-9));
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate fecha_Ini = LocalDate.parse(fechaInicio.substring(0, fechaInicio.length() - 9), fmt);
+
+			// String fec_fin = df.format(fechaFin.substring(0,fechaInicio.length()-9));
+			LocalDate fecha_fin = LocalDate.parse(fechaFin.substring(0, fechaFin.length() - 9), fmt);
+
+			Period periodo = Period.between(fecha_Ini, fecha_fin);
+			System.out.println("total de dias " + periodo.getDays());
+			
+			if(periodo.getDays()>0) {
+				graficar=true;
+			}else {
+				graficar=false;
+			}
+			ltsSData = new ArrayList<>();
+		
+		System.out.println("hay q graficar "+graficar);
+		if(!graficar) {
+			//muestra un mensaje de fechas invalidas
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Graficas","Fechas invalidas.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		
 			System.out.println("sensor seleccionado: " + sensorSeleccionado);
 			System.out.println("fecha inicio " + fechaInicio);
 			System.out.println("fecha fin " + fechaFin);
@@ -482,6 +534,7 @@ public class BlogDetalle {
 				// cont++;
 			}
 			System.out.println("Connection Succesfull");
+			grafica_datos();
 		}
 
 	}
@@ -518,5 +571,80 @@ public class BlogDetalle {
 		comentario = new Comentario();
 		ltsComentarios = comentarioDAO.allComByBlog(blog.getId());
 
+	}
+	
+	public void grafica_datos() {
+		//filtro de 12 datos
+		
+		
+		Sensor sensor = new Sensor();
+		for (int i = 0; i < ltsSensor.size(); i++) {
+			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
+				sensor = ltsSensor.get(i);
+			}
+		}
+		int max = 0;
+		int min = 50;
+		for (int i = 0; i < ltsSData.size(); i++) {
+			if (ltsSData.get(i).getValor() > max) {
+				max = (int) ltsSData.get(i).getValor();
+			}
+			if (ltsSData.get(i).getValor() < min) {
+				min = (int) ltsSData.get(i).getValor();
+			}
+		}
+		max = max + 5;
+		if (min <= 5) {
+			min = 0;
+		} else {
+			min = min - 5;
+		}
+		lineModel2 = initCategoryModel();
+		lineModel2.setTitle(sensorSeleccionado);
+		lineModel2.setAnimate(true);
+		lineModel2.setZoom(true);
+		lineModel2.setLegendPosition("e");
+		lineModel2.setShowPointLabels(true);
+		lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+		//sensorDescripcion = sensor.getDescripcion_web();
+
+		Axis yAxis = lineModel2.getAxis(AxisType.Y);
+		yAxis.setLabel(sensor.getMedicion());
+
+		yAxis.setMin(min);
+		yAxis.setMax(max);
+
+		DateAxis axis = new DateAxis();
+		axis.setTickAngle(-50);
+		axis.setTickFormat("%b %#d, %Y %H:%M");
+
+//		System.out.println("fecha dato "+ltsSData.get(0).fecha);
+//		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
+		lineModel2.getAxes().put(AxisType.X, axis);
+	}
+
+	private LineChartModel initCategoryModel() {
+		LineChartModel model = new LineChartModel();
+
+		ChartSeries series1 = new ChartSeries();
+		series1.setLabel(sensorSeleccionado);
+		System.out.println("tam lista "+ltsSData.size());
+		while(ltsSData.size()>=13) {
+			int pos = (int) (Math.random() * ltsSData.size());
+			ltsSData.remove(pos);
+		}
+		System.out.println("tam lista "+ltsSData.size());
+		for (int i = 0; i < ltsSData.size(); i++) {
+			series1.set(ltsSData.get(i).fecha, ltsSData.get(i).getValor());
+		}
+		// series1.set(1, 2);
+		// series1.set(2, 1);
+		// series1.set(3, 3);
+		// series1.set(4, 6);
+		// series1.set(5, 8);
+
+		model.addSeries(series1);
+
+		return model;
 	}
 }
