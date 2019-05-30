@@ -13,6 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -91,7 +94,7 @@ public class DashboardUser {
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
 	List<Sensor> ltsSensor;
-	
+	boolean graficar = false;
 	boolean typeCalendar; // true= calendario ; false = combo
 
 	protected List<MedValFec> ltsDataSensor;
@@ -447,9 +450,34 @@ public class DashboardUser {
 					System.out.println("fecha mensual " + fechaInicio);
 				}
 
-			} else {
-				System.out.println("fecha por calendario");
 			}
+			System.out.println("fecha por calendario " + fechaInicio.substring(0, fechaInicio.length() - 9) + " - "
+					+ fechaFin.substring(0, fechaFin.length() - 9));
+			// String fec_Inicio =
+			// df.format(fechaInicio.substring(0,fechaInicio.length()-9));
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate fecha_Ini = LocalDate.parse(fechaInicio.substring(0, fechaInicio.length() - 9), fmt);
+
+			// String fec_fin = df.format(fechaFin.substring(0,fechaInicio.length()-9));
+			LocalDate fecha_fin = LocalDate.parse(fechaFin.substring(0, fechaFin.length() - 9), fmt);
+
+			Period periodo = Period.between(fecha_Ini, fecha_fin);
+			System.out.println("total de dias " + periodo.getDays());
+			
+			if(periodo.getDays()>0) {
+				graficar=true;
+			}else {
+				graficar=false;
+			}
+			//ltsSData = new ArrayList<>();
+		
+		System.out.println("hay q graficar "+graficar);
+		if(!graficar) {
+			//muestra un mensaje de fechas invalidas
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Graficas","Fechas invalidas.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		
 			ltsDataSensor = new ArrayList<>();
 
 			System.out.println("sensor seleccionado: " + sensorSeleccionado);
