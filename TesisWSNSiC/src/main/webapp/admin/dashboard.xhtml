@@ -37,18 +37,17 @@
 								<i class="fas fa-fw fa-microchip"></i>
 							</div>
 
-							<div class="mr-5">Nodos</div>
+							<div class="mr-5"><h4>Nodos</h4></div>
 							<br />
 							<div class="mr-4">
-								Activos:
-								<h:outputLabel value="#{dashboardAdmin.nodoActivo}" />
+								<h7>Activos: </h7> <h:outputLabel value="#{dashboardAdmin.nodoActivo}" />
 							</div>
 							<div class="mr-3">
-								Inactivos:
+								<h7>Inactivos: </h7>
 								<h:outputLabel value="#{dashboardAdmin.nodoInactivo}" />
 							</div>
 							<div class="mr-2">
-								Total:
+								<h7>Total: </h7>
 								<h:outputLabel value="#{dashboardAdmin.ltsNodo.size()}" />
 							</div>
 						</div>
@@ -69,18 +68,18 @@
 							<div class="card-body-icon">
 								<i class="fas fa-fw fa-map-pin"></i>
 							</div>
-							<div class="mr-5">Sensores</div>
+							<div class="mr-5"><h4>Sensores</h4></div>
 							<br />
 							<div class="mr-4">
-								Activos:
+								<h7>Activos: </h7>
 								<h:outputLabel value="#{dashboardAdmin.sensorActivo}" />
 							</div>
 							<div class="mr-3">
-								Inactivos:
+								<h7>Inactivos: </h7>
 								<h:outputLabel value="#{dashboardAdmin.sensorInactivo}" />
 							</div>
 							<div class="mr-2">
-								Total:
+								<h7>Total: </h7>
 								<h:outputLabel value="#{dashboardAdmin.ltsSensor.size()}" />
 							</div>
 						</div>
@@ -100,14 +99,14 @@
 							<div class="card-body-icon">
 								<i class="fas fa-fw fa-building"></i>
 							</div>
-							<div class="mr-5">Empresas</div>
+							<div class="mr-5"><h4>Empresas</h4></div>
 							<br />
 							<div class="mr-4">
-								Activas:
+								<h7>Activas: </h7>
 								<h:outputLabel value="#{dashboardAdmin.empresaActiva} " />
 							</div>
 							<div class="mr-3">
-								Inactivos:
+								<h7>Inactivos: </h7>
 								<h:outputLabel value="#{dashboardAdmin.empresaInactiva} " />
 							</div>
 						</div>
@@ -133,18 +132,18 @@
 							<div class="card-body-icon">
 								<i class="fas fa-fw fa-hdd"></i>
 							</div>
-							<div class="mr-5">Memoria del Servidor de Aplicaciones</div>
+							<div class="mr-5"><h4>Servidor de Aplicaciones</h4></div>
 							<br />
 							<div class="mr-4">
-								Libre:
+								<h7>Libre: </h7>
 								<h:outputLabel value="#{dashboardAdmin.elibre} " />
 							</div>
 							<div class="mr-3">
-								Utilizado:
+								<h7>Utilizado: </h7>
 								<h:outputLabel value="#{dashboardAdmin.eutilizado} " />
 							</div>
 							<div class="mr-3">
-								Total:
+								<h7>Total: </h7>
 								<h:outputLabel value="#{dashboardAdmin.etotal} " />
 							</div>
 						</div>
@@ -183,12 +182,12 @@
 							update="listaNodos panelDatos" />
 						<p:gmapInfoWindow id="infoWindow">
 							<p:outputPanel
-								style="text-align: center; display: block; margin: auto">
+								style="text-align: center; display: block; margin: auto;">
 
-								<h:outputText value="#{dashboardAdmin.marker.title}" />
+								<i class="fas fa-home"> </i><h:outputText value="#{dashboardAdmin.marker.title}" />
 								<br />
 								
-								<h:outputText value="Sensores:"><span class="entypo-lamp"></span></h:outputText>
+								<i class="fas fa-tablet"> </i><h:outputText value="Sensores:"><span class="entypo-lamp"></span></h:outputText>
 								<br />
 								<ui:repeat value="#{dashboardAdmin.nodoSelected.ltssensores}"
 									var="sensores">
@@ -210,7 +209,7 @@
 
 				<div class="card mb-3">
 					<div class="card-header">
-						<i class="fas fa-table"></i> Listado general de todos los nodos ubicados en la ciudad de Cuenca
+						<i class="fas fa-table"></i> Listado de todos los nodos basados en su posicion.
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
@@ -287,13 +286,13 @@
 					<i class="fas fa-filter"></i> Opciones de Busqueda
 				</div>
 				<div class="card-body">
+				<center>
 					<div class="table-responsive">
-
 						<h:panelGrid columns="8" style="margin-bottom:10px"
 							cellpadding="5">
-							<p class="a">Seleccione los datos a graficar:</p>
+							<p class="a">Seleccione el sensor:</p>
 							<p:growl id="messages" showDetail="true" />
-							<center>
+							
 
 								<h:selectOneMenu id="listaNodos" class="custom-select"
 									value="#{dashboardAdmin.sensorSeleccionado}"
@@ -316,21 +315,22 @@
 
 
 
-								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+								<p:outputLabel for="fechaIni" value="Fecha inicial:" />
 								<p:calendar id="fechaIni" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
 									<p:ajax event="dateSelect"
 										listener="#{dashboardAdmin.onDateSelectInicio}" />
 								</p:calendar>
 
-								<p:outputLabel for="fechaFin" value="Fecha de fin:" />
+								<p:outputLabel for="fechaFin" value="Fecha final:" />
 								<p:calendar id="fechaFin" pattern="dd/MM/yyyy" locale="es" mode="popup" styleClass="calendar">
 									<p:ajax event="dateSelect"
 										listener="#{dashboardAdmin.onDateSelectFin}" />
 								</p:calendar>
-							</center>
+							
 						</h:panelGrid>
 
 						</div>
+						</center>
 						</div>
 						</div>
 
@@ -353,27 +353,34 @@
 								  </div> 
 								  <div class="card-body">
 								    <blockquote class="blockquote mb-0">
-								      <p>
+								    <center>
+								    <div class="div-mediciones">
+								    	<p class="elementoicono">
 								      	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
-											value="Temperatura: #{dashboardAdmin.datoTemp}" />
-											
-										<br />
+											value="Temperatura: #{dashboardAdmin.datoTemp}" /><i class="fas fa-fw fa-thermometer-full" id="menumediciones"></i>
+										</p>	
+										<p class="elementoicono">
 										<h:outputText rendered="#{dashboardAdmin.datoHum  != 0.0}"
-											value="Humedad: #{dashboardAdmin.datoHum}"/>
-										<br />
+											value="Humedad: #{dashboardAdmin.datoHum}"/><i class="fas fa-fw fa-cloud" id="menumediciones"></i>
+										</p>
+										<p class="elementoicono">
 										<h:outputText rendered="#{dashboardAdmin.datoLum != 0.0}"
-											value="Luminosidad: #{dashboardAdmin.datoLum}" />
-										<br />
+											value="Luminosidad: #{dashboardAdmin.datoLum}" /><i class="fas fa-fw fa-sun" id="menumediciones"></i>
+										</p>
+										<p class="elementoicono">
 										<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}"
-											value="Ruido: #{dashboardAdmin.datoRui}" />
-								      
+											value="Ruido: #{dashboardAdmin.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
 								      </p>
+								    </div>
+								    </center>
+								    									<div class="containerdesc">
+								<h:outputText id="descripcion_sensor" style="font-size: 25px" value="#{dashboardAdmin.sensorDescripcion}" />	
+									</div>
 								    </blockquote>
 								  </div>
 								</div>
 									
-								<h:outputText id="descripcion_sensor" value="#{dashboardAdmin.sensorDescripcion}" />	
-									
+
        								
 										
 									</h:panelGroup>
