@@ -12,7 +12,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.apache.poi.util.IOUtils;
 import org.primefaces.event.FileUploadEvent;
@@ -21,15 +20,12 @@ import dao.ec.edu.ups.tesiswsnsic.BlogDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Blog;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
-import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
 
 @ManagedBean
-public class BlogControlador {
+public class BlogControladorEditar {
 
-	Persona user;
-	Empresa empresa;
+	
 	Blog nuevoblog;
-	List<Blog> ltsMyBlogs;
 	
 	@Inject
 	BlogDAO blogDao;
@@ -38,16 +34,12 @@ public class BlogControlador {
 	@PostConstruct
 	public void init() {
 		try {
-			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSelected");
-			empresa =  user.getEmpresa();
-			System.out.println("empresa usuario" + user.getEmpresa().toString());
-			nuevoblog = new Blog();
-			ltsMyBlogs = blogDao.blogByEmpresa(user.getEmpresa().getId());
-			System.out.println("blogs " + ltsMyBlogs.size());
+			nuevoblog = (Blog) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("blogEdit");
+			System.out.println("empresa usuario" + nuevoblog.toString());
 			
 		}catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("error la extraer usuario");
+			System.out.println("error la extraer blog");
 			e.printStackTrace();
 		}
 	}
@@ -67,49 +59,20 @@ public class BlogControlador {
 	}
 
 
-	public List<Blog> getLtsMyBlogs() {
-		return ltsMyBlogs;
-	}
-
-
-	public void setLtsMyBlogs(List<Blog> ltsMyBlogs) {
-		this.ltsMyBlogs = ltsMyBlogs;
-	}
-
-
-	public void actualizar(Blog blog) {
+	public void actualizar() {
 		try {
 //			byte [] bytes;
 //			bytes = IOUtils.toByteArray(fileImag);
 //	        // Store image to DB
 //	        blog.setImagen(bytes);
-	        blogDao.update(blog);
+	        blogDao.update(nuevoblog);
 	        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Succesful", "Informacion Actualizada.");
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	        FacesContext contex = FacesContext.getCurrentInstance();
+	        contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/listaBlogs.xhtml");
 	        
 		}catch (Exception e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Error al guardar su informacion.");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-			e.printStackTrace();
-			// TODO: handle exception
-		}
-	}
-
-	public void crearBlog() {
-		try {
-//			byte [] bytes;
-//			bytes = IOUtils.toByteArray(fileImag);
-//	        // Store image to DB
-//	        blog.setImagen(bytes);
-			nuevoblog.setEmpresa(empresa);
-	        blogDao.insert(nuevoblog);
-	        nuevoblog = new Blog();
-	        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Succesful", "Blog Creado.");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	        
-	        
-		}catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Error al crearblog.");
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 			e.printStackTrace();
 			// TODO: handle exception
@@ -134,25 +97,4 @@ public class BlogControlador {
 				
 			}
 	    }
-	 public void irEditar(Blog blog) {
-		 try{
-				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("blogEdit", blog);
-				FacesContext contex = FacesContext.getCurrentInstance();
-				contex.getExternalContext().redirect("/TesisWSNSiC/faces/user/editBlog.xhtml");
-			}catch (Exception e) {
-				// TODO: handle exception
-			}
-	 }
-	 
-	 public void eliminarBlog(Blog blog) {
-		 try {
-			 blogDao.remove(blog);
-			 ltsMyBlogs = blogDao.blogByEmpresa(user.getEmpresa().getId());
-				System.out.println("blogs " + ltsMyBlogs.size());
-		 }catch (Exception e) {
-			 e.printStackTrace();
-			// TODO: handle exception
-		}
-	 }
 }

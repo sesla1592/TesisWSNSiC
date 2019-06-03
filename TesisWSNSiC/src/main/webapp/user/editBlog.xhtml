@@ -389,7 +389,7 @@
                                     <h2>Primer paso: Nombre del Blog</h2>
                                 <section><center>
                                        <p class="b">Nombre del Blog</p> <br/>
-										<h:inputText value="#{blogControlador.nuevoblog.nombreBlog}"  
+										<h:inputText value="#{blogControladorEditar.nuevoblog.nombreBlog}"  
 										pt:placeholder="Ingres un nombre para el blog" 
 										class="form-control" style="width:400px;height:20px"
 										maxlength="30"/>
@@ -404,10 +404,10 @@
                                     <h2>Segundo paso: Descripcion del Blog</h2>
                                 <section><center>
                                 		<p class="b">Ingrese una breve descripcion del blog (max 100 caracteres)</p>
-									<h:inputTextarea value="#{blogControlador.nuevoblog.breve_descripcion}" 
+									<h:inputTextarea value="#{blogControladorEditar.nuevoblog.breve_descripcion}" 
 									pt:placeholder="Contenido" style="width:700px;height:50px"/>
                                      <p class="b">Ingrese el contenido del blog</p>
-									<h:inputTextarea value="#{blogControlador.nuevoblog.descripcion}" 
+									<h:inputTextarea value="#{blogControladorEditar.nuevoblog.descripcion}" 
 									pt:placeholder="Contenido" style="width:700px;height:150px"/>
 									</center>
 										<div class="alert alert-info">
@@ -421,7 +421,7 @@
                                     <h2>Tercer Paso: Estado del Blog</h2>
                                     <section><center>
 				                    <p class="b">Estado del Blog</p><br/><br/>
-									<h:selectOneMenu id="fecha" value = "#{blogControlador.nuevoblog.estado}"
+									<h:selectOneMenu id="fecha" value = "#{blogControladorEditar.nuevoblog.estado}"
 									class="form-control" style="width:200px"> 
 										<f:selectItem itemValue = "true" itemLabel = "activo" /> 
 										<f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
@@ -452,7 +452,7 @@
 										
                                 	</div>
                                 	<center>
-                                	<p:fileUpload fileUploadListener="#{blogControlador.handleFileUpload}" 
+                                	<p:fileUpload fileUploadListener="#{blogControladorEditar.handleFileUpload}" 
 							mode="advanced" dragDropSupport="false" style="width:400px"
                  			 update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
  								<p:growl id="messages" showDetail="true" /><br/><br/><br/><br/>
@@ -460,7 +460,7 @@
 										
                                 	
                                 	
-                                	 <h:commandLink action="#{blogControlador.crearBlog()}" 
+                                	 <h:commandLink action="#{blogControladorEditar.actualizar()}" 
                                 	 title="GUARDAR Blog"
                                 	 styleClass="glyphicon glyphicon-save fa-2x"/>
                                 	</center>

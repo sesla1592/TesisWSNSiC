@@ -151,7 +151,7 @@ public class EmpresaControlador {
 			blog.setVisitas(0);
 			blog.setFechaPub(fechaPublicacion);
 			blog = blogDAO.insert(blog);
-			empresa.setBlog(blog);
+			//empresa.setBlog(blog);
 			empresa.setEstado("activo");
 			empresa = empresaDAO.insertEmpresa(empresa);
 			System.out.println("em ->"+empresa.toString());

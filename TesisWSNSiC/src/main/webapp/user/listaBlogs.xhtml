@@ -385,85 +385,52 @@
                            <div class="body-nest" id="basic">
  							<h:form>
  							
-                                <div id="wizard">
-                                    <h2>Primer paso: Nombre del Blog</h2>
-                                <section><center>
-                                       <p class="b">Nombre del Blog</p> <br/>
-										<h:inputText value="#{blogControlador.nuevoblog.nombreBlog}"  
-										pt:placeholder="Ingres un nombre para el blog" 
-										class="form-control" style="width:400px;height:20px"
-										maxlength="30"/>
-										</center><br/><br/><br/><br/><br/>
-										<div class="alert alert-warning">
-											<button data-dismiss="alert" class="close" type="button">×</button>
-											<span class="entypo-cancel-circled"></span> <strong>Warning!</strong>&nbsp;&nbsp;Ingrese
-											el nombre de encabezado del sitio blog con un maximo de 30 caracteres.
-										</div>
-								</section>
-
-                                    <h2>Segundo paso: Descripcion del Blog</h2>
-                                <section><center>
-                                		<p class="b">Ingrese una breve descripcion del blog (max 100 caracteres)</p>
-									<h:inputTextarea value="#{blogControlador.nuevoblog.breve_descripcion}" 
-									pt:placeholder="Contenido" style="width:700px;height:50px"/>
-                                     <p class="b">Ingrese el contenido del blog</p>
-									<h:inputTextarea value="#{blogControlador.nuevoblog.descripcion}" 
-									pt:placeholder="Contenido" style="width:700px;height:150px"/>
-									</center>
-										<div class="alert alert-info">
-										<button data-dismiss="alert" class="close" type="button">×</button>
-											<span class="entypo-cancel-circled"></span> <strong>Warning!</strong>&nbsp;&nbsp;Ingrese
-											el contenido relacionado con el tema en el paso 1.
-										</div>
-
-										</section>
-
-                                    <h2>Tercer Paso: Estado del Blog</h2>
-                                    <section><center>
-				                    <p class="b">Estado del Blog</p><br/><br/>
-									<h:selectOneMenu id="fecha" value = "#{blogControlador.nuevoblog.estado}"
-									class="form-control" style="width:200px"> 
-										<f:selectItem itemValue = "true" itemLabel = "activo" /> 
-										<f:selectItem itemValue = "false" itemLabel = "inactivo" /> 
-                                        </h:selectOneMenu></center><br/><br/><br/><br/><br/>
-
-										<div class="alert alert-success">
-											<button data-dismiss="alert" class="close" type="button">×</button>
-											<span class="entypo-thumbs-up"></span> <strong>Casi 
-												Listo!</strong>&nbsp;&nbsp;Activar sitio blog visible al publico, sitio inactivo
-												no sera observado por ningun usuario el contenido expuesto.
-										</div>
-
-										</section>
-
-                                    <h2>Cuarto paso: Logo Blog</h2>
-                                    <section><center>
-                                     <p class="b">Imagen del blog</p><br/><br/>
-											</center>
-										</section>
-										
-										
-										<br/><br/><br/>
-										
-                                    
-                                    
-                                     
-							
-										
-                                	</div>
+                                
                                 	<center>
-                                	<p:fileUpload fileUploadListener="#{blogControlador.handleFileUpload}" 
-							mode="advanced" dragDropSupport="false" style="width:400px"
-                 			 update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
- 								<p:growl id="messages" showDetail="true" /><br/><br/><br/><br/>
+ 								<p:growl id="messages" showDetail="true" />
+								<h2>Lista de blogs</h2>
+								
+								<p:dataTable id="datalist" value="#{blogControlador.ltsMyBlogs}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="5"
+                                 rowsPerPageTemplate="10,20,30,40,50">
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreBlog}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Editar"/>
+                            </f:facet>
+                            <h:commandButton action="#{blogControlador.irEditar(item)}" value="Editar" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Eliminar"/>
+                            </f:facet>
+                            <p:commandButton value="Eliminar" action="#{blogControlador.eliminarBlog(item)}" update="datalist"/>
+                        </p:column>
+                        <f:facet name="footer">
+							<h:commandLink action="myBlog.xhtml" value="crear blog">
+							</h:commandLink>
 
-										
+							</f:facet>
+                    </p:dataTable>		
                                 	
                                 	
-                                	 <h:commandLink action="#{blogControlador.crearBlog()}" 
-                                	 title="GUARDAR Blog"
-                                	 styleClass="glyphicon glyphicon-save fa-2x"/>
+                                	
                                 	</center>
+								
 								</h:form>
 								<br/>
 								<br/>

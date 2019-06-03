@@ -38,9 +38,10 @@ public class BlogDAO {
 	
 	public void remove(Blog blog){
 		try {
-			em.remove(blog);
+			em.remove(em.contains(blog) ? blog : em.merge(blog));
 		} catch (Exception e) {
 			System.out.println("error al eliminar "+this.getClass().getName());
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 	}
@@ -75,6 +76,21 @@ public class BlogDAO {
 					"Select b from Blog b where b.estado = true order by b.visitas DESC", Blog.class);
 			//query.setParameter("codeNodo", codeNodo);
 			query.setMaxResults(3);
+			List<Blog> ltsBlogs = query.getResultList();
+			return ltsBlogs;
+		} catch (Exception e) {
+			e.printStackTrace();
+			//e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Blog> blogByEmpresa(int idEmpresa){
+		try {
+			TypedQuery<Blog> query = em.createQuery(
+					"Select b from Blog b where b.estado = true and empresa.id = :idEmpresa", Blog.class);
+			query.setParameter("idEmpresa", idEmpresa);
+			
 			List<Blog> ltsBlogs = query.getResultList();
 			return ltsBlogs;
 		} catch (Exception e) {

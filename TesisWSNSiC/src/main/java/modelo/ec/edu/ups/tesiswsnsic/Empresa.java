@@ -2,7 +2,6 @@ package modelo.ec.edu.ups.tesiswsnsic;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -60,9 +58,9 @@ public class Empresa {
 	@JoinColumn(name = "emp_nod_fk", referencedColumnName = "emp_id")
 	private List<Nodo> listaNodos;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "blo_id")
-	private Blog blog;
+	@OneToMany(cascade = (javax.persistence.CascadeType.ALL), fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_blo_fk", referencedColumnName = "emp_id")
+	private List<Blog> ltsBlogs;
 
 	public int getId() {
 		return id;
@@ -152,15 +150,6 @@ public class Empresa {
 		this.listaNodos = listaNodos;
 	}
 
-	
-	public Blog getBlog() {
-		return blog;
-	}
-
-	public void setBlog(Blog blog) {
-		this.blog = blog;
-	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -169,11 +158,18 @@ public class Empresa {
 		this.descripcion = descripcion;
 	}
 
+	public List<Blog> getLtsBlogs() {
+		return ltsBlogs;
+	}
+
+	public void setLtsBlogs(List<Blog> ltsBlogs) {
+		this.ltsBlogs = ltsBlogs;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((blog == null) ? 0 : blog.hashCode());
 		result = prime * result + ((ciudad == null) ? 0 : ciudad.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
@@ -181,6 +177,7 @@ public class Empresa {
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((listaNodos == null) ? 0 : listaNodos.hashCode());
+		result = prime * result + ((ltsBlogs == null) ? 0 : ltsBlogs.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
 		result = prime * result + ((personas == null) ? 0 : personas.hashCode());
@@ -198,11 +195,6 @@ public class Empresa {
 		if (getClass() != obj.getClass())
 			return false;
 		Empresa other = (Empresa) obj;
-		if (blog == null) {
-			if (other.blog != null)
-				return false;
-		} else if (!blog.equals(other.blog))
-			return false;
 		if (ciudad == null) {
 			if (other.ciudad != null)
 				return false;
@@ -234,6 +226,11 @@ public class Empresa {
 			if (other.listaNodos != null)
 				return false;
 		} else if (!listaNodos.equals(other.listaNodos))
+			return false;
+		if (ltsBlogs == null) {
+			if (other.ltsBlogs != null)
+				return false;
+		} else if (!ltsBlogs.equals(other.ltsBlogs))
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)
