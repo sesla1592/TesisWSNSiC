@@ -44,7 +44,6 @@ public class NodoControlador {
 	Nodo nodoSelected;
 	boolean insert;
 	
-	private static String resultadoBusqueda;
 	private List<Nodo> ltsNodo;
 	String codNodo="";
 	

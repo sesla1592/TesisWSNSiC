@@ -26,7 +26,12 @@ public class PublicBlog {
 	public void init() {
 		ltsBlogs = blogDAO.allBlogs();
 		for (int i = 0; i < ltsBlogs.size(); i++) {
-			ltsBlogs.get(i).setImgBase64(new String(Base64.encodeBase64(ltsBlogs.get(i).getImagen())));
+			try {
+				ltsBlogs.get(i).setImgBase64(new String(Base64.encodeBase64(ltsBlogs.get(i).getImagen())));
+			}catch (Exception e) {
+				ltsBlogs.get(i).setImgBase64("");
+				// TODO: handle exception
+			}
 			//imageString= new String(Base64.encodeBase64(blog.getImagen()));
 		}
 		System.out.println(ltsBlogs.size());

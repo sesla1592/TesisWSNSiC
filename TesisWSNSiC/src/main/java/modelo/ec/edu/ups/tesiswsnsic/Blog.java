@@ -219,9 +219,11 @@ public class Blog {
 	@Override
 	public String toString() {
 		return "Blog [id=" + id + ", nombreBlog=" + nombreBlog + ", descripcion=" + descripcion + ", breve_descripcion="
-				+ breve_descripcion  + ", fechaPub=" + fechaPub + ", visitas="
+				+ breve_descripcion + ", imagen=" + Arrays.toString(imagen) + ", fechaPub=" + fechaPub + ", visitas="
 				+ visitas + ", estado=" + estado + "]";
 	}
+
+	
 	
 	
 	
