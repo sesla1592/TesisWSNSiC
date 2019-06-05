@@ -1139,6 +1139,10 @@ public class DashboardUser {
 			bytes = IOUtils.toByteArray(fileImag);
 	        // Store image to DB
 	        nuevoblog.setImagen(bytes);
+	        Date date = new Date();
+	        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	        //System.out.println("Fecha: "+dateFormat.format(date));
+	        nuevoblog.setFechaPub(dateFormat.format(date));
 	        blogDao.insert(nuevoblog);
 	        System.out.println(nuevoblog.toString());
 	        nuevoblog = new Blog();
