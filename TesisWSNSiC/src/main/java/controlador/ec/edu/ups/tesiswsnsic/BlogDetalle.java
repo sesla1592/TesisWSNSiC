@@ -81,9 +81,13 @@ public class BlogDetalle {
 	
 	@Inject
 	SensorDAO sensorDAO;
+	
+	Sensor sensor = new Sensor();
 
 	public MapModel simpleModel;
 	public Nodo nodoSelected;
+	
+	private String sensorDescripcion;
 
 	protected List<MedValFec> ltsSData;
 	public String fechaInicio;
@@ -155,6 +159,14 @@ public class BlogDetalle {
 			System.out.println("error la extraer blog");
 		}
 
+	}
+
+	public String getSensorDescripcion() {
+		return sensorDescripcion;
+	}
+
+	public void setSensorDescripcion(String sensorDescripcion) {
+		this.sensorDescripcion = sensorDescripcion;
 	}
 
 	private StreamedContent dbImage;
@@ -368,6 +380,7 @@ public class BlogDetalle {
 		for (int i = 0; i < nodoSelected.getLtssensores().size(); i++) {
 			ltsSensores.add("" + nodoSelected.getLtssensores().get(i).getNombreCompleto());
 			// nodoSelected.getLtssensores().size()
+
 		}
 
 		for (int i = 0; i < ltsSensores.size(); i++) {
@@ -532,7 +545,7 @@ public class BlogDetalle {
 				}
 
 				// cont++;
-			}
+			}			
 			System.out.println("Connection Succesfull");
 			grafica_datos();
 		}
@@ -577,7 +590,7 @@ public class BlogDetalle {
 		//filtro de 12 datos
 		
 		
-		Sensor sensor = new Sensor();
+		sensor = new Sensor();
 		for (int i = 0; i < ltsSensor.size(); i++) {
 			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
 				sensor = ltsSensor.get(i);
@@ -599,6 +612,9 @@ public class BlogDetalle {
 		} else {
 			min = min - 5;
 		}
+		
+		sensorDescripcion = sensor.getDescripcion_web();
+		System.out.println("SENSOR DESCRIPCION: " +sensorDescripcion);
 		lineModel2 = initCategoryModel();
 		lineModel2.setTitle(sensorSeleccionado);
 		lineModel2.setAnimate(true);
