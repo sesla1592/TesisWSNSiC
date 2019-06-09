@@ -692,7 +692,7 @@ public class DashboardAdmin {
 		DateAxis axis = new DateAxis();
 		axis.setTickAngle(-50);
 		axis.setTickFormat("%b %#d, %Y %H:%M");
-
+		axis.setMax(fechaFin);
 //		System.out.println("fecha dato "+ltsSData.get(0).fecha);
 //		System.out.println("fecha dato "+ltsSData.get(ltsSData.size()-1).fecha);
 		lineModel2.getAxes().put(AxisType.X, axis);

@@ -19,7 +19,7 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="css/bootstrap.css" />
 	<link rel="stylesheet" href="css/themify-icons.css" />
-	<link rel="stylesheet" href="css/flaticon.css" />
+	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
 	<link rel="stylesheet" href="vendors/fontawesome/css/all.min.css" />
 	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
 	<link rel="stylesheet" href="vendors/animate-css/animate.css" />
@@ -186,6 +186,7 @@
 								</h:selectOneMenu>
 								<h:selectOneMenu value="#{blogDetalle.tipoFecha}"
 									valueChangeListener="#{blogDetalle.cambioDeFecha}">
+									<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
 									<f:selectItem itemValue="Diario" itemLabel="Diario" />
 									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
 									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
@@ -204,9 +205,9 @@
 									<p:ajax event="dateSelect"
 										listener="#{blogDetalle.onDateSelectFin}" />
 								</p:calendar>
-								<br />
-								<br />
-								<br />
+<div>								
+								<h:outputText id="descripcion_sensor" style="font-size: 15px" value="#{blogDetalle.sensorDescripcion}" />
+</div>
 								<br />
 								<center><h2>MEDICIONES SENSORES EN LA NUBE</h2>
 								
@@ -218,7 +219,7 @@
 								
 								</center>
 								<b:commandButton action="#{blogDetalle.grafica()}"
-									value="Graficar" update="grafica messages" look="primary">
+									value="Graficar" update="grafica messages descripcion_sensor" look="primary">
 								</b:commandButton>
 
 
