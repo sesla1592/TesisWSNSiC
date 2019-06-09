@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,6 +41,8 @@ public class RegistDatosWSREST {
 	private static String smssat = "Saved on the cloud SiC";
 	private JsonObject gsonObj;
 	private Document doc;
+	
+	List<String>dataws = new ArrayList<>();
 
 	/*
 	 * PERMITE PERSISTIR A LA BASE DE DATOS QUE SE ENCUENTRA EN LA NUBE, MONGO DB Y POSTGRESQL
@@ -165,12 +169,13 @@ public class RegistDatosWSREST {
 	/*http://localhost:8080/TesisWSNSiC/rs/Registrodatos/RegistrarPOST
 	 * */
 	@POST
-	@Path("/RegistrarPOST")
+	@Path("RegistrarPOST")
 	@Produces("application/json")
 	//@Consumes("application/json")
 	public Respuesta obtenerDatosNueva(String nod_detalles) {
 		Respuesta r = new Respuesta();
-
+		dataws = new ArrayList<>();
+		JsonArray gsonArr = new JsonArray();
 		try {
 	    	MongoClient mongoClient = new MongoClient("35.199.91.181",27017);
 	    	System.out.println("Connection Mongo Client");
@@ -180,51 +185,35 @@ public class RegistDatosWSREST {
 	    	System.out.println("Sucess get Collection");
 	    	System.out.println(collection.getNamespace());
 	    	System.out.println("RECIBIDO  "+nod_detalles.toString());
-	    	conv = nod_detalles.toString();
+	    	nod_detalles = nod_detalles.replace("\\", "");
+	    	nod_detalles = nod_detalles.replace("[\"", "[");
+	    	nod_detalles = nod_detalles.replace("\"]", "]");
+	    	nod_detalles = nod_detalles.replace("}\",\"{", "},{");
+	    	System.out.println("NOD_DETALLES: "+nod_detalles);
+	    	JsonParser parser = new JsonParser();
+	    	try {
+		    	gsonArr = parser.parse(nod_detalles).getAsJsonArray();
+		    	System.out.println("GSONARR: "+gsonArr);
+	    	}catch (Exception e) {
+	    		e.printStackTrace();
+				// TODO: handle exception
+			}
 
-	    	if(conv.contains("u'")) {
-		    	String converter1 = nod_detalles.toString().replace("u'", "\"");
-//		    	System.out.println("CONVERTER1:" +converter1);
-		    	String converter2 = String.valueOf(converter1.replace("'", "\""));
-//		    	System.out.println("CONV2: "+converter2.toString());
-		    	String converter3 = converter2.substring(1, converter2.length()-1);
-//		    	System.out.println("FCONV: "+converter3);
-
-		    	try {
-		    		doc = Document.parse(converter3);
-		    		String djson = "["+doc.toJson()+"]";
-		    		JsonParser parser = new JsonParser();
-		    		JsonArray gsonArr = parser.parse(djson).getAsJsonArray();
-		    		for(JsonElement obj : gsonArr){
-		    			gsonObj = obj.getAsJsonObject();
-		    			gsonObj.remove("estadocloud");
-		    			System.out.println("CONVERTED JSON:  "+gsonObj);
-		    			String gsonObj1 =  String.valueOf(gsonObj);
-		    			doc = Document.parse(gsonObj1);
-		    			System.out.println("CONVERTIDO A DOCUMENTO:  "+doc);
-		    	    	collection.insertOne(doc);
-		    	    	System.out.println("GRABADO EN LA  NUBE...");
-		    			r.setMensaje(smssat);
-		    		}
-				} catch (Exception e) {
-					r.setCodigo(-90);
-					r.setMensaje("Error al almacenar CLOUD SiC");
-					e.printStackTrace();
-				}
-
-	    	}else{
-	    		System.out.println("NORMAL:  "+conv);
+	    	for(JsonElement obj : gsonArr) {
+	    		JsonObject gsonObj = obj.getAsJsonObject();
+	    		System.out.println("GSON OBJECT: "+gsonObj);
+	    		conv = gsonObj.toString();
 	    		doc = Document.parse(conv);
-	    		System.out.println("MISMO: "+doc);
-		    	collection.insertOne(doc);
-		    	System.out.println("GRABADO EN LA  NUBE...");
-				r.setMensaje(smssat);
+	    		collection.insertOne(doc);
+	    		System.out.println("Almacenado en el Cloud Publico");
+	    		r.setMensaje(smssat);
 	    	}
 		}catch(JSONException e) {
 			r.setCodigo(-90);
 			r.setMensaje("Error al almacenar CLOUD SiC");
-			 e.printStackTrace();
-		}	
+			 e.printStackTrace();		 
+		}			
+		
 		return r;		
 	}
 	
