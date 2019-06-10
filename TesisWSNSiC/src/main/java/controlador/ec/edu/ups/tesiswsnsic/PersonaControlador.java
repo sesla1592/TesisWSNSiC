@@ -223,6 +223,19 @@ public class PersonaControlador{
 			// TODO: handle exception
 		}
 	}
+	
+	public void redirecEditAdmin() {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+	        //HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+			HttpSession session = SessionUtils.getSession();
+	        facesContext.getExternalContext().redirect("/TesisWSNSiC/faces/admin/editAdmin.xhtml");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	* Metodo para cerrar sesion 
 	* pozo

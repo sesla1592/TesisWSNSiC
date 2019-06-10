@@ -15,7 +15,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
 
-    <title>WSISiC - Dashboard Developer</title>
+    <title>WSNSiC - Dashboard Developer</title>
 	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
     <!-- Bootstrap core CSS-->	
     <link href="/TesisWSNSiC/faces/dashboard/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
@@ -53,7 +53,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <h:commandLink action="#{personaControlador.logout()}" value="Editar usuario" class="dropdown-item" data-toggle="modal"/>
+          <h:commandLink action="#{personaControlador.redirecEditAdmin()}" value="Editar usuario" class="dropdown-item" data-toggle="modal"/>
             <div class="dropdown-divider"></div>
             <a>
             <h:commandLink action="#{personaControlador.logout()}" value="Cerrar sesion" class="dropdown-item" data-toggle="modal"/></a>
