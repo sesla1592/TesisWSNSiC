@@ -348,7 +348,7 @@
 									
 									
 								<div class="card">
-								  <div class="card-header">
+								  <div class="card-header" >
 								    Informacion del Nodo (#{dashboardAdmin.nodoSelected.nombre})
 								  </div> 
 								  <div class="card-body">
@@ -393,7 +393,7 @@
 				<h:outputText id="descripcion" value="#{dashboardAdmin.sensorDescripcion}" />
 				<p:chart id ="grafica" type="line" model="#{dashboardAdmin.lineModel2}" style="height:700px;" widgetVar="chart" />
 				<br />    
-				<p:commandButton type="button" value="Reset" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
+				<p:commandButton type="button" value="Resetear" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
 			</div>
 										</center>
 									</p:row>
@@ -458,6 +458,29 @@
 			font-size: 48px;
 			color: #C23B22;
 		}
+		
+		.jqplot-target {
+		    color: #666;
+		    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+		    font-size: 15px;
+		}
+		.jqplot-yaxis-label {
+    		margin-right: 5px;
+    		font-size: 15px;
+    		position: absolute;
+		}
+		table.jqplot-table-legend, table.jqplot-cursor-legend {
+    		font-size: 20px;
+		}
+		.jqplot-axis {
+    		font-size: 30px;
+		}
+		.jqplot-target {
+    		color: #666;
+    		font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    		font-size: 20px;
+	}
+		
 	</style>
 
 	<script type="text/javascript">

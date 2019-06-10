@@ -116,7 +116,13 @@ public class DashboardAdmin {
 			System.out.println("user " + user.toString());
 			// cantidad de nodos
 			ltsNodo = nodoDAO.getAllNodos();
-			nodoActivo = ltsNodo.size();
+			for(int i=0; i<ltsNodo.size();i++) {
+				if(ltsNodo.get(i).isEstado()) {
+					nodoActivo++;
+				}else {
+					nodoInactivo++;
+				}
+			}
 			simpleModel = new DefaultMapModel();
 			// cantidad de sensores
 			ltsSensor = sensorDAO.getAllSensor();
