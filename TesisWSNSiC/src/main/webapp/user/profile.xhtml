@@ -152,9 +152,7 @@
 							<div id="button-bg13"></div>
 						</li>
 					</ul></li>
-				<li class="hidden-xs"><a class="toggle-left" href="#"> <span
-						style="font-size: 20px;" class="entypo-list-add"></span>
-				</a></li>
+				
 			</ul>
 
             </div>
@@ -213,8 +211,8 @@
 										href="myBlog.xhtml" title="Blog List"><i
 											class="entypo-doc-text"></i><span>Crear Blog</span></a></li>
 									<li><a class="tooltip-tip2 ajax-load"
-										href="blog-detail.xhtml" title="Blog Detail"><i
-											class="entypo-newspaper"></i><span>Blog Details</span></a></li>
+									href="listaBlogs.xhtml" title="Mis blogs"><i
+										class="entypo-newspaper"></i><span>Mis Blogs</span></a></li>
 								</ul></li>
 									<li><a class="tooltip-tip ajax-load" href="nodosuser.xhtml"
 								title="Nodos"> <i class="glyphicon glyphicon-search"></i> <span>Nodos</span>
@@ -291,41 +289,16 @@
                             <div class="alert">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <span class="tittle-alert entypo-info-circled"></span>
-                                Welcome back,&nbsp;
-                                <strong>#{dashboardUser.user.nombre}</strong>&nbsp;&nbsp;Your last sig in at Yesterday, 16:54 PM
+                                Bienvenido nuevamente,&nbsp;
+                                <strong>#{dashboardUser.user.nombre},</strong>&nbsp;&nbsp;Empresa: <strong>#{dashboardUser.user.empresa.nombre},</strong>
+                                Ciudad:  <strong>#{dashboardUser.user.empresa.ciudad} </strong>
                             </div>
 
 
                         </div>
 
                     </div>
-                    <div class="col-sm-2">
-                        <div class="devider-vertical visible-lg"></div>
-                        <div class="btn-group btn-wigdet pull-right visible-lg">
-                            <div class="btn">
-                                Widget</div>
-                            <button data-toggle="dropdown" class="btn dropdown-toggle" type="button">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul role="menu" class="dropdown-menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="entypo-plus-circled margin-iconic"></span>Add New</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="entypo-heart margin-iconic"></span>Favorite</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="entypo-cog margin-iconic"></span>Setting</a>
-                                </li>
-                            </ul>
-                        </div>
-
-
-                    </div>
+                    
                 </div>
             </div>
             <!--/ TITLE -->
@@ -337,16 +310,16 @@
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">Extra Pages</a>
+                <li><a href="dashboard.xhtml" title="Inicio">WSNSiC</a>
                 </li>
                 <li><i class="fa fa-lg fa-angle-right"></i>
                 </li>
-                <li><a href="#" title="Sample page 1">Perfil</a>
+                <li><a href="" title="Sample page 1">Perfil</a>
                 </li>
                 <li class="pull-right">
                     <div class="input-group input-widget">
 
-                        <input style="border-radius:15px" type="text" placeholder="Search..." class="form-control"/>
+                        
                     </div>
                 </li>
             </ul>
@@ -365,12 +338,13 @@
                                         <li class="list-group-item text-left">
                                             <span class="entypo-user"></span>&nbsp;&nbsp;Perfil</li>
                                         <li class="list-group-item text-center">
-                                            <img src="http://api.randomuser.me/portraits/men/10.jpg" alt="" class="img-circle img-responsive img-profile"/>
+                                            <img src="http://excavacionesdescalzo.es/wp-content/uploads/2016/12/Descalzo-quienes-somos.png"
+                                             alt="" class="img-circle img-responsive img-profile"/>
 
                                         </li>
                                         <li class="list-group-item text-center">
                                             <span class="pull-left">
-                                                <strong>Ratings</strong>
+                                                <strong>Valoracion</strong>
                                             </span>
 
 
@@ -399,16 +373,18 @@
 
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
-                                                <strong>Joined</strong>
-                                            </span>2.13.2014</li>
+                                                <strong>Id Usuario</strong>
+                                            </span>#{dashboardUser.user.id}</li>
+                                       
                                         <li class="list-group-item text-right">
                                             <span class="pull-left">
-                                                <strong>Last seen</strong>
-                                            </span>Yesterday</li>
-                                        <li class="list-group-item text-right">
+                                                <strong>Id empresa</strong>
+                                            </span>#{dashboardUser.user.empresa.id}</li>
+                                            
+                                             <li class="list-group-item text-right">
                                             <span class="pull-left">
-                                                <strong>Nickname</strong>
-                                            </span>themesmile</li>
+                                                <strong>Estado perfil</strong>
+                                            </span>#{dashboardUser.user.estado}</li>
 
                                     </ul>
 
@@ -422,9 +398,7 @@
                                     <hr/>
 
                                     <dl class="dl-horizontal-profile">
-                                        <dt>Id Usuario</dt>
-                                        <dd>#{dashboardUser.user.id}</dd>
-
+                                        
                                         <dt>Nombre</dt>
                                         <dd>#{dashboardUser.user.nombre}</dd>
 
@@ -434,9 +408,7 @@
                                         <dt>Correo</dt>
                                         <dd>#{dashboardUser.user.correo}</dd>
 
-                                        <dt>Estado</dt>
-                                        <dd>#{dashboardUser.user.estado}</dd>
-
+                                       
                                         <dt>Contraseña actual</dt>
                                         <dd>#{dashboardUser.user.password}</dd>
 
@@ -452,9 +424,7 @@
  <hr/>
 
                                     <dl class="dl-horizontal-profile">
-                                        <dt>Id Empresa</dt>
-                                        <dd>#{editEmpresa.empresa.id}</dd>
-
+                                       
                                         <dt>Nombre</dt>
                                         <dd>#{editEmpresa.empresa.nombre}</dd>
 
@@ -482,33 +452,33 @@
                             <div class="col-xs-12 divider text-center">
                                 <div class="col-xs-12 col-sm-4 emphasis">
                                     <h2>
-                                        <strong>20,7K</strong>
+                                        <strong>#{dashboardUser.user.rolPerson.descripcion}</strong>
                                     </h2>
                                     <p>
-                                        <small>Followers</small>
+                                        <small>Tipo de Rol</small>
                                     </p>
-                                    <button class="btn btn-success btn-block">
-                                        <span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Follow</button>
+                                    <!-- <button class="btn btn-success btn-block">
+                                        <span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Follow</button> -->
                                 </div>
                                 <div class="col-xs-12 col-sm-4 emphasis">
                                     <h2>
-                                        <strong>245</strong>
+                                        <strong>#{dashboardUser.nuevoblog.visitas}</strong>
                                     </h2>
                                     <p>
-                                        <small>Following</small>
+                                        <small>Blog (visitas)</small>
                                     </p>
-                                    <button class="btn btn-info btn-block">
-                                        <span class="fa fa-user"></span>&nbsp;&nbsp;View Profile</button>
+                                   <!--  <button class="btn btn-info btn-block">
+                                        <span class="fa fa-user"></span>&nbsp;&nbsp;View Profile</button> -->
                                 </div>
                                 <div class="col-sm-4 emphasis">
                                     <h2>
-                                        <strong>43</strong>
+                                        <strong>#{dashboardUser.user.empresa.tipoempresa.descripcion}</strong>
                                     </h2>
                                     <p>
-                                        <small>Likes</small>
+                                        <small>Tipo de Empresa</small>
                                     </p>
-                                    <button class="btn btn-default btn-block">
-                                        <span class="fa fa-user"></span>&nbsp;&nbsp;Likes</button>
+                                    <!-- <button class="btn btn-default btn-block">
+                                        <span class="fa fa-user"></span>&nbsp;&nbsp;Likes</button> -->
                                 </div>
                             </div>
                         </div>
@@ -792,137 +762,7 @@
         </div>
         <!--  END OF PAPER WRAP -->
 
-        <!-- RIGHT SLIDER CONTENT -->
-        <div class="sb-slidebar sb-right">
-            <div class="right-wrapper">
-                <div class="row">
-                    <h3>
-                        <span><i class="entypo-gauge"></i>&nbsp;&nbsp;MAIN WIDGET</span>
-                    </h3>
-                    <div class="col-sm-12">
-
-                        <div class="widget-knob">
-                            <span class="chart" style="position:relative" data-percent="86">
-                                <span class="percent"></span>
-                            </span>
-                        </div>
-                        <div class="widget-def">
-                            <b>Distance traveled</b>
-                            <br/>
-                            <i>86% to the check point</i>
-                        </div>
-
-                        <div class="widget-knob">
-                            <span class="speed-car" style="position:relative" data-percent="60">
-                                <span class="percent2"></span>
-                            </span>
-                        </div>
-                        <div class="widget-def">
-                            <b>The average speed</b>
-                            <br/>
-                            <i>30KM/h avarage speed</i>
-                        </div>
-
-
-                        <div class="widget-knob">
-                            <span class="overall" style="position:relative" data-percent="25">
-                                <span class="percent3"></span>
-                            </span>
-                        </div>
-                        <div class="widget-def">
-                            <b>Overall result</b>
-                            <br/>
-                            <i>30KM/h avarage Result</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top:0;" class="right-wrapper">
-                <div class="row">
-                    <h3>
-                        <span><i class="entypo-chat"></i>&nbsp;&nbsp;CHAT</span>
-                    </h3>
-                    <div class="col-sm-12">
-                        <span class="label label-warning label-chat">Online</span>
-                        <ul class="chat">
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-circle" src="http://api.randomuser.me/portraits/thumb/men/20.jpg"/>
-                                    </span><b>Dave Junior</b>
-                                    <br/><i>Last seen : 08:00 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-circle" src="http://api.randomuser.me/portraits/thumb/men/21.jpg"/>
-                                    </span><b>Kenneth Lucas</b>
-                                    <br/><i>Last seen : 07:21 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-circle" src="http://api.randomuser.me/portraits/thumb/men/22.jpg"/>
-                                    </span><b>Heidi Perez</b>
-                                    <br/><i>Last seen : 05:43 PM</i>
-                                </a>
-                            </li>
-
-
-                        </ul>
-
-                        <span class="label label-chat">Offline</span>
-                        <ul class="chat">
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-offline img-circle" src="http://api.randomuser.me/portraits/thumb/men/23.jpg"/>
-                                    </span><b>Dave Junior</b>
-                                    <br/><i>Last seen : 08:00 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-offline img-circle" src="http://api.randomuser.me/portraits/thumb/women/24.jpg"/>
-                                    </span><b>Kenneth Lucas</b>
-                                    <br/><i>Last seen : 07:21 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-offline img-circle" src="http://api.randomuser.me/portraits/thumb/men/25.jpg"/>
-                                    </span><b>Heidi Perez</b>
-                                    <br/><i>Last seen : 05:43 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-offline img-circle" src="http://api.randomuser.me/portraits/thumb/women/25.jpg"/>
-                                    </span><b>Kenneth Lucas</b>
-                                    <br/><i>Last seen : 07:21 PM</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        <img alt="" class="img-chat img-offline img-circle" src="http://api.randomuser.me/portraits/thumb/men/26.jpg"/>
-                                    </span><b>Heidi Perez</b>
-                                    <br/><i>Last seen : 05:43 PM</i>
-                                </a>
-                            </li>
-
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
 </div>
         <!-- END OF RIGHT SLIDER CONTENT-->
 
