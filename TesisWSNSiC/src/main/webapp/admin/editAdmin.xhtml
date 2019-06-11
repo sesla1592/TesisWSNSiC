@@ -1,16 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
 
-<h:head></h:head> 
-<body> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:hs="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:hf="http://highfaces.org" template="/Templateadmin.xhtml">
 
-<h:form>
-<h:inputText value="#{dashboardAdmin.user.nombre}" />
-<h:inputText value="#{dashboardAdmin.user.apellido}" />
-</h:form>
+	<ui:define name="contenido">
 
-</body> 
-</html>
+
+		<h:form>
+
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="dashboard.xhtml">Dashboard</a>
+				</li>
+
+				<li class="breadcrumb-item active"><a>Bienvenido:
+						#{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</a></li>
+				<li class="breadcrumb-item active"><a>#{dashboardAdmin.user.rolPerson.descripcion}</a></li>
+
+			</ol>
+
+			<h2></h2>
+			<br />
+			<h4>Informacion del Developer</h4>
+
+			<label>Nombre:</label>
+			<h:inputText value="#{dashboardAdmin.user.nombre}" />
+			<br />
+			<label>Apellido:</label>
+			<h:inputText value="#{dashboardAdmin.user.apellido}" />
+			<br />
+			<label>Correo:</label>
+			<h:inputText value="#{dashboardAdmin.user.correo}" />
+			<br />
+			<label>Contrasenia:</label>
+			<h:inputText value="#{dashboardAdmin.user.password}" />
+			<br />
+			<label>Confirmar contrasenia:</label>
+			<h:inputText value="#{dashboardAdmin.user.password}" />
+			<br />
+			<b:commandButton action="#{dashboardAdmin.actualizarPersona()}"
+				value="Actualizar Datos Personales"></b:commandButton>
+				</h:form>
+				
+				
+			
+				
+		</ui:define>
+</ui:composition>
