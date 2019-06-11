@@ -47,6 +47,7 @@ import com.mongodb.MongoClientURI;
 
 import dao.ec.edu.ups.tesiswsnsic.EmpresaDAO;
 import dao.ec.edu.ups.tesiswsnsic.NodoDAO;
+import dao.ec.edu.ups.tesiswsnsic.PersonaDAO;
 import dao.ec.edu.ups.tesiswsnsic.SensorDAO;
 import modelo.ec.edu.ups.tesiswsnsic.Empresa;
 import modelo.ec.edu.ups.tesiswsnsic.MedValFec;
@@ -91,7 +92,9 @@ public class DashboardAdmin {
 	SensorDAO sensorDAO;
 	@Inject
 	EmpresaDAO empresaDAO;
-
+	@Inject
+	PersonaDAO personaDAO;
+	
 	List<String> ltsSensores = new ArrayList<>();
 	private MongoClient mongoClient;
 	public Double datoTemp = 0.0;
@@ -106,6 +109,8 @@ public class DashboardAdmin {
 	public String medici;
 	public double val;
 	boolean typeCalendar;
+	
+	private String newPassword;
 
 	@PostConstruct
 	public void init() {
@@ -318,6 +323,14 @@ public class DashboardAdmin {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	public String getTipoFecha() {
@@ -727,5 +740,19 @@ public class DashboardAdmin {
 		model.addSeries(series1);
 
 		return model;
+	}
+	
+	public void actualizarPersona() {
+		if(newPassword!=null) {
+			if(newPassword.equals(user.getPassword())){
+				System.out.println("contrasenas iguales");
+				personaDAO.updatePersona(user);
+			}else {
+				System.out.println("contrasenas diferentes");
+				//mensaje de no guardado
+			}
+		}else {
+			personaDAO.updatePersona(user);
+		}
 	}
 }
