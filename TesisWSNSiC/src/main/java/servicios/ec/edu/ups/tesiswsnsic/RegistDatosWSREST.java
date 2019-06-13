@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -112,7 +113,7 @@ public class RegistDatosWSREST {
 		}
 		return r;
 	}
-	
+/*	
 	@Path("/prueba")
 	@GET
 	@Produces("application/json")
@@ -164,7 +165,7 @@ public class RegistDatosWSREST {
 			// TODO: handle exception
 		}
 	}
-	
+*/	
 	
 	/*http://localhost:8080/TesisWSNSiC/rs/Registrodatos/RegistrarPOST
 	 * */
@@ -185,35 +186,20 @@ public class RegistDatosWSREST {
 	    	System.out.println("Sucess get Collection");
 	    	System.out.println(collection.getNamespace());
 	    	System.out.println("RECIBIDO  "+nod_detalles.toString());
-	    	nod_detalles = nod_detalles.replace("\\", "");
-	    	nod_detalles = nod_detalles.replace("[\"", "[");
-	    	nod_detalles = nod_detalles.replace("\"]", "]");
-	    	nod_detalles = nod_detalles.replace("}\",\"{", "},{");
-	    	System.out.println("NOD_DETALLES: "+nod_detalles);
-	    	JsonParser parser = new JsonParser();
-	    	try {
-		    	gsonArr = parser.parse(nod_detalles).getAsJsonArray();
-		    	System.out.println("GSONARR: "+gsonArr);
-	    	}catch (Exception e) {
-	    		e.printStackTrace();
-				// TODO: handle exception
-			}
-
-	    	for(JsonElement obj : gsonArr) {
-	    		JsonObject gsonObj = obj.getAsJsonObject();
-	    		System.out.println("GSON OBJECT: "+gsonObj);
-	    		conv = gsonObj.toString();
-	    		doc = Document.parse(conv);
-	    		collection.insertOne(doc);
-	    		System.out.println("Almacenado en el Cloud Publico");
-	    		r.setMensaje(smssat);
-	    	}
+//	    	JSONParser parser = new JSONParser();
+//	    	JsonObject gsonObj = (JsonObject) parser.parse(nod_detalles); 
+//	    	System.out.println("GSON OBJECT: "+gsonObj);
+//    		conv = gsonObj.toString();
+    		doc = Document.parse(nod_detalles.toString());
+    		collection.insertOne(doc);
+    		System.out.println("Almacenado en el Cloud Publico");
+    		r.setMensaje(smssat);
+    	
 		}catch(JSONException e) {
 			r.setCodigo(-90);
 			r.setMensaje("Error al almacenar CLOUD SiC");
 			 e.printStackTrace();		 
-		}			
-		
+		}		
 		return r;		
 	}
 	
