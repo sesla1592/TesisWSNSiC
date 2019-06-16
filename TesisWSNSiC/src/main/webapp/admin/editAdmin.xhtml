@@ -10,10 +10,18 @@
 
 	<ui:define name="contenido">
 
+		<h:head>
 
-		<h:form>
+			<h:outputStylesheet library="css" name="jsfcrud.css" />
+			<h:outputScript library="js" name="jsfcrud.js" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<link rel="stylesheet"
+				href="https://www.w3schools.com/w3css/4/w3.css" />
+				
+				<link href="styles/miestilo.css" rel="stylesheet"/>
+		</h:head>
 
-			<!-- Breadcrumbs-->
+		<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="dashboard.xhtml">Dashboard</a>
 				</li>
@@ -21,34 +29,55 @@
 				<li class="breadcrumb-item active"><a>Bienvenido:
 						#{dashboardAdmin.user.nombre} #{dashboardAdmin.user.apellido}</a></li>
 				<li class="breadcrumb-item active"><a>#{dashboardAdmin.user.rolPerson.descripcion}</a></li>
+				</ol>
 
-			</ol>
+		<br/>
 
-			<h2></h2>
-			<br />
-			<h4>Informacion del Developer</h4>
 
-			<label>Nombre:</label>
-			<h:inputText value="#{dashboardAdmin.user.nombre}" />
-			<br />
-			<label>Apellido:</label>
-			<h:inputText value="#{dashboardAdmin.user.apellido}" />
-			<br />
-			<label>Correo:</label>
-			<h:inputText value="#{dashboardAdmin.user.correo}" />
-			<br />
-			<label>Contrasenia:</label>
-			<h:inputText value="#{dashboardAdmin.user.password}" />
-			<br />
-			<label>Confirmar contrasenia:</label>
-			<h:inputText value="#{dashboardAdmin.user.password}" />
-			<br />
-			<b:commandButton action="#{dashboardAdmin.actualizarPersona()}"
-				value="Actualizar Datos Personales"></b:commandButton>
-				</h:form>
+		<div class="form-style-10">
+			<h1>
+				Mi Perfil<span></span>
+			</h1>
+			<h:form>
+				<div class="section">
+					<span>1</span>Nombres y Apellidos 
+				</div>
+				<div class="inner-wrap">
+					<label>Nombres:<h:inputText type="text" value="#{dashboardAdmin.user.nombre}" class="form-control"/></label>
+					<label>Apellidos:<h:inputText value="#{dashboardAdmin.user.apellido}" class="form-control"/></label>
+				</div>
+
+				<div class="section">
+					<span>2</span>Correo
+				</div>
+				<div class="inner-wrap">
+					<label>Correo electronico<h:inputText type="email" value="#{dashboardAdmin.user.correo}" class="form-control"/></label>
 				
-				
+				</div>
+
+				<div class="section">
+					<span>3</span>Passwords
+				</div>
+				<div class="inner-wrap">
+					<label>Password <h:inputText type="password" value="#{dashboardAdmin.user.password}" class="form-control"/></label> <label>Confirmar
+						Password <h:inputText type="password" value="#{dashboardAdmin.user.password}" class="form-control"/>
+					</label>
+				</div>
+				<div class="button-section">
+					<p:commandButton action="#{dashboardAdmin.actualizarPersona()}"
+				value="Actualizar Datos Personales" style="margin-right:20px;" styleClass="ui-priority-primary"></p:commandButton>
+						<br/>
+				</div>
+			</h:form>
+				<br/>
 			
-				
-		</ui:define>
+		</div>
+
+
+
+
+
+
+
+	</ui:define>
 </ui:composition>
