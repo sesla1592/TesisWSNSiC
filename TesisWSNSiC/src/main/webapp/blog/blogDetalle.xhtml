@@ -163,16 +163,16 @@
 							<p>
 								<h:panelGroup id="panelDatos">
 									<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}"
-										value="Temperatura: #{blogDetalle.datoTemp}" />
+										value="Temperatura: #{blogDetalle.datoTemp}" /><i class="fas fa-fw fa-thermometer-full" id="menumediciones"></i>
 									<br />
 									<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}"
-										value="Humedad: #{blogDetalle.datoHum}" />
+										value="Humedad: #{blogDetalle.datoHum}" /><i class="fas fa-fw fa-cloud" id="menumediciones"></i>
 									<br />
 									<h:outputText rendered="#{blogDetalle.datoLum != 0.0}"
-										value="Luminosidad: #{blogDetalle.datoLum}" />
+										value="Luminosidad: #{blogDetalle.datoLum}" /><i class="fas fa-fw fa-sun" id="menumediciones"></i>
 									<br />
 									<h:outputText rendered="#{blogDetalle.datoRui != 0.0}"
-										value="Ruido: #{blogDetalle.datoRui}" />
+										value="Ruido: #{blogDetalle.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
 									<br />
 								</h:panelGroup>
 								<br />
