@@ -40,7 +40,7 @@ public class PersonaControlador{
 	
 	private Validacion v;
 
-	private String user = null;
+	private String user = "";
 	
 	@NotBlank(message = "Ingrese las contrasenias")
 	private String password;
