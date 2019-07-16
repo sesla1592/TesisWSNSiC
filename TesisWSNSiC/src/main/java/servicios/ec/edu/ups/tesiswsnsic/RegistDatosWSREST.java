@@ -177,13 +177,14 @@ public class RegistDatosWSREST {
 	@Produces("application/json")
 	//@Consumes("application/json")
 	public Respuesta obtenerDatosNueva(String nod_detalles) {
+		System.out.println("NEW WEBSERVICE..");
 		Respuesta r = new Respuesta();
 		dataws = new ArrayList<>();
 		JsonArray gsonArr = new JsonArray();
 		MongoClientOptions builder = new MongoClientOptions.Builder().
 				readPreference(ReadPreference.primaryPreferred())
 				.maxConnectionIdleTime(60000)
-				.sslEnabled(true)
+				//.sslEnabled(true)
 				.build();
 		try {
 	    	MongoClient mongoClient = new MongoClient(new ServerAddress("35.199.91.181",27017),builder);
@@ -203,7 +204,7 @@ public class RegistDatosWSREST {
     		System.out.println("Almacenado en el Cloud Publico");
     		r.setMensaje(smssat);
     		System.out.println("Cerrando la conexion....");
-    		mongoClient.close();
+//    		mongoClient.close();
 		}catch(JSONException e) {
 			r.setCodigo(-90);
 			r.setMensaje("Error al almacenar CLOUD SiC");
