@@ -31,6 +31,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ReadPreference;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
@@ -177,8 +180,13 @@ public class RegistDatosWSREST {
 		Respuesta r = new Respuesta();
 		dataws = new ArrayList<>();
 		JsonArray gsonArr = new JsonArray();
+		MongoClientOptions builder = new MongoClientOptions.Builder().
+				readPreference(ReadPreference.primaryPreferred())
+				.maxConnectionIdleTime(60000)
+				.sslEnabled(true)
+				.build();
 		try {
-	    	MongoClient mongoClient = new MongoClient("35.199.91.181",27017);
+	    	MongoClient mongoClient = new MongoClient(new ServerAddress("35.199.91.181",27017),builder);
 	    	System.out.println("Connection Mongo Client");
 	    	MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
 	    	System.out.println("Connection to Data Base");
@@ -194,11 +202,12 @@ public class RegistDatosWSREST {
     		collection.insertOne(doc);
     		System.out.println("Almacenado en el Cloud Publico");
     		r.setMensaje(smssat);
-    	
+    		System.out.println("Cerrando la conexion....");
+    		mongoClient.close();
 		}catch(JSONException e) {
 			r.setCodigo(-90);
 			r.setMensaje("Error al almacenar CLOUD SiC");
-			 e.printStackTrace();		 
+			 e.printStackTrace();
 		}		
 		return r;		
 	}
