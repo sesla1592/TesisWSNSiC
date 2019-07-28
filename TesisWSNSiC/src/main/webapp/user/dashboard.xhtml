@@ -9,7 +9,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta charset="utf-8" />
-	<title>Dashboard WSN</title>
+	<title>WSNCLOUD - Dashboard </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
@@ -104,25 +104,6 @@ canvas#canvas4 {
 						<li class="sec"></li>
 						<li class="meridiem"></li>
 					</ul>
-
-					<ul id="nt-title">
-						<li><i class="wi-day-lightning"></i>&#160;&#160;Quito&#160;
-							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
-							
-						<li><i class="wi-day-lightning"></i>&#160;&#160;Guayas&#160;
-							<b>85</b><i class="wi-fahrenheit"></i>&#160;; Tonight- 72 °F
-							(22.2 °C)</li>
-
-						<li><i class="wi-day-lightning"></i>&#160;&#160;Cuenca&#160;
-							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
-
-						<li><i class="wi-day-lightning"></i>&#160;&#160;Loja&#160;
-							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
-
-						<li><i class="wi-day-lightning"></i>&#160;&#160;Morona Santiago&#160; 
-							<b>85</b><i class="wi-fahrenheit"></i>&#160;; 15km/h</li>
-
-					</ul>
 				</div>
 
 				<ul style="margin-right: 0;" class="nav navbar-nav navbar-right">
@@ -179,29 +160,12 @@ canvas#canvas4 {
 		<div id="skin-select">
 			<div id="logo">
 				<h1>
-					WSNCloud <span>v1</span>
+					WSNCloud
 				</h1>
 			</div>
 
 			<a id="toggle"> <span class="entypo-menu"></span>
 			</a>
-			<div class="dark">
-				<form action="#">
-					<span> <h:inputText type="text" name="search" value=""
-							class="search rounded id_search" pt:placeholder="Search Menu..." />
-					</span>
-				</form>
-			</div>
-
-			<div class="search-hover">
-				<form id="demo-2">
-					<input type="search" pt:placeholder="Search Menu..."
-						class="id_search" />
-				</form>
-			</div>
-
-
-
 
 			<div class="skin-part">
 				<div id="tree-wrap">
@@ -336,7 +300,7 @@ canvas#canvas4 {
 				<ul id="breadcrumb">
 					<li><span class="entypo-home"></span></li>
 					<li><i class="fa fa-lg fa-angle-right"></i></li>
-					<li><a href="dashboard.xhtml" title="WSNSiC">WSNSiC</a></li>
+					<li><a href="dashboard.xhtml" title="WSNCLOUD" id="crumbs" >WSNCLOUD</a></li>
 					<!-- <li><i class="fa fa-lg fa-angle-right"></i></li>
 					<li><a href="#" title="Dashboard">Dashboard BusinessAdmin</a></li> -->
 					<li class="pull-right">
@@ -364,8 +328,8 @@ canvas#canvas4 {
 							<div class="col-sm-12">
 								<div id="siteClose2" class="nest">
 									<div class="title-alt">
-										<h6>
-											<span class="entypo-location"></span>&nbsp;NODOS WSNSiC (GOOGLE MAPS)
+										<h6 id="nodosli">
+											<span class="entypo-location"></span>&nbsp;NODOS WSNCLOUD (GOOGLE MAPS)
 										</h6>
 										<div class="titleClose">
 											<a class="gone" href="#siteClose"> <span
@@ -562,9 +526,9 @@ canvas#canvas4 {
 										<center>
 										<div >
 				
-				<p:chart id ="grafica" type="line" model="#{dashboardUser.lineModel2}" style="height:700px;" widgetVar="chart" />
+				<p:chart id ="grafica" type="line" model="#{dashboardUser.lineModel2}" style="height:700px; width:80%;" widgetVar="chart"  />
 				<br />    
-				<p:commandButton type="button" value="Reset" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
+				<p:commandButton type="button" value="Restablecer" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
 			</div>
 									</center>
 										
@@ -853,6 +817,43 @@ canvas#canvas4 {
 		font-family: "Roboto", Arial, sans-serif;
 }
 
+.jqplot-lineRenderer-highlight-canvas{
+color: red;
+}
+
+.jqplot-point-label, .jqplot-event-canvas {
+font-size: 15px;
+color: black;
+border-radius: 15px;
+}
+
+/*ETIQUETA EJE Y*/
+.jqplot-yaxis-label {
+font-size: 19px;
+color: black;
+height: 20px;
+width: 15px;
+}
+/*ESCALA EN Y*/
+.jqplot-yaxis-tick {
+font-size: 19px;
+color: black;
+height: 20px;
+width: 15px;
+}
+
+/* ETIQUETA TRANNSICION */
+.jqplot-highlighter-tooltip {
+color: black;
+font-size: 14px;
+background-color: #d6eaf8;
+}
+
+.jqplot-table-legend, .jqplot-table-legend-label, .jqplot-seriesToggle {
+font-size: 14px;
+color: black;
+}
+
 
 i.material-icons {
 		font-size: 1.5rem;
@@ -1087,6 +1088,12 @@ a.ui-state-default
   width:23px;
   height:26px;
   text-align:center;
+}
+
+span, nodosli, #crumbs{
+font-size: 12px;
+font-style: bold;
+font-family: sans-serif;
 }
 
 </style>
