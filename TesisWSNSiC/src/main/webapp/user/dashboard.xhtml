@@ -29,6 +29,8 @@
 		<!-- ICOS API GOOGLE -->
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+	
+	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 	<style type="text/css">
 canvas#canvas4 {
@@ -461,6 +463,10 @@ canvas#canvas4 {
 										</p:commandButton>
                                         
                                       
+                                      
+
+                                      
+                                      
                                   </h:panelGrid></center>
                                 </div>
 
@@ -533,18 +539,9 @@ canvas#canvas4 {
 									</center>
 										
 											<br/>
-											<br/>
-											<center><h:form>
-											
-									
-											
-											</h:form></center>
-											
+											<br/>											
 											<br/>
 											<br/>
-											
-											
-											
 										<!-- FIN DEL CODIGO -->
 
 									</div>
@@ -564,7 +561,7 @@ canvas#canvas4 {
 											
 											
 					<br />
-
+		
 
 				</h:form>
 				
@@ -583,6 +580,7 @@ canvas#canvas4 {
 											
 												<h:commandLink action="#{dashboardUser.descargarPDF()}" title="Descargar en PDF">
 												<i class="material-icons">picture_as_pdf</i></h:commandLink>
+												
 											</h:form></center>	
 		
 					
@@ -815,6 +813,10 @@ canvas#canvas4 {
 		@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
 * {
 		font-family: "Roboto", Arial, sans-serif;
+}
+
+#myDiv {
+width: 100%;
 }
 
 .jqplot-lineRenderer-highlight-canvas{
