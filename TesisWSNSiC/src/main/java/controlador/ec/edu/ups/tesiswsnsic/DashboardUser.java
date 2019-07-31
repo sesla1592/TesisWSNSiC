@@ -89,11 +89,17 @@ import utilidades.ec.edu.ups.tesiswsnsic.SessionUtils;
 @ManagedBean
 @ViewScoped
 public class DashboardUser {
+	
+	org.json.simple.JSONObject contenedor = new org.json.simple.JSONObject();
+	String contenedor1;
 
 	@Inject
 	PersonaNodoDAO personaNodoDAO;
 	@Inject
 	NodoDAO nodoDAO;
+	
+	//
+	String csvglobal; 
 
 	private Marker marker;
 	Persona user;
@@ -332,9 +338,17 @@ public class DashboardUser {
 	// public void setLtsSRui(List<MedValFec> ltsSRui) {
 	// this.ltsSRui = ltsSRui;
 	// }
-
+	
 	public Double getDatoRui() {
 		return datoRui;
+	}
+
+	public String getCsvglobal() {
+		return csvglobal;
+	}
+
+	public void setCsvglobal(String csvglobal) {
+		this.csvglobal = csvglobal;
 	}
 
 	public void setDatoRui(Double datoRui) {
@@ -539,8 +553,233 @@ public class DashboardUser {
 			System.out.println("Connection Succesfull");
 			graficaModel();
 		}
-
 	}
+	
+	public void establecerangofechas() {
+		if (nodoSelected != null) {
+			System.out.println("boolean typo calendario " + typeCalendar);
+			if (typeCalendar == false) {
+				System.out.println("fecha por combo :" + tipoFecha);
+				// cambio las fechas
+
+				if (tipoFecha.equals("Diario")) {
+					Date date = new Date();
+					// Caso 2: obtener la fecha y salida por pantalla con formato:
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(date) + " 00:00:00";
+				}
+				if (tipoFecha.equals("Semanal")) {
+					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+					calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+					System.out.println("fecha semanal " + fechaInicio);
+				}
+				if (tipoFecha.equals("Mensual")) {
+					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
+					calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
+					System.out.println("fecha mensual " + fechaInicio);
+				}
+
+			}
+			System.out.println("fecha por calendario " + fechaInicio.substring(0, fechaInicio.length() - 9) + " - "
+					+ fechaFin.substring(0, fechaFin.length() - 9));
+			// String fec_Inicio =
+			// df.format(fechaInicio.substring(0,fechaInicio.length()-9));
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate fecha_Ini = LocalDate.parse(fechaInicio.substring(0, fechaInicio.length() - 9), fmt);
+
+			// String fec_fin = df.format(fechaFin.substring(0,fechaInicio.length()-9));
+			LocalDate fecha_fin = LocalDate.parse(fechaFin.substring(0, fechaFin.length() - 9), fmt);
+
+			Period periodo = Period.between(fecha_Ini, fecha_fin);
+			System.out.println("total de dias " + periodo.getDays());
+			
+			if(periodo.getDays()>0) {
+				graficar=true;
+			}else {
+				graficar=false;
+			}
+			//ltsSData = new ArrayList<>();
+		
+		System.out.println("hay q graficar "+graficar);
+		if(!graficar) {
+			//muestra un mensaje de fechas invalidas
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Graficas","Fechas invalidas.");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		
+			ltsDataSensor = new ArrayList<>();
+
+			System.out.println("sensor seleccionado: " + sensorSeleccionado);
+			System.out.println("fache inicio : " + fechaInicio);
+			System.out.println("fache fin : " + fechaFin);
+			MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
+
+			BasicDBObject query = new BasicDBObject();
+			query.put("n", nodoSelected.getIdentificador());
+			query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
+			// FindIterable<Document> busquedaNodo = collection.find(query);
+			// busquedaNodo.forEach(printBlock);
+			DB db = mongoClient.getDB(DBConnection.dbname);
+			DBCollection coll = db.getCollection(DBConnection.dbcollection);
+
+			DBCursor d1 = coll.find(query);
+
+			fec = "";
+			while (d1.hasNext()) {
+
+				DBObject obj = d1.next();
+
+				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
+				fec = obj.get("fecha").toString();
+				//fec = fec.substring(0, 10);
+				for (int i = 0; i < ltsMediciones.length(); i++) {
+					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
+					medici = gsonObj2.get("m").toString();// va el nombre del sensor
+					String sensor = sensorSeleccionado.substring(0, 1);
+					if (medici.equals(sensor)) {
+						val = Double.parseDouble(gsonObj2.get("v").toString());
+						// String sensor =sensorSeleccionado.substring(0, 1);
+						if (medici.equals(sensor)) {
+							val = Double.parseDouble(gsonObj2.get("v").toString());
+							MedValFec medicionValue = new MedValFec(medici, val, fec);
+							ltsDataSensor.add(medicionValue);
+
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public void cargaSensorSelec(){
+		Sensor sensor = new Sensor();
+		System.out.println("LISTADO CARGADO SIZE: "+ltsSensor.size());
+		for (int i = 0; i < ltsSensor.size(); i++) {
+			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
+				sensor = ltsSensor.get(i);
+			}
+		}
+		int max = 0;
+		int min = 50;
+		for (int i = 0; i < ltsDataSensor.size(); i++) {
+			if (ltsDataSensor.get(i).getValor() > max) {
+				max = (int) ltsDataSensor.get(i).getValor();
+			}
+			if (ltsDataSensor.get(i).getValor() < min) {
+				min = (int) ltsDataSensor.get(i).getValor();
+			}
+		}
+		max = max + 5;
+		if (min <= 5) {
+			min = 0;
+		} else {
+			min = min - 5;
+		}
+	/* POSIBLES DATOS  A GRAFICAR */
+		System.out.println("...DATOS CARGADOS...");
+		System.out.println("OBTENIDOS LTS: "+ltsDataSensor.toString());
+	}
+	
+	/* CARGA EL NODO QUE SELECCIONO */
+	
+	public void cargarNodoCSV() {
+		ltsReporte = new ArrayList<>();
+		for (int i = 0; i < ltsMyNodos.size(); i++) {
+			datosNodo(ltsMyNodos.get(i).getIdentificador(), true);
+		}
+		formarCSV();
+	}
+
+	public void cargarNodoJSON() {
+		ltsReporte = new ArrayList<>();
+		for (int i = 0; i < ltsMyNodos.size(); i++) {
+			datosNodo(ltsMyNodos.get(i).getIdentificador(), true);
+		}
+		formarJSON();
+	}
+		
+	public String getContenedor1() {
+		return contenedor1;
+	}
+
+	public void setContenedor1(String contenedor1) {
+		this.contenedor1 = contenedor1;
+	}
+
+	public org.json.simple.JSONObject getContenedor() {
+		return contenedor;
+	}
+
+	public void setContenedor(org.json.simple.JSONObject contenedor) {
+		this.contenedor = contenedor;
+	}
+
+	public void formarJSON() {
+		contenedor = new org.json.simple.JSONObject();
+		org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
+
+		org.json.simple.JSONArray company = new org.json.simple.JSONArray();
+		for (int i = 0; i < ltsReporte.size(); i++) {
+
+			obj.put("codNodo", ltsReporte.get(i).getCodSensor());
+			obj.put("fecha", ltsReporte.get(i).getFecha());
+
+			obj.put("latitud", ltsReporte.get(i).getLatitud());
+			obj.put("longitud", ltsReporte.get(i).getLongitud());
+			obj.put("sensor", ltsReporte.get(i).getSensor());
+			obj.put("valor", ltsReporte.get(i).getValor());
+
+			company.add(obj);
+			obj = new org.json.simple.JSONObject();
+		}
+		contenedor.put("data", company);
+		contenedor1 = contenedor.toString();
+		System.out.println("JSON FORMADO contenedor1: "+contenedor1);
+		// try-with-resources statement based on post comment below :)
+	}
+	
+	/* FORMA EL CSV */
+
+	public void formarCSV() {
+		String[] ltsCabecera = { "Codigo Sensor", "Fecha", "Latitud", "Longitud", "Sensor", "Valor" };
+		try {
+			StringWriter sw = new StringWriter();
+			CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(ltsCabecera);
+			// writer.
+			CSVPrinter csvPrinter = new CSVPrinter(sw, csvFormat);
+			
+			System.out.println("TAMANO CSV: "+ltsReporte.size());
+			for (int i = 0; i < ltsReporte.size(); i++) {
+				List<Object> colum = new ArrayList<>();
+				colum.add(ltsReporte.get(i).getCodSensor());
+				colum.add(ltsReporte.get(i).getFecha());
+				colum.add(ltsReporte.get(i).getLatitud());
+				colum.add(ltsReporte.get(i).getLongitud());
+				colum.add(ltsReporte.get(i).getSensor());
+				colum.add(ltsReporte.get(i).getValor());
+				csvPrinter.printRecord(colum);	
+			}	
+			sw.flush();
+			csvglobal = sw.toString();
+			System.out.println("CSV to String Establecido: "+ csvglobal);
+		}catch (Exception e) {
+				System.out.println("Error al cargar"+e);
+			}
+	}
+
+
+	
+	/* PLOTTY */
+	 public void Ploty() {
+		 establecerangofechas();
+		 cargaSensorSelec();
+		 cargarNodoJSON();
+		 //cargarNodoCSV();
+	 }
 
 	public void getDatosTH() {
 		datoTemp = 0.0;
@@ -698,8 +937,12 @@ public class DashboardUser {
 				colum.add(ltsReporte.get(i).getSensor());
 				colum.add(ltsReporte.get(i).getValor());
 				csvPrinter.printRecord(colum);
+				
 			}
+			
 			sw.flush();
+			
+			csvglobal = sw.toString();
 			
 			String nameFile = "file.csv";
 			// descargar
@@ -947,9 +1190,6 @@ public class DashboardUser {
 
 	
 	public void graficaModel() {
-		//filtro de 12 datos
-		
-		
 		Sensor sensor = new Sensor();
 		for (int i = 0; i < ltsSensor.size(); i++) {
 			if (ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
@@ -972,6 +1212,7 @@ public class DashboardUser {
 		} else {
 			min = min - 5;
 		}
+		//filtro de 12 datos
 		lineModel2 = initCategoryModel();
 		lineModel2.setTitle(sensorSeleccionado);
 		lineModel2.setAnimate(true);
@@ -1198,4 +1439,5 @@ public class DashboardUser {
 			// TODO: handle exception
 		}
 	 }
+	 
 }
