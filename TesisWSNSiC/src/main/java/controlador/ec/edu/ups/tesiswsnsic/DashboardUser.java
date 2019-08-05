@@ -699,6 +699,7 @@ public class DashboardUser {
 		for (int i = 0; i < ltsMyNodos.size(); i++) {
 			datosNodo(ltsMyNodos.get(i).getIdentificador(), true);
 		}
+		System.out.println("PRINT CONSOLE");
 		formarJSON();
 	}
 		

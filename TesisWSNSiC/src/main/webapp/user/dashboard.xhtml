@@ -462,12 +462,108 @@ canvas#canvas4 {
 											value="Graficar" update="grafica messages">
 										</p:commandButton>
                                         
-                                      
+<!-- TESTING CODE NEW FOR GRAPHICS -->
+  <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Execute"></p:commandLink>
+<h:panelGroup id="afterLoad">
+<div id="myDiv" style="width:999px"></div>
+	<h:outputScript>
+		function afterLoad() {
+				var str = #{dashboardUser.contenedor1};
+				console.log("Size Array: "+str.data.length);
+				var colors = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)','rgba(189,189,189,1)', 'rgba(91, 125, 166, 0.9)'];
+				var varray = str.data;
+				var valx;
+				var valy;
+				var tmed;
+				var result;
+				var strfechax = "";
+				var strvalory = "";
+				console.log(varray);
+				for (var i =0; i &lt; str.data.length; i++){					
+					tmed = varray[i].sensor;
+					
+					var valory = varray[i].valor;
+					var fechax = varray[i].fecha;
+					
+					if(i == str.data.length-1){
+						strfechax += `"`+fechax+`"`;
+						strvalory += `"`+valory+`"`;
+					}else{
+						strfechax += `"`+fechax+ `",`;
+						strvalory += `"`+valory+ `",`;
+					}
+					strfechax = strfechax.replace("/","-");
+				}
+				try{
+					var jsonx = JSON.parse("["+strfechax+"]");
+					var jsony = JSON.parse("["+strvalory+"]");
+					console.log(jsonx);
+					console.log(jsony);
+				}catch(e){
+					console.log(e.name);
+					console.log(e.message);
+				}
+				 
+				var result = {
+						x : jsonx,
+						y : jsony,
+						type : 'scatter',
+						mode : 'lines+markers',
+						name : 'Testing',
+						showlegend: true,
+						hovertext: 'Medicion'
+				};
+					
+				console.log(result);
+				var datagraphics = [result];
+				
+				var layout = {
+				title : 'Series de Rangos',
+				showline: true,
+				plot_bgcolor: 'rgba(0,0,0,0)',
+				xaxis: {
+				    autorange: true,
+				    title: 
+				    {
+				    		text: 'Titulo para X'
+				    },
+				    rangeselector: {buttons: [
+			        {
+				          	count: 1,
+				          	label: '1m',
+				          	step: 'month',
+				          	stepmode: 'backward'
+			        },
+			        {
+			          		count: 6,
+			          		label: '6m',
+			          		step: 'month',
+			          		stepmode: 'backward'
+			        },
+			        {step: 'all'}
+			      	]},    
+				    type: 'date'
+				},
+				yaxis: {
+				    	autorange: true,
+				    	range: [0, 100],
+				    	title: 
+				    	{
+				    		text: 'Titulo para Y'
+				    	}
+				}
+				};
+				console.log(layout);
+				Plotly.newPlot('myDiv', datagraphics, layout, {showSendToCloud: true});
+		}
+	</h:outputScript>
+</h:panelGroup>		                                     
                                       
 
                                       
                                       
                                   </h:panelGrid></center>
+                              
                                 </div>
 
                             </div>
@@ -813,10 +909,6 @@ canvas#canvas4 {
 		@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
 * {
 		font-family: "Roboto", Arial, sans-serif;
-}
-
-#myDiv {
-width: 100%;
 }
 
 .jqplot-lineRenderer-highlight-canvas{
