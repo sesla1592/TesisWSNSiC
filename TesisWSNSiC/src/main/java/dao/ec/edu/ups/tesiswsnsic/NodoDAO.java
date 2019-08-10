@@ -161,4 +161,17 @@ public class NodoDAO {
 			return false;
 		}
 	}
+	
+	public String selectDireccion(String codigo) {
+		try {
+			TypedQuery<Nodo> query = em.createQuery(
+					"Select n from Nodo n where n.identificador like :codigo", Nodo.class);
+			query.setParameter("codigo", codigo);
+			Nodo nodo = query.getSingleResult();
+			return nodo.getDescripcion();
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return null;
+		}
+	}
 }
