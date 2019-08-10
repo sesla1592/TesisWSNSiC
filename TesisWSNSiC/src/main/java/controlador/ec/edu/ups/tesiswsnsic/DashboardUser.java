@@ -92,6 +92,11 @@ public class DashboardUser {
 	
 	org.json.simple.JSONObject contenedor = new org.json.simple.JSONObject();
 	String contenedor1;
+	org.json.simple.JSONObject contenedordinamico = new org.json.simple.JSONObject();
+	JSONArray ltsMediciones;
+	
+	org.json.simple.JSONObject storageJSON = new org.json.simple.JSONObject();
+	JSONObject gsonObj2;
 
 	@Inject
 	PersonaNodoDAO personaNodoDAO;
@@ -453,6 +458,9 @@ public class DashboardUser {
 	}
 
 	public void grafica() {
+		contenedor = new org.json.simple.JSONObject();
+		org.json.simple.JSONArray company = new org.json.simple.JSONArray();
+		org.json.simple.JSONObject obj1 = new org.json.simple.JSONObject();
 		if (nodoSelected != null) {
 			System.out.println("boolean typo calendario " + typeCalendar);
 			if (typeCalendar == false) {
@@ -526,17 +534,32 @@ public class DashboardUser {
 			DBCursor d1 = coll.find(query);
 
 			fec = "";
+			String nsensor = "";
+			String tipesensor = "";
+			String lat = "";
+			String lon = "";
+			String direccion = "";
+			String unidadmedida = "";
 			while (d1.hasNext()) {
 
 				DBObject obj = d1.next();
 
 				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
 				fec = obj.get("fecha").toString();
+				nsensor = obj.get("n").toString();
+				direccion = nodoDAO.selectDireccion(nsensor);
+				lat = obj.get("la").toString();
+				lon = obj.get("lo").toString();
 				//fec = fec.substring(0, 10);
 				for (int i = 0; i < ltsMediciones.length(); i++) {
-					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					medici = gsonObj2.get("m").toString();// va el nombre del sensor
+					System.out.println("LTS(n)  :"+ltsMediciones.getJSONObject(i));
+					gsonObj2 = ltsMediciones.getJSONObject(i);
+					medici = gsonObj2.get("m").toString();// va el nombre del sensor, referente al tipo de sensor
+					tipesensor = retornaTipoSensor(medici);
+					unidadmedida = retornaUnidadMed(medici);
+					System.out.println("MEDICI(n)   :"+medici);
 					String sensor = sensorSeleccionado.substring(0, 1);
+					System.out.println("SENSOR(n)   :"+sensor);
 					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
 						// String sensor =sensorSeleccionado.substring(0, 1);
@@ -544,10 +567,23 @@ public class DashboardUser {
 							val = Double.parseDouble(gsonObj2.get("v").toString());
 							MedValFec medicionValue = new MedValFec(medici, val, fec);
 							ltsDataSensor.add(medicionValue);
-
+							obj1.put("codNodo", nsensor.toUpperCase());
+							obj1.put("fecha", fec);
+							
+							obj1.put("latitud", lat);
+							obj1.put("longitud", lon);
+							obj1.put("tsensor", tipesensor);
+							obj1.put("valor", val);
+							obj1.put("direccion", direccion);
+							obj1.put("unidadmedida", unidadmedida);
+							company.add(obj1);
+							obj1 = new org.json.simple.JSONObject();
 						}
 					}
 				}
+				contenedor.put("data", company);
+				contenedor1 = contenedor.toString();
+				System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());
 			}
 
 			System.out.println("Connection Succesfull");
@@ -555,104 +591,30 @@ public class DashboardUser {
 		}
 	}
 	
-	public void establecerangofechas() {
-		if (nodoSelected != null) {
-			System.out.println("boolean typo calendario " + typeCalendar);
-			if (typeCalendar == false) {
-				System.out.println("fecha por combo :" + tipoFecha);
-				// cambio las fechas
-
-				if (tipoFecha.equals("Diario")) {
-					Date date = new Date();
-					// Caso 2: obtener la fecha y salida por pantalla con formato:
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-					fechaInicio = dateFormat.format(date) + " 00:00:00";
-				}
-				if (tipoFecha.equals("Semanal")) {
-					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-					calendar.add(Calendar.DATE, -7); // el -3 indica que se le restaran 3 dias
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-					System.out.println("fecha semanal " + fechaInicio);
-				}
-				if (tipoFecha.equals("Mensual")) {
-					Calendar calendar = Calendar.getInstance(); // obtiene la fecha de hoy
-					calendar.add(Calendar.DATE, -30); // el -3 indica que se le restaran 3 dias
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-					fechaInicio = dateFormat.format(calendar.getTime()) + " 00:00:00";
-					System.out.println("fecha mensual " + fechaInicio);
-				}
-
-			}
-			System.out.println("fecha por calendario " + fechaInicio.substring(0, fechaInicio.length() - 9) + " - "
-					+ fechaFin.substring(0, fechaFin.length() - 9));
-			// String fec_Inicio =
-			// df.format(fechaInicio.substring(0,fechaInicio.length()-9));
-			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-			LocalDate fecha_Ini = LocalDate.parse(fechaInicio.substring(0, fechaInicio.length() - 9), fmt);
-
-			// String fec_fin = df.format(fechaFin.substring(0,fechaInicio.length()-9));
-			LocalDate fecha_fin = LocalDate.parse(fechaFin.substring(0, fechaFin.length() - 9), fmt);
-
-			Period periodo = Period.between(fecha_Ini, fecha_fin);
-			System.out.println("total de dias " + periodo.getDays());
-			
-			if(periodo.getDays()>0) {
-				graficar=true;
-			}else {
-				graficar=false;
-			}
-			//ltsSData = new ArrayList<>();
-		
-		System.out.println("hay q graficar "+graficar);
-		if(!graficar) {
-			//muestra un mensaje de fechas invalidas
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Graficas","Fechas invalidas.");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String retornaUnidadMed(String umed) {
+		if(umed.equals("L")) {
+			return "lux";
+		}else if(umed.equals("H")) {
+			return "%";
+		}else if(umed.equals("R")) {
+			return "dbs";
+		}else if(umed.equals("T")) {
+			return "ºC";	
 		}
-		
-			ltsDataSensor = new ArrayList<>();
-
-			System.out.println("sensor seleccionado: " + sensorSeleccionado);
-			System.out.println("fache inicio : " + fechaInicio);
-			System.out.println("fache fin : " + fechaFin);
-			MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
-
-			BasicDBObject query = new BasicDBObject();
-			query.put("n", nodoSelected.getIdentificador());
-			query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
-			// FindIterable<Document> busquedaNodo = collection.find(query);
-			// busquedaNodo.forEach(printBlock);
-			DB db = mongoClient.getDB(DBConnection.dbname);
-			DBCollection coll = db.getCollection(DBConnection.dbcollection);
-
-			DBCursor d1 = coll.find(query);
-
-			fec = "";
-			while (d1.hasNext()) {
-
-				DBObject obj = d1.next();
-
-				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
-				fec = obj.get("fecha").toString();
-				//fec = fec.substring(0, 10);
-				for (int i = 0; i < ltsMediciones.length(); i++) {
-					JSONObject gsonObj2 = ltsMediciones.getJSONObject(i);
-					medici = gsonObj2.get("m").toString();// va el nombre del sensor
-					String sensor = sensorSeleccionado.substring(0, 1);
-					if (medici.equals(sensor)) {
-						val = Double.parseDouble(gsonObj2.get("v").toString());
-						// String sensor =sensorSeleccionado.substring(0, 1);
-						if (medici.equals(sensor)) {
-							val = Double.parseDouble(gsonObj2.get("v").toString());
-							MedValFec medicionValue = new MedValFec(medici, val, fec);
-							ltsDataSensor.add(medicionValue);
-
-						}
-					}
-				}
-			}
+		return null;		
+	}
+	
+	public String retornaTipoSensor(String inic) {
+		if(inic.equals("L")) {
+			return "Luminosidad";
+		}else if(inic.equals("H")) {
+			return "Humedad";
+		}else if(inic.equals("R")) {
+			return "Ruido";
+		}else if(inic.equals("T")) {
+			return "Temperatura";	
 		}
+		return null;
 	}
 	
 	public void cargaSensorSelec(){
@@ -776,11 +738,76 @@ public class DashboardUser {
 	
 	/* PLOTTY */
 	 public void Ploty() {
-		 establecerangofechas();
-		 cargaSensorSelec();
-		 cargarNodoJSON();
-		 //cargarNodoCSV();
+		 grafica();
+		 //cargardatadinamica();
+//		 establecerangofechas();
+//		 cargaSensorSelec();
+//		 cargarNodoJSON();
 	 }
+	 
+	public void cargaDatosJSON(String codSensor, boolean historico) {
+
+		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
+		BasicDBObject query = new BasicDBObject();
+		query.put("n", codSensor);
+		System.out.println("sensor selected ----> " + codSensor);
+		// busquedaNodo.forEach(printBlock);
+		DB db = mongoClient.getDB(DBConnection.dbname);
+		DBCollection coll = db.getCollection(DBConnection.dbcollection);
+		if (historico) {
+			// System.out.println("fache inicio : "+fechaInicio);
+			// System.out.println("fache fin : "+fechaFin);
+			// System.out.println("prueba");
+			// fechaInicio="2019/01/11 00:00:00";
+			// fechaFin="2019/01/11 23:59:59";
+			// System.out.println("fache inicio : "+fechaInicio);
+			// System.out.println("fache fin : "+fechaFin);
+			System.out.println("QUERY DATE");
+			query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
+		}
+
+		DBCursor d1 = coll.find(query);
+		double latitud = 0.0;
+		double longitud = 0.0;
+		String fecha = "";
+
+		while (d1.hasNext()) {
+
+			DBObject obj = d1.next();
+			JSONArray ltsSensores = new JSONArray(obj.get("ms").toString());
+			fecha = obj.get("fecha").toString();
+			latitud = Double.parseDouble(obj.get("la").toString());
+			longitud = Double.parseDouble(obj.get("lo").toString());
+
+			for (int i = 0; i < ltsSensores.length(); i++) {
+				JSONObject sensorM = ltsSensores.getJSONObject(i);
+				Reporte reporte = new Reporte();
+				reporte.setCodSensor(codSensor);
+				reporte.setFecha(fecha);
+				reporte.setLatitud(latitud);
+				reporte.setLongitud(longitud);
+
+				if (sensorM.getString("m").equals("T")) {
+					reporte.setSensor("Temperatura");
+					reporte.setValor(Double.parseDouble(sensorM.get("v").toString()));
+				}
+				if (sensorM.getString("m").equals("H")) {
+					reporte.setSensor("Humedad");
+					reporte.setValor(Double.parseDouble(sensorM.get("v").toString()));
+				}
+				if (sensorM.getString("m").equals("L")) {
+					reporte.setSensor("Luminosidad");
+					reporte.setValor(Double.parseDouble(sensorM.get("v").toString()));
+				}
+				if (sensorM.getString("m").equals("R")) {
+					reporte.setSensor("Ruido");
+					reporte.setValor(Double.parseDouble(sensorM.get("v").toString()));
+				}
+				ltsReporte.add(reporte);
+
+			}
+		}
+	}
 
 	public void getDatosTH() {
 		datoTemp = 0.0;

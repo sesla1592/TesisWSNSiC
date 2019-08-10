@@ -478,13 +478,21 @@ canvas#canvas4 {
 				var result;
 				var strfechax = "";
 				var strvalory = "";
+				var tsensor = "";
+				var direccion = "";
+				var nombresensor = "";
+				var umed = "";
+				console.log("VARRAY TOTAL OBTENIDO");
 				console.log(varray);
 				for (var i =0; i &lt; str.data.length; i++){					
 					tmed = varray[i].sensor;
 					
 					var valory = varray[i].valor;
 					var fechax = varray[i].fecha;
-					
+					tsensor = varray[i].tsensor;
+					direccion = varray[i].direccion;
+					nombresensor = varray[i].codNodo;
+					umed = varray[i].unidadmedida;
 					if(i == str.data.length-1){
 						strfechax += `"`+fechax+`"`;
 						strvalory += `"`+valory+`"`;
@@ -497,6 +505,7 @@ canvas#canvas4 {
 				try{
 					var jsonx = JSON.parse("["+strfechax+"]");
 					var jsony = JSON.parse("["+strvalory+"]");
+					console.log(tsensor);
 					console.log(jsonx);
 					console.log(jsony);
 				}catch(e){
@@ -509,23 +518,23 @@ canvas#canvas4 {
 						y : jsony,
 						type : 'scatter',
 						mode : 'lines+markers',
-						name : 'Testing',
+						name : tsensor,
 						showlegend: true,
-						hovertext: 'Medicion'
+						hovertext: umed
 				};
 					
 				console.log(result);
 				var datagraphics = [result];
 				
 				var layout = {
-				title : 'Series de Rangos',
+				title : nombresensor+" - "+direccion,
 				showline: true,
 				plot_bgcolor: 'rgba(0,0,0,0)',
 				xaxis: {
 				    autorange: true,
 				    title: 
 				    {
-				    		text: 'Titulo para X'
+				    		text: ' P e r i o d o s '
 				    },
 				    rangeselector: {buttons: [
 			        {
@@ -541,7 +550,8 @@ canvas#canvas4 {
 			          		stepmode: 'backward'
 			        },
 			        {step: 'all'}
-			      	]},    
+			      	]}, 
+			      	rangeslider: {range: ['2018-02-17', '2020-02-16']},   
 				    type: 'date'
 				},
 				yaxis: {
@@ -549,7 +559,7 @@ canvas#canvas4 {
 				    	range: [0, 100],
 				    	title: 
 				    	{
-				    		text: 'Titulo para Y'
+				    		text: 'Valor medido'+'('+ umed +')'
 				    	}
 				}
 				};
