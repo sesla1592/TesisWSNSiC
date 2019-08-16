@@ -138,6 +138,12 @@ public class DashboardUser {
 	public String typeMedicion = "";
 
 	public String tipoFecha;
+	
+	//propiedades iniciales para la grafica
+	String tipograficaSelect = "lineal";
+	String typeSelect = "scatter";
+	String modeSelect = "lines";
+	String fillSelect = "none";
 
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLDITALIC);
 	private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
@@ -246,7 +252,7 @@ public class DashboardUser {
 	public void setTypeMedicion(String typeMedicion) {
 		this.typeMedicion = typeMedicion;
 	}
-
+	
 	public void setSensorSeleccionado(String sensorSeleccionado) {
 		// sensorSeleccionado = sensorSeleccionado.substring(0, 1);
 		try {
@@ -270,6 +276,91 @@ public class DashboardUser {
 		}
 
 		// System.out.println("--> " + this.sensorSeleccionado);
+	}
+
+	public String getTipograficaSelect() {
+		System.out.println();
+		return tipograficaSelect;
+	}
+
+	public String getModeSelect() {
+		return modeSelect;
+	}
+
+	public void setModeSelect(String modeSelect) {
+		this.modeSelect = modeSelect;
+	}
+
+	public String getFillSelect() {
+		return fillSelect;
+	}
+
+	public void setFillSelect(String fillSelect) {
+		this.fillSelect = fillSelect;
+	}
+
+	public String getTypeSelect() {
+		return typeSelect;
+	}
+
+	public void setTypeSelect(String typeSelect) {
+		this.typeSelect = typeSelect;
+	}
+
+	//public String tipograficaSelect = "scatter";
+	//public String mode = "lines";
+	//public String fill = "none";
+	public void setTipograficaSelect(String tipograficaSelect) {
+		try {
+			System.out.println("GRAFICA SELECCIONADA:  "+tipograficaSelect);
+			if(this.tipograficaSelect.equals("lineal")) {
+				System.out.println("LINEAL");
+				typeSelect = "scatter";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("linealdispersion")) {
+				System.out.println("LINEAL");
+				typeSelect = "scatter";
+				modeSelect = "lines+markers";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("barra")) {
+				System.out.println("BARRA");
+				typeSelect = "bar";
+				modeSelect = "markers";
+				fillSelect = "none";	
+			}
+			if(this.tipograficaSelect.equals("dispersion")) {
+				System.out.println("DISPERSION");
+				typeSelect = "scatter";
+				modeSelect = "markers";
+				fillSelect = "none";	
+			}
+			if(this.tipograficaSelect.equals("area")) {
+				System.out.println("AREA");
+				typeSelect = "scatter";
+				modeSelect = "lines";
+				fillSelect = "tonexty";
+			}
+			if(this.tipograficaSelect.equals("histograma")) {
+				System.out.println("HISTOGRAMA");
+				typeSelect = "histogram";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("histograma2dcontorno")) {
+				System.out.println("HISTOGRAMAA-2D");
+				typeSelect = "histogram2dcontour";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		this.tipograficaSelect = tipograficaSelect;
 	}
 
 	public List<String> getLtsSensores() {
@@ -461,7 +552,7 @@ public class DashboardUser {
 		contenedor = new org.json.simple.JSONObject();
 		org.json.simple.JSONArray company = new org.json.simple.JSONArray();
 		org.json.simple.JSONObject obj1 = new org.json.simple.JSONObject();
-		if (nodoSelected != null) {
+		if (nodoSelected != null) {	
 			System.out.println("boolean typo calendario " + typeCalendar);
 			if (typeCalendar == false) {
 				System.out.println("fecha por combo :" + tipoFecha);

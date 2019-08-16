@@ -434,17 +434,16 @@ canvas#canvas4 {
 												itemLabel="#{sensorItem}"/>
 										</h:selectOneMenu>
                                         
-                                
-										
-										<h:selectOneMenu value="#{dashboardUser.tipoFecha}"
-											valueChangeListener="#{dashboardUser.cambioDeFecha}" class="form-control">
-											<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
-											<f:selectItem itemValue="Diario" itemLabel="Diario" />
-											<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
-											<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
-										</h:selectOneMenu>
-                                        
-
+										<p:outputLabel value="Tipo de gráfica:"></p:outputLabel>
+										<h:selectOneMenu value="#{dashboardUser.tipograficaSelect}" class="form-control">
+											<f:selectItem itemValue="lineal" itemLabel="Lineal" var="itemlineal"/>
+											<f:selectItem itemValue="linealdispersion" itemLabel="Lineal + Dispersión" var="itemlineal"/>
+											<f:selectItem itemValue="barra" itemLabel="Barra" var="itembarra"/>
+											<f:selectItem itemValue="dispersion" itemLabel="Dispersión" var="itemdispersion"/>
+											<f:selectItem itemValue="area" itemLabel="Area" var="itemarea"/>
+											<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
+											<f:selectItem itemValue="histograma2dcontorno" itemLabel="Contorno de histograma en 2D" var="histograma2dcontorno"/>
+										</h:selectOneMenu>                                
 
 										<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
 										<p:calendar id="fechaIni" pattern="yyyy/MM/dd" locale="es" styleClass="calendar">
@@ -463,13 +462,21 @@ canvas#canvas4 {
 										</p:commandButton>
                                         
 <!-- TESTING CODE NEW FOR GRAPHICS -->
-  <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Execute"></p:commandLink>
+  <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
 <h:panelGroup id="afterLoad">
 <div id="myDiv" style="width:999px"></div>
 	<h:outputScript>
 		function afterLoad() {
 				var str = #{dashboardUser.contenedor1};
 				console.log("Size Array: "+str.data.length);
+			    var tipogengrafica = "#{dashboardUser.tipograficaSelect}";
+			    console.log("Grafica: "+tipogengrafica);
+			    var typegrafica = "#{dashboardUser.typeSelect}";
+			    console.log("G type: "+typegrafica);
+			    var modegrafica = "#{dashboardUser.modeSelect}";
+			    console.log("ACROSS DECLARATE mode"+modegrafica);
+			    var fillgrafica = "#{dashboardUser.fillSelect}"; 
+			    console.log("ACROSS DECLARATE fill"+fillgrafica);
 				var colors = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)','rgba(189,189,189,1)', 'rgba(91, 125, 166, 0.9)'];
 				var varray = str.data;
 				var valx;
@@ -516,8 +523,9 @@ canvas#canvas4 {
 				var result = {
 						x : jsonx,
 						y : jsony,
-						type : 'scatter',
-						mode : 'lines+markers',
+						type : typegrafica,
+						mode : modegrafica,
+						fill : fillgrafica,
 						name : tsensor,
 						showlegend: true,
 						hovertext: umed
