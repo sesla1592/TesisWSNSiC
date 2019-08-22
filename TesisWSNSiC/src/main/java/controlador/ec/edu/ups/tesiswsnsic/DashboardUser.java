@@ -97,6 +97,8 @@ public class DashboardUser {
 	
 	org.json.simple.JSONObject storageJSON = new org.json.simple.JSONObject();
 	JSONObject gsonObj2;
+	
+	JSONObject gsonObj2minimo;
 
 	@Inject
 	PersonaNodoDAO personaNodoDAO;
@@ -124,6 +126,7 @@ public class DashboardUser {
 	private List<Reporte> ltsReporte;
 
 	public String medici;
+	public String mediciminimo;
 	public double val;
 	public String fec;
 	public String medicion = "Temperatura";
@@ -138,7 +141,23 @@ public class DashboardUser {
 	public String typeMedicion = "";
 
 	public String tipoFecha;
+	
+	//propiedades iniciales para la grafica
+	String tipograficaSelect = "lineal";
+	String typeSelect = "scatter";
+	String modeSelect = "lines";
+	String fillSelect = "none";
 
+	//Variables maximo y minimo
+	double max = 0;
+	double min = 0;
+	List<Double> listvalores;
+	boolean maxminestablecidos = false;
+	org.json.simple.JSONObject contenedormaximos = new org.json.simple.JSONObject();
+	String contenedor1maximos;
+	org.json.simple.JSONObject contenedorminimos = new org.json.simple.JSONObject();
+	String contenedor1minimos;
+	
 	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLDITALIC);
 	private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
 	private static final Font headerTable = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
@@ -246,7 +265,7 @@ public class DashboardUser {
 	public void setTypeMedicion(String typeMedicion) {
 		this.typeMedicion = typeMedicion;
 	}
-
+	
 	public void setSensorSeleccionado(String sensorSeleccionado) {
 		// sensorSeleccionado = sensorSeleccionado.substring(0, 1);
 		try {
@@ -270,6 +289,107 @@ public class DashboardUser {
 		}
 
 		// System.out.println("--> " + this.sensorSeleccionado);
+	}
+
+	public String getTipograficaSelect() {
+		System.out.println();
+		return tipograficaSelect;
+	}
+
+	public String getModeSelect() {
+		return modeSelect;
+	}
+
+	public void setModeSelect(String modeSelect) {
+		this.modeSelect = modeSelect;
+	}
+
+	public String getFillSelect() {
+		return fillSelect;
+	}
+
+	public void setFillSelect(String fillSelect) {
+		this.fillSelect = fillSelect;
+	}
+
+	public String getTypeSelect() {
+		return typeSelect;
+	}
+
+	public void setTypeSelect(String typeSelect) {
+		this.typeSelect = typeSelect;
+	}
+
+	public double getMax() {
+		return max;
+	}
+
+	public void setMax(double max) {
+		this.max = max;
+	}
+
+	public double getMin() {
+		return min;
+	}
+
+	public void setMin(double min) {
+		this.min = min;
+	}
+
+	//public String tipograficaSelect = "scatter";
+	//public String mode = "lines";
+	//public String fill = "none";
+	public void setTipograficaSelect(String tipograficaSelect) {
+		try {
+			System.out.println("GRAFICA SELECCIONADA:  "+tipograficaSelect);
+			if(this.tipograficaSelect.equals("lineal")) {
+				System.out.println("LINEAL");
+				typeSelect = "scatter";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("linealdispersion")) {
+				System.out.println("LINEAL");
+				typeSelect = "scatter";
+				modeSelect = "lines+markers";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("barra")) {
+				System.out.println("BARRA");
+				typeSelect = "bar";
+				modeSelect = "markers";
+				fillSelect = "none";	
+			}
+			if(this.tipograficaSelect.equals("dispersion")) {
+				System.out.println("DISPERSION");
+				typeSelect = "scatter";
+				modeSelect = "markers";
+				fillSelect = "none";	
+			}
+			if(this.tipograficaSelect.equals("area")) {
+				System.out.println("AREA");
+				typeSelect = "scatter";
+				modeSelect = "lines";
+				fillSelect = "tonexty";
+			}
+			if(this.tipograficaSelect.equals("histograma")) {
+				System.out.println("HISTOGRAMA");
+				typeSelect = "histogram";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+			if(this.tipograficaSelect.equals("histograma2dcontorno")) {
+				System.out.println("HISTOGRAMAA-2D");
+				typeSelect = "histogram2dcontour";
+				modeSelect = "lines";
+				fillSelect = "none";
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		this.tipograficaSelect = tipograficaSelect;
 	}
 
 	public List<String> getLtsSensores() {
@@ -461,7 +581,14 @@ public class DashboardUser {
 		contenedor = new org.json.simple.JSONObject();
 		org.json.simple.JSONArray company = new org.json.simple.JSONArray();
 		org.json.simple.JSONObject obj1 = new org.json.simple.JSONObject();
-		if (nodoSelected != null) {
+		
+		org.json.simple.JSONObject obj1minimo = new org.json.simple.JSONObject();
+		org.json.simple.JSONArray companyminimo = new org.json.simple.JSONArray();
+		
+		org.json.simple.JSONObject obj1maximo = new org.json.simple.JSONObject();
+		org.json.simple.JSONArray companymaximo = new org.json.simple.JSONArray();
+
+		if (nodoSelected != null) {	
 			System.out.println("boolean typo calendario " + typeCalendar);
 			if (typeCalendar == false) {
 				System.out.println("fecha por combo :" + tipoFecha);
@@ -521,6 +648,7 @@ public class DashboardUser {
 			System.out.println("sensor seleccionado: " + sensorSeleccionado);
 			System.out.println("fache inicio : " + fechaInicio);
 			System.out.println("fache fin : " + fechaFin);
+			
 			MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 
 			BasicDBObject query = new BasicDBObject();
@@ -532,6 +660,7 @@ public class DashboardUser {
 			DBCollection coll = db.getCollection(DBConnection.dbcollection);
 
 			DBCursor d1 = coll.find(query);
+						
 
 			fec = "";
 			String nsensor = "";
@@ -540,12 +669,14 @@ public class DashboardUser {
 			String lon = "";
 			String direccion = "";
 			String unidadmedida = "";
+			listvalores = new ArrayList<Double>();
 			while (d1.hasNext()) {
 
 				DBObject obj = d1.next();
 
 				JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
-				fec = obj.get("fecha").toString();
+				
+				fec = obj.get("fecha").toString().replace("/", "-");
 				nsensor = obj.get("n").toString();
 				direccion = nodoDAO.selectDireccion(nsensor);
 				lat = obj.get("la").toString();
@@ -560,13 +691,23 @@ public class DashboardUser {
 					System.out.println("MEDICI(n)   :"+medici);
 					String sensor = sensorSeleccionado.substring(0, 1);
 					System.out.println("SENSOR(n)   :"+sensor);
+
 					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
 						// String sensor =sensorSeleccionado.substring(0, 1);
 						if (medici.equals(sensor)) {
+							System.out.println("ALMACENAR VALOR D: "+Double.parseDouble(gsonObj2.get("v").toString()));
+							listvalores.add(Double.parseDouble(gsonObj2.get("v").toString()));
 							val = Double.parseDouble(gsonObj2.get("v").toString());
 							MedValFec medicionValue = new MedValFec(medici, val, fec);
 							ltsDataSensor.add(medicionValue);
+							if(maxminestablecidos==true) {
+								//CARGAR LOS VALORES DE MAXIMOS Y MINIMOS
+								if(val==max) {
+								}else if (val==min) {
+								}	
+							}
+							
 							obj1.put("codNodo", nsensor.toUpperCase());
 							obj1.put("fecha", fec);
 							
@@ -581,13 +722,157 @@ public class DashboardUser {
 						}
 					}
 				}
+				contenedormaximos.put("data", companymaximo);
+				contenedor1maximos = contenedormaximos.toString();
+				System.out.println("contenedor1maximos :"+contenedor1maximos);
+				
+				contenedorminimos.put("data", companyminimo);
+				contenedor1minimos = contenedorminimos.toString();
+				System.out.println("contenedor1minimos :"+contenedor1minimos);
+				
 				contenedor.put("data", company);
 				contenedor1 = contenedor.toString();
 				System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());
 			}
+				estableceMaxMin(listvalores);
+		}
+	}
+/*	
+	//Variables maximo y minimo
+	org.json.simple.JSONObject contenedormaximos = new org.json.simple.JSONObject();
+	String contenedor1maximos;
+	org.json.simple.JSONObject contenedorminimos = new org.json.simple.JSONObject();
+	String contenedor1minimos;
+*/	
+	public void estableceMaxMin(List<Double> listv) {
+		min=max=0;
+		for(int i = 0 ; i < listv.size(); i++) {
+			if(max < listv.get(i)) {
+				max = listv.get(i);
+			}
+		}
+		min = max;
+		for(int i = 0 ; i < listv.size(); i++) {
+			if(min > listv.get(i)) {
+				min = listv.get(i);
+			}
+		}
+		System.out.println("MAX: "+max+",    MIN:"+min);
+		maxminestablecidos = true;
+		putMaxMin();
+	}
+	
+	public void putMaxMin() {
+		org.json.simple.JSONObject obj1minimo = new org.json.simple.JSONObject();
+		org.json.simple.JSONArray companyminimo = new org.json.simple.JSONArray();
+		
+		org.json.simple.JSONObject obj1maximo = new org.json.simple.JSONObject();
+		org.json.simple.JSONArray companymaximo = new org.json.simple.JSONArray();
+		
+		System.err.println("PUTTING MAX MIN");
+		MongoClient mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 
-			System.out.println("Connection Succesfull");
-			graficaModel();
+		BasicDBObject query = new BasicDBObject();
+		query.put("n", nodoSelected.getIdentificador());
+		query.put("fecha", BasicDBObjectBuilder.start("$gte", fechaInicio).add("$lte", fechaFin).get());
+		// FindIterable<Document> busquedaNodo = collection.find(query);
+		// busquedaNodo.forEach(printBlock);
+		DB db = mongoClient.getDB(DBConnection.dbname);
+		DBCollection coll = db.getCollection(DBConnection.dbcollection);
+
+		DBCursor d1 = coll.find(query);
+		System.out.println("FECHA INICIO FIN: "+fechaInicio+" "+fechaFin+"     QUERY:"+query.get("n")+" "+query.get("fecha"));
+		
+		fec = "";
+		String nsensor = "";
+		String tipesensor = "";
+		String lat = "";
+		String lon = "";
+		String direccion = "";
+		String unidadmedida = "";
+		listvalores = new ArrayList<Double>();
+
+		while (d1.hasNext()) {
+			DBObject obj = d1.next();
+
+			JSONArray ltsMediciones = new JSONArray(obj.get("ms").toString());
+			
+			fec = obj.get("fecha").toString().replace("/", "-");
+			nsensor = obj.get("n").toString();
+			direccion = nodoDAO.selectDireccion(nsensor);
+			lat = obj.get("la").toString();
+			lon = obj.get("lo").toString();
+//			System.out.println("DIRECCION:  "+direccion);
+//			System.out.println("lat:  "+lat);
+//			System.out.println("lon:  "+lon);
+			for (int i = 0; i < ltsMediciones.length(); i++) {
+//				System.out.println("LTS(n)  :"+ltsMediciones.getJSONObject(i));
+				gsonObj2 = ltsMediciones.getJSONObject(i);
+				medici = gsonObj2.get("m").toString();// va el nombre del sensor, referente al tipo de sensor
+				tipesensor = retornaTipoSensor(medici);
+				unidadmedida = retornaUnidadMed(medici);
+//				System.out.println("MEDICI(n)   :"+medici);
+				String sensor = sensorSeleccionado.substring(0, 1);
+//				System.out.println("SENSOR(n)   :"+sensor);
+				if (medici.equals(sensor)) {
+					val = Double.parseDouble(gsonObj2.get("v").toString());
+					// String sensor =sensorSeleccionado.substring(0, 1);
+					if (medici.equals(sensor)) {
+						listvalores.add(Double.parseDouble(gsonObj2.get("v").toString()));
+						val = Double.parseDouble(gsonObj2.get("v").toString());
+						MedValFec medicionValue = new MedValFec(medici, val, fec);
+						ltsDataSensor.add(medicionValue);
+						System.out.println("ESTO VAL: "+val+",   ESTO MIN: "+min);
+						if(val==max) {
+							System.out.println("MAXIMO ES: "+fec);
+							
+							obj1maximo.put("codNodo", nsensor.toUpperCase());
+							obj1maximo.put("fecha", fec);
+							
+							obj1maximo.put("latitud", lat);
+							obj1maximo.put("longitud", lon);
+							obj1maximo.put("tsensor", tipesensor);
+							obj1maximo.put("valor", val);
+							obj1maximo.put("direccion", direccion);
+							obj1maximo.put("unidadmedida", unidadmedida);
+							companymaximo.add(obj1maximo);
+							obj1maximo = new org.json.simple.JSONObject();							
+						}else if (val==min) {
+							System.out.println("MINIMO ES: "+fec);
+							
+							obj1minimo.put("codNodo", nsensor.toUpperCase());
+							obj1minimo.put("fecha", fec);
+							
+							obj1minimo.put("latitud", lat);
+							obj1minimo.put("longitud", lon);
+							obj1minimo.put("tsensor", tipesensor);
+							obj1minimo.put("valor", val);
+							obj1minimo.put("direccion", direccion);
+							obj1minimo.put("unidadmedida", unidadmedida);
+							companyminimo.add(obj1minimo);
+							obj1minimo = new org.json.simple.JSONObject();
+															
+						}	
+					}
+				}
+			}	
+		}
+		if(tipograficaSelect.equals("histograma2dcontorno") || tipograficaSelect.equals("histograma")) {
+			contenedormaximos.put("data", companymaximo);
+			contenedor1maximos = "";
+			System.out.println("contenedor1maximos :"+contenedor1maximos);
+			
+			contenedorminimos.put("data", companyminimo);
+			contenedor1minimos = "";
+			System.out.println("contenedor1minimos :"+contenedor1minimos);
+		}else {
+		contenedormaximos.put("data", companymaximo);
+		contenedor1maximos = contenedormaximos.toString();
+		System.out.println("contenedor1maximos :"+contenedor1maximos);
+		
+		contenedorminimos.put("data", companyminimo);
+		contenedor1minimos = contenedorminimos.toString();
+		System.out.println("contenedor1minimos :"+contenedor1minimos);
 		}
 	}
 	
@@ -672,6 +957,22 @@ public class DashboardUser {
 	public void setContenedor1(String contenedor1) {
 		this.contenedor1 = contenedor1;
 	}
+	
+	public String getContenedor1maximos() {
+		return contenedor1maximos;
+	}
+
+	public void setContenedor1maximos(String contenedor1maximos) {
+		this.contenedor1maximos = contenedor1maximos;
+	}
+
+	public String getContenedor1minimos() {
+		return contenedor1minimos;
+	}
+
+	public void setContenedor1minimos(String contenedor1minimos) {
+		this.contenedor1minimos = contenedor1minimos;
+	}
 
 	public org.json.simple.JSONObject getContenedor() {
 		return contenedor;
@@ -739,10 +1040,6 @@ public class DashboardUser {
 	/* PLOTTY */
 	 public void Ploty() {
 		 grafica();
-		 //cargardatadinamica();
-//		 establecerangofechas();
-//		 cargaSensorSelec();
-//		 cargarNodoJSON();
 	 }
 	 
 	public void cargaDatosJSON(String codSensor, boolean historico) {

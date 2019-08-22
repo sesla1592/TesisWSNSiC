@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import modelo.ec.edu.ups.tesiswsnsic.Persona;
+import net.sf.jasperreports.engine.util.DigestUtils;
 
 @Stateless
 public class PersonaDAO {
@@ -137,6 +138,8 @@ public class PersonaDAO {
 	}
 	
 	public Persona loginPersona(String user, String password) {
+		
+		String encriptpassword = org.apache.commons.codec.digest.DigestUtils.md5Hex(password);
 		
 		TypedQuery<Persona> query = em.createQuery("Select p from Persona p WHERE "
 				+ "p.correo like :user AND p.password like :password", Persona.class);
