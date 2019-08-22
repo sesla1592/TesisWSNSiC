@@ -441,8 +441,8 @@ canvas#canvas4 {
 											<f:selectItem itemValue="barra" itemLabel="Barra" var="itembarra"/>
 											<f:selectItem itemValue="dispersion" itemLabel="Dispersión" var="itemdispersion"/>
 											<f:selectItem itemValue="area" itemLabel="Area" var="itemarea"/>
-											<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
-											<f:selectItem itemValue="histograma2dcontorno" itemLabel="Contorno de histograma en 2D" var="histograma2dcontorno"/>
+<!-- 										<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
+											<f:selectItem itemValue="histograma2dcontorno" itemLabel="Contorno de histograma en 2D" var="histograma2dcontorno"/>-->
 										</h:selectOneMenu>                                
 
 										<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
@@ -456,10 +456,11 @@ canvas#canvas4 {
 											<p:ajax event="dateSelect"
 												listener="#{dashboardUser.onDateSelectFin}" />
 										</p:calendar>
-                                        
+<!--                                          
                                         <p:commandButton action="#{dashboardUser.grafica()}"
-											value="Graficar" update="grafica messages">
+											value="Graficar" update="messages">
 										</p:commandButton>
+-->										
                                         
 <!-- TESTING CODE NEW FOR GRAPHICS -->
   <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
@@ -467,7 +468,10 @@ canvas#canvas4 {
 <div id="myDiv" style="width:999px"></div>
 	<h:outputScript>
 		function afterLoad() {
-				var str = #{dashboardUser.contenedor1};
+				var str = #{dashboardUser.contenedor1}; 
+				var strmax = #{dashboardUser.contenedor1maximos};
+				var strmin = #{dashboardUser.contenedor1minimos};
+				
 				console.log("Size Array: "+str.data.length);
 			    var tipogengrafica = "#{dashboardUser.tipograficaSelect}";
 			    console.log("Grafica: "+tipogengrafica);
@@ -479,39 +483,126 @@ canvas#canvas4 {
 			    console.log("ACROSS DECLARATE fill"+fillgrafica);
 				var colors = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)','rgba(189,189,189,1)', 'rgba(91, 125, 166, 0.9)'];
 				var varray = str.data;
+				var varraymax = strmax.data;
+				var varraymin = strmin.data;
+				var ynum;
+				var jsonx;
+				var jsony;
+				var jsonmaxx;
+				var jsonmaxy;
+				var jsonminx;
+				var jsonminy;
 				var valx;
 				var valy;
 				var tmed;
 				var result;
 				var strfechax = "";
 				var strvalory = "";
+				var strfechamaxx = "";
+				var strvalormaxy = "";
+				var strfechaminx = "";
+				var strvalorminy = "";
+				var vmax = "#{dashboardUser.max}";
+				var vmin = "#{dashboardUser.min}";
 				var tsensor = "";
 				var direccion = "";
 				var nombresensor = "";
 				var umed = "";
+				
+				var media = 0;
+				var finicio = "";
+				var ffin = "";
+				
+				var minimo;
+				var maximo;
+
 				console.log("VARRAY TOTAL OBTENIDO");
+				var longitud = str.data.length;
 				console.log(varray);
 				for (var i =0; i &lt; str.data.length; i++){					
 					tmed = varray[i].sensor;
 					
+					finicio = `"`+varray[0].fecha+`"`;
+
+					if(i == longitud-1){
+					ffin = `"`+varray[i].fecha+`"`;
+
+					}
+
+					media = parseInt(media + varray[i].valor);
+					
 					var valory = varray[i].valor;
 					var fechax = varray[i].fecha;
+
 					tsensor = varray[i].tsensor;
 					direccion = varray[i].direccion;
 					nombresensor = varray[i].codNodo;
 					umed = varray[i].unidadmedida;
 					if(i == str.data.length-1){
+
 						strfechax += `"`+fechax+`"`;
 						strvalory += `"`+valory+`"`;
 					}else{
+
 						strfechax += `"`+fechax+ `",`;
 						strvalory += `"`+valory+ `",`;
 					}
-					strfechax = strfechax.replace("/","-");
+
+					
+				}
+				for(var i =0; i &lt; strmax.data.length; i++){
+					var valmaxy = varraymax[i].valor;
+					var fechamaxx = varraymax[i].fecha;
+					
+					if(i == strmax.data.length-1){
+						strfechamaxx += `"`+fechamaxx+`"`;
+						strvalormaxy += `"`+valmaxy+`"`;
+					}else{
+						strfechamaxx += `"`+fechamaxx+ `",`;
+						strvalormaxy += `"`+valmaxy+ `",`;
+					}
+					
+				}
+				for (var i =0; i &lt; strmin.data.length; i++){
+					var valminy = varraymin[i].valor;
+					var fechaminx = varraymin[i].fecha; 
+					
+					if(i == strmin.data.length-1){
+						strfechaminx += `"`+fechaminx+`"`;
+						strvalorminy += `"`+valminy+`"`;
+					}else{
+						strfechaminx += `"`+fechaminx+ `",`;
+						strvalorminy += `"`+valminy+ `",`;
+					}
+					
 				}
 				try{
-					var jsonx = JSON.parse("["+strfechax+"]");
-					var jsony = JSON.parse("["+strvalory+"]");
+
+					var imedia = parseFloat(media/str.data.length).toFixed(2);
+					var strvmedia = `"`+imedia+`"`;
+					
+					var vecfechamedia = JSON.parse("["+finicio+","+ffin+"]");
+					var vecvalormedia = JSON.parse("["+strvmedia+","+strvmedia+"]")
+					
+					jsonx = JSON.parse("["+strfechax+"]");
+					jsony = JSON.parse("["+strvalory+"]");
+					
+					jsonmaxx = JSON.parse("["+strfechamaxx+"]");
+					jsonmaxy = JSON.parse("["+strvalormaxy+"]");
+					
+					console.log("INICIO JSONMAXX");
+					console.log(jsonmaxx);
+					console.log("FIN JSONMAXX");
+					
+					jsonminx = JSON.parse("["+strfechaminx+"]");
+					jsonminy = JSON.parse("["+strvalorminy+"]");
+					
+					console.log("MEDIA"+imedia);
+					console.log("JSON FECHA MEDIA :  "+vecfechamedia);
+					console.log("JSON VALOR MEDIA:    "+vecvalormedia);
+					
+					
+					
 					console.log(tsensor);
 					console.log(jsonx);
 					console.log(jsony);
@@ -530,9 +621,61 @@ canvas#canvas4 {
 						showlegend: true,
 						hovertext: umed
 				};
-					
+
+				var gmedia = 
+				{
+						x : vecfechamedia,
+						y : vecvalormedia,
+						type : 'scatter',
+						mode : 'lines',
+						name : 'Media:'+' '+imedia+' '+umed,
+						line : {
+							dash : 'dashdot',
+							width : 4
+						},
+						marker : {
+							color : 'rgb( 244, 198, 41)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};					
+
+				var gminimos = 
+				{
+				        type : 'scatter',
+						x : jsonminx,
+						y : jsonminy,
+						mode : 'markers',
+						name : 'Mínimo:'+' '+vmin+' '+umed,
+						marker : {
+							color : 'rgb(180, 31, 88)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};				
+				
+				var gmaximos = 
+				{
+				        type : 'scatter',
+						x : jsonmaxx,
+						y : jsonmaxy,
+						mode : 'markers',
+						name : 'Máximo: '+' '+vmax+' '+umed,
+						marker : {
+							color : 'rgb( 9, 86, 21)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};		
+				
+				console.log('GMAXIMOS');
+				console.log(gmaximos);
+				console.log('TERMINA GMAXIMOS');
 				console.log(result);
-				var datagraphics = [result];
+				var datagraphics = [result, gmedia, gmaximos, gminimos];
 				
 				var layout = {
 				title : nombresensor+" - "+direccion,
@@ -559,7 +702,7 @@ canvas#canvas4 {
 			        },
 			        {step: 'all'}
 			      	]}, 
-			      	rangeslider: {range: ['2018-02-17', '2020-02-16']},   
+			      	rangeslider: {range: ['2019-01-01', '2020-02-16']},   
 				    type: 'date'
 				},
 				yaxis: {
@@ -577,7 +720,21 @@ canvas#canvas4 {
 	</h:outputScript>
 </h:panelGroup>		                                     
                                       
-
+										<h:panelGroup id="panelDatos">
+       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br />
+											<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}"
+												value="Temperatura: #{dashboardUser.datoTemp}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}"
+												value="Humedad: #{dashboardUser.datoHum}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoLum != 0.0}"
+												value="Luminosidad: #{dashboardUser.datoLum}" />
+											<br />
+											<h:outputText rendered="#{dashboardUser.datoRui != 0.0}"
+												value="Ruido: #{dashboardUser.datoRui}" />
+											<br />
+										</h:panelGroup>
                                       
                                       
                                   </h:panelGrid></center>
@@ -596,7 +753,7 @@ canvas#canvas4 {
 
 					<!--   INICIO DE LA TABLA DE LOS NODOS DE LOS USUARIOS -->
 
-
+<!-- 
 					<div class="content-wrap">
 						<div class="row">
 							<div class="col-sm-12">
@@ -619,67 +776,30 @@ canvas#canvas4 {
 									</div>
 									<div id="RealTime"
 										style="min-height: 296px; padding-top: 20px;"
-										class="body-nest">
-
-
-										<!-- CODIGO PARA LA GRAFICA DE LOS NODOS SENSORES -->
-									
-										
-
-										<h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br />
-											<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}"
-												value="Temperatura: #{dashboardUser.datoTemp}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}"
-												value="Humedad: #{dashboardUser.datoHum}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoLum != 0.0}"
-												value="Luminosidad: #{dashboardUser.datoLum}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoRui != 0.0}"
-												value="Ruido: #{dashboardUser.datoRui}" />
-											<br />
-										</h:panelGroup>
-										
-										
+										class="body-nest">																			
 										<center>
 										<div >
-				
 				<p:chart id ="grafica" type="line" model="#{dashboardUser.lineModel2}" style="height:700px; width:80%;" widgetVar="chart"  />
 				<br />    
 				<p:commandButton type="button" value="Restablecer" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
 			</div>
-									</center>
-										
+									</center>										
 											<br/>
 											<br/>											
 											<br/>
 											<br/>
-										<!-- FIN DEL CODIGO -->
-
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- FIN -->
+-->
+
 
 
 <!-- BOTONES DE  LOS FORMATOS PARA LA DESCARGA DE LOS DATOS-->
-
-
-
-
-
-											
-											
 					<br />
-		
-
 				</h:form>
-				
-											
 											<center><h:form>
 											
 												<h:commandLink action="#{dashboardUser.descargarCSV()}" title="Descargar en SVC">
