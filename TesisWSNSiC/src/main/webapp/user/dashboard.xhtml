@@ -420,12 +420,8 @@ canvas#canvas4 {
 
                             <div class="body-nest form-inline" id="inline">
 							<center>
-							
-								<h:panelGrid columns="8">
-                                
-                                  
-                                     
-                                        <p:outputLabel value="Sensor:"></p:outputLabel>
+							<h:panelGrid columns="6">
+							                                        <p:outputLabel value="Sensor:"></p:outputLabel>
                                         <h:selectOneMenu id="listaNodos"
 											value="#{dashboardUser.sensorSeleccionado}" class="form-control">
 
@@ -433,6 +429,15 @@ canvas#canvas4 {
 												var="sensorItem" itemValue="#{sensorItem}"
 												itemLabel="#{sensorItem}"/>
 										</h:selectOneMenu>
+								
+								<p:outputLabel value="Periodos:"></p:outputLabel>		
+								<h:selectOneMenu value="#{dashboardUser.tipoFecha}" class="form-control"
+									valueChangeListener="#{dashboardUser.cambioDeFecha}">
+									<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
+									<f:selectItem itemValue="Diario" itemLabel="Diario" />
+									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
+									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
+								</h:selectOneMenu>
                                         
 										<p:outputLabel value="Tipo de gráfica:"></p:outputLabel>
 										<h:selectOneMenu value="#{dashboardUser.tipograficaSelect}" class="form-control">
@@ -456,6 +461,9 @@ canvas#canvas4 {
 											<p:ajax event="dateSelect"
 												listener="#{dashboardUser.onDateSelectFin}" />
 										</p:calendar>
+							</h:panelGrid>
+							
+								<h:panelGrid columns="3">
 <!--                                          
                                         <p:commandButton action="#{dashboardUser.grafica()}"
 											value="Graficar" update="messages">
@@ -465,7 +473,7 @@ canvas#canvas4 {
 <!-- TESTING CODE NEW FOR GRAPHICS -->
   <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
 <h:panelGroup id="afterLoad">
-<div id="myDiv" style="width:999px"></div>
+<div id="myDiv"></div>
 	<h:outputScript>
 		function afterLoad() {
 				var str = #{dashboardUser.contenedor1}; 
@@ -678,9 +686,21 @@ canvas#canvas4 {
 				var datagraphics = [result, gmedia, gmaximos, gminimos];
 				
 				var layout = {
-				title : nombresensor+" - "+direccion,
+				title : {
+					text: nombresensor+" - "+direccion,
+					font: {
+						size: 22
+					}
+				},	
+				legend : {
+					font: {
+						size: 15
+					}
+				},				
 				showline: true,
 				plot_bgcolor: 'rgba(0,0,0,0)',
+				width: 1630,			
+				height: 600, 
 				xaxis: {
 				    autorange: true,
 				    title: 
@@ -710,7 +730,10 @@ canvas#canvas4 {
 				    	range: [0, 100],
 				    	title: 
 				    	{
-				    		text: 'Valor medido'+'('+ umed +')'
+				    		text: 'Medición'+'('+ umed +')',
+				    		font: {
+								size: 18
+							}
 				    	}
 				}
 				};
