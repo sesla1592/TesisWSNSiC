@@ -16,6 +16,7 @@
 	<link rel="icon"
 		href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-WCPiR71SqcEE42ZLTsFSI8826I0N668APBtGIYjCWWVZDx46" />
 	<title>WSNSiC - Blogs Detalle</title>
+	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="css/bootstrap.css" />
 	<link rel="stylesheet" href="css/themify-icons.css" />
@@ -193,6 +194,18 @@
 									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
 									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
 								</h:selectOneMenu>
+								
+								<p:outputLabel value="Tipo de gráfica:"></p:outputLabel>
+										<h:selectOneMenu value="#{blogDetalle.tipograficaSelect}" class="form-control">
+											<f:selectItem itemValue="lineal" itemLabel="Lineal" var="itemlineal"/>
+											<f:selectItem itemValue="linealdispersion" itemLabel="Lineal + Dispersión" var="itemlineal"/>
+											<f:selectItem itemValue="barra" itemLabel="Barra" var="itembarra"/>
+											<f:selectItem itemValue="dispersion" itemLabel="Dispersión" var="itemdispersion"/>
+											<f:selectItem itemValue="area" itemLabel="Area" var="itemarea"/>
+<!-- 										<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
+											<f:selectItem itemValue="histograma2dcontorno" itemLabel="Contorno de histograma en 2D" var="histograma2dcontorno"/>-->
+										</h:selectOneMenu>  
+										
 								<br />
 								<br />
 								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
@@ -213,17 +226,297 @@
 								<br />
 								<center><h2>MEDICIONES SENSORES EN LA NUBE</h2>
 								
+								
+								
+								
+								 <p:commandLink type="button" action="#{blogDetalle.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
+<h:panelGroup id="afterLoad">
+
+<div id="myDiv"></div>
+	<h:outputScript>
+		function afterLoad() {
+				var str = #{blogDetalle.contenedor1}; 
+				var strmax = #{blogDetalle.contenedor1maximos};
+				var strmin = #{blogDetalle.contenedor1minimos};
+				
+				console.log("Size Array: "+str.data.length);
+			    var tipogengrafica = "#{blogDetalle.tipograficaSelect}";
+			    console.log("Grafica: "+tipogengrafica);
+			    var typegrafica = "#{blogDetalle.typeSelect}";
+			    console.log("G type: "+typegrafica);
+			    var modegrafica = "#{blogDetalle.modeSelect}";
+			    console.log("ACROSS DECLARATE mode"+modegrafica);
+			    var fillgrafica = "#{blogDetalle.fillSelect}"; 
+			    console.log("ACROSS DECLARATE fill"+fillgrafica);
+				var colors = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)','rgba(189,189,189,1)', 'rgba(91, 125, 166, 0.9)'];
+				var varray = str.data;
+				var varraymax = strmax.data;
+				var varraymin = strmin.data;
+				var ynum;
+				var jsonx;
+				var jsony;
+				var jsonmaxx;
+				var jsonmaxy;
+				var jsonminx;
+				var jsonminy;
+				var valx;
+				var valy;
+				var tmed;
+				var result;
+				var strfechax = "";
+				var strvalory = "";
+				var strfechamaxx = "";
+				var strvalormaxy = "";
+				var strfechaminx = "";
+				var strvalorminy = "";
+				var vmax = "#{blogDetalle.max}";
+				var vmin = "#{blogDetalle.min}";
+				var tsensor = "";
+				var direccion = "";
+				var nombresensor = "";
+				var umed = "";
+				
+				var media = 0;
+				var finicio = "";
+				var ffin = "";
+				
+				var minimo;
+				var maximo;
+
+				console.log("VARRAY TOTAL OBTENIDO");
+				var longitud = str.data.length;
+				console.log(varray);
+				for (var i =0; i &lt; str.data.length; i++){					
+					tmed = varray[i].sensor;
+					
+					finicio = `"`+varray[0].fecha+`"`;
+
+					if(i == longitud-1){
+					ffin = `"`+varray[i].fecha+`"`;
+
+					}
+
+					media = parseInt(media + varray[i].valor);
+					
+					var valory = varray[i].valor;
+					var fechax = varray[i].fecha;
+
+					tsensor = varray[i].tsensor;
+					direccion = varray[i].direccion;
+					nombresensor = varray[i].codNodo;
+					umed = varray[i].unidadmedida;
+					if(i == str.data.length-1){
+
+						strfechax += `"`+fechax+`"`;
+						strvalory += `"`+valory+`"`;
+					}else{
+
+						strfechax += `"`+fechax+ `",`;
+						strvalory += `"`+valory+ `",`;
+					}
+
+					
+				}
+				for(var i =0; i &lt; strmax.data.length; i++){
+					var valmaxy = varraymax[i].valor;
+					var fechamaxx = varraymax[i].fecha;
+					
+					if(i == strmax.data.length-1){
+						strfechamaxx += `"`+fechamaxx+`"`;
+						strvalormaxy += `"`+valmaxy+`"`;
+					}else{
+						strfechamaxx += `"`+fechamaxx+ `",`;
+						strvalormaxy += `"`+valmaxy+ `",`;
+					}
+					
+				}
+				for (var i =0; i &lt; strmin.data.length; i++){
+					var valminy = varraymin[i].valor;
+					var fechaminx = varraymin[i].fecha; 
+					
+					if(i == strmin.data.length-1){
+						strfechaminx += `"`+fechaminx+`"`;
+						strvalorminy += `"`+valminy+`"`;
+					}else{
+						strfechaminx += `"`+fechaminx+ `",`;
+						strvalorminy += `"`+valminy+ `",`;
+					}
+					
+				}
+				try{
+
+					var imedia = parseFloat(media/str.data.length).toFixed(2);
+					var strvmedia = `"`+imedia+`"`;
+					
+					var vecfechamedia = JSON.parse("["+finicio+","+ffin+"]");
+					var vecvalormedia = JSON.parse("["+strvmedia+","+strvmedia+"]")
+					
+					jsonx = JSON.parse("["+strfechax+"]");
+					jsony = JSON.parse("["+strvalory+"]");
+					
+					jsonmaxx = JSON.parse("["+strfechamaxx+"]");
+					jsonmaxy = JSON.parse("["+strvalormaxy+"]");
+					
+					console.log("INICIO JSONMAXX");
+					console.log(jsonmaxx);
+					console.log("FIN JSONMAXX");
+					
+					jsonminx = JSON.parse("["+strfechaminx+"]");
+					jsonminy = JSON.parse("["+strvalorminy+"]");
+					
+					console.log("MEDIA"+imedia);
+					console.log("JSON FECHA MEDIA :  "+vecfechamedia);
+					console.log("JSON VALOR MEDIA:    "+vecvalormedia);
+					
+					
+					
+					console.log(tsensor);
+					console.log(jsonx);
+					console.log(jsony);
+				}catch(e){
+					console.log(e.name);
+					console.log(e.message);
+				}
+				 
+				var result = {
+						x : jsonx,
+						y : jsony,
+						type : typegrafica,
+						mode : modegrafica,
+						fill : fillgrafica,
+						name : tsensor,
+						showlegend: true,
+						hovertext: umed
+				};
+
+				var gmedia = 
+				{
+						x : vecfechamedia,
+						y : vecvalormedia,
+						type : 'scatter',
+						mode : 'lines',
+						name : 'Media:'+' '+imedia+' '+umed,
+						line : {
+							dash : 'dashdot',
+							width : 4
+						},
+						marker : {
+							color : 'rgb( 244, 198, 41)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};					
+
+				var gminimos = 
+				{
+				        type : 'scatter',
+						x : jsonminx,
+						y : jsonminy,
+						mode : 'markers',
+						name : 'Mínimo:'+' '+vmin+' '+umed,
+						marker : {
+							color : 'rgb(180, 31, 88)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};				
+				
+				var gmaximos = 
+				{
+				        type : 'scatter',
+						x : jsonmaxx,
+						y : jsonmaxy,
+						mode : 'markers',
+						name : 'Máximo: '+' '+vmax+' '+umed,
+						marker : {
+							color : 'rgb( 9, 86, 21)',
+							symbol : 'circle',
+							opacity : 1,
+							size : 6 
+						}
+				};		
+				
+				console.log('GMAXIMOS');
+				console.log(gmaximos);
+				console.log('TERMINA GMAXIMOS');
+				console.log(result);
+				var datagraphics = [result, gmedia, gmaximos, gminimos];
+				
+				var layout = {
+				title : {
+					text: nombresensor+" - "+direccion,
+					font: {
+						size: 22
+					}
+				},	
+				legend : {
+					font: {
+						size: 15
+					}
+				},				
+				showline: true,
+				plot_bgcolor: 'rgba(0,0,0,0)',
+				width: 1630,			
+				height: 600, 
+				xaxis: {
+				    autorange: true,
+				    title: 
+				    {
+				    		text: ' P e r i o d o s '
+				    },
+				    rangeselector: {buttons: [
+			        {
+				          	count: 1,
+				          	label: '1m',
+				          	step: 'month',
+				          	stepmode: 'backward'
+			        },
+			        {
+			          		count: 6,
+			          		label: '6m',
+			          		step: 'month',
+			          		stepmode: 'backward'
+			        },
+			        {step: 'all'}
+			      	]}, 
+			      	rangeslider: {range: ['2019-01-01', '2020-02-16']},   
+				    type: 'date'
+				},
+				yaxis: {
+				    	autorange: true,
+				    	range: [0, 100],
+				    	title: 
+				    	{
+				    		text: 'Medición'+'('+ umed +')',
+				    		font: {
+								size: 18
+							}
+				    	}
+				}
+				};
+				console.log(layout);
+				Plotly.newPlot('myDiv', datagraphics, layout, {showSendToCloud: true});
+		}
+	</h:outputScript>
+</h:panelGroup>		       
+								
+							</center>	
+								
+								
+								<!--  
 								<div >
 									<p:chart id ="grafica" type="line" model="#{blogDetalle.lineModel2}" style="height:700px;" widgetVar="chart" />
 									<br />    
 									<p:commandButton type="button" value="Reset" icon="pi pi-ban" onclick="PF('chart').resetZoom()"/>
 								</div>
 								
-								</center>
+								
 								<b:commandButton action="#{blogDetalle.grafica()}"
-									value="Graficar" update="grafica messages descripcion_sensor" look="primary">
+									value="Graficar" update="messages descripcion_sensor" look="primary">
 								</b:commandButton>
-
+-->
 
 							</p>
 
