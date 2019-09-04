@@ -26,6 +26,15 @@
       <!-- The datasource is deployed as WEB-INF/TesisWSNSiC-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/TesisWSNSiC-ds.xml -->
       <jta-data-source>java:jboss/datasources/wsn</jta-data-source>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Blog</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Comentario</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Empresa</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Nodo</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Persona</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.PersonaNodo</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Rol</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.Sensor</class>
+      <class>modelo.ec.edu.ups.tesiswsnsic.TipoEmpresa</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.hbm2ddl.auto" value="update" />

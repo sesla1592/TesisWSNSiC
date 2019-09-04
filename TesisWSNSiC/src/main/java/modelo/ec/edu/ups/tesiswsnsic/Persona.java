@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnTransformer;
+
 @Entity
 @Table(name = "PERSONA")
 public class Persona {
@@ -34,7 +36,17 @@ public class Persona {
 	@Column(name = "per_correo")
 	private String correo;
 
-	@Column(name = "per_password")
+	@Column(name = "per_password", columnDefinition = "bytea")
+	@ColumnTransformer( 
+			read = "pgp_sym_decrypt (" + 
+					"per_password, " +
+					"    current_setting('session_replication_role')" + 
+					")", 
+			write = "pgp_sym_encrypt ( " + 
+					"?, " + 
+	                "    current_setting('session_replication_role')" +
+					")"
+					)
 	private String password;
 	
 	@Column(name = "per_cambio_password")
