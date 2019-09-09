@@ -107,6 +107,9 @@ public class DashboardUser {
 	
 	//
 	String csvglobal; 
+	
+	public static String nuevalinea = System.getProperty("line.separator");
+	String sensorDescripcion = " ";
 
 	private Marker marker;
 	Persona user;
@@ -212,6 +215,14 @@ public class DashboardUser {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	public String getSensorDescripcion() {
+		return sensorDescripcion;
+	}
+
+	public void setSensorDescripcion(String sensorDescripcion) {
+		this.sensorDescripcion = sensorDescripcion;
 	}
 
 	public String getMedici() {
@@ -1111,7 +1122,7 @@ public class DashboardUser {
 		datoHum = 0.0;
 		datoRui = 0.0;
 		datoLum = 0.0;
-
+		Sensor sensorobj = new Sensor();
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 		BasicDBObject query = new BasicDBObject();
 		query.put("n", nodoSelected.getIdentificador());
@@ -1128,6 +1139,10 @@ public class DashboardUser {
 			JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
 			for (int i = 0; i < ltsSensores.length(); i++) {
 				JSONObject sensorM = ltsSensores.getJSONObject(i);
+				sensorobj = ltsSensor.get(i);
+				sensorDescripcion += sensorobj.getDescripcion_web()+nuevalinea;
+				sensorDescripcion.replace("null", "");
+				System.out.println("SENSOR DESCRIPCION:  "+sensorDescripcion );
 				if (sensorM.getString("m").equals("T")) {
 					datoTemp = Double.parseDouble(sensorM.get("v").toString());
 				}

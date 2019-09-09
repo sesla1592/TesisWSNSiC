@@ -81,7 +81,7 @@ public class DashboardAdmin {
 	List<Empresa> ltsEmpresa;
 	Marker marker;
 	Nodo nodoSelected;
-	private String sensorDescripcion;
+	String sensorDescripcion = " ";
 	public MapModel simpleModel;
 	public String tipoFecha;
 	public String typeMedicion = "";
@@ -104,6 +104,7 @@ public class DashboardAdmin {
 	public Double datoRui = 0.0;
 	public Double datoLum = 0.0;
 	String sensorSeleccionado;
+	public static String nuevalinea = System.getProperty("line.separator");
 	protected List<MedValFec> ltsSData;
 	public String fechaInicio;
 	public String fechaFin;
@@ -485,7 +486,7 @@ public class DashboardAdmin {
 	}
 
 	public void calculaEspaciosa() {
-		File file = new File("C:");
+		File file = new File("/dev/vda");
 		// Total espacio en disco (Bytes).
 		long total = file.getTotalSpace();
 		// Espacio libre en disco (Bytes).
@@ -535,6 +536,7 @@ public class DashboardAdmin {
 		datoRui = 0.0;
 		datoLum = 0.0;
 
+		Sensor sensorobj = new Sensor();
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 		BasicDBObject query = new BasicDBObject();
 		query.put("n", nodoSelected.getIdentificador());
@@ -550,8 +552,21 @@ public class DashboardAdmin {
 			System.out.println("prueba---> " + d1.get("la"));
 			System.out.println("prueba---> " + d1.get("lo"));
 			JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
+/*			
+			for(int i =0; i<ltsSensor.size();i++) {
+				if(ltsSensor.get(i).getNombreCompleto().equals(sensorSeleccionado)) {
+					sensorobj = ltsSensor.get(i);
+					sensorDescripcion = sensorobj.getDescripcion_web();
+					System.out.println("SENSOR DESCRIPCION: "+sensorDescripcion);
+				}
+			}
+*/			
 			for (int i = 0; i < ltsSensores.length(); i++) {
 				JSONObject sensorM = ltsSensores.getJSONObject(i);
+				sensorobj = ltsSensor.get(i);
+				sensorDescripcion += sensorobj.getDescripcion_web()+nuevalinea;
+				sensorDescripcion.replace("null", "");
+				System.out.println("SENSOR DESCRIPCION:  "+sensorDescripcion );
 				if (sensorM.getString("m").equals("T")) {
 					datoTemp = Double.parseDouble(sensorM.get("v").toString());
 				}
@@ -564,8 +579,9 @@ public class DashboardAdmin {
 				if (sensorM.getString("m").equals("R")) {
 					datoRui = Double.parseDouble(sensorM.get("v").toString());
 				}
-
+				sensorDescripcion.replace("null", "");
 			}
+			
 		} else {
 			System.out.println("prueba---> no encontro");
 		}
@@ -655,6 +671,7 @@ public class DashboardAdmin {
 		
 		org.json.simple.JSONObject obj1maximo = new org.json.simple.JSONObject();
 		org.json.simple.JSONArray companymaximo = new org.json.simple.JSONArray();
+		Sensor sensorobj = new Sensor();
 		boolean graficar = false;
 		if (nodoSelected != null) {
 			ltsSData = new ArrayList<>();
@@ -730,7 +747,6 @@ public class DashboardAdmin {
 			DBCollection coll = db.getCollection(DBConnection.dbcollection);
 
 			DBCursor d1 = coll.find(query);
-
 			fec = "";
 			String nsensor = "";
 			String tipesensor = "";
@@ -739,6 +755,7 @@ public class DashboardAdmin {
 			String direccion = "";
 			String unidadmedida = "";
 			listvalores = new ArrayList<Double>();
+			
 			while (d1.hasNext()) {
 
 				DBObject obj = d1.next();
@@ -752,6 +769,7 @@ public class DashboardAdmin {
 				lon = obj.get("lo").toString();
 				//fec = fec.substring(0, 10);
 				for (int i = 0; i < ltsMediciones.length(); i++) {
+
 					gsonObj2 = ltsMediciones.getJSONObject(i);
 					medici = gsonObj2.get("m").toString();// va el nombre del sensor
 					tipesensor = retornaTipoSensor(medici);
@@ -804,6 +822,7 @@ public class DashboardAdmin {
 				System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());				
 			}
 			estableceMaxMin(listvalores);
+//			System.out.println(sensorDescripcion);
 		}
 	}
 	
@@ -885,9 +904,9 @@ public class DashboardAdmin {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
 						MedValFec medicionValue = new MedValFec(medici, val, fec);
 						ltsDataSensor.add(medicionValue);
-						System.out.println("ESTO VAL: "+val+",   ESTO MIN: "+min);
+//						System.out.println("ESTO VAL: "+val+",   ESTO MIN: "+min);
 						if(val==max) {
-							System.out.println("MAXIMO ES: "+fec);
+//							System.out.println("MAXIMO ES: "+fec);
 							
 							obj1maximo.put("codNodo", nsensor.toUpperCase());
 							obj1maximo.put("fecha", fec);
@@ -901,7 +920,7 @@ public class DashboardAdmin {
 							companymaximo.add(obj1maximo);
 							obj1maximo = new org.json.simple.JSONObject();							
 						}else if (val==min) {
-							System.out.println("MINIMO ES: "+fec);
+//							System.out.println("MINIMO ES: "+fec);
 							
 							obj1minimo.put("codNodo", nsensor.toUpperCase());
 							obj1minimo.put("fecha", fec);
