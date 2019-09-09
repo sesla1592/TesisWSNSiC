@@ -177,6 +177,7 @@
 									<h:outputText rendered="#{blogDetalle.datoRui != 0.0}"
 										value="Ruido: #{blogDetalle.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
 									<br />
+																	<h:outputText id="descripcion_sensor" style="font-size: 15px" value="#{blogDetalle.sensorDescripcion}" />
 								</h:panelGroup>
 								<br />
 								<br />
@@ -220,9 +221,7 @@
 									<p:ajax event="dateSelect"
 										listener="#{blogDetalle.onDateSelectFin}" />
 								</p:calendar>
-<div>								
-								<h:outputText id="descripcion_sensor" style="font-size: 15px" value="#{blogDetalle.sensorDescripcion}" />
-</div>
+
 								<br />
 								<center><h2>MEDICIONES SENSORES EN LA NUBE</h2>
 								

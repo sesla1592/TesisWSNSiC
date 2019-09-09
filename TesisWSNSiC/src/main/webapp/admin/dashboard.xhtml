@@ -361,7 +361,7 @@
 								  <div class="card-body">
 								    <blockquote class="blockquote mb-0">
 								    <center>
-								    <div class="div-mediciones">
+								    <div class="div-mediciones">					    
 								    	<p class="elementoicono">
 								      	<h:outputText rendered="#{dashboardAdmin.datoTemp != 0.0}"
 											value="Temperatura: #{dashboardAdmin.datoTemp}" /><i class="fas fa-fw fa-thermometer-full" id="menumediciones"></i>
@@ -377,19 +377,16 @@
 										<p class="elementoicono">
 										<h:outputText rendered="#{dashboardAdmin.datoRui != 0.0}"
 											value="Ruido: #{dashboardAdmin.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
-								      </p>
+								      </p>	
+									
 								    </div>
 								    </center>
-								    									<div class="containerdesc">
-								<h:outputText id="descripcion_sensor" style="font-size: 25px" value="#{dashboardAdmin.sensorDescripcion}" />	
-									</div>
+								    <center>
+								    <h:outputText value="#{dashboardAdmin.sensorDescripcion}" style="font-size: 15px" />
+								    </center>
 								    </blockquote>
 								  </div>
 								</div>
-									
-
-       								
-										
 									</h:panelGroup>
 
 									<br />

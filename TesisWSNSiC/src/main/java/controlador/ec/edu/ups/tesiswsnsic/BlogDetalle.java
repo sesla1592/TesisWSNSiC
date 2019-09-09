@@ -91,7 +91,7 @@ public class BlogDetalle {
 	public MapModel simpleModel;
 	public Nodo nodoSelected;
 	
-	private String sensorDescripcion;
+	String sensorDescripcion = " ";
 
 	protected List<MedValFec> ltsSData;
 	public String fechaInicio;
@@ -104,6 +104,7 @@ public class BlogDetalle {
 	public Double datoLum = 0.0;
 	List<String> ltsSensores = new ArrayList<>();
 	String sensorSeleccionado = "";
+	public static String nuevalinea = System.getProperty("line.separator");
 	public String tipoFecha;
 	public String medici;
 	public double val;
@@ -445,6 +446,7 @@ public class BlogDetalle {
 		datoRui = 0.0;
 		datoLum = 0.0;
 
+		Sensor sensorobj = new Sensor();
 		mongoClient = new MongoClient(new MongoClientURI(DBConnection.connectionMomgo));
 		BasicDBObject query = new BasicDBObject();
 		query.put("n", nodoSelected.getIdentificador());
@@ -461,6 +463,9 @@ public class BlogDetalle {
 			JSONArray ltsSensores = new JSONArray(d1.get("ms").toString());
 			for (int i = 0; i < ltsSensores.length(); i++) {
 				JSONObject sensorM = ltsSensores.getJSONObject(i);
+				sensorobj = ltsSensor.get(i);
+				sensorDescripcion += sensorobj.getDescripcion_web()+nuevalinea;
+				sensorDescripcion.replace("null", "");
 				if (sensorM.getString("m").equals("T")) {
 					datoTemp = Double.parseDouble(sensorM.get("v").toString());
 				}
