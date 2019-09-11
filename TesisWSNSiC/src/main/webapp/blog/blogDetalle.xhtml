@@ -8,131 +8,236 @@
 	xmlns:hf="http://highfaces.org"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
+
+
 <h:head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8" />
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>WSNSic</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="robots" content="all,follow" />
+	<!-- Bootstrap CSS-->
+	<link rel="stylesheet"
+		href="../blog/distribution/vendor/bootstrap/css/bootstrap.min.css" />
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet"
+		href="../blog/distribution/vendor/font-awesome/css/font-awesome.min.css" />
+	<!-- Custom icon font-->
+	<link rel="stylesheet" href="../blog/distribution/css/fontastic.css" />
+	<!-- Google fonts - Open Sans-->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" />
+	<!-- Fancybox-->
+	<link rel="stylesheet"
+		href="../blog/distribution/vendor/@fancyapps/fancybox/jquery.fancybox.min.css" />
+	<!-- theme stylesheet-->
+	<link rel="stylesheet"
+		href="../blog/distribution/css/style.default.css"
+		id="theme-stylesheet" />
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="../blog/distribution/css/custom.css" />
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="favicon.png" />
+	<!-- Tweaks for older IEs-->
+	<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 	<link rel="icon"
 		href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-WCPiR71SqcEE42ZLTsFSI8826I0N668APBtGIYjCWWVZDx46" />
-	<title>WSNSiC - Blogs Detalle</title>
-	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="css/bootstrap.css" />
-	<link rel="stylesheet" href="css/themify-icons.css" />
-	<link rel="icon" type="image/png" href="../image/coloricon.svg" />
+
 	<link rel="stylesheet" href="vendors/fontawesome/css/all.min.css" />
-	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
-	<link rel="stylesheet" href="vendors/animate-css/animate.css" />
-	<!-- main css -->
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/responsive.css" />
-	
-		<link rel="shortcut icon" href="/TesisWSNSiC/faces/icons/gihp4c.png" />
 </h:head>
-<body>
+
+
+
+
+
+
+<body background="fondo4.png">
+
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPa3ras2hBSAdSpYCa7q83OF8fOgCL6g"></script>
 
-	<!-- Start header Menu Area -->
-	<header id="header" class="header_area">
-	<div class="main_menu">
-		<nav class="navbar navbar-expand-lg navbar-light">
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+
+	<header class="header"> <!-- Main Navbar--> <nav
+		class="navbar navbar-expand-lg">
+	<div class="search-area">
+		<div
+			class="search-area-inner d-flex align-items-center justify-content-center">
+			<div class="close-btn">
+				<i class="icon-close"></i>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-8">
+					<form action="#">
+						<div class="form-group">
+							<input type="search" name="search" id="search"
+								placeholder="What are you looking for?" />
+							<button type="submit" class="submit">
+								<i class="icon-search-1"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<!-- Navbar Brand -->
+		<div
+			class="navbar-header d-flex align-items-center justify-content-between">
+			<!-- Navbar Brand -->
+			<a href="index.html" class="navbar-brand"><p class="d">WSNSiC
+					Post</p> </a>
+			<!-- Toggle Button-->
+			<button type="button" data-toggle="collapse"
+				data-target="#navbarcollapse" aria-controls="navbarcollapse"
+				aria-expanded="false" aria-label="Toggle navigation"
+				class="navbar-toggler">
+				<span></span><span></span><span></span>
 			</button>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse offset"
-				id="navbarSupportedContent">
-				<ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-												<li><a href="home.xhtml">INICIO</a></li>
-							<li><a href="about.xhtml">QUIENES SOMOS</a></li>
-							<li><a href="services.xhtml">SOLUCIONES</a></li>
-							<li class="active"><a href="../homepage/blogs.xhtml">BLOGS</a></li>
-
-						</ul>
-			</div>
 		</div>
-		</nav>
-	</div>
-	</header>
-	<!-- End header MEnu Area -->
-
-
-	<!--================Home Banner Area =================-->
-	<section class="banner_area">
-	<div class="banner_inner d-flex align-items-center">
-		<div class="container">
-			<div
-				class="banner_content d-md-flex justify-content-between align-items-center">
-				<div class="mb-3 mb-md-0">
-					<h2>Blog</h2>
-				</div>
-				<div class="page_link">
-					<a href="../homepage/home.xhtml">Inicio</a> <a href="contact.html">Blog
-						Details</a>
-				</div>
-			</div>
+		<!-- Navbar Menu -->
+		<div id="navbarcollapse" class="collapse navbar-collapse">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a href="../homepage/home.xhtml"
+					class="nav-link ">Inicio</a></li>
+				<li class="nav-item"><a href="../login/Login.xhtml"
+					class="nav-link ">Iniciar sesion</a></li>
+				<li class="nav-item"><a href="../login/Registrar.xhtml"
+					class="nav-link active ">Registarte</a></li>
+				<li class="nav-item"><a href="../homepage/blogs.xhtml"
+					class="nav-link ">Más blogs</a></li>
+			</ul>
 		</div>
 	</div>
-	</section>
-	<!--================End Home Banner Area =================-->
+	</nav> </header>
+	<main>
+	<div class="header-img"></div>
+	</main>
 
 
-	<!--================Blog Area =================-->
-
-	<section class="blog_area single-post-area area-padding">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 posts-list">
-				<div class="single-post">
-					<h2>
-						<h:outputLabel class="tituloblog" value="#{blogDetalle.blog.nombreBlog}" />
-					</h2>
-					<br></br>
-					<div class="feature-img">
+			<!-- Latest Posts -->
+			<main class="post blog-post col-lg-16">
+			<div class="container">
+				<div class="post-single">
+
+					<h1>
 						<center>
-							<img class="img-fluid"
-								src="data:image/png;base64,#{blogDetalle.imageString}"
-								height="350" width="550" alt="" />
+							<h:outputLabel class="tituloblog"
+								value="#{blogDetalle.blog.nombreBlog}" />
 						</center>
+
+					</h1>
+					<br />
+
+					<div class="post-thumbnail">
+
+						<img class="img-fluid"
+							src="data:image/png;base64,#{blogDetalle.imageString}"
+							height="250" width="250" alt="" />
+
 					</div>
+					<div class="post-details">
+						<div class="post-meta d-flex justify-content-between">
+							<div class="category">
+								<a href="#"><h:outputLabel
+										value="Empresa: #{blogDetalle.blog.empresa.nombre}">
+									</h:outputLabel></a><a href="#"></a>
+							</div>
+						</div>
 
-					<div class="blog_details">
 						<h:form>
+							<div
+								class="post-footer d-flex align-items-center flex-column flex-sm-row">
+								<a href="#" class="author d-flex align-items-center flex-wrap">
 
-							<ul class="blog-info-link mt-3 mb-4">
-								<li><a href="#"><i class="far fa-building"></i> <h:outputLabel
-											value="Empresa: #{blogDetalle.blog.empresa.nombre}"></h:outputLabel></a></li>
-								<li><a href="#"><i class="far fa-comments"></i> #{blogDetalle.ltsComentarios.size()}
-										Comments</a></li>
-								<li><a href="#"><i class="far fa-user"></i> <h:outputLabel
-											value="Autor: #{blogDetalle.blog.empresa.personas.get(0).nombre} #{blogDetalle.blog.empresa.personas.get(0).apellido}"></h:outputLabel>
-								</a></li>
-								<li><a href="#"><i class="far fa-calendar-alt"></i> <h:outputLabel
-											value="Fecha de publicacion: #{blogDetalle.blog.fechaPub}" /></a></li>
-								<li><a href="#"><i class="far fa-envelope"></i> <h:outputLabel
-											value="#{blogDetalle.blog.empresa.correo}" /></a></li>
+									<img src="https://img.icons8.com/clouds/2x/user.png" class=""
+									height="70" width="70" />
 
-							</ul>
-							<p class="excert">
+									<div class="title">
+										<h:outputLabel
+											value="Autor: #{blogDetalle.blog.empresa.personas.get(0).nombre} 
+											#{blogDetalle.blog.empresa.personas.get(0).apellido}"></h:outputLabel>
+									</div>
+								</a>
+								<div class="d-flex align-items-center flex-wrap">
+									<div class="date">
+										<i class="icon-clock"></i>
+										<h:outputLabel
+											value="Fecha de publicacion: #{blogDetalle.blog.fechaPub}" />
+									</div>
+									<div class="views">
+										<i class="icon-eye"></i>
+										<h:outputLabel value="Visitas: #{blogDetalle.blog.visitas}" />
+									</div>
+									<div class="comments meta-last">
+										<i class="icon-comment"></i>Comentarios:
+										#{blogDetalle.ltsComentarios.size()}
+									</div>
 
-								<h:outputLabel id="descripcion" value="#{blogDetalle.blog.descripcion}"></h:outputLabel>
-							</p>
+								</div>
+							</div>
 						</h:form>
+
+						<div class="post-body">
+							<p class="lead"></p>
+
+							<blockquote class="blockquote" style="background: white">
+								<p class="lead">
+									<h:outputLabel id="descripcion"
+										value="#{blogDetalle.blog.descripcion}"></h:outputLabel>
+								</p>
+								<footer class="blockquote-footer"> <cite
+									title="Source Title">Mail:<h:outputLabel
+										value="#{blogDetalle.blog.empresa.correo}" /></cite> </footer>
+							</blockquote>
+						</div>
+
+
+
+
+
 						<h:form>
-							<div class="quote-wrapper">
-								<div class="">
-
-									<!-- MAPA DEL BLOG -->
 
 
-									<p:growl id="messages" showDetail="true" />
+							<div class="post-body">
+
+
+								<blockquote class="blockquote" style="background: white">
+									<p class="lead">MAPA DE GEOLOCALIZACION DE NODOS</p>
+
+									<div class="alert alert-warning alert-dismissible fade show"
+										role="alert">
+										<strong>WSNSiC MAP</strong> Seleccione un marcador y grafique
+										datos en tiempo real.
+										<button type="button" class="close" data-dismiss="alert"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+
+								</blockquote>
+							</div>
+
+						</h:form>
+
+
+
+
+
+						<!-- MAPA GEOLOCALIZACIÓN -->
+						<h:form>
+							<blockquote class="blockquote" style="background: white">
+								<div class="quote-wrapper">
 
 									<p:gmap center="-2.892183,-79.0243996" zoom="13" type="roadmap"
 										style="width:100%;height:400px"
@@ -159,80 +264,167 @@
 										</p:gmapInfoWindow>
 									</p:gmap>
 
-									<!-- TERMINA MAPA DEL BLOG -->
 
 								</div>
-							</div>
-							<p>
-								<h:panelGroup id="panelDatos">
-									<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}"
-										value="Temperatura: #{blogDetalle.datoTemp}" /><i class="fas fa-fw fa-thermometer-full" id="menumediciones"></i>
-									<br />
-									<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}"
-										value="Humedad: #{blogDetalle.datoHum}" /><i class="fas fa-fw fa-cloud" id="menumediciones"></i>
-									<br />
-									<h:outputText rendered="#{blogDetalle.datoLum != 0.0}"
-										value="Luminosidad: #{blogDetalle.datoLum}" /><i class="fas fa-fw fa-sun" id="menumediciones"></i>
-									<br />
-									<h:outputText rendered="#{blogDetalle.datoRui != 0.0}"
-										value="Ruido: #{blogDetalle.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
-									<br />
-																	<h:outputText id="descripcion_sensor" style="font-size: 15px" value="#{blogDetalle.sensorDescripcion}" />
-								</h:panelGroup>
-								<br />
-								<br />
+
+							</blockquote>
+							<!-- FIN DEL MAPA-->
+
+							<center>
+								<blockquote class="blockquote" style="background: white">
+									<h:panelGroup id="panelDatos">
+										<div class="container">
+											<div class="row">
+												<div class="col-sm">
+
+
+													<h:outputText rendered="#{blogDetalle.datoTemp != 0.0}"
+														value="Temperatura: #{blogDetalle.datoTemp}" />
+													<i class="fas fa-fw fa-thermometer-full fa-3x"
+														id="menumediciones" style="color: red;"></i>
+
+												</div>
+												<div class="col-sm">
+
+													<h:outputText rendered="#{blogDetalle.datoHum  != 0.0}"
+														value="Humedad: #{blogDetalle.datoHum}" />
+													<i class="fas fa-fw fa-cloud fa-3x" id="menumediciones"
+														style="color: lightblue;"></i>
+
+												</div>
+												<div class="col-sm">
+
+													<h:outputText rendered="#{blogDetalle.datoLum != 0.0}"
+														value="Luminosidad: #{blogDetalle.datoLum}" />
+													<i class="fas fa-fw fa-sun fa-3x" style="color: yellow;"
+														id="menumediciones"></i>
+
+
+												</div>
+												<div class="col-sm">
+
+													<h:outputText rendered="#{blogDetalle.datoRui != 0.0}"
+														value="Ruido: #{blogDetalle.datoRui}" />
+													<i class="fas fa-fw fa-volume-down fa-3x"
+														id="menumediciones" style="color: silver;"></i>
+
+
+												</div>
+											</div>
+										</div>
+										<br />
+										<br />
+
+										<h:outputText id="descripcion_sensor" style="font-size: 15px"
+											value="#{blogDetalle.sensorDescripcion}" />
+
+									</h:panelGroup>
+								</blockquote>
+							</center>
+
+
+
+
+
+							<br />
+
+							<blockquote class="blockquote" style="background: white">
+
+								<div class="alert alert-success" role="alert">
+									<strong>Nota:</strong> Seleccione los siguientes filtros para
+									graficar (Tipo de sensor, fechas, tipo de gráfica).
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+
 
 								<h:selectOneMenu id="listaNodos"
-									value="#{blogDetalle.sensorSeleccionado}">
+									value="#{blogDetalle.sensorSeleccionado}"
+									styleClass="form-control">
+									<f:selectItem itemValue="Seleccionar rango de fecha"
+										itemLabel="Seleccionar tipo de sensor" />
+
 									<f:selectItems value="#{blogDetalle.ltsSensores}"
 										var="sensorItem" itemValue="#{sensorItem}"
 										itemLabel="#{sensorItem}" />
 								</h:selectOneMenu>
+
+
+								<br />
 								<h:selectOneMenu value="#{blogDetalle.tipoFecha}"
-									valueChangeListener="#{blogDetalle.cambioDeFecha}">
-									<f:selectItem itemValue="Seleccionar" itemLabel="Seleccionar" />
+									valueChangeListener="#{blogDetalle.cambioDeFecha}"
+									styleClass="form-control">
+									<f:selectItem itemValue="Seleccionar rango de fecha"
+										itemLabel="Seleccionar rango de fecha (diario, semanal, mensual)" />
 									<f:selectItem itemValue="Diario" itemLabel="Diario" />
 									<f:selectItem itemValue="Semanal" itemLabel="Semanal" />
 									<f:selectItem itemValue="Mensual" itemLabel="Mensual" />
 								</h:selectOneMenu>
-								
-								<p:outputLabel value="Tipo de gráfica:"></p:outputLabel>
-										<h:selectOneMenu value="#{blogDetalle.tipograficaSelect}" class="form-control">
-											<f:selectItem itemValue="lineal" itemLabel="Lineal" var="itemlineal"/>
-											<f:selectItem itemValue="linealdispersion" itemLabel="Lineal + Dispersión" var="itemlineal"/>
-											<f:selectItem itemValue="barra" itemLabel="Barra" var="itembarra"/>
-											<f:selectItem itemValue="dispersion" itemLabel="Dispersión" var="itemdispersion"/>
-											<f:selectItem itemValue="area" itemLabel="Area" var="itemarea"/>
-<!-- 										<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
+								<br />
+
+								<h:selectOneMenu value="#{blogDetalle.tipograficaSelect}"
+									class="form-control">
+									<f:selectItem itemValue="Seleccione tipo de Gráfica"
+										itemLabel="Seleccionar tipo de sensor" />
+									<f:selectItem itemValue="lineal" itemLabel="Lineal"
+										var="itemlineal" />
+									<f:selectItem itemValue="linealdispersion"
+										itemLabel="Lineal + Dispersión" var="itemlineal" />
+									<f:selectItem itemValue="barra" itemLabel="Barra"
+										var="itembarra" />
+									<f:selectItem itemValue="dispersion" itemLabel="Dispersión"
+										var="itemdispersion" />
+									<f:selectItem itemValue="area" itemLabel="Area" var="itemarea" />
+									<!-- 										<f:selectItem itemValue="histograma" itemLabel="Histograma" var="itemhistograma"/>
 											<f:selectItem itemValue="histograma2dcontorno" itemLabel="Contorno de histograma en 2D" var="histograma2dcontorno"/>-->
-										</h:selectOneMenu>  
-										
-								<br />
-								<br />
-								<p:outputLabel for="fechaIni" value="Fecha de inicio:" />
-								<p:calendar id="fechaIni" pattern="yyyy/MM/dd">
-									<p:ajax event="dateSelect"
-										listener="#{blogDetalle.onDateSelectInicio}" />
-								</p:calendar>
-								<br />
-								<br />
-								<p:outputLabel for="fechaFin" value="Fecha de fin:  " />
-								<p:calendar id="fechaFin" pattern="yyyy/MM/dd	">
-									<p:ajax event="dateSelect"
-										listener="#{blogDetalle.onDateSelectFin}" />
-								</p:calendar>
+								</h:selectOneMenu>
 
 								<br />
-								<center><h2>MEDICIONES SENSORES EN LA NUBE</h2>
-								
-								
-								
-								
-								 <p:commandLink type="button" action="#{blogDetalle.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
-<h:panelGroup id="afterLoad">
 
-<div id="myDiv"></div>
-	<h:outputScript>
+								<center>
+									<div class="container">
+										<div class="row">
+											<div class="col-sm">
+												<p>Fecha de Inicio:</p>
+												<p:calendar id="fechaIni" pattern="yyyy/MM/dd">
+													<p:ajax event="dateSelect"
+														listener="#{blogDetalle.onDateSelectInicio}" />
+												</p:calendar>
+											</div>
+											<div class="col-sm">
+
+												<p>Fecha del Fin:</p>
+												<p:calendar id="fechaFin" pattern="yyyy/MM/dd">
+													<p:ajax event="dateSelect"
+														listener="#{blogDetalle.onDateSelectFin}" />
+												</p:calendar>
+											</div>
+										</div>
+									</div>
+								</center>
+
+
+							</blockquote>
+
+							<br />
+
+							<blockquote class="blockquote" style="background: white">
+								<center>
+									<p>MEDICIONES SENSORES EN LA NUBE</p>
+
+
+
+									<p:commandLink type="button" action="#{blogDetalle.Ploty()}"
+										update="afterLoad" oncomplete="afterLoad()" value="Graficar"
+										class="btn btn-info"></p:commandLink>
+
+
+									<h:panelGroup id="afterLoad">
+
+										<div id="myDiv"></div>
+										<h:outputScript>
 		function afterLoad() {
 				var str = #{blogDetalle.contenedor1}; 
 				var strmax = #{blogDetalle.contenedor1maximos};
@@ -457,7 +649,7 @@
 				},				
 				showline: true,
 				plot_bgcolor: 'rgba(0,0,0,0)',
-				width: 1630,			
+				width: 1130,			
 				height: 600, 
 				xaxis: {
 				    autorange: true,
@@ -499,11 +691,12 @@
 				Plotly.newPlot('myDiv', datagraphics, layout, {showSendToCloud: true});
 		}
 	</h:outputScript>
-</h:panelGroup>		       
-								
-							</center>	
-								
-								
+									</h:panelGroup>
+
+
+								</center>
+
+
 								<!--  
 								<div >
 									<p:chart id ="grafica" type="line" model="#{blogDetalle.lineModel2}" style="height:700px;" widgetVar="chart" />
@@ -517,139 +710,290 @@
 								</b:commandButton>
 -->
 
-							</p>
+
+
+
+							</blockquote>
 
 						</h:form>
 
-					</div>
-				</div>
-				<div class="navigation-top">
-					<div class="d-sm-flex justify-content-between text-center">
-						<p class="like-info">
-							<span class="align-middle"><i class="fas fa-city"></i></span>
-							<h:outputLabel value="#{blogDetalle.blog.empresa.ciudad}" />
-						</p>
-						<div class="col-sm-4 text-center my-2 my-sm-0">
-							<p class="comment-count">
-								<span class="align-middle"><i class="far fa-address-card"></i></span>
-								<h:outputLabel value=" #{blogDetalle.blog.empresa.direccion}" />
-							</p>
-						</div>
-						<ul class="social-icons">
-							<li><a href="#"><i class="fa fa-heart"></i></a> <h:outputLabel
-									value="Visitas: #{blogDetalle.blog.visitas} " /><br /></li>
+						<!-- *******************INICIO DE LOS COMENTARIOS ************************ -->
 
-						</ul>
-					</div>
+						<h:form id="formComentarios">
+							<blockquote class="blockquote" style="background: white">
+								<div class="post-comments">
+									<header>
+									<h3 class="h6">
+										Comentarios<span class="no-of-comments">(#{blogDetalle.ltsComentarios.size()})</span>
+									</h3>
+									</header>
+									<ui:repeat var="comentarios"
+										value="#{blogDetalle.ltsComentarios}" id="dataCom">
+										<div class="comment">
+											<div class="comment-header d-flex justify-content-between">
+												<div class="user d-flex align-items-center">
+													<div class="image">
+														<img
+															src="https://cdn.icon-icons.com/icons2/1154/PNG/512/1486564400-account_81513.png"
+															alt="..." class="" />
+													</div>
+													<div class="title">
+														<strong><h:outputText
+																value="Post:#{comentarios.email}" /></strong> <span class="date">#{comentarios.fecha}</span>
+													</div>
+												</div>
+											</div>
+											<div class="comment-body">
+												<p>
+													<h:outputText value="#{comentarios.cometario}" />
+												</p>
+											</div>
 
-
-				</div>
-
-
-				<div class="blog-author">
-					<div class="media align-items-center">
-						<img src="img/blog/author.png" alt="" />
-						<div class="media-body">
-							<a href="#">
-								<h4>
-									<h:outputLabel
-										value="Empresa: #{blogDetalle.blog.empresa.nombre}" />
-									<br />
-								</h4>
-							</a>
-							<p>
-								<h:outputLabel
-									value="Descripcion Empresa: #{blogDetalle.blog.empresa.descripcion}" />
-							</p>
-						</div>
-					</div>
-				</div>
-<h:form id="formComentarios">
-				<div class="comments-area">
-					<h4>Comentarios</h4>
-					<ui:repeat var="comentarios" value="#{blogDetalle.ltsComentarios}" id="dataCom">
-					<div class="comment-list">
-						<div class="single-comment justify-content-between d-flex">
-							<div class="user justify-content-between d-flex">
-								<div class="thumb">
-									<img src="img/blog/c1.png" alt="" />
-								</div>
-								<div class="desc">
-									<p class="comment"><h:outputText value="#{comentarios.cometario}"/></p>
-
-									<div class="d-flex justify-content-between">
-										<div class="d-flex align-items-center">
-											<h5>
-												<a href="#"> <h:outputText value="Post:#{comentarios.email}"/></a>
-											</h5>
-											<p class="date">#{comentarios.fecha}</p>
 										</div>
+									</ui:repeat>
+								</div>
+							</blockquote>
+						</h:form>
 
-										<div class="reply-btn">
-											<a href="#" class="btn-reply text-uppercase">reply</a>
+						<!-- *******************ESCRIBIR COMENTARIOS ************************ -->
+
+						<blockquote class="blockquote" style="background: white">
+							<div class="add-comment">
+								<header>
+								<h3 class="h6">Deja tu respuesta</h3>
+								</header>
+
+
+
+								<h:form id="formularioComentario" class="commenting-form">
+									<div class="row">
+										<div class="form-group col-md-6">
+
+											<h:inputText class="form-control" id="email"
+												value="#{blogDetalle.comentario.email}"
+												pt:placeholder="Ingrese su correo electronico" />
+
+										</div>
+										<br />
+										<div class="form-group col-md-12">
+											<h:inputTextarea class="form-control"
+												value="#{blogDetalle.comentario.cometario}" id="nombre"
+												cols="30" rows="9" pt:placeholder="Escribe un comentario" />
+										</div>
+										<div class="form-group col-md-12">
+
+											<p:commandButton class="btn btn-info"
+												value="Agregar Comentario"
+												action="#{blogDetalle.guardarComentario()}">
+												<f:ajax execute="@form"
+													render=":dataCom formularioComentario post-comments formComentarios" />
+											</p:commandButton>
+
 										</div>
 									</div>
-
-								</div>
-							</div>			
-						</div>
+								</h:form>
+							</div>
+						</blockquote>
 					</div>
-				</ui:repeat>
-				</div>
-				</h:form>
-				
-				<div class="comment-form">
-					<h4>Deja tu respuesta</h4>
-					<h:form class="form-contact comment_form" id="formularioComentario">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<h:inputTextarea class="form-control w-100" value="#{blogDetalle.comentario.cometario}"
-										id="nombre" cols="30" rows="9" pt:placeholder="Escribe un comentario"/>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<h:inputText class="form-control" id="email" value="#{blogDetalle.comentario.email}"
-										pt:placeholder="Ingrese su correo electronico" />
-								</div>
-							</div>
-
-						</div>
-						<div class="form-group">
-							<h:commandButton class="button button-contactForm" value="Agregar Comentario" 
-							action="#{blogDetalle.guardarComentario()}" >
-							<f:ajax  execute="@form"  render=":dataCom formularioComentario comments-area formComentarios" /> 
-							</h:commandButton>
-						</div>
-					</h:form>
 				</div>
 			</div>
+			</main>
+			<aside class="col-lg-4"> <!-- Widget [Search Bar Widget]--> <!-- Widget [Latest Posts Widget]        -->
 
+			<!-- Widget [Categories Widget]--> <!-- Widget [Tags Cloud Widget]-->
+
+			</aside>
 		</div>
 	</div>
-	</section>
+	<!-- Page Footer-->
+	<footer class="main-footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="logo">
+					<h6 class="text-white">Universidad Politecnica Salesiana</h6>
+				</div>
+				<div class="contact-details">
+					<p>Calle Turuguayco 3-69 y Calle Vieja</p>
+					<p>Tel:(+593) 74135250</p>
+					<p>
+						Email: <a href="mailto:info@company.com">wsnsic@gmail.com</a>
+					</p>
+					<!--  <ul class="social-menu">
+						<li class="list-inline-item"><a href="#"><i
+								class="fa fa-facebook"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i
+								class="fa fa-twitter"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i
+								class="fa fa-instagram"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i
+								class="fa fa-behance"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i
+								class="fa fa-pinterest"></i></a></li>
+					</ul>  -->
+				</div>
+			</div>
+			<!-- <div class="col-md-4">
+				<div class="menus d-flex">
+					<ul class="list-unstyled">
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Add Listing</a></li>
+						<li><a href="#">Pricing</a></li>
+						<li><a href="#">Privacy &amp; Policy</a></li>
+					</ul>
+					<ul class="list-unstyled">
+						<li><a href="#">Our Partners</a></li>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">How It Works</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="latest-posts">
+					<a href="#">
+						<div class="post d-flex align-items-center">
+							<div class="image">
+								<img src="img/small-thumbnail-1.jpg" alt="..." class="" />
+							</div>
+							<div class="title">
+								<strong>Hotels for all budgets</strong><span
+									class="date last-meta">October 26, 2016</span>
+							</div>
+						</div>
+					</a><a href="#">
+						<div class="post d-flex align-items-center">
+							<div class="image">
+								<img src="img/small-thumbnail-2.jpg" alt="..." class="" />
+							</div>
+							<div class="title">
+								<strong>Great street atrs in London</strong><span
+									class="date last-meta">October 26, 2016</span>
+							</div>
+						</div>
+					</a><a href="#">
+						<div class="post d-flex align-items-center">
+							<div class="image">
+								<img src="img/small-thumbnail-3.jpg" alt="..." class="" />
+							</div>
+							<div class="title">
+								<strong>Best coffee shops in Sydney</strong><span
+									class="date last-meta">October 26, 2016</span>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div class="copyrights">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>2019. Cuenca- Ecuador</p>
+				</div>
+				<div class="col-md-6 text-right">
+					<p>
+						WSNSiC<a href="https://bootstrapious.com/p/bootstrap-carousel"
+							class="text-white">2019</a>
+						<!-- Please do not remove the backlink to Bootstrap Temple unless you purchase an attribution-free license @ Bootstrap Temple or support us at http://bootstrapious.com/donate. It is part of the license conditions. Thanks for understanding :)                         -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</footer>
+	<!-- JavaScript files-->
+	<script src="../blog/distribution/vendor/jquery/jquery.min.js"></script>
+	<script src="../blog/distribution/vendor/popper.js/umd/popper.min.js"> </script>
+	<script src="../blog/distribution/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="../blog/distribution/vendor/jquery.cookie/jquery.cookie.js"> </script>
+	<script
+		src="../blog/distribution/vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+	<script src="../blog/distribution/js/front.js"></script>
 
-	<!--================Blog Area end =================-->
-
-	<!-- ================ Instargram Area Starts ================= -->
-
-
-
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/popper.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/stellar.js"></script>
-	<script src="vendors/popup/jquery.magnific-popup.min.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/waypoints.min.js"></script>
-	<script src="js/mail-script.js"></script>
-	<script src="js/contact.js"></script>
-	<script src="js/jquery.form.js"></script>
-	<script src="js/jquery.validate.min.js"></script>
-	<script src="js/mail-script.js"></script>
-	<script src="js/theme.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.min.js"></script>
 </body>
+
+
+
+
+<style type="text/css">
+
+/* Import the google web fonts you want to use */
+
+/* tangerine font */
+@import url(https://fonts.googleapis.com/css?family=Tangerine);
+
+/* bigshot one font */
+@import url(https://fonts.googleapis.com/css?family=Bigshot+One);
+
+/* Over the rainbow font */
+@import url(https://fonts.googleapis.com/css?family=Over+the+Rainbow);
+
+/* pacifico font */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+/* Content styling */
+/* fonts for the text */
+@import
+	url('https://fonts.googleapis.com/css?family=Merriweather:700|Roboto');
+
+p.a {
+	font-family: 'Tangerine', serif;
+	font-size: 48px;
+	color: #C23B22;
+}
+
+p.b {
+	font-family: 'Bigshot One', serif;
+	font-size: 48px;
+	color: #317873;
+}
+
+p.c {
+	font-family: 'Over the Rainbow', serif;
+	font-size: 48px;
+	color: #0077BE;
+}
+
+p.d {
+	font-family: 'Pacifico', serif;
+	font-size: 28px;
+	color: #C23B22;
+}
+
+.jqplot-target {
+	color: #666;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 15px;
+}
+
+.jqplot-yaxis-label {
+	margin-right: 5px;
+	font-size: 15px;
+	position: absolute;
+}
+
+table.jqplot-table-legend, table.jqplot-cursor-legend {
+	font-size: 20px;
+}
+
+.jqplot-axis {
+	font-size: 30px;
+}
+
+.jqplot-target {
+	color: #666;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 20px;
+}
+</style>
+
+
+
 </html>
