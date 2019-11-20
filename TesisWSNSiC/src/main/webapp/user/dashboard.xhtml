@@ -420,7 +420,7 @@ canvas#canvas4 {
 
                             <div class="body-nest form-inline" id="inline">
 							<center>
-							<h:panelGrid columns="6">
+							<h:panelGrid columns="4">
 							                                        <p:outputLabel value="Sensor:"></p:outputLabel>
                                         <h:selectOneMenu id="listaNodos"
 											value="#{dashboardUser.sensorSeleccionado}" class="form-control">
@@ -461,17 +461,14 @@ canvas#canvas4 {
 											<p:ajax event="dateSelect"
 												listener="#{dashboardUser.onDateSelectFin}" />
 										</p:calendar>
-							</h:panelGrid>
-							
-								<h:panelGrid columns="3">
-<!--                                          
+										<!--                                          
                                         <p:commandButton action="#{dashboardUser.grafica()}"
 											value="Graficar" update="messages">
 										</p:commandButton>
 -->										
-                                        
+                                      </h:panelGrid>  
 <!-- TESTING CODE NEW FOR GRAPHICS -->
-  <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica Plotly"></p:commandLink>
+  <p:commandLink type="button" action="#{dashboardUser.Ploty()}" update="afterLoad" oncomplete="afterLoad()" value="Grafica"></p:commandLink>
 <h:panelGroup id="afterLoad">
 <div id="myDiv"></div>
 	<h:outputScript>
@@ -479,6 +476,13 @@ canvas#canvas4 {
 				var str = #{dashboardUser.contenedor1}; 
 				var strmax = #{dashboardUser.contenedor1maximos};
 				var strmin = #{dashboardUser.contenedor1minimos};
+				
+				
+				var imedia = #{dashboardUser.vmedia};
+				console.log("ANTES RECUPERAR");
+				var vmaxm = #{dashboardUser.max};
+				var vminm = #{dashboardUser.min};
+				console.log("DATOS RECUPERADOS");
 				
 				console.log("Size Array: "+str.data.length);
 			    var tipogengrafica = "#{dashboardUser.tipograficaSelect}";
@@ -517,7 +521,6 @@ canvas#canvas4 {
 				var nombresensor = "";
 				var umed = "";
 				
-				var media = 0;
 				var finicio = "";
 				var ffin = "";
 				
@@ -536,8 +539,6 @@ canvas#canvas4 {
 					ffin = `"`+varray[i].fecha+`"`;
 
 					}
-
-					media = parseInt(media + varray[i].valor);
 					
 					var valory = varray[i].valor;
 					var fechax = varray[i].fecha;
@@ -546,7 +547,20 @@ canvas#canvas4 {
 					direccion = varray[i].direccion;
 					nombresensor = varray[i].codNodo;
 					umed = varray[i].unidadmedida;
-					if(i == str.data.length-1){
+					
+					if((valory == vmaxm) &amp;&amp; (i &lt; str.data.length-1)){
+						strfechamaxx += `"`+fechax+`",`;
+						strvalormaxy += `"`+valory+`",`;
+					console.log("FECHA "+strfechamaxx);
+					console.log("VALOR "+strvalormaxy);
+					}else if((valory == vminm) &amp;&amp; (i &lt; str.data.length-1)){
+					console.log("EENTRA MINIMO: "+valory);
+						strfechaminx += `"`+fechax+ `",`;
+						strvalorminy += `"`+valory+ `",`;
+					console.log("FECHA "+strfechaminx);
+					console.log("VALOR "+strvalorminy);
+					}else{
+						if(i == str.data.length-1){
 
 						strfechax += `"`+fechax+`"`;
 						strvalory += `"`+valory+`"`;
@@ -555,38 +569,12 @@ canvas#canvas4 {
 						strfechax += `"`+fechax+ `",`;
 						strvalory += `"`+valory+ `",`;
 					}
+					}
 
-					
-				}
-				for(var i =0; i &lt; strmax.data.length; i++){
-					var valmaxy = varraymax[i].valor;
-					var fechamaxx = varraymax[i].fecha;
-					
-					if(i == strmax.data.length-1){
-						strfechamaxx += `"`+fechamaxx+`"`;
-						strvalormaxy += `"`+valmaxy+`"`;
-					}else{
-						strfechamaxx += `"`+fechamaxx+ `",`;
-						strvalormaxy += `"`+valmaxy+ `",`;
-					}
-					
-				}
-				for (var i =0; i &lt; strmin.data.length; i++){
-					var valminy = varraymin[i].valor;
-					var fechaminx = varraymin[i].fecha; 
-					
-					if(i == strmin.data.length-1){
-						strfechaminx += `"`+fechaminx+`"`;
-						strvalorminy += `"`+valminy+`"`;
-					}else{
-						strfechaminx += `"`+fechaminx+ `",`;
-						strvalorminy += `"`+valminy+ `",`;
-					}
 					
 				}
 				try{
 
-					var imedia = parseFloat(media/str.data.length).toFixed(2);
 					var strvmedia = `"`+imedia+`"`;
 					
 					var vecfechamedia = JSON.parse("["+finicio+","+ffin+"]");
@@ -595,6 +583,10 @@ canvas#canvas4 {
 					jsonx = JSON.parse("["+strfechax+"]");
 					jsony = JSON.parse("["+strvalory+"]");
 					
+					strfechamaxx = strfechamaxx.substring(',', strfechamaxx.length-1);
+					strvalormaxy = strvalormaxy.substring(',', strvalormaxy.length-1);
+					console.log("SUBSTRINGMAX  "+strfechamaxx);
+					console.log("SUBSTRINGMIN  "+strvalormaxy);
 					jsonmaxx = JSON.parse("["+strfechamaxx+"]");
 					jsonmaxy = JSON.parse("["+strvalormaxy+"]");
 					
@@ -602,6 +594,8 @@ canvas#canvas4 {
 					console.log(jsonmaxx);
 					console.log("FIN JSONMAXX");
 					
+					strfechaminx = strfechaminx.substring(',', strfechaminx.length-1);
+					strvalorminy = strvalorminy.substring(',', strvalorminy.length-1);
 					jsonminx = JSON.parse("["+strfechaminx+"]");
 					jsonminy = JSON.parse("["+strvalorminy+"]");
 					
@@ -743,25 +737,44 @@ canvas#canvas4 {
 	</h:outputScript>
 </h:panelGroup>		                                     
                                       
-										<h:panelGroup id="panelDatos">
-       	datos Nodo: #{dashboardUser.nodoSelected.nombre}<br />
-											<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}"
-												value="Temperatura: #{dashboardUser.datoTemp}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}"
-												value="Humedad: #{dashboardUser.datoHum}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoLum != 0.0}"
-												value="Luminosidad: #{dashboardUser.datoLum}" />
-											<br />
-											<h:outputText rendered="#{dashboardUser.datoRui != 0.0}"
-												value="Ruido: #{dashboardUser.datoRui}" />
-											<br />
-								    <h:outputText value="#{dashboardUser.sensorDescripcion}" style="font-size: 15px" />
-										</h:panelGroup>
+										
                                       
                                       
+							
+							
+								<h:panelGrid columns="3">
+
                                   </h:panelGrid></center>
+                                  
+                                  <h:panelGroup id="panelDatos">
+                                  
+                                  <div class="card-body">
+                                  <blockquote class="blockquote mb-0">
+                                  <center>
+                                  <div class="div-mediciones">
+       	Datos Nodo: #{dashboardUser.nodoSelected.nombre}<br />
+       	<p class="elementoicono">
+											<h:outputText rendered="#{dashboardUser.datoTemp != 0.0}"
+												value="Temperatura: #{dashboardUser.datoTemp}" /><i class="fas fa-fw fa-thermometer-full" id="menumediciones"></i>
+		</p>
+		<p class="elementoicono">			
+											<h:outputText rendered="#{dashboardUser.datoHum  != 0.0}"
+												value="Humedad: #{dashboardUser.datoHum}" /><i class="fas fa-fw fa-cloud" id="menumediciones"></i>
+		</p>
+		<p class="elementoicono">									
+											<h:outputText rendered="#{dashboardUser.datoLum != 0.0}"
+												value="Luminosidad: #{dashboardUser.datoLum}" /><i class="fas fa-fw fa-sun" id="menumediciones"></i>
+		</p>
+		<p class="elementoicono">									
+											<h:outputText rendered="#{dashboardUser.datoRui != 0.0}"
+												value="Ruido: #{dashboardUser.datoRui}" /><i class="fas fa-fw fa-volume-down"  id="menumediciones"></i>
+		</p>									
+								    <h:outputText value="#{dashboardUser.sensorDescripcion}" style="font-size: 15px" />
+								    </div>
+								    </center>
+								    </blockquote>
+								    </div>
+										</h:panelGroup>
                               
                                 </div>
 
