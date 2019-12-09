@@ -105,6 +105,13 @@ public class DashboardUser {
 	@Inject
 	NodoDAO nodoDAO;
 	
+	/**
+	 * AGREGADO RECIENTEMENTE
+	 * */
+	double sumatoria;
+	double vmedia;
+	int tamvectordatos;
+	
 	//
 	String csvglobal; 
 	
@@ -217,6 +224,16 @@ public class DashboardUser {
 		}
 	}
 	
+	public double getVmedia() {
+		return vmedia;
+	}
+
+	public void setVmedia(double vmedia) {
+		this.vmedia = vmedia;
+	}
+
+
+
 	public String getSensorDescripcion() {
 		return sensorDescripcion;
 	}
@@ -710,8 +727,14 @@ public class DashboardUser {
 							System.out.println("ALMACENAR VALOR D: "+Double.parseDouble(gsonObj2.get("v").toString()));
 							listvalores.add(Double.parseDouble(gsonObj2.get("v").toString()));
 							val = Double.parseDouble(gsonObj2.get("v").toString());
+							
+							/**
+							 * AGREGADO RECIENTEMENTE
+							 * */
+							sumatoria += val;
 							MedValFec medicionValue = new MedValFec(medici, val, fec);
 							ltsDataSensor.add(medicionValue);
+							tamvectordatos++;
 							if(maxminestablecidos==true) {
 								//CARGAR LOS VALORES DE MAXIMOS Y MINIMOS
 								if(val==max) {
@@ -745,9 +768,21 @@ public class DashboardUser {
 				contenedor1 = contenedor.toString();
 				System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());
 			}
+			/* OBTENCION DE LA MEDIA*/
+			System.out.println("SUMATORIA: "+sumatoria);
+			System.out.println("TAMANIO VECT"+tamvectordatos);
+			vmedia = sumatoria / tamvectordatos;
+			vmedia = formatearDecimales(vmedia);
+			
 				estableceMaxMin(listvalores);
 		}
 	}
+	
+	public static Double formatearDecimales(Double va) {
+		return Math.round(va * Math.pow(10, 2)) / Math.pow(10, 2);
+	}
+	
+	
 /*	
 	//Variables maximo y minimo
 	org.json.simple.JSONObject contenedormaximos = new org.json.simple.JSONObject();
@@ -770,7 +805,7 @@ public class DashboardUser {
 		}
 		System.out.println("MAX: "+max+",    MIN:"+min);
 		maxminestablecidos = true;
-		putMaxMin();
+		//putMaxMin();
 	}
 	
 	public void putMaxMin() {

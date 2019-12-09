@@ -407,6 +407,12 @@
 				var str = #{dashboardAdmin.contenedor1}; 
 				var strmax = #{dashboardAdmin.contenedor1maximos};
 				var strmin = #{dashboardAdmin.contenedor1minimos};
+				var imedia = #{dashboardAdmin.vmedia};
+				
+				console.log("ANTES RECUPERAR");
+				var vmaxm = #{dashboardAdmin.max};
+				var vminm = #{dashboardAdmin.min};
+				console.log("DATOS RECUPERADOS");
 				
 				console.log("Size Array: "+str.data.length);
 			    var tipogengrafica = "#{dashboardAdmin.tipograficaSelect}";
@@ -445,7 +451,6 @@
 				var nombresensor = "";
 				var umed = "";
 				
-				var media = 0;
 				var finicio = "";
 				var ffin = "";
 				
@@ -455,7 +460,7 @@
 				console.log("VARRAY TOTAL OBTENIDO");
 				var longitud = str.data.length;
 				console.log(varray);
-				for (var i =0; i &lt; str.data.length; i++){					
+				for (var i =0; i &lt; str.data.length; i++){				
 					tmed = varray[i].sensor;
 					
 					finicio = `"`+varray[0].fecha+`"`;
@@ -464,17 +469,28 @@
 					ffin = `"`+varray[i].fecha+`"`;
 
 					}
-
-					media = parseInt(media + varray[i].valor);
 					
 					var valory = varray[i].valor;
 					var fechax = varray[i].fecha;
-
+					
 					tsensor = varray[i].tsensor;
 					direccion = varray[i].direccion;
 					nombresensor = varray[i].codNodo;
 					umed = varray[i].unidadmedida;
-					if(i == str.data.length-1){
+					
+					if((valory == vmaxm) &amp;&amp; (i &lt; str.data.length-1)){
+						strfechamaxx += `"`+fechax+`",`;
+						strvalormaxy += `"`+valory+`",`;
+					console.log("FECHA "+strfechamaxx);
+					console.log("VALOR "+strvalormaxy);
+					}else if((valory == vminm) &amp;&amp; (i &lt; str.data.length-1)){
+					console.log("EENTRA MINIMO: "+valory);
+						strfechaminx += `"`+fechax+ `",`;
+						strvalorminy += `"`+valory+ `",`;
+					console.log("FECHA "+strfechaminx);
+					console.log("VALOR "+strvalorminy);
+					}else{
+						if(i == str.data.length-1){
 
 						strfechax += `"`+fechax+`"`;
 						strvalory += `"`+valory+`"`;
@@ -483,38 +499,12 @@
 						strfechax += `"`+fechax+ `",`;
 						strvalory += `"`+valory+ `",`;
 					}
-
-					
-				}
-				for(var i =0; i &lt; strmax.data.length; i++){
-					var valmaxy = varraymax[i].valor;
-					var fechamaxx = varraymax[i].fecha;
-					
-					if(i == strmax.data.length-1){
-						strfechamaxx += `"`+fechamaxx+`"`;
-						strvalormaxy += `"`+valmaxy+`"`;
-					}else{
-						strfechamaxx += `"`+fechamaxx+ `",`;
-						strvalormaxy += `"`+valmaxy+ `",`;
 					}
 					
-				}
-				for (var i =0; i &lt; strmin.data.length; i++){
-					var valminy = varraymin[i].valor;
-					var fechaminx = varraymin[i].fecha; 
-					
-					if(i == strmin.data.length-1){
-						strfechaminx += `"`+fechaminx+`"`;
-						strvalorminy += `"`+valminy+`"`;
-					}else{
-						strfechaminx += `"`+fechaminx+ `",`;
-						strvalorminy += `"`+valminy+ `",`;
-					}
-					
-				}
+				}										
+				
 				try{
-
-					var imedia = parseFloat(media/str.data.length).toFixed(2);
+					
 					var strvmedia = `"`+imedia+`"`;
 					
 					var vecfechamedia = JSON.parse("["+finicio+","+ffin+"]");
@@ -523,6 +513,10 @@
 					jsonx = JSON.parse("["+strfechax+"]");
 					jsony = JSON.parse("["+strvalory+"]");
 					
+					strfechamaxx = strfechamaxx.substring(',', strfechamaxx.length-1);
+					strvalormaxy = strvalormaxy.substring(',', strvalormaxy.length-1);
+					console.log("SUBSTRINGMAX  "+strfechamaxx);
+					console.log("SUBSTRINGMIN  "+strvalormaxy);
 					jsonmaxx = JSON.parse("["+strfechamaxx+"]");
 					jsonmaxy = JSON.parse("["+strvalormaxy+"]");
 					
@@ -530,6 +524,8 @@
 					console.log(jsonmaxx);
 					console.log("FIN JSONMAXX");
 					
+					strfechaminx = strfechaminx.substring(',', strfechaminx.length-1);
+					strvalorminy = strvalorminy.substring(',', strvalorminy.length-1);
 					jsonminx = JSON.parse("["+strfechaminx+"]");
 					jsonminy = JSON.parse("["+strvalorminy+"]");
 					

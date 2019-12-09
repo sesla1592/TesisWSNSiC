@@ -85,6 +85,13 @@ public class DashboardAdmin {
 	public MapModel simpleModel;
 	public String tipoFecha;
 	public String typeMedicion = "";
+	
+	/**
+	 * AGREGADO RECIENTEMENTE
+	 * */
+	double sumatoria;
+	double vmedia;
+	int tamvectordatos;
 
 	private LineChartModel lineModel2 = new LineChartModel();
 
@@ -131,6 +138,7 @@ public class DashboardAdmin {
 	//Variables maximo y minimo
 	double max = 0;
 	double min = 0;
+	
 	List<Double> listvalores;
 	boolean maxminestablecidos = false;
 	org.json.simple.JSONObject contenedormaximos = new org.json.simple.JSONObject();
@@ -144,7 +152,6 @@ public class DashboardAdmin {
 	public void init() {
 		calculaEspaciosa();
 		try {
-
 			user = (Persona) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSelected");
 			System.out.println("user " + user.toString());
 			// cantidad de nodos
@@ -190,7 +197,7 @@ public class DashboardAdmin {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public Persona getUser() {
 		return user;
 	}
@@ -354,7 +361,7 @@ public class DashboardAdmin {
 	}
 	
 	public String getTipograficaSelect() {
-		System.out.println();
+		System.out.println("SELECCION DE GRAFICA TIPO"+tipograficaSelect);
 		return tipograficaSelect;
 	}
 
@@ -446,6 +453,14 @@ public class DashboardAdmin {
 
 	public void setEtotal(String etotal) {
 		this.etotal = etotal;
+	}
+
+	public double getVmedia() {
+		return vmedia;
+	}
+
+	public void setVmedia(double vmedia) {
+		this.vmedia = vmedia;
 	}
 
 	public MapModel getSimpleModel() {
@@ -616,37 +631,37 @@ public class DashboardAdmin {
 				typeSelect = "scatter";
 				modeSelect = "lines";
 				fillSelect = "none";
-			}
+			}else
 			if(this.tipograficaSelect.equals("linealdispersion")) {
 				System.out.println("LINEAL");
 				typeSelect = "scatter";
 				modeSelect = "lines+markers";
 				fillSelect = "none";
-			}
+			}else
 			if(this.tipograficaSelect.equals("barra")) {
 				System.out.println("BARRA");
 				typeSelect = "bar";
 				modeSelect = "markers";
 				fillSelect = "none";	
-			}
+			}else
 			if(this.tipograficaSelect.equals("dispersion")) {
 				System.out.println("DISPERSION");
 				typeSelect = "scatter";
 				modeSelect = "markers";
 				fillSelect = "none";	
-			}
+			}else
 			if(this.tipograficaSelect.equals("area")) {
 				System.out.println("AREA");
 				typeSelect = "scatter";
 				modeSelect = "lines";
 				fillSelect = "tonexty";
-			}
+			}else
 			if(this.tipograficaSelect.equals("histograma")) {
 				System.out.println("HISTOGRAMA");
 				typeSelect = "histogram";
 				modeSelect = "lines";
 				fillSelect = "none";
-			}
+			}else
 			if(this.tipograficaSelect.equals("histograma2dcontorno")) {
 				System.out.println("HISTOGRAMAA-2D");
 				typeSelect = "histogram2dcontour";
@@ -774,10 +789,10 @@ public class DashboardAdmin {
 					medici = gsonObj2.get("m").toString();// va el nombre del sensor
 					tipesensor = retornaTipoSensor(medici);
 					unidadmedida = retornaUnidadMed(medici);
-					System.out.println("MEDICI(n)   :"+medici);
+					//System.out.println("MEDICI(n)   :"+medici);
 					String sensor = sensorSeleccionado.substring(0, 1);
-					System.out.println("SENSOR(n)   :"+sensor);
-					
+					//System.out.println("SENSOR(n)   :"+sensor);
+					System.out.println("FECHA: "+fec);
 					if (medici.equals(sensor)) {
 						val = Double.parseDouble(gsonObj2.get("v").toString());
 
@@ -785,10 +800,20 @@ public class DashboardAdmin {
 							System.out.println("ALMACENAR VALOR D: "+Double.parseDouble(gsonObj2.get("v").toString()));
 							listvalores.add(Double.parseDouble(gsonObj2.get("v").toString()));
 							val = Double.parseDouble(gsonObj2.get("v").toString());
+							
+							/**
+							 * AGREGADO RECIENTEMENTE
+							 * */
+							sumatoria += val;
 							MedValFec medicionValue = new MedValFec(medici, val, fec);
 							ltsDataSensor.add(medicionValue);
+							/**
+							 * AGREGADO RECIENTEMENTE
+							 * */
+							tamvectordatos++;
 							if(maxminestablecidos==true) {
 								//CARGAR LOS VALORES DE MAXIMOS Y MINIMOS
+								System.out.println("VAAAAL: "+val);
 								if(val==max) {
 								}else if (val==min) {
 								}	
@@ -809,41 +834,65 @@ public class DashboardAdmin {
 						
 					}
 				}
+				
 				contenedormaximos.put("data", companymaximo);
 				contenedor1maximos = contenedormaximos.toString();
-				System.out.println("contenedor1maximos :"+contenedor1maximos);
+				//System.out.println("contenedor1maximos :"+contenedor1maximos);
 				
 				contenedorminimos.put("data", companyminimo);
 				contenedor1minimos = contenedorminimos.toString();
-				System.out.println("contenedor1minimos :"+contenedor1minimos);
+				//System.out.println("contenedor1minimos :"+contenedor1minimos);
 				
 				contenedor.put("data", company);
 				contenedor1 = contenedor.toString();
-				System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());				
+				//System.out.println("LTSDATASENSORES (Str):  "+ltsDataSensor.toString());				
 			}
+			/* OBTENCION DE LA MEDIA*/
+			System.out.println("SUMATORIA: "+sumatoria);
+			System.out.println("TAMANIO VECT"+tamvectordatos);
+			vmedia = sumatoria / tamvectordatos;
+			vmedia = formatearDecimales(vmedia);
+			/**
+			 * COMENTARIO TEMPORAL
+			 * */
 			estableceMaxMin(listvalores);
 //			System.out.println(sensorDescripcion);
 		}
 	}
 	
+	public static Double formatearDecimales(Double va) {
+		return Math.round(va * Math.pow(10, 2)) / Math.pow(10, 2);
+	}
+	
+	/*
+	 * PERMITE ESTABLECER LOS VALORES MAXIMOS Y MINIMOS
+	 * */
 	public void estableceMaxMin(List<Double> listv) {
 		min=max=0;
 		for(int i = 0 ; i < listv.size(); i++) {
 			if(max < listv.get(i)) {
 				max = listv.get(i);
+				//System.out.println("MAXIMOOOO: "+max);
 			}
 		}
 		min = max;
 		for(int i = 0 ; i < listv.size(); i++) {
 			if(min > listv.get(i)) {
 				min = listv.get(i);
+				//System.out.println("MINIMOOOO: "+min);
 			}
 		}
 		System.out.println("MAX: "+max+",    MIN:"+min);
 		maxminestablecidos = true;
-		putMaxMin();
+/**
+ * COMENTARIO TEMPORAL
+ * */		
+//		putMaxMin();
 	}
 	
+	/**
+	 * MODIFICAR YA QUE SE HACE NUEVAMENTE LA CONSULTA
+	 * */
 	public void putMaxMin() {
 		org.json.simple.JSONObject obj1minimo = new org.json.simple.JSONObject();
 		org.json.simple.JSONArray companyminimo = new org.json.simple.JSONArray();
@@ -942,19 +991,19 @@ public class DashboardAdmin {
 		if(tipograficaSelect.equals("histograma2dcontorno") || tipograficaSelect.equals("histograma")) {
 			contenedormaximos.put("data", companymaximo);
 			contenedor1maximos = "";
-			System.out.println("contenedor1maximos :"+contenedor1maximos);
+			//System.out.println("contenedor1maximos :"+contenedor1maximos);
 			
 			contenedorminimos.put("data", companyminimo);
 			contenedor1minimos = "";
-			System.out.println("contenedor1minimos :"+contenedor1minimos);
+			//System.out.println("contenedor1minimos :"+contenedor1minimos);
 		}else {
 		contenedormaximos.put("data", companymaximo);
 		contenedor1maximos = contenedormaximos.toString();
-		System.out.println("contenedor1maximos :"+contenedor1maximos);
+		//System.out.println("contenedor1maximos :"+contenedor1maximos);
 		
 		contenedorminimos.put("data", companyminimo);
 		contenedor1minimos = contenedorminimos.toString();
-		System.out.println("contenedor1minimos :"+contenedor1minimos);
+		//System.out.println("contenedor1minimos :"+contenedor1minimos);
 		}
 	}
 	
@@ -986,6 +1035,7 @@ public class DashboardAdmin {
 	
 	/* PLOTTY */
 	 public void Ploty() {
+			getTipograficaSelect();
 		 grafica();
 	 }
 

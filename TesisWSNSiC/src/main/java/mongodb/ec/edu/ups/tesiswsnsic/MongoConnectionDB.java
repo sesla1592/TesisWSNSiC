@@ -228,7 +228,7 @@ public class MongoConnectionDB {
 				
 			}
 		};
-		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://35.199.91.181:27017"));
+		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://34.69.137.5:27017"));
 		MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
 		FindIterable<Document> collection = database.getCollection("Nueva").find().sort(Sorts.descending("fecha")).limit(10);
 		 

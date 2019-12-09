@@ -61,7 +61,7 @@ public class RegistDatosWSREST {
 	public Respuesta obtenerDatos(@QueryParam("nod_detalles")String nod_detalles ) {
 		Respuesta r = new Respuesta();
 		try {
-	    	MongoClient mongoClient = new MongoClient("35.199.91.181",27017);
+	    	MongoClient mongoClient = new MongoClient("34.69.137.5",27017);
 	    	System.out.println("Connection Mongo Client");
 	    	MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
 	    	System.out.println("Connection to Data Base");
@@ -187,7 +187,7 @@ public class RegistDatosWSREST {
 				//.sslEnabled(true)
 				.build();
 		try {
-	    	MongoClient mongoClient = new MongoClient(new ServerAddress("35.199.91.181",27017),builder);
+	    	MongoClient mongoClient = new MongoClient(new ServerAddress("34.69.137.5",27017),builder);
 	    	System.out.println("Connection Mongo Client");
 	    	MongoDatabase database = mongoClient.getDatabase("DBWSNSIN");
 	    	System.out.println("Connection to Data Base");
